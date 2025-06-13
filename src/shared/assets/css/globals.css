@@ -2,6 +2,14 @@
 
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "Visuelt";
+  src: url("/fonts/VisueltPro-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -58,6 +66,10 @@
   --color-stroke: #dedede;
   --color-red: #ff2121;
   --color-dark-blue: #1b1e30;
+}
+
+body {
+  font-family: var(--font-poppins), sans-serif;
 }
 
 :root {
