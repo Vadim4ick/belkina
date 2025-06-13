@@ -47,6 +47,17 @@
   --breakpoint-mobile: 768px;
   --breakpoint-tablet: 991px;
   --breakpoint-desktop: 1150px;
+
+  --color-dark-grey: #626262;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-light-grey: #f4f4f4;
+  --color-blue: #1455fe;
+  --color-blue-hover: #0034ba;
+  --color-green: #00ff73;
+  --color-stroke: #dedede;
+  --color-red: #ff2121;
+  --color-dark-blue: #1b1e30;
 }
 
 :root {
