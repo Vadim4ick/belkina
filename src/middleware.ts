@@ -1,30 +1,34 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { withAuth, type NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
-const isPublicRoute = createRouteMatcher([
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api/(.*)",
-  "/",
-]);
+const authPaths = ["/sign-in", "/sign-up"];
+// const privatePaths = [];
 
-const isAuthForm = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+export default withAuth(
+  function middleware(req: NextRequestWithAuth) {
+    const { pathname } = req.nextUrl;
 
-export default clerkMiddleware(async (auth, req) => {
-  const { userId } = await auth();
+    const isAuth = !!req.nextauth.token;
 
-  if (!isPublicRoute(req)) {
-    await auth.protect();
-  }
+    // 🔒 Блокировать доступ к /sign-in и /sign-up для авторизованных
+    if (isAuth && authPaths.includes(pathname)) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
 
-  if (userId && isAuthForm(req)) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-});
+    // 🔐 Блокировать доступ к privatePaths для НЕавторизованных
+    // if (!isAuth && privatePaths.includes(pathname)) {
+    //   return NextResponse.redirect(new URL("/sign-in", req.url));
+    // }
+
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: () => true, // Пропускаем всех, фильтруем вручную
+    },
+  },
+);
 
 export const config = {
-  matcher: [
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    "/(api|trpc)(.*)",
-  ],
+  matcher: ["/((?!api|_next|static|favicon.ico).*)"], // обрабатываем все страницы
 };

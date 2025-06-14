@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/shared/assets/css/globals.css";
 import { Providers } from "@/shared/providers/providers";
-import { ClerkProvider } from "@clerk/nextjs";
-import { ruRU } from "@clerk/localizations";
 import { AppHeader } from "@/widgets/app-header";
 
 const geistSans = Poppins({
@@ -25,20 +23,10 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full">
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
-        <ClerkProvider
-          localization={ruRU}
-          appearance={{
-            elements: {
-              formFieldInput: "custom-clerk-input",
-            },
-          }}
-          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-        >
-          <Providers>
-            <AppHeader />
-            {children}
-          </Providers>
-        </ClerkProvider>
+        <Providers>
+          <AppHeader />
+          {children}
+        </Providers>
       </body>
     </html>
   );

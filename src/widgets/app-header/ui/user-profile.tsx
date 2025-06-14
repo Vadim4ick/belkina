@@ -13,54 +13,70 @@ import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { UserIcon } from "@/shared/icons/user-icon";
 import { LogOutIcon } from "@/shared/icons/log-out-icon";
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { ProfileAvatar } from "@/shared/ui/profile-avatar";
 import { Typography } from "@/shared/ui/typography";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export function UserProfile() {
-  const { isSignedIn, user } = useUser();
+  const { data: session, status } = useSession();
 
-  if (!isSignedIn || !user) {
+  const router = useRouter();
+
+  if (status !== "authenticated") {
     return (
-      <SignInButton>
-        <Button variant="ghost">Войти</Button>
-      </SignInButton>
+      <Button onClick={() => router.push("/sign-in")} variant="ghost">
+        Войти
+      </Button>
     );
   }
 
   return (
     <>
-      <Typography variant="poppins-md-16">{user && user.fullName}</Typography>
+      <Typography variant="poppins-md-16">
+        {session.user && session.user?.name}
+      </Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             className="h-12 w-12 self-center rounded-full p-px"
           >
-            <ProfileAvatar path={user.imageUrl || ""} className="h-12 w-12" />
+            <ProfileAvatar
+              path={session.user?.image || ""}
+              className="h-12 w-12"
+            />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-2 w-56">
           <DropdownMenuLabel>
             <p>Мой аккаунт</p>
             <p className="text-muted-foreground overflow-hidden text-xs text-ellipsis">
-              {user && user.fullName}
+              {session.user && session.user?.email}
             </p>
           </DropdownMenuLabel>
           <DropdownMenuGroup></DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href={`/profile`}>
+              <Link className="cursor-pointer" href={`/profile`}>
                 <UserIcon className="mr-2 h-4 w-4" />
                 <span>Личный кабинет</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <LogOutIcon className="mr-2 h-4 w-4" />
-              <SignOutButton>
-                <button>Выйти</button>
-              </SignOutButton>
+            <DropdownMenuItem asChild>
+              <Button
+                className="h-[32px] w-full cursor-pointer justify-start"
+                variant="ghostWhite"
+                onClick={() =>
+                  signOut({
+                    callbackUrl: "/",
+                  })
+                }
+              >
+                <LogOutIcon className="mr-2 h-4 w-4" />
+                Выйти
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
