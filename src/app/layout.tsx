@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Poppins({
   variable: "--font-poppins",
+  subsets: ["latin"],
   weight: ["400", "500"],
 });
 

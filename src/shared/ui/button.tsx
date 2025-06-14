@@ -1,8 +1,8 @@
+/* eslint-disable react/display-name */
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/shared/lib/utils";
-import { ButtonHTMLAttributes, FC, SVGProps } from "react";
 
 const buttonVariants = cva(
   "inline-flex items-center px-4 justify-center cursor-pointer gap-2 rounded-lg font-medium transition-colors outline-none whitespace-nowrap select-none disabled:pointer-events-none",

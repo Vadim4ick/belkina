@@ -10,13 +10,7 @@ export default async function Layout({
   return (
     <>
       <AppHeader />
-      <Suspense
-        fallback={
-          <div className="flex min-h-screen items-center justify-center">
-            " ... add Spinner"
-          </div>
-        }
-      >
+      <Suspense fallback={null}>
         <main className="w-full">{children}</main>
       </Suspense>
       {/* <Footer /> */}
