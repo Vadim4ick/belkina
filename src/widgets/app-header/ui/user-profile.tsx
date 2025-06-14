@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,24 +14,18 @@ import Link from "next/link";
 import { LoginButton } from "@/features/login-user/login-button";
 import { UserIcon } from "@/shared/icons/user-icon";
 import { LogOutIcon } from "@/shared/icons/log-out-icon";
-import { getProfileDisplayName, ProfileAvatar, User } from "@/entities/user";
-import { userSessionMoc } from "@/entities/user/model/moc-session";
-
-// !!!! Временно реализована имитация входа. В состояние user сохраняется мок - сессия.
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { ProfileAvatar } from "@/shared/ui/profile-avatar";
 
 export function UserProfile() {
-  const [user, setUserLogedIn] = useState<User>();
-  console.log("userLogedIn ==> ", user);
+  const { isSignedIn, user } = useUser();
 
-  const session = userSessionMoc;
-
-  if (!user) {
+  if (!isSignedIn || !user) {
     return (
       <LoginButton>
-        <Button variant="ghost" onClick={() => setUserLogedIn(session?.user)}>
-          {" "}
-          Войти
-        </Button>
+        <SignInButton>
+          <Button variant="ghost">Войти</Button>
+        </SignInButton>
       </LoginButton>
     );
   }
@@ -39,7 +33,7 @@ export function UserProfile() {
   return (
     <>
       <p className="text-muted-foreground overflow-hidden text-xs text-ellipsis">
-        {user ? getProfileDisplayName(user) : undefined}
+        {user && user.fullName}
       </p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -47,14 +41,14 @@ export function UserProfile() {
             variant="ghost"
             className="h-8 w-8 self-center rounded-full p-px"
           >
-            <ProfileAvatar profile={user} className="h-8 w-8" />
+            <ProfileAvatar path={user.imageUrl || ""} className="h-8 w-8" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-2 w-56">
           <DropdownMenuLabel>
             <p>Мой аккаунт</p>
             <p className="text-muted-foreground overflow-hidden text-xs text-ellipsis">
-              {user ? getProfileDisplayName(user) : undefined}
+              {user && user.fullName}
             </p>
           </DropdownMenuLabel>
           <DropdownMenuGroup></DropdownMenuGroup>
@@ -66,12 +60,11 @@ export function UserProfile() {
                 <span>Личный кабинет</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              // disabled={isLoadingSignOut}
-              onClick={() => setUserLogedIn(undefined)}
-            >
+            <DropdownMenuItem>
               <LogOutIcon className="mr-2 h-4 w-4" />
-              <span>Выход</span>
+              <SignOutButton>
+                <button>Выйти</button>
+              </SignOutButton>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

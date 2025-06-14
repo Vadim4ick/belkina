@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/shared/assets/css/globals.css";
 import { Providers } from "@/shared/providers/providers";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Poppins({
   variable: "--font-poppins",
@@ -19,9 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body className={`${geistSans.variable} antialiased`}>
-        <Providers>{children}</Providers>
+    <html lang="ru" className="h-full">
+      <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
+        <ClerkProvider
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        >
+          <Providers>{children}</Providers>
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { cn } from "@/shared/lib/utils";
 import { Button, ButtonProps } from "@/shared/ui/button";
 import { SheetClose } from "@/shared/ui/sheet";

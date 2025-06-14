@@ -1,15 +1,20 @@
 "use client";
 
-import { ClerkProvider } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { Loader2 } from "lucide-react";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <ClerkProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-    >
-      {children}
-    </ClerkProvider>
-  );
+  const { isLoaded } = useUser();
+
+  if (!isLoaded) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <Loader2 className="size-8 animate-spin" />
+      </div>
+    );
+  }
+
+  return <>{children}</>;
 };
 
 export { Providers };

@@ -11,6 +11,7 @@ import {
   SOCIAL_PROVIDER,
 } from "@/entities/auth";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { YandexIcon } from "@/shared/icons/yandex";
 
 type AuthFormProps = {
   mode: FORM_MODE;
@@ -91,19 +92,23 @@ export function AuthForm({
               <hr className="flex-1 border-gray-300" />
             </div>
 
-            {/* <button
-            onClick={() => handleOAuth("oauth_custom_yandex")}
-            className="flex items-center gap-2 rounded border bg-white px-4 py-2"
-          >
-            <span>Войти через Яндекс</span>
-          </button>  */}
-            <Button
-              className="w-full"
-              onClick={() => onOAuth("oauth_google")}
-              variant="ghost"
-            >
-              <GoogleIcon className="size-3" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                className="w-full"
+                onClick={() => onOAuth("oauth_custom_yandex")}
+                variant="ghost"
+              >
+                <YandexIcon className="size-6" />
+              </Button>
+
+              <Button
+                className="w-full"
+                onClick={() => onOAuth("oauth_google")}
+                variant="ghost"
+              >
+                <GoogleIcon className="size-4" />
+              </Button>
+            </div>
 
             <Typography
               className="text-dark-grey flex w-full items-center justify-center gap-1"
@@ -144,6 +149,8 @@ export function AuthForm({
             {error}
           </Typography>
         )}
+
+        <div id="clerk-captcha" />
       </div>
     </div>
   );
