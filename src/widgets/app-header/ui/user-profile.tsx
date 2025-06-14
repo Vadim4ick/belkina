@@ -15,6 +15,7 @@ import { UserIcon } from "@/shared/icons/user-icon";
 import { LogOutIcon } from "@/shared/icons/log-out-icon";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { ProfileAvatar } from "@/shared/ui/profile-avatar";
+import { Typography } from "@/shared/ui/typography";
 
 export function UserProfile() {
   const { isSignedIn, user } = useUser();
@@ -29,16 +30,14 @@ export function UserProfile() {
 
   return (
     <>
-      <p className="text-muted-foreground overflow-hidden text-xs text-ellipsis">
-        {user && user.fullName}
-      </p>
+      <Typography variant="poppins-md-16">{user && user.fullName}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="h-8 w-8 self-center rounded-full p-px"
+            className="h-12 w-12 self-center rounded-full p-px"
           >
-            <ProfileAvatar path={user.imageUrl || ""} className="h-8 w-8" />
+            <ProfileAvatar path={user.imageUrl || ""} className="h-12 w-12" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-2 w-56">

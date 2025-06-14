@@ -14,6 +14,8 @@ import { HeaderSidebarButtonSheet as HeaderSidebarButton } from "./header-sideba
 import { IHeaderItems } from "..";
 import { MenuIcon } from "@/shared/icons/menu-icon";
 import { XIcon } from "@/shared/icons/x-icon";
+import { UserProfile } from "./user-profile";
+import { Logo } from "@/shared/ui/logo";
 
 interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[];
@@ -33,30 +35,26 @@ function MobileNav({ headerItems }: MobileNavProps) {
         </Button>
       </SheetTrigger>
 
-      <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
-        <SheetHeader className="mb-3 ml-4">
-          <SheetTitle>Личный кабинет</SheetTitle>
-          <SheetDescription className="space-x-3">
-            {/* <UserProfile /> */}
-          </SheetDescription>
+      <SheetContent side="left" hideClose className="w-[90%] px-5 py-4">
+        <SheetHeader className="mb-3 p-0">
+          <SheetTitle>
+            <Logo />
+          </SheetTitle>
+          <SheetDescription></SheetDescription>
+          <div className="flex flex-row-reverse items-center justify-end gap-x-4">
+            <UserProfile />
+          </div>
           <SheetClose className="absolute right-5">
-            {/* <Button className="h-7 w-7 p-0" variant="ghost"> */}
             <XIcon />
-            {/* </Button> */}
           </SheetClose>
         </SheetHeader>
-        <div>
+        <ul className="space-y-4">
           {headerItems.map((item, idx) => (
-            <Link key={idx} href={item.url}>
-              <HeaderSidebarButton
-                variant={pathname === item.url ? "secondary" : "ghost"}
-                icon={item.icon}
-              >
-                <span>{item.title}</span>
-              </HeaderSidebarButton>
-            </Link>
+            <li key={idx}>
+              <Link href={item.url}>{item.title}</Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </SheetContent>
     </Sheet>
   );
