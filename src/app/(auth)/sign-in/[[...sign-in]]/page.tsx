@@ -9,7 +9,7 @@ export default function CustomSignIn() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 p-4">
-      <SignIn />
+      <SignIn signInUrl="/" />
     </div>
   );
 }
