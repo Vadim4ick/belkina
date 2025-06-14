@@ -11,7 +11,6 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
-import { LoginButton } from "@/features/login-user/login-button";
 import { UserIcon } from "@/shared/icons/user-icon";
 import { LogOutIcon } from "@/shared/icons/log-out-icon";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
@@ -22,11 +21,9 @@ export function UserProfile() {
 
   if (!isSignedIn || !user) {
     return (
-      <LoginButton>
-        <SignInButton>
-          <Button variant="ghost">Войти</Button>
-        </SignInButton>
-      </LoginButton>
+      <SignInButton>
+        <Button variant="ghost">Войти</Button>
+      </SignInButton>
     );
   }
 
