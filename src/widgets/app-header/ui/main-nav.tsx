@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "@/shared/ui/logo";
 import { UserProfile } from "./user-profile";
 import { Typography } from "@/shared/ui/typography";
+import { Container } from "@/shared/ui/container";
 
 interface MainNavProps {
   headerItems: IHeaderItems[];
@@ -12,9 +13,9 @@ interface MainNavProps {
 function MainNav({ headerItems }: MainNavProps) {
   const pathname = usePathname();
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
-      <nav>
-        <div className="container mx-auto flex h-14 items-center gap-12">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur">
+      <Container>
+        <div className="mx-auto flex h-14 items-center gap-12">
           <div className="mr-4 hidden md:flex">
             <Logo />
           </div>
@@ -36,7 +37,7 @@ function MainNav({ headerItems }: MainNavProps) {
             <UserProfile />
           </div>
         </div>
-      </nav>
+      </Container>
     </header>
   );
 }

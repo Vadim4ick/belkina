@@ -9,8 +9,6 @@ import {
   SheetTrigger,
 } from "@/shared/ui/sheet";
 import { Button, ButtonProps } from "@/shared/ui/button";
-import { usePathname } from "next/navigation";
-import { HeaderSidebarButtonSheet as HeaderSidebarButton } from "./header-sidebar-button";
 import { IHeaderItems } from "..";
 import { MenuIcon } from "@/shared/icons/menu-icon";
 import { XIcon } from "@/shared/icons/x-icon";
@@ -22,7 +20,6 @@ interface MobileNavProps extends ButtonProps {
 }
 
 function MobileNav({ headerItems }: MobileNavProps) {
-  const pathname = usePathname();
   return (
     <Sheet>
       <SheetTrigger asChild>

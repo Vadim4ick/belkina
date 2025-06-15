@@ -105,6 +105,14 @@ body {
   --sidebar-ring: oklch(0.704 0.04 256.788);
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
+
+  --header-height: 65px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 44px;
+  }
 }
 
 .dark {
