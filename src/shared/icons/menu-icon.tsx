@@ -1,4 +1,4 @@
-import { FC, SVGProps } from "react"
+import { FC, SVGProps } from "react";
 
 const MenuIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
@@ -18,7 +18,7 @@ const MenuIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
       <line x1="4" x2="20" y1="6" y2="6" />
       <line x1="4" x2="20" y1="18" y2="18" />
     </svg>
-  )
-}
+  );
+};
 
-export { MenuIcon }
+export { MenuIcon };

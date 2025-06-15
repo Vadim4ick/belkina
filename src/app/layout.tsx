@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "@/shared/assets/css/globals.css";
 import { Providers } from "@/shared/providers/providers";
 import { AppHeader } from "@/widgets/app-header";
+import { AppFooter } from "@/widgets/app-footer";
 
 const geistSans = Poppins({
   variable: "--font-poppins",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Providers>
           <AppHeader />
           {children}
+          <AppFooter />
         </Providers>
       </body>
     </html>
