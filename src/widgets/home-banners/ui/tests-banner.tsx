@@ -4,7 +4,7 @@ import { Typography } from "@/shared/ui/typography";
 
 const TestsBanner = () => {
   return (
-    <section className="bg-light-grey py-[48px]">
+    <section className="bg-light-grey max-mobile:py-6 py-12">
       <Container className="relative flex items-center justify-center">
         <div className="relative w-full overflow-hidden">
           <div className="bg-blue max-tablet:flex-col max-mobile:py-[24px] max-mobile:px-4 max-tablet:h-full flex h-[570px] w-full items-center justify-between gap-6 rounded-[16px] px-[20px] py-[48px]">

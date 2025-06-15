@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <MainBanner />
-      <section>
+      <section className="max-mobile:py-6 py-12">
         <Container>Промежуточная страница</Container>
       </section>
       <TestsBanner />

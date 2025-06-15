@@ -24,7 +24,7 @@ export function FeedbackForm({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="border-stroke flex w-full max-w-[350px] flex-col gap-4 rounded-md border bg-white px-8 py-[20px]">
+      <div className="border-stroke max-mobile:px-4 flex w-full max-w-[350px] flex-col gap-4 rounded-md border bg-white px-8 py-[20px]">
         <Typography className="text-center" tag="p" variant="poppins-md-16">
           Заполняй форму, чтобы получить бесплатную консультацию
         </Typography>
