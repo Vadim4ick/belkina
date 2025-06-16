@@ -40,7 +40,7 @@ const AppFooter = () => {
           </div>
         </div>
       </div>
-      <div className="pt-10 pb-20">
+      <div className="pt-[50px] pb-[36px] md:pb-[98px]">
         <div className="container mx-auto">
           <div className="flex flex-col justify-around gap-y-20 px-[26px] pt-12 pb-9 md:flex-row md:items-center">
             <div className="flex flex-col items-start gap-7">
