@@ -25,7 +25,7 @@ export function UserProfile() {
 
   if (status !== "authenticated") {
     return (
-      <Button onClick={() => router.push("/sign-in")} variant="ghost">
+      <Button onClick={() => router.push("/auth/sign-in")} variant="ghost">
         Войти
       </Button>
     );

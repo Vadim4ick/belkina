@@ -112,7 +112,7 @@ export function AuthForm({
               variant="poppins-reg-14"
             >
               {isSignUp ? "Уже есть аккаунт?" : "Нет аккаунта?"}
-              <Link href={isSignUp ? "/sign-in" : "/sign-up"}>
+              <Link href={isSignUp ? "auth/sign-in" : "auth/sign-up"}>
                 <Typography
                   className="text-blue"
                   tag="p"
