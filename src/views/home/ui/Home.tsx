@@ -1,5 +1,6 @@
 import { TariffList } from "@/features/tariff-list";
-import { MainBanner, TestsBanner } from "@/widgets/home-banners";
+import { MainBanner } from "./home-banners/main-banner";
+import { TestsBanner } from "./home-banners/tests-banner";
 
 const Home = () => {
   return (
