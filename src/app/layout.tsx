@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
         <Providers>
           <AppHeader />
-          {children}
+          <main className="pt-[var(--header-height)]">{children}</main>
           <AppFooter />
         </Providers>
       </body>

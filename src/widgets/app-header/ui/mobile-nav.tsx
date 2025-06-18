@@ -25,7 +25,7 @@ function MobileNav({ headerItems, className }: MobileNavProps) {
       <SheetTrigger className={className} asChild>
         <Button
           variant="ghost"
-          className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 left-0 z-50 w-full justify-between px-3 py-4 backdrop-blur"
+          className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 left-0 z-50 w-full justify-between rounded-none px-3 py-4 backdrop-blur"
           aria-label="Open menu"
         >
           <MenuIcon className="h-5 w-5" />

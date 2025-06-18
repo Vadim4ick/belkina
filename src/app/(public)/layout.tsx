@@ -3,5 +3,5 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="w-full">{children}</main>;
+  return <div className="w-full">{children}</div>;
 }

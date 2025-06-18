@@ -6,6 +6,7 @@ import { UserProfile } from "./user-profile";
 import { Typography } from "@/shared/ui/typography";
 import { Container } from "@/shared/ui/container";
 import { cn } from "@/shared/lib/utils";
+import { useEffect, useState } from "react";
 
 interface MainNavProps {
   headerItems: IHeaderItems[];
@@ -14,10 +15,33 @@ interface MainNavProps {
 
 function MainNav({ headerItems, className }: MainNavProps) {
   const pathname = usePathname();
+
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 65) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
     <header
       className={cn(
-        "bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur",
+        "bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur transition-transform duration-300",
+        !visible && "-translate-y-full",
         className,
       )}
     >
@@ -30,7 +54,10 @@ function MainNav({ headerItems, className }: MainNavProps) {
             {headerItems.map((item, idx) => (
               <Link
                 key={idx}
-                className={` ${pathname === item.url ? "text-blue" : "text-dark-grey"} hover:text-blue-hover font-medium transition-colors`}
+                className={cn(
+                  `hover:text-blue-hover font-medium transition-colors`,
+                  pathname === item.url ? "text-blue" : "text-dark-grey",
+                )}
                 href={item.url}
               >
                 <Typography variant="poppins-md-16" tag="p">

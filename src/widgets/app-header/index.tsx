@@ -37,7 +37,7 @@ export function AppHeader() {
   return (
     <>
       <MainNav className="mobile:block hidden" headerItems={headerItems} />
-      <MobileNav className="mobile:hidden block" headerItems={headerItems} />
+      <MobileNav className="mobile:hidden flex" headerItems={headerItems} />
     </>
   );
 }

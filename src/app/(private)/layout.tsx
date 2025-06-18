@@ -9,13 +9,11 @@ export default async function Layout({
   const session = await auth();
   console.log("session ==> ", session);
 
-  const role = session
-    ? (session?.user.role as "USER" | "ADMIN" | undefined)
-    : "USER";
+  const role = session ? (session?.user.role as "USER" | "ADMIN") : "USER";
   return (
     <div className="flex">
       <AppSidebar variant={role} />
-      <main className="w-full">{children}</main>
+      <div className="w-full">{children}</div>
     </div>
   );
 }
