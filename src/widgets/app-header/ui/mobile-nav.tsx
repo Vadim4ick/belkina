@@ -19,10 +19,10 @@ interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[];
 }
 
-function MobileNav({ headerItems }: MobileNavProps) {
+function MobileNav({ headerItems, className }: MobileNavProps) {
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger className={className} asChild>
         <Button
           variant="ghost"
           className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 left-0 z-50 w-full justify-between px-3 py-4 backdrop-blur"

@@ -5,15 +5,22 @@ import { Logo } from "@/shared/ui/logo";
 import { UserProfile } from "./user-profile";
 import { Typography } from "@/shared/ui/typography";
 import { Container } from "@/shared/ui/container";
+import { cn } from "@/shared/lib/utils";
 
 interface MainNavProps {
   headerItems: IHeaderItems[];
+  className?: string;
 }
 
-function MainNav({ headerItems }: MainNavProps) {
+function MainNav({ headerItems, className }: MainNavProps) {
   const pathname = usePathname();
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur">
+    <header
+      className={cn(
+        "bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur",
+        className,
+      )}
+    >
       <Container>
         <div className="mx-auto flex h-14 items-center gap-12">
           <div className="mr-4 hidden md:flex">
