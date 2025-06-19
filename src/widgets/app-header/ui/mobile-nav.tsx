@@ -21,6 +21,7 @@ interface MobileNavProps extends ButtonProps {
 }
 
 function MobileNav({ headerItems, className }: MobileNavProps) {
+function MobileNav({ headerItems, className }: MobileNavProps) {
   return (
     <Sheet>
       <SheetTrigger className={cn("", className)} asChild>

@@ -7,7 +7,7 @@ export default async function AuthLayout({
 }) {
   return (
     <>
-      <div className="pt-20 md:pt-0">
+      <div className="mobile:pt-0 pt-[var(--header-height)]">
         <Suspense>{children}</Suspense>
       </div>
     </>
