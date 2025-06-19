@@ -1,9 +1,10 @@
-import { IsideBarItems } from "../_model/ISideBarItems"
+import { getRouteProfile } from "@/shared/lib/routes";
+import { IsideBarItems } from "../_model/ISideBarItems";
 
 export const DocsMenuItems: IsideBarItems[] = [
   {
     title: "Вернутся в личный кабинет",
-    url: "/profile",
+    url: getRouteProfile(),
   },
   {
     title: "Политика конфиденциальности",
@@ -17,4 +18,4 @@ export const DocsMenuItems: IsideBarItems[] = [
     title: "Пользовательское соглашение",
     url: "/docs/user-agreement",
   },
-]
+];

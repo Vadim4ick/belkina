@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
+import { getRouteHome } from "@/shared/lib/routes";
 import { MainNav } from "./ui/main-nav";
 import { MobileNav } from "./ui/mobile-nav";
 import { FC, SVGProps } from "react";
@@ -14,7 +14,7 @@ export interface IHeaderItems {
 const headerItems = [
   {
     title: "Тестирование ЕГЭ",
-    url: "/",
+    url: getRouteHome(),
     icon: null,
   },
   {
@@ -35,11 +35,10 @@ const headerItems = [
 ];
 
 interface AppHeaderProps {
-  role?: "USER" | "ADMIN" | undefined;
   route: "PUBLIC" | "PRIVATE";
 }
 
-export function AppHeader({ role, route }: AppHeaderProps) {
+export function AppHeader({ route }: AppHeaderProps) {
   return (
     <>
       <MainNav headerItems={headerItems} className="hidden md:flex" />

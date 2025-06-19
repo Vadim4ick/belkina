@@ -1,21 +1,21 @@
-import { UserIcon } from "@/shared/icons/user-icon"
-import { IsideBarItems } from "../_model/ISideBarItems"
-import { CartIcon } from "@/shared/icons/cart-icon"
-import { TagIcon } from "@/shared/icons/tag-icon"
-import { CalendarIcon } from "@/shared/icons/calendar-icon"
-import { MessagesIcon } from "@/shared/icons/messages-icon"
-import { TariffsIcon } from "@/shared/icons/tariffs-icon"
-
+import { UserIcon } from "@/shared/icons/user-icon";
+import { IsideBarItems } from "../_model/ISideBarItems";
+import { CartIcon } from "@/shared/icons/cart-icon";
+import { TagIcon } from "@/shared/icons/tag-icon";
+import { CalendarIcon } from "@/shared/icons/calendar-icon";
+import { MessagesIcon } from "@/shared/icons/messages-icon";
+import { TariffsIcon } from "@/shared/icons/tariffs-icon";
+import { getRouteCatalog, getRouteProfile } from "@/shared/lib/routes";
 
 export const PrivateMenuItems: IsideBarItems[] = [
   {
     title: "Главная",
-    url: "/profile",
+    url: getRouteProfile(),
     icon: UserIcon,
   },
   {
     title: "Каталог",
-    url: "/catalog",
+    url: getRouteCatalog(),
     icon: CartIcon,
   },
   {
@@ -37,5 +37,5 @@ export const PrivateMenuItems: IsideBarItems[] = [
     title: "Тарифы",
     url: "/#",
     icon: TariffsIcon,
-  }
-]
+  },
+];

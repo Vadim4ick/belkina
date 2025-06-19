@@ -1,5 +1,6 @@
 "use client";
 import { TelegramIcon } from "@/shared/icons/telegram-icon";
+import { getRouteHome } from "@/shared/lib/routes";
 import { Logo } from "@/shared/ui/logo";
 import { Typography } from "@/shared/ui/typography";
 import Link from "next/link";
@@ -13,7 +14,7 @@ export interface IFooterNavItems {
 const footerNavItems = [
   {
     title: "Тестирование ЕГЭ",
-    url: "/",
+    url: getRouteHome(),
   },
   {
     title: "Курсы",
