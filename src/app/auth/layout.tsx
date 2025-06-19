@@ -9,9 +9,9 @@ export default async function AuthLayout({
   return (
     <>
       <AppHeader route="PUBLIC" />
-      <div className="max-mobile:pt-0 pt-[var(--header-height)]">
+      <main className="max-mobile:pt-0 pt-[var(--header-height)]">
         <Suspense>{children}</Suspense>
-      </div>
+      </main>
     </>
   );
 }

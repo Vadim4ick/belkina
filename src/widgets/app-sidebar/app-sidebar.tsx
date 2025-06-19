@@ -16,7 +16,7 @@ export function AppSidebar() {
     <>
       <SidebarDesktop
         sideBarItems={PrivateMenuItems}
-        className="hidden md:flex"
+        className="hidden h-auto md:flex"
       />
       <SidebarMobile
         sideBarItems={PrivateMenuItems}
