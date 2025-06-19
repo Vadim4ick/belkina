@@ -1,5 +1,6 @@
 "use client";
 
+import { getRouteHome } from "@/shared/lib/routes";
 import { AuthForm } from "@/widgets/auth-form";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
@@ -14,7 +15,7 @@ export default function RegisterPage() {
     await signIn("credentials", {
       email,
       password,
-      callbackUrl: "/",
+      callbackUrl: getRouteHome(),
     });
   };
 

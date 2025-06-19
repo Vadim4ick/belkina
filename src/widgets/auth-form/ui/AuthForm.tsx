@@ -10,6 +10,7 @@ import { AuthProviders, FORM_MODE } from "../model/types";
 import { MAPPING_FORM_AUTH_MODE } from "../model/const";
 import { signIn } from "next-auth/react";
 import { YandexIcon } from "@/shared/icons/yandex";
+import { getRouteAuth } from "@/shared/lib/routes";
 
 type AuthFormProps = {
   mode: FORM_MODE;
@@ -46,7 +47,7 @@ export function AuthForm({
 
   const oauth = async (provider: AuthProviders) => {
     await signIn(provider, {
-      callbackUrl: "/",
+      callbackUrl: getRouteAuth(),
     });
   };
 

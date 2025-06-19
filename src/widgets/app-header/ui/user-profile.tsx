@@ -17,6 +17,7 @@ import { ProfileAvatar } from "@/shared/ui/profile-avatar";
 import { Typography } from "@/shared/ui/typography";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { getRouteAuth } from "@/shared/lib/routes";
 
 export function UserProfile() {
   const { data: session, status } = useSession();
@@ -70,7 +71,7 @@ export function UserProfile() {
                 variant="ghostWhite"
                 onClick={() =>
                   signOut({
-                    callbackUrl: "/",
+                    callbackUrl: getRouteAuth(),
                   })
                 }
               >
