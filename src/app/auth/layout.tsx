@@ -1,3 +1,4 @@
+import { AppHeader } from "@/widgets/app-header";
 import { Suspense } from "react";
 
 export default async function AuthLayout({
@@ -7,7 +8,8 @@ export default async function AuthLayout({
 }) {
   return (
     <>
-      <div className="mobile:pt-0 pt-[var(--header-height)]">
+      <AppHeader route="PUBLIC" />
+      <div className="max-mobile:pt-0 pt-[var(--header-height)]">
         <Suspense>{children}</Suspense>
       </div>
     </>
