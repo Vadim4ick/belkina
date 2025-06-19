@@ -6,7 +6,7 @@ export const publicRoutes: string[] = [
 ]
 export const privateRoutes: string[] = [
   "/profile/glavnaya",
-  "/profile/catalog",
+  "/profile/katalog",
   "/profile/tests",
 ]
 

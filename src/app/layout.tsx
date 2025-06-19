@@ -25,7 +25,6 @@ export default function RootLayout({
     <html lang="ru" className="h-full">
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
         <Providers>
-          <AppHeader />
           {children}
           <AppFooter />
         </Providers>

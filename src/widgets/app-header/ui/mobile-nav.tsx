@@ -14,21 +14,22 @@ import { MenuIcon } from "@/shared/icons/menu-icon";
 import { XIcon } from "@/shared/icons/x-icon";
 import { UserProfile } from "./user-profile";
 import { Logo } from "@/shared/ui/logo";
+import { cn } from "@/shared/lib/utils";
 
 interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[];
 }
 
-function MobileNav({ headerItems }: MobileNavProps) {
+function MobileNav({ headerItems, className }: MobileNavProps) {
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger className={cn("", className)} asChild>
         <Button
           variant="ghost"
-          className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 left-0 z-50 w-full justify-between px-3 py-4 backdrop-blur"
+          className="fixed top-4 left-4 z-50 w-full justify-between px-3 py-4"
           aria-label="Open menu"
         >
-          <MenuIcon className="h-5 w-5" />
+          <MenuIcon className="h-6 w-6" />
         </Button>
       </SheetTrigger>
 

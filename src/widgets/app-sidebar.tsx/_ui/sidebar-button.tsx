@@ -17,7 +17,7 @@ const SidebarButton = ({
 }: SidebarButtonProps) => {
   return (
     <Button
-      variant="ghost"
+      variant="ghostWhite"
       className={cn("w-full justify-start gap-2", className)}
       {...props}
     >

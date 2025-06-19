@@ -2,7 +2,6 @@
 
 import { MainNav } from "./ui/main-nav";
 import { MobileNav } from "./ui/mobile-nav";
-import { useMediaQuery } from "usehooks-ts";
 import { FC, SVGProps } from "react";
 
 export interface IHeaderItems {
@@ -34,11 +33,21 @@ const headerItems = [
   },
 ];
 
-export function AppHeader() {
-  const isDesktop = useMediaQuery("(min-width:768px)", {
-    initializeWithValue: false,
-  });
+interface AppHeaderProps {
+  role?: "USER" | "ADMIN" | undefined;
+  route: "PUBLIC" | "PRIVATE";
+}
 
-  if (isDesktop) return <MainNav headerItems={headerItems} />;
-  return <MobileNav headerItems={headerItems} />;
+export function AppHeader({ role, route }: AppHeaderProps) {
+  return (
+    <>
+      <MainNav headerItems={headerItems} className="hidden md:flex" />
+      {route !== "PRIVATE" && (
+        <MobileNav
+          headerItems={headerItems}
+          className="flex !w-fit md:hidden"
+        />
+      )}
+    </>
+  );
 }

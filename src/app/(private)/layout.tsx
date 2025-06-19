@@ -1,4 +1,5 @@
 import { auth } from "@/entities/user/auth";
+import { AppHeader } from "@/widgets/app-header";
 import { AppSidebar } from "@/widgets/app-sidebar.tsx";
 
 export default async function Layout({
@@ -13,9 +14,12 @@ export default async function Layout({
     ? (session?.user.role as "USER" | "ADMIN" | undefined)
     : "USER";
   return (
-    <div className="flex">
-      <AppSidebar variant={role} />
-      <main className="w-full">{children}</main>
-    </div>
+    <>
+      <AppHeader route="PRIVATE" />
+      <div className="flex h-full">
+        <AppSidebar />
+        <main className="h-full w-full flex-1 pt-16">{children}</main>
+      </div>
+    </>
   );
 }

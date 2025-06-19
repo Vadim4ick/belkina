@@ -1,7 +1,14 @@
+import { AppHeader } from "@/widgets/app-header";
+
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="w-full">{children}</main>;
+  return (
+    <>
+      <AppHeader route="PUBLIC" />
+      <main className="w-full">{children}</main>;
+    </>
+  );
 }

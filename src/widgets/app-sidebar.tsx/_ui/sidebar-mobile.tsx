@@ -5,6 +5,7 @@ import {
   SheetClose,
   SheetContent,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/shared/ui/sheet";
 import { Button } from "@/shared/ui/button";
@@ -13,17 +14,20 @@ import { usePathname } from "next/navigation";
 import { MenuIcon } from "@/shared/icons/menu-icon";
 import { XIcon } from "@/shared/icons/x-icon";
 import { UserProfile } from "@/widgets/app-header/ui/user-profile";
+import { cn } from "@/shared/lib/utils";
 
 interface SidebarMobileProps {
   sideBarItems: IsideBarItems[];
+  className?: string;
 }
 
-const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
+const SidebarMobile = ({ sideBarItems, className }: SidebarMobileProps) => {
   const pathname = usePathname();
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed z-50 w-full py-3 pl-3 backdrop-blur">
+      <SheetTrigger className={cn("w-fit", className)} asChild>
+        {/* <div className="bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed z-50 w-full py-3 pl-3 backdrop-blur"> */}
+        <div className="fixed z-50 w-full py-3 pl-3">
           <Button size="sm" variant="ghost" className="">
             <MenuIcon />
           </Button>
@@ -32,16 +36,9 @@ const SidebarMobile = ({ sideBarItems }: SidebarMobileProps) => {
 
       <SheetContent side="left" hideClose className="max-w-[80%] px-3 py-4">
         <SheetHeader className="flex flex-row items-center justify-between">
-          <div className="mb-3 ml-4">
-            {/* <h1 className="">Личный кабинет</h1> */}
-            <div className="flex items-center gap-3">
-              <UserProfile />
-            </div>
-          </div>
+          <SheetTitle></SheetTitle>
           <SheetClose>
-            <Button className="h-7 w-7 p-0" variant="ghost">
-              <XIcon />
-            </Button>
+            <XIcon />
           </SheetClose>
         </SheetHeader>
         <div>

@@ -17,8 +17,4 @@ export const DocsMenuItems: IsideBarItems[] = [
     title: "Пользовательское соглашение",
     url: "/docs/user-agreement",
   },
-  {
-    title: "Настройка API Google Таблицы",
-    url: "/docs/setup_api_instruction",
-  },
 ]
