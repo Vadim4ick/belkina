@@ -13,7 +13,6 @@ import { SidebarButtonSheet as SidebarButton } from "./sidebar-button";
 import { usePathname } from "next/navigation";
 import { MenuIcon } from "@/shared/icons/menu-icon";
 import { XIcon } from "@/shared/icons/x-icon";
-import { UserProfile } from "@/widgets/app-header/ui/user-profile";
 import { cn } from "@/shared/lib/utils";
 
 interface SidebarMobileProps {

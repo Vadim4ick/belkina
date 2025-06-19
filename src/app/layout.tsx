@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/shared/assets/css/globals.css";
 import { Providers } from "@/shared/providers/providers";
-import { AppHeader } from "@/widgets/app-header";
 import { AppFooter } from "@/widgets/app-footer";
 
 const geistSans = Poppins({
@@ -26,6 +25,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
         <Providers>
           {children}
+
           <AppFooter />
         </Providers>
       </body>

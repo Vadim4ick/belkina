@@ -8,7 +8,8 @@ export default async function Layout({
   return (
     <>
       <AppHeader route="PUBLIC" />
-      <main className="w-full">{children}</main>;
+
+      <main className="w-full">{children}</main>
     </>
   );
 }

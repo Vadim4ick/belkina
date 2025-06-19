@@ -10,7 +10,7 @@ export default async function Layout({
   const session = await auth();
   console.log("session ==> ", session);
 
-  const role = session ? (session?.user.role as "USER" | "ADMIN") : "USER";
+  // const role = session ? (session?.user.role as "USER" | "ADMIN") : "USER";
   return (
     <>
       <AppHeader route="PRIVATE" />

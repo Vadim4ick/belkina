@@ -1,6 +1,5 @@
 "use client";
 
-import { useMediaQuery } from "usehooks-ts";
 import { FC, SVGProps } from "react";
 import { SidebarDesktop } from "./_ui/sidebar-desktop";
 import { SidebarMobile } from "./_ui/sidebar-mobile";
