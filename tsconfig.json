@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/shared/lib/tailwind.config.js"
-  ],
+, "src/widgets/app-sidebar"  ],
   "exclude": ["node_modules"]
 }

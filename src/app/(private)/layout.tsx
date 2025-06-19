@@ -1,6 +1,6 @@
 import { auth } from "@/entities/user/auth";
 import { AppHeader } from "@/widgets/app-header";
-import { AppSidebar } from "@/widgets/app-sidebar.tsx";
+import { AppSidebar } from "@/widgets/app-sidebar";
 
 export default async function Layout({
   children,
@@ -14,9 +14,9 @@ export default async function Layout({
   return (
     <>
       <AppHeader route="PRIVATE" />
-      <div className="flex h-full">
+      <div className="flex h-full pt-16">
         <AppSidebar />
-        <main className="h-full w-full flex-1 pt-16">{children}</main>
+        <main className="h-full w-full flex-1">{children}</main>
       </div>
     </>
   );
