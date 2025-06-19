@@ -10,7 +10,7 @@ import { AuthProviders, FORM_MODE } from "../model/types";
 import { MAPPING_FORM_AUTH_MODE } from "../model/const";
 import { signIn } from "next-auth/react";
 import { YandexIcon } from "@/shared/icons/yandex";
-import { getRouteAuth } from "@/shared/lib/routes";
+import { getRouteAuth, getRouteRegister } from "@/shared/lib/routes";
 
 type AuthFormProps = {
   mode: FORM_MODE;
@@ -113,7 +113,7 @@ export function AuthForm({
               variant="poppins-reg-14"
             >
               {isSignUp ? "Уже есть аккаунт?" : "Нет аккаунта?"}
-              <Link href={isSignUp ? "/auth/sign-in" : "/auth/sign-up"}>
+              <Link href={isSignUp ? getRouteAuth() : getRouteRegister()}>
                 <Typography
                   className="text-blue"
                   tag="p"

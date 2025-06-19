@@ -18,15 +18,20 @@ import { Typography } from "@/shared/ui/typography";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { getRouteAuth } from "@/shared/lib/routes";
+import { Skeleton } from "@/shared/ui/skeleton";
 
 export function UserProfile() {
   const { data: session, status } = useSession();
 
   const router = useRouter();
 
+  if (status === "loading") {
+    return <Skeleton className="h-[48px] w-[150px]" />;
+  }
+
   if (status !== "authenticated") {
     return (
-      <Button onClick={() => router.push("/auth/sign-in")} variant="ghost">
+      <Button onClick={() => router.push(getRouteAuth())} variant="ghost">
         Войти
       </Button>
     );
