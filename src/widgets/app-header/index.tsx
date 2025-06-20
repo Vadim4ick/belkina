@@ -41,11 +41,11 @@ interface AppHeaderProps {
 export function AppHeader({ route }: AppHeaderProps) {
   return (
     <>
-      <MainNav headerItems={headerItems} className="hidden md:flex" />
+      <MainNav headerItems={headerItems} className="z-[1000] hidden md:flex" />
       {route !== "PRIVATE" && (
         <MobileNav
           headerItems={headerItems}
-          className="flex !w-fit md:hidden"
+          className="z-[1000] flex !w-fit md:hidden"
         />
       )}
     </>
