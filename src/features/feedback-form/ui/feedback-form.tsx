@@ -1,24 +1,29 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { Typography } from "@/shared/ui/typography";
 import { cn } from "@/shared/lib/utils";
+import { FeedbackFormData } from "../model/type";
+import { feedbackSchema } from "../model/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 export function FeedbackForm({ className }: { className?: string }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    console.log(email, password);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FeedbackFormData>({
+    resolver: zodResolver(feedbackSchema),
+  });
+  const onSubmit = (data: FeedbackFormData) => {
+    console.log(data);
   };
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       className={cn(
         "max-tablet:justify-center max-tablet:items-center flex w-full flex-col items-end justify-end gap-6",
         className,
@@ -31,17 +36,18 @@ export function FeedbackForm({ className }: { className?: string }) {
 
         <Input
           type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
           label="Ваша почта"
           placeholder="name@flowbite.com"
+          {...register("email")}
+          error={errors.email?.message}
         />
+
         <Input
-          type="number"
-          onChange={(e) => setPassword(e.target.value)}
-          value={email}
+          type="tel"
           label="Ваш номер"
           placeholder="+7 (999) 999-99-99"
+          {...register("number")}
+          error={errors.number?.message}
         />
 
         <Button size={"xl"}>Отправить</Button>
