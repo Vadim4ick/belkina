@@ -1,0 +1,25 @@
+import type { CodegenConfig } from '@graphql-codegen/cli'
+
+const config: CodegenConfig = {
+  overwrite: true, // Перезаписывать файл на каждой генерации
+  schema: 'http://localhost:3000/api/graphql', // или URL сервера Payload
+  documents: 'src/shared/graphql/schemas/**/*.gql', // путь к .gql запросам
+  generates: {
+    './src/shared/graphql/__generated__.ts': {
+      plugins: [
+        'typescript', // генерирует типы GraphQL
+        'typescript-operations', // типы для queries, mutations
+        'typescript-graphql-request', // SDK с getSdk()
+      ],
+      config: {
+        maybeValue: 'T', // делает поля типа T | null (а не T | null | undefined)
+        avoidOptionals: true, // убирает ? у полей (делает их всегда обязательными)
+        immutableTypes: true, // делает типы readonly (immutable)
+        enumsAsTypes: true, // enum → union type (реже нужен enum runtime)
+      },
+    },
+  },
+  ignoreNoDocuments: true,
+}
+
+export default config
