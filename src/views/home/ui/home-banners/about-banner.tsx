@@ -1,0 +1,54 @@
+import { Button } from "@/shared/ui/button";
+import { Container } from "@/shared/ui/container";
+import { Typography } from "@/shared/ui/typography";
+import Image from "next/image";
+
+const AboutBanner = () => {
+  return (
+    <section className="max-mobile:py-6 py-12">
+      <Container>
+        <div className="bg-light-grey max-desktop:gap-6 max-tablet:flex-col max-tablet:py-6 max-tablet:px-4 flex gap-[48px] rounded-[16px]">
+          <Image
+            src="/img/about.png"
+            alt="about"
+            width={570}
+            height={612}
+            unoptimized
+            className="max-desktop:w-[450px] max-tablet:w-full max-tablet:max-h-[450px] rounded-[16px]"
+          />
+
+          <div className="tablet:py-[40px] tablet:pr-[22px] max-tablet:gap-6 flex h-auto flex-col justify-between gap-10">
+            <div className="flex flex-col gap-12">
+              <div className="flex flex-col gap-6">
+                <Typography tag="h2" variant="visuelt-bold-48">
+                  О проекте
+                </Typography>
+
+                <Typography tag="p" variant="poppins-md-16">
+                  Наш проект помогает подготовиться к ЕГЭ по русскому языку,
+                  чтобы сдать на 90+ баллов без лишнего напряжения
+                </Typography>
+              </div>
+
+              <Typography
+                tag="div"
+                className="text-dark-grey rounded-[16px] bg-white p-6"
+                variant="poppins-md-16"
+              >
+                Белкина — опытный преподаватель русского языка,
+                специализирующийся на подготовке к ЕГЭ. Она помогает ученикам
+                достигать высоких баллов (90+), делая акцент на эффективных
+                методиках без лишнего стресса. Её уроки включают разбор сложных
+                тем, практические задания и индивидуальный подход
+              </Typography>
+            </div>
+
+            <Button size={"xl"}>Пройти тест</Button>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+};
+
+export { AboutBanner };
