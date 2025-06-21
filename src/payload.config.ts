@@ -13,6 +13,9 @@ import { HomePage } from './shared/collections/page/HomePage'
 import { Tariffs } from './shared/collections/Tariffs'
 import { en } from '@payloadcms/translations/languages/en'
 import { ru } from '@payloadcms/translations/languages/ru'
+import { Tests } from './shared/collections/test/Tests'
+import { TestQuestions } from './shared/collections/test/test-questions'
+import { UserTestProgress } from './shared/collections/test/user-test-progress'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -34,7 +37,7 @@ export default buildConfig({
     defaultLocale: 'ru', // required
   },
 
-  collections: [Users, Media, Tariffs, FAQs],
+  collections: [Users, Media, Tariffs, FAQs, Tests, TestQuestions, UserTestProgress],
   globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

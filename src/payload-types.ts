@@ -71,6 +71,9 @@ export interface Config {
     media: Media;
     tariffs: Tariff;
     faqs: Faq;
+    tests: Test;
+    'test-questions': TestQuestion;
+    'user-test-progress': UserTestProgress;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -81,6 +84,9 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     tariffs: TariffsSelect<false> | TariffsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    tests: TestsSelect<false> | TestsSelect<true>;
+    'test-questions': TestQuestionsSelect<false> | TestQuestionsSelect<true>;
+    'user-test-progress': UserTestProgressSelect<false> | UserTestProgressSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -131,6 +137,7 @@ export interface User {
   id: number;
   role: 'admin' | 'editor' | 'user';
   signupMethod: 'email' | 'yandex';
+  tariff: number | Tariff;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -141,6 +148,23 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tariffs".
+ */
+export interface Tariff {
+  id: number;
+  title: string;
+  price: number;
+  subtitle: string;
+  description: string;
+  benefits: {
+    value: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -163,16 +187,39 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tariffs".
+ * via the `definition` "faqs".
  */
-export interface Tariff {
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tests".
+ */
+export interface Test {
   id: number;
   title: string;
-  price: number;
-  subtitle: string;
-  description: string;
-  benefits: {
-    value: string;
+  instruction: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test-questions".
+ */
+export interface TestQuestion {
+  id: number;
+  test: number | Test;
+  errors: {
+    label: string;
+    id?: string | null;
+  }[];
+  proposals: {
+    label: string;
     id?: string | null;
   }[];
   updatedAt: string;
@@ -180,12 +227,19 @@ export interface Tariff {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
+ * via the `definition` "user-test-progress".
  */
-export interface Faq {
+export interface UserTestProgress {
   id: number;
-  question: string;
-  answer: string;
+  user: number | User;
+  test: number | Test;
+  progress: number;
+  completedQuestions?:
+    | {
+        question: number | TestQuestion;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -211,6 +265,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faqs';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'tests';
+        value: number | Test;
+      } | null)
+    | ({
+        relationTo: 'test-questions';
+        value: number | TestQuestion;
+      } | null)
+    | ({
+        relationTo: 'user-test-progress';
+        value: number | UserTestProgress;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -261,6 +327,7 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   role?: T;
   signupMethod?: T;
+  tariff?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -314,6 +381,54 @@ export interface TariffsSelect<T extends boolean = true> {
 export interface FaqsSelect<T extends boolean = true> {
   question?: T;
   answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tests_select".
+ */
+export interface TestsSelect<T extends boolean = true> {
+  title?: T;
+  instruction?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "test-questions_select".
+ */
+export interface TestQuestionsSelect<T extends boolean = true> {
+  test?: T;
+  errors?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  proposals?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "user-test-progress_select".
+ */
+export interface UserTestProgressSelect<T extends boolean = true> {
+  user?: T;
+  test?: T;
+  progress?: T;
+  completedQuestions?:
+    | T
+    | {
+        question?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
