@@ -5,18 +5,27 @@ import { AboutBanner } from './home-banners/about-banner'
 import { AskedQuestions } from '@/features/asked-questions'
 import { TestCardQuestions } from '@/widgets/test-card-questions'
 import { gql } from '@/shared/graphql/client'
+import { getSettledValue } from '@/shared/lib/utils'
 
 const Home = async () => {
-  const res = await gql.GetHomePage()
+  const [res, faqs, tarrifs] = await Promise.allSettled([
+    gql.GetHomePage(),
+    gql.GetFAGs(),
+    gql.GetTaraffis(),
+  ])
+
+  const resVal = getSettledValue(res)
+  const faqsVal = getSettledValue(faqs)
+  const tarrifsVal = getSettledValue(tarrifs)
 
   return (
     <>
-      <MainBanner content={res.HomePage.mainOfferBanner} />
-      <TariffList />
-      <AboutBanner content={res.HomePage.aboutProjectBanner} />
+      <MainBanner content={resVal?.HomePage.mainOfferBanner} />
+      <TariffList tarrifs={tarrifsVal?.Tariffs.docs} />
+      <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
       <TestCardQuestions />
-      <AskedQuestions />
-      <TestsBanner content={res.HomePage.diagnosticTestBanner} />
+      <AskedQuestions faqs={faqsVal?.Faqs.docs} />
+      <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
     </>
   )
 }
