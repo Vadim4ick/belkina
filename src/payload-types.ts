@@ -88,7 +88,7 @@ export interface Config {
   };
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'en' | 'ru';
   user: User & {
     collection: 'users';
   };
@@ -116,6 +116,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * User management
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */

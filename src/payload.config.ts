@@ -9,6 +9,8 @@ import sharp from 'sharp'
 import { Users } from './shared/collections/Users'
 import { Media } from './shared/collections/Media'
 import { Tariffs } from './shared/collections/Tariffs'
+import { en } from '@payloadcms/translations/languages/en'
+import { ru } from '@payloadcms/translations/languages/ru'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,6 +21,15 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+  },
+
+  i18n: {
+    fallbackLanguage: 'ru',
+    supportedLanguages: { en, ru },
+  },
+  localization: {
+    locales: ['en', 'ru'], // required
+    defaultLocale: 'ru', // required
   },
 
   collections: [Users, Media, Tariffs],

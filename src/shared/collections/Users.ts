@@ -4,6 +4,24 @@ export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
+    group: {
+      ru: 'Пользователи',
+      en: 'Users',
+    },
+    description: {
+      ru: 'Управление пользователями',
+      en: 'User management',
+    },
+  },
+  labels: {
+    singular: {
+      ru: 'Пользователь',
+      en: 'User',
+    },
+    plural: {
+      ru: 'Пользователи',
+      en: 'Users',
+    },
   },
   access: {
     // 🔐 Админка доступна только "admin"-ам

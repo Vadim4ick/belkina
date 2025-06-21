@@ -31,6 +31,15 @@ export type Access = {
   readonly users: Maybe<UsersAccess>;
 };
 
+export type FallbackLocaleInputType =
+  | 'en'
+  | 'none'
+  | 'ru';
+
+export type LocaleInputType =
+  | 'en'
+  | 'ru';
+
 export type Media = {
   readonly __typename?: 'Media';
   readonly alt: Scalars['String']['output'];
@@ -1024,30 +1033,35 @@ export type Mutation = {
 export type MutationCreateMediaArgs = {
   data: MutationMediaInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationCreatePayloadLockedDocumentArgs = {
   data: MutationPayloadLockedDocumentInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationCreatePayloadPreferenceArgs = {
   data: MutationPayloadPreferenceInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationCreateTariffArgs = {
   data: MutationTariffInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type MutationCreateUserArgs = {
   data: MutationUserInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1129,6 +1143,7 @@ export type MutationUpdateMediaArgs = {
   data: MutationMediaUpdateInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1137,6 +1152,7 @@ export type MutationUpdatePayloadLockedDocumentArgs = {
   data: MutationPayloadLockedDocumentUpdateInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1145,6 +1161,7 @@ export type MutationUpdatePayloadPreferenceArgs = {
   data: MutationPayloadPreferenceUpdateInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1153,6 +1170,7 @@ export type MutationUpdateTariffArgs = {
   data: MutationTariffUpdateInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1161,6 +1179,7 @@ export type MutationUpdateUserArgs = {
   data: MutationUserUpdateInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -1176,6 +1195,18 @@ export type PayloadLockedDocument = {
   readonly id: Scalars['Int']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
   readonly user: PayloadLockedDocument_User_Relationship;
+};
+
+
+export type PayloadLockedDocumentDocumentArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type PayloadLockedDocumentUserArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 export type PayloadLockedDocumentUpdate_DocumentRelationshipInput = {
@@ -1703,6 +1734,12 @@ export type PayloadPreference = {
   readonly value: Maybe<Scalars['JSON']['output']>;
 };
 
+
+export type PayloadPreferenceUserArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
 export type PayloadPreferenceUpdate_UserRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadPreferenceUpdate_UserRelationshipInputRelationTo>;
   readonly value: InputMaybe<Scalars['JSON']['input']>;
@@ -2215,19 +2252,25 @@ export type Query = {
 
 export type QueryMediaArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type QueryPayloadLockedDocumentArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type QueryPayloadLockedDocumentsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   page: InputMaybe<Scalars['Int']['input']>;
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
@@ -2237,13 +2280,17 @@ export type QueryPayloadLockedDocumentsArgs = {
 
 export type QueryPayloadPreferenceArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type QueryPayloadPreferencesArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   page: InputMaybe<Scalars['Int']['input']>;
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
@@ -2253,13 +2300,17 @@ export type QueryPayloadPreferencesArgs = {
 
 export type QueryTariffArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type QueryTariffsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   page: InputMaybe<Scalars['Int']['input']>;
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
@@ -2269,13 +2320,17 @@ export type QueryTariffsArgs = {
 
 export type QueryUserArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
 export type QueryUsersArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   page: InputMaybe<Scalars['Int']['input']>;
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
@@ -2285,7 +2340,9 @@ export type QueryUsersArgs = {
 
 export type QueryAllMediaArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   page: InputMaybe<Scalars['Int']['input']>;
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
@@ -2295,30 +2352,35 @@ export type QueryAllMediaArgs = {
 
 export type QueryCountPayloadLockedDocumentsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<PayloadLockedDocument_Where>;
 };
 
 
 export type QueryCountPayloadPreferencesArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<PayloadPreference_Where>;
 };
 
 
 export type QueryCountTariffsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<Tariff_Where>;
 };
 
 
 export type QueryCountUsersArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<User_Where>;
 };
 
 
 export type QueryCountallMediaArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<Media_Where>;
 };
 
@@ -3907,6 +3969,13 @@ export type UsersResetPassword = {
   readonly user: Maybe<User>;
 };
 
+export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
+
+export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTaraffisQuery = { readonly __typename?: 'Query', readonly Tariffs: { readonly __typename?: 'Tariffs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }> } };
+
 export type LoginUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -3932,7 +4001,28 @@ export type GetUserByEmailQueryVariables = Exact<{
 
 export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly role: User_Role, readonly signupMethod: User_SignupMethod }> } };
 
-
+export const TariffFragmentFragmentDoc = gql`
+    fragment TariffFragment on Tariff {
+  id
+  title
+  price
+  subtitle
+  description
+  benefits {
+    id
+    value
+  }
+}
+    `;
+export const GetTaraffisDocument = gql`
+    query GetTaraffis {
+  Tariffs {
+    docs {
+      ...TariffFragment
+    }
+  }
+}
+    ${TariffFragmentFragmentDoc}`;
 export const LoginUserDocument = gql`
     mutation LoginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
@@ -3973,6 +4063,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetTaraffis(variables?: GetTaraffisQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTaraffisQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTaraffisQuery>({ document: GetTaraffisDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTaraffis', 'query', variables);
+    },
     LoginUser(variables: LoginUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LoginUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<LoginUserMutation>({ document: LoginUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LoginUser', 'mutation', variables);
     },

@@ -6,6 +6,16 @@ export const Tariffs: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'price'],
   },
+  labels: {
+    singular: {
+      ru: 'Тариф',
+      en: 'Tariff',
+    },
+    plural: {
+      ru: 'Тарифы',
+      en: 'Tariffs',
+    },
+  },
   access: {
     create: async ({ req }) => {
       const { docs } = await req.payload.find({
@@ -14,8 +24,6 @@ export const Tariffs: CollectionConfig = {
       })
       return docs?.length < 3
     },
-    update: () => true,
-    delete: () => true,
     read: () => true,
   },
 

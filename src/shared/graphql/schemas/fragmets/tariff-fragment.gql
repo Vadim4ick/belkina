@@ -1,0 +1,11 @@
+fragment TariffFragment on Tariff {
+  id
+  title
+  price
+  subtitle
+  description
+  benefits {
+    id
+    value
+  }
+}

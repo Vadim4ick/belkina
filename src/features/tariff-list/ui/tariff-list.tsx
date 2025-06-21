@@ -1,9 +1,12 @@
-import { TariffCard, TARIFFS_LIST } from "@/entities/tariff";
-import { cn } from "@/shared/lib/utils";
-import { Container } from "@/shared/ui/container";
-import { Typography } from "@/shared/ui/typography";
+import { TariffCard } from '@/entities/tariff'
+import { gql } from '@/shared/graphql/client'
+import { cn } from '@/shared/lib/utils'
+import { Container } from '@/shared/ui/container'
+import { Typography } from '@/shared/ui/typography'
 
-const TariffList = ({ title = "Тарифы" }: { title?: string }) => {
+const TariffList = async ({ title = 'Тарифы' }: { title?: string }) => {
+  const tarrifs = await gql.GetTaraffis()
+
   return (
     <section className="max-mobile:py-6 py-12">
       <Container>
@@ -13,18 +16,14 @@ const TariffList = ({ title = "Тарифы" }: { title?: string }) => {
           </Typography>
 
           <div className="max-tablet:grid-cols-1 grid grid-cols-3 gap-6">
-            {TARIFFS_LIST.map((item, idx) => (
-              <TariffCard
-                key={idx}
-                item={item}
-                className={cn(idx === 1 && "border-blue border")}
-              />
+            {tarrifs.Tariffs.docs.map((item, idx) => (
+              <TariffCard key={idx} item={item} className={cn(idx === 1 && 'border-blue border')} />
             ))}
           </div>
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export { TariffList };
+export { TariffList }
