@@ -7,8 +7,10 @@ import Image from 'next/image'
 const AboutBanner = ({
   content,
 }: {
-  content: GetHomePageQuery['HomePage']['aboutProjectBanner']
+  content?: GetHomePageQuery['HomePage']['aboutProjectBanner']
 }) => {
+  if (!content) return null
+
   return (
     <section className="max-mobile:py-6 py-12">
       <Container>

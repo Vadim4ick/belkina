@@ -6,8 +6,9 @@ import { Typography } from '@/shared/ui/typography'
 const TestsBanner = ({
   content,
 }: {
-  content: GetHomePageQuery['HomePage']['diagnosticTestBanner']
+  content?: GetHomePageQuery['HomePage']['diagnosticTestBanner']
 }) => {
+  if (!content) return null
   return (
     <section className="bg-light-grey max-mobile:py-6 py-12">
       <Container className="relative flex items-center justify-center">

@@ -24,6 +24,7 @@ export type Scalars = {
 export type Access = {
   readonly __typename?: 'Access';
   readonly canAccessAdmin: Scalars['Boolean']['output'];
+  readonly faqs: Maybe<FaqsAccess>;
   readonly homePage: Maybe<HomePageAccess>;
   readonly media: Maybe<MediaAccess>;
   readonly payload_locked_documents: Maybe<Payload_Locked_DocumentsAccess>;
@@ -36,6 +37,397 @@ export type FallbackLocaleInputType =
   | 'en'
   | 'none'
   | 'ru';
+
+export type Faq = {
+  readonly __typename?: 'Faq';
+  readonly answer: Scalars['String']['output'];
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly question: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type Faq_Answer_Operator = {
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Faq_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Faq_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Faq_Question_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Faq_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Faq_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
+  readonly answer: InputMaybe<Faq_Answer_Operator>;
+  readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
+  readonly id: InputMaybe<Faq_Id_Operator>;
+  readonly question: InputMaybe<Faq_Question_Operator>;
+  readonly updatedAt: InputMaybe<Faq_UpdatedAt_Operator>;
+};
+
+export type Faq_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
+  readonly answer: InputMaybe<Faq_Answer_Operator>;
+  readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
+  readonly id: InputMaybe<Faq_Id_Operator>;
+  readonly question: InputMaybe<Faq_Question_Operator>;
+  readonly updatedAt: InputMaybe<Faq_UpdatedAt_Operator>;
+};
+
+export type Faq_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
+  readonly answer: InputMaybe<Faq_Answer_Operator>;
+  readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
+  readonly id: InputMaybe<Faq_Id_Operator>;
+  readonly question: InputMaybe<Faq_Question_Operator>;
+  readonly updatedAt: InputMaybe<Faq_UpdatedAt_Operator>;
+};
+
+export type Faqs = {
+  readonly __typename?: 'Faqs';
+  readonly docs: ReadonlyArray<Faq>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type FaqsCreateAccess = {
+  readonly __typename?: 'FaqsCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsCreateDocAccess = {
+  readonly __typename?: 'FaqsCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsDeleteAccess = {
+  readonly __typename?: 'FaqsDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsDeleteDocAccess = {
+  readonly __typename?: 'FaqsDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsDocAccessFields = {
+  readonly __typename?: 'FaqsDocAccessFields';
+  readonly answer: Maybe<FaqsDocAccessFields_Answer>;
+  readonly createdAt: Maybe<FaqsDocAccessFields_CreatedAt>;
+  readonly question: Maybe<FaqsDocAccessFields_Question>;
+  readonly updatedAt: Maybe<FaqsDocAccessFields_UpdatedAt>;
+};
+
+export type FaqsDocAccessFields_Answer = {
+  readonly __typename?: 'FaqsDocAccessFields_answer';
+  readonly create: Maybe<FaqsDocAccessFields_Answer_Create>;
+  readonly delete: Maybe<FaqsDocAccessFields_Answer_Delete>;
+  readonly read: Maybe<FaqsDocAccessFields_Answer_Read>;
+  readonly update: Maybe<FaqsDocAccessFields_Answer_Update>;
+};
+
+export type FaqsDocAccessFields_Answer_Create = {
+  readonly __typename?: 'FaqsDocAccessFields_answer_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Answer_Delete = {
+  readonly __typename?: 'FaqsDocAccessFields_answer_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Answer_Read = {
+  readonly __typename?: 'FaqsDocAccessFields_answer_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Answer_Update = {
+  readonly __typename?: 'FaqsDocAccessFields_answer_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_CreatedAt = {
+  readonly __typename?: 'FaqsDocAccessFields_createdAt';
+  readonly create: Maybe<FaqsDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<FaqsDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<FaqsDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<FaqsDocAccessFields_CreatedAt_Update>;
+};
+
+export type FaqsDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'FaqsDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'FaqsDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'FaqsDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'FaqsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Question = {
+  readonly __typename?: 'FaqsDocAccessFields_question';
+  readonly create: Maybe<FaqsDocAccessFields_Question_Create>;
+  readonly delete: Maybe<FaqsDocAccessFields_Question_Delete>;
+  readonly read: Maybe<FaqsDocAccessFields_Question_Read>;
+  readonly update: Maybe<FaqsDocAccessFields_Question_Update>;
+};
+
+export type FaqsDocAccessFields_Question_Create = {
+  readonly __typename?: 'FaqsDocAccessFields_question_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Question_Delete = {
+  readonly __typename?: 'FaqsDocAccessFields_question_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Question_Read = {
+  readonly __typename?: 'FaqsDocAccessFields_question_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_Question_Update = {
+  readonly __typename?: 'FaqsDocAccessFields_question_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'FaqsDocAccessFields_updatedAt';
+  readonly create: Maybe<FaqsDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<FaqsDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<FaqsDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<FaqsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type FaqsDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'FaqsDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'FaqsDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'FaqsDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'FaqsDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields = {
+  readonly __typename?: 'FaqsFields';
+  readonly answer: Maybe<FaqsFields_Answer>;
+  readonly createdAt: Maybe<FaqsFields_CreatedAt>;
+  readonly question: Maybe<FaqsFields_Question>;
+  readonly updatedAt: Maybe<FaqsFields_UpdatedAt>;
+};
+
+export type FaqsFields_Answer = {
+  readonly __typename?: 'FaqsFields_answer';
+  readonly create: Maybe<FaqsFields_Answer_Create>;
+  readonly delete: Maybe<FaqsFields_Answer_Delete>;
+  readonly read: Maybe<FaqsFields_Answer_Read>;
+  readonly update: Maybe<FaqsFields_Answer_Update>;
+};
+
+export type FaqsFields_Answer_Create = {
+  readonly __typename?: 'FaqsFields_answer_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Answer_Delete = {
+  readonly __typename?: 'FaqsFields_answer_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Answer_Read = {
+  readonly __typename?: 'FaqsFields_answer_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Answer_Update = {
+  readonly __typename?: 'FaqsFields_answer_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_CreatedAt = {
+  readonly __typename?: 'FaqsFields_createdAt';
+  readonly create: Maybe<FaqsFields_CreatedAt_Create>;
+  readonly delete: Maybe<FaqsFields_CreatedAt_Delete>;
+  readonly read: Maybe<FaqsFields_CreatedAt_Read>;
+  readonly update: Maybe<FaqsFields_CreatedAt_Update>;
+};
+
+export type FaqsFields_CreatedAt_Create = {
+  readonly __typename?: 'FaqsFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_CreatedAt_Delete = {
+  readonly __typename?: 'FaqsFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_CreatedAt_Read = {
+  readonly __typename?: 'FaqsFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_CreatedAt_Update = {
+  readonly __typename?: 'FaqsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Question = {
+  readonly __typename?: 'FaqsFields_question';
+  readonly create: Maybe<FaqsFields_Question_Create>;
+  readonly delete: Maybe<FaqsFields_Question_Delete>;
+  readonly read: Maybe<FaqsFields_Question_Read>;
+  readonly update: Maybe<FaqsFields_Question_Update>;
+};
+
+export type FaqsFields_Question_Create = {
+  readonly __typename?: 'FaqsFields_question_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Question_Delete = {
+  readonly __typename?: 'FaqsFields_question_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Question_Read = {
+  readonly __typename?: 'FaqsFields_question_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_Question_Update = {
+  readonly __typename?: 'FaqsFields_question_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_UpdatedAt = {
+  readonly __typename?: 'FaqsFields_updatedAt';
+  readonly create: Maybe<FaqsFields_UpdatedAt_Create>;
+  readonly delete: Maybe<FaqsFields_UpdatedAt_Delete>;
+  readonly read: Maybe<FaqsFields_UpdatedAt_Read>;
+  readonly update: Maybe<FaqsFields_UpdatedAt_Update>;
+};
+
+export type FaqsFields_UpdatedAt_Create = {
+  readonly __typename?: 'FaqsFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_UpdatedAt_Delete = {
+  readonly __typename?: 'FaqsFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_UpdatedAt_Read = {
+  readonly __typename?: 'FaqsFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsFields_UpdatedAt_Update = {
+  readonly __typename?: 'FaqsFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type FaqsReadAccess = {
+  readonly __typename?: 'FaqsReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsReadDocAccess = {
+  readonly __typename?: 'FaqsReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsUpdateAccess = {
+  readonly __typename?: 'FaqsUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type FaqsUpdateDocAccess = {
+  readonly __typename?: 'FaqsUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
 
 export type HomePage = {
   readonly __typename?: 'HomePage';
@@ -2097,16 +2489,19 @@ export type Media_Width_Operator = {
 
 export type Mutation = {
   readonly __typename?: 'Mutation';
+  readonly createFaq: Maybe<Faq>;
   readonly createMedia: Maybe<Media>;
   readonly createPayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly createPayloadPreference: Maybe<PayloadPreference>;
   readonly createTariff: Maybe<Tariff>;
   readonly createUser: Maybe<User>;
+  readonly deleteFaq: Maybe<Faq>;
   readonly deleteMedia: Maybe<Media>;
   readonly deletePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly deletePayloadPreference: Maybe<PayloadPreference>;
   readonly deleteTariff: Maybe<Tariff>;
   readonly deleteUser: Maybe<User>;
+  readonly duplicateFaq: Maybe<Faq>;
   readonly duplicateMedia: Maybe<Media>;
   readonly duplicatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly duplicatePayloadPreference: Maybe<PayloadPreference>;
@@ -2117,6 +2512,7 @@ export type Mutation = {
   readonly refreshTokenUser: Maybe<UsersRefreshedUser>;
   readonly resetPasswordUser: Maybe<UsersResetPassword>;
   readonly unlockUser: Scalars['Boolean']['output'];
+  readonly updateFaq: Maybe<Faq>;
   readonly updateHomePage: Maybe<HomePage>;
   readonly updateMedia: Maybe<Media>;
   readonly updatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
@@ -2124,6 +2520,13 @@ export type Mutation = {
   readonly updateTariff: Maybe<Tariff>;
   readonly updateUser: Maybe<User>;
   readonly verifyEmailUser: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+export type MutationCreateFaqArgs = {
+  data: MutationFaqInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -2162,6 +2565,11 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationDeleteFaqArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDeleteMediaArgs = {
   id: Scalars['Int']['input'];
 };
@@ -2183,6 +2591,12 @@ export type MutationDeleteTariffArgs = {
 
 
 export type MutationDeleteUserArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateFaqArgs = {
+  data: MutationFaqInput;
   id: Scalars['Int']['input'];
 };
 
@@ -2232,6 +2646,15 @@ export type MutationResetPasswordUserArgs = {
 
 export type MutationUnlockUserArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateFaqArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationFaqUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -2319,6 +2742,7 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInput = {
 };
 
 export type PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo =
+  | 'faqs'
   | 'media'
   | 'tariffs'
   | 'users';
@@ -2331,7 +2755,7 @@ export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
 export type PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo =
   | 'users';
 
-export type PayloadLockedDocument_Document = Media | Tariff | User;
+export type PayloadLockedDocument_Document = Faq | Media | Tariff | User;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -2339,11 +2763,13 @@ export type PayloadLockedDocument_DocumentRelationshipInput = {
 };
 
 export type PayloadLockedDocument_DocumentRelationshipInputRelationTo =
+  | 'faqs'
   | 'media'
   | 'tariffs'
   | 'users';
 
 export type PayloadLockedDocument_Document_RelationTo =
+  | 'faqs'
   | 'media'
   | 'tariffs'
   | 'users';
@@ -2390,6 +2816,7 @@ export type PayloadLockedDocument_Document_Relation = {
 };
 
 export type PayloadLockedDocument_Document_Relation_RelationTo =
+  | 'faqs'
   | 'media'
   | 'tariffs'
   | 'users';
@@ -3329,6 +3756,8 @@ export type PayloadPreferencesUpdateDocAccess = {
 export type Query = {
   readonly __typename?: 'Query';
   readonly Access: Maybe<Access>;
+  readonly Faq: Maybe<Faq>;
+  readonly Faqs: Maybe<Faqs>;
   readonly HomePage: Maybe<HomePage>;
   readonly Media: Maybe<Media>;
   readonly PayloadLockedDocument: Maybe<PayloadLockedDocument>;
@@ -3340,11 +3769,13 @@ export type Query = {
   readonly User: Maybe<User>;
   readonly Users: Maybe<Users>;
   readonly allMedia: Maybe<AllMedia>;
+  readonly countFaqs: Maybe<CountFaqs>;
   readonly countPayloadLockedDocuments: Maybe<CountPayloadLockedDocuments>;
   readonly countPayloadPreferences: Maybe<CountPayloadPreferences>;
   readonly countTariffs: Maybe<CountTariffs>;
   readonly countUsers: Maybe<CountUsers>;
   readonly countallMedia: Maybe<CountallMedia>;
+  readonly docAccessFaq: Maybe<FaqsDocAccess>;
   readonly docAccessHomePage: Maybe<HomePageDocAccess>;
   readonly docAccessMedia: Maybe<MediaDocAccess>;
   readonly docAccessPayloadLockedDocument: Maybe<Payload_Locked_DocumentsDocAccess>;
@@ -3353,6 +3784,26 @@ export type Query = {
   readonly docAccessUser: Maybe<UsersDocAccess>;
   readonly initializedUser: Maybe<Scalars['Boolean']['output']>;
   readonly meUser: Maybe<UsersMe>;
+};
+
+
+export type QueryFaqArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryFaqsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<Faq_Where>;
 };
 
 
@@ -3463,6 +3914,13 @@ export type QueryAllMediaArgs = {
 };
 
 
+export type QueryCountFaqsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<Faq_Where>;
+};
+
+
 export type QueryCountPayloadLockedDocumentsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
@@ -3495,6 +3953,11 @@ export type QueryCountallMediaArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<Media_Where>;
+};
+
+
+export type QueryDocAccessFaqArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -4805,6 +5268,11 @@ export type AllMedia = {
   readonly totalPages: Scalars['Int']['output'];
 };
 
+export type CountFaqs = {
+  readonly __typename?: 'countFaqs';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountPayloadLockedDocuments = {
   readonly __typename?: 'countPayloadLockedDocuments';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
@@ -4828,6 +5296,24 @@ export type CountUsers = {
 export type CountallMedia = {
   readonly __typename?: 'countallMedia';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
+export type FaqsAccess = {
+  readonly __typename?: 'faqsAccess';
+  readonly create: Maybe<FaqsCreateAccess>;
+  readonly delete: Maybe<FaqsDeleteAccess>;
+  readonly fields: Maybe<FaqsFields>;
+  readonly read: Maybe<FaqsReadAccess>;
+  readonly update: Maybe<FaqsUpdateAccess>;
+};
+
+export type FaqsDocAccess = {
+  readonly __typename?: 'faqsDocAccess';
+  readonly create: Maybe<FaqsCreateDocAccess>;
+  readonly delete: Maybe<FaqsDeleteDocAccess>;
+  readonly fields: Maybe<FaqsDocAccessFields>;
+  readonly read: Maybe<FaqsReadDocAccess>;
+  readonly update: Maybe<FaqsUpdateDocAccess>;
 };
 
 export type HomePageAccess = {
@@ -4860,6 +5346,20 @@ export type MediaDocAccess = {
   readonly fields: Maybe<MediaDocAccessFields>;
   readonly read: Maybe<MediaReadDocAccess>;
   readonly update: Maybe<MediaUpdateDocAccess>;
+};
+
+export type MutationFaqInput = {
+  readonly answer: Scalars['String']['input'];
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly question: Scalars['String']['input'];
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationFaqUpdateInput = {
+  readonly answer: InputMaybe<Scalars['String']['input']>;
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly question: InputMaybe<Scalars['String']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationHomePageInput = {
@@ -5126,6 +5626,11 @@ export type UsersResetPassword = {
   readonly user: Maybe<User>;
 };
 
+export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFaGsQuery = { readonly __typename?: 'Query', readonly Faqs: { readonly __typename?: 'Faqs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Faq', readonly id: number, readonly question: string, readonly answer: string }> } };
+
 export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
@@ -5173,6 +5678,17 @@ export const TariffFragmentFragmentDoc = gql`
   benefits {
     id
     value
+  }
+}
+    `;
+export const GetFaGsDocument = gql`
+    query GetFAGs {
+  Faqs {
+    docs {
+      id
+      question
+      answer
+    }
   }
 }
     `;
@@ -5250,6 +5766,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetFAGs(variables?: GetFaGsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFaGsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetFaGsQuery>({ document: GetFaGsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFAGs', 'query', variables);
+    },
     GetHomePage(variables?: GetHomePageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetHomePageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHomePageQuery>({ document: GetHomePageDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetHomePage', 'query', variables);
     },

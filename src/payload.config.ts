@@ -8,6 +8,7 @@ import sharp from 'sharp'
 
 import { Users } from './shared/collections/Users'
 import { Media } from './shared/collections/Media'
+import { FAQs } from './shared/collections/FAQs'
 import { HomePage } from './shared/collections/page/HomePage'
 import { Tariffs } from './shared/collections/Tariffs'
 import { en } from '@payloadcms/translations/languages/en'
@@ -33,7 +34,7 @@ export default buildConfig({
     defaultLocale: 'ru', // required
   },
 
-  collections: [Users, Media, Tariffs],
+  collections: [Users, Media, Tariffs, FAQs],
   globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

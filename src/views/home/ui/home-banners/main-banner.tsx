@@ -3,7 +3,9 @@ import { GetHomePageQuery } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 
-const MainBanner = ({ content }: { content: GetHomePageQuery['HomePage']['mainOfferBanner'] }) => {
+const MainBanner = ({ content }: { content?: GetHomePageQuery['HomePage']['mainOfferBanner'] }) => {
+  if (!content) return null
+
   return (
     <section className="bg-light-grey max-tablet:h-full max-mobile:pb-6 max-mobile:pt-[calc(var(--header-height)_+_24px)] h-[calc(100vh_-_var(--header-height))]">
       <Container className="flex items-center justify-center">
@@ -11,7 +13,7 @@ const MainBanner = ({ content }: { content: GetHomePageQuery['HomePage']['mainOf
           <div className="max-tablet:max-w-full flex w-full max-w-[485px] flex-col gap-[24px]">
             <div className="bg-green flex w-fit items-center gap-[10px] rounded-[12px] px-4 py-3">
               <Typography className="uppercase" tag="p" variant="poppins-md-16">
-                {content.label}
+                {content?.label}
               </Typography>
             </div>
 
@@ -20,15 +22,15 @@ const MainBanner = ({ content }: { content: GetHomePageQuery['HomePage']['mainOf
               tag="h1"
               variant="visuelt-bold-48"
             >
-              {content.title}
+              {content?.title}
             </Typography>
 
             <Typography className="text-white" tag="p" variant="poppins-md-16">
-              {content.description}
+              {content?.description}
             </Typography>
 
             <div className="max-mobile:p-4 flex flex-col gap-4 rounded-[12px] bg-[#0033B9] px-6 py-4">
-              {content.options.map((option) => (
+              {content?.options.map((option) => (
                 <div key={option.id} className="flex items-center gap-4">
                   <div className="flex h-[36px] w-full max-w-[50px] items-center justify-center rounded-[120px] bg-black">
                     🔥
