@@ -65,5 +65,24 @@ export const Users: CollectionConfig = {
         update: ({ req: { user } }) => user?.role === 'admin',
       },
     },
+
+    {
+      name: 'tariff',
+      label: 'Тариф',
+      type: 'relationship',
+      relationTo: 'tariffs',
+      required: true,
+      defaultValue: async ({ req }) => {
+        const { docs } = await req.payload.find({
+          collection: 'tariffs',
+          limit: 1,
+          sort: 'createdAt',
+        })
+        return docs[0]?.id // первый созданный тариф по умолчанию
+      },
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
 }
