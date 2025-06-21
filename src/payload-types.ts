@@ -120,6 +120,7 @@ export interface UserAuthOperations {
 export interface User {
   id: number;
   role: 'admin' | 'editor' | 'user';
+  signupMethod: 'email' | 'yandex';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -213,6 +214,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   role?: T;
+  signupMethod?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
