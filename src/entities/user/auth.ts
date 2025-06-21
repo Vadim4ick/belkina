@@ -2,7 +2,7 @@
 import NextAuth, { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Yandex from 'next-auth/providers/yandex'
-import { createUser, emailExists, loginUser } from '@/shared/graphql/user'
+import { gql } from '@/shared/graphql/client'
 
 export const authOptions: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -19,16 +19,19 @@ export const authOptions: NextAuthConfig = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null
 
-        const user = await emailExists(credentials.email as string)
+        const user = await gql.GetUserByEmail({ email: credentials.email })
 
-        if (!user) return null
+        if (user.Users.totalDocs <= 0) return null
 
         // 2) Просим Payload проверить пароль
-        const ok = await loginUser(credentials.email as string, credentials.password as string)
+        const loginUser = await gql.LoginUser({
+          email: credentials.email as string,
+          password: credentials.password as string,
+        })
 
-        if (!ok) return null
+        if (!loginUser.loginUser.user) return null
 
-        return { id: ok.id, email: ok.email }
+        return { id: loginUser.loginUser.user.id, email: loginUser.loginUser.user.email }
       },
     }),
 
@@ -42,10 +45,14 @@ export const authOptions: NextAuthConfig = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === 'yandex') {
-        const exists = await emailExists(user.email!)
-
-        if (!exists) {
-          await createUser(user.email!, Math.random().toString(36).slice(-10), 'user', 'yandex')
+        const exists = await gql.GetUserByEmail({ email: user.email })
+        if (exists.Users.totalDocs <= 0) {
+          await gql.CreateUser({
+            email: user.email!,
+            password: Math.random().toString(36).slice(-10),
+            role: 'user',
+            signupMethod: 'yandex',
+          })
         }
       }
       return true
