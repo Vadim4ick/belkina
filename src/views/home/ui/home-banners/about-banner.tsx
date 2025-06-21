@@ -1,9 +1,14 @@
-import { Button } from "@/shared/ui/button";
-import { Container } from "@/shared/ui/container";
-import { Typography } from "@/shared/ui/typography";
-import Image from "next/image";
+import { GetHomePageQuery } from '@/shared/graphql/__generated__'
+import { Button } from '@/shared/ui/button'
+import { Container } from '@/shared/ui/container'
+import { Typography } from '@/shared/ui/typography'
+import Image from 'next/image'
 
-const AboutBanner = () => {
+const AboutBanner = ({
+  content,
+}: {
+  content: GetHomePageQuery['HomePage']['aboutProjectBanner']
+}) => {
   return (
     <section className="max-mobile:py-6 py-12">
       <Container>
@@ -21,12 +26,11 @@ const AboutBanner = () => {
             <div className="flex flex-col gap-12">
               <div className="flex flex-col gap-6">
                 <Typography tag="h2" variant="visuelt-bold-48">
-                  О проекте
+                  {content.title}
                 </Typography>
 
                 <Typography tag="p" variant="poppins-md-16">
-                  Наш проект помогает подготовиться к ЕГЭ по русскому языку,
-                  чтобы сдать на 90+ баллов без лишнего напряжения
+                  {content.subtitle}
                 </Typography>
               </div>
 
@@ -35,20 +39,16 @@ const AboutBanner = () => {
                 className="text-dark-grey rounded-[16px] bg-white p-6"
                 variant="poppins-md-16"
               >
-                Белкина — опытный преподаватель русского языка,
-                специализирующийся на подготовке к ЕГЭ. Она помогает ученикам
-                достигать высоких баллов (90+), делая акцент на эффективных
-                методиках без лишнего стресса. Её уроки включают разбор сложных
-                тем, практические задания и индивидуальный подход
+                {content.description}
               </Typography>
             </div>
 
-            <Button size={"xl"}>Пройти тест</Button>
+            <Button size={'xl'}>Пройти тест</Button>
           </div>
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export { AboutBanner };
+export { AboutBanner }

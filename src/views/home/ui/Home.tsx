@@ -4,16 +4,19 @@ import { TestsBanner } from './home-banners/tests-banner'
 import { AboutBanner } from './home-banners/about-banner'
 import { AskedQuestions } from '@/features/asked-questions'
 import { TestCardQuestions } from '@/widgets/test-card-questions'
+import { gql } from '@/shared/graphql/client'
 
-const Home = () => {
+const Home = async () => {
+  const res = await gql.GetHomePage()
+
   return (
     <>
-      <MainBanner />
+      <MainBanner content={res.HomePage.mainOfferBanner} />
       <TariffList />
-      <AboutBanner />
+      <AboutBanner content={res.HomePage.aboutProjectBanner} />
       <TestCardQuestions />
       <AskedQuestions />
-      <TestsBanner />
+      <TestsBanner content={res.HomePage.diagnosticTestBanner} />
     </>
   )
 }

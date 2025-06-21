@@ -1,8 +1,13 @@
-import { FeedbackForm } from "@/features/feedback-form";
-import { Container } from "@/shared/ui/container";
-import { Typography } from "@/shared/ui/typography";
+import { FeedbackForm } from '@/features/feedback-form'
+import { GetHomePageQuery } from '@/shared/graphql/__generated__'
+import { Container } from '@/shared/ui/container'
+import { Typography } from '@/shared/ui/typography'
 
-const TestsBanner = () => {
+const TestsBanner = ({
+  content,
+}: {
+  content: GetHomePageQuery['HomePage']['diagnosticTestBanner']
+}) => {
   return (
     <section className="bg-light-grey max-mobile:py-6 py-12">
       <Container className="relative flex items-center justify-center">
@@ -15,25 +20,17 @@ const TestsBanner = () => {
                   tag="h1"
                   variant="visuelt-bold-48"
                 >
-                  Тест ОГЭ/ЕГЭ и план подготовки по слабым темам!
+                  {content.title}
                 </Typography>
 
-                <Typography
-                  className="text-white"
-                  tag="p"
-                  variant="poppins-md-16"
-                >
-                  Оставьте заявку сейчас
+                <Typography className="text-white" tag="p" variant="poppins-md-16">
+                  {content.subtitle}
                 </Typography>
               </div>
 
               <div className="bg-green w-fit rounded-[12px] px-4 py-3">
-                <Typography
-                  className="uppercase"
-                  tag="p"
-                  variant="poppins-md-16"
-                >
-                  плати только за нужные темы
+                <Typography className="uppercase" tag="p" variant="poppins-md-16">
+                  {content.label}
                 </Typography>
               </div>
             </div>
@@ -41,21 +38,21 @@ const TestsBanner = () => {
             <FeedbackForm className="max-tablet:items-start max-tablet:justify-start max-mobile:items-center z-10" />
 
             <img
-              src={"/img/teacher.png"}
+              src={'/img/teacher.png'}
               className="max-mobile:block z-10 -mb-[24px] hidden max-h-[350px]"
             />
           </div>
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute right-[20px] w-[1500px] px-4">
-            <img src={"/img/bannerLine.png"} />
+            <img src={'/img/bannerLine.png'} />
           </div>
           <img
-            src={"/img/teacher.png"}
+            src={'/img/teacher.png'}
             className="max-tablet:right-0 tablet:left-1/2 tablet:-translate-x-1/2 max-mobile:hidden absolute bottom-0 max-[1200px]:max-h-[450px]"
           />
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export { TestsBanner };
+export { TestsBanner }

@@ -86,8 +86,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    homePage: HomePage;
+  };
+  globalsSelect: {
+    homePage: HomePageSelect<false> | HomePageSelect<true>;
+  };
   locale: 'en' | 'ru';
   user: User & {
     collection: 'users';
@@ -163,8 +167,8 @@ export interface Tariff {
   id: number;
   title: string;
   price: number;
-  subtitle?: string | null;
-  description?: string | null;
+  subtitle: string;
+  description: string;
   benefits: {
     value: string;
     id?: string | null;
@@ -317,6 +321,70 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage".
+ */
+export interface HomePage {
+  id: number;
+  mainOfferBanner: {
+    title: string;
+    description: string;
+    label: string;
+    options: {
+      text?: string | null;
+      id?: string | null;
+    }[];
+  };
+  aboutProjectBanner: {
+    title: string;
+    subtitle: string;
+    description: string;
+  };
+  diagnosticTestBanner: {
+    title: string;
+    subtitle: string;
+    label: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homePage_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  mainOfferBanner?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        label?: T;
+        options?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  aboutProjectBanner?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        description?: T;
+      };
+  diagnosticTestBanner?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        label?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

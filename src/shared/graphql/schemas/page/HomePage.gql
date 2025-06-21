@@ -1,0 +1,25 @@
+query GetHomePage {
+  HomePage {
+    mainOfferBanner {
+      title
+      description
+      label
+      options {
+        text
+        id
+      }
+    }
+
+    aboutProjectBanner {
+      title
+      subtitle
+      description
+    }
+
+    diagnosticTestBanner {
+      title
+      subtitle
+      label
+    }
+  }
+}

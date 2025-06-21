@@ -16,6 +16,7 @@ export const Tariffs: CollectionConfig = {
       en: 'Tariffs',
     },
   },
+
   access: {
     create: async ({ req }) => {
       const { docs } = await req.payload.find({
@@ -51,10 +52,12 @@ export const Tariffs: CollectionConfig = {
     },
     {
       name: 'subtitle',
+      required: true,
       type: 'text',
     },
     {
       name: 'description',
+      required: true,
       type: 'textarea',
     },
     {
