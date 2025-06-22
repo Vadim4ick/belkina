@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link'
 import {
   Sheet,
   SheetClose,
@@ -7,23 +7,24 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/shared/ui/sheet";
-import { Button, ButtonProps } from "@/shared/ui/button";
-import { IHeaderItems } from "..";
-import { MenuIcon } from "@/shared/icons/menu-icon";
-import { XIcon } from "@/shared/icons/x-icon";
-import { UserProfile } from "./user-profile";
-import { Logo } from "@/shared/ui/logo";
-import { cn } from "@/shared/lib/utils";
+} from '@/shared/ui/sheet'
+import { Button, ButtonProps } from '@/shared/ui/button'
+import { IHeaderItems } from '..'
+import { MenuIcon } from '@/shared/icons/menu-icon'
+import { XIcon } from '@/shared/icons/x-icon'
+import { UserProfile } from './user-profile'
+import { Logo } from '@/shared/ui/logo'
+import { cn } from '@/shared/lib/utils'
+import { memo } from 'react'
 
 interface MobileNavProps extends ButtonProps {
-  headerItems: IHeaderItems[];
+  headerItems: IHeaderItems[]
 }
 
-function MobileNav({ headerItems, className }: MobileNavProps) {
+const MobileNav = memo(({ headerItems, className }: MobileNavProps) => {
   return (
     <Sheet>
-      <SheetTrigger className={cn("", className)} asChild>
+      <SheetTrigger className={cn('', className)} asChild>
         <Button
           variant="ghost"
           className="border-dark-grey fixed top-4 left-4 z-50 w-full justify-between border px-3 py-4"
@@ -55,6 +56,7 @@ function MobileNav({ headerItems, className }: MobileNavProps) {
         </ul>
       </SheetContent>
     </Sheet>
-  );
-}
-export { MobileNav };
+  )
+})
+
+export { MobileNav }

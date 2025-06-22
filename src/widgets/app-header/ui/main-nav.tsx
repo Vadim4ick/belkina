@@ -1,47 +1,49 @@
-import Link from "next/link";
-import { IHeaderItems } from "..";
-import { usePathname } from "next/navigation";
-import { Logo } from "@/shared/ui/logo";
-import { UserProfile } from "./user-profile";
-import { Typography } from "@/shared/ui/typography";
-import { Container } from "@/shared/ui/container";
-import { cn } from "@/shared/lib/utils";
-import { useEffect, useState } from "react";
+'use client'
+
+import Link from 'next/link'
+import { IHeaderItems } from '..'
+import { usePathname } from 'next/navigation'
+import { Logo } from '@/shared/ui/logo'
+import { UserProfile } from './user-profile'
+import { Typography } from '@/shared/ui/typography'
+import { Container } from '@/shared/ui/container'
+import { cn } from '@/shared/lib/utils'
+import { memo, useEffect, useState } from 'react'
 
 interface MainNavProps {
-  headerItems: IHeaderItems[];
-  className?: string;
+  headerItems: IHeaderItems[]
+  className?: string
 }
 
-function MainNav({ headerItems, className }: MainNavProps) {
-  const pathname = usePathname();
+const MainNav = memo(({ headerItems, className }: MainNavProps) => {
+  const pathname = usePathname()
 
-  const [visible, setVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [visible, setVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY
 
       if (currentScrollY > lastScrollY && currentScrollY > 65) {
-        setVisible(false);
+        setVisible(false)
       } else {
-        setVisible(true);
+        setVisible(true)
       }
 
-      setLastScrollY(currentScrollY);
-    };
+      setLastScrollY(currentScrollY)
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll)
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   return (
     <header
       className={cn(
-        "bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur transition-transform duration-300",
-        !visible && "-translate-y-full",
+        'bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 z-50 flex h-[65px] w-full items-center border-b backdrop-blur transition-transform duration-300',
+        !visible && '-translate-y-full',
         className,
       )}
     >
@@ -56,7 +58,7 @@ function MainNav({ headerItems, className }: MainNavProps) {
                 key={idx}
                 className={cn(
                   `hover:text-blue-hover font-medium transition-colors`,
-                  pathname === item.url ? "text-blue" : "text-dark-grey",
+                  pathname === item.url ? 'text-blue' : 'text-dark-grey',
                 )}
                 href={item.url}
               >
@@ -73,7 +75,7 @@ function MainNav({ headerItems, className }: MainNavProps) {
         </div>
       </Container>
     </header>
-  );
-}
+  )
+})
 
-export { MainNav };
+export { MainNav }

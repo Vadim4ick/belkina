@@ -19,8 +19,9 @@ import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { getRouteAuth } from '@/shared/lib/routes'
 import { Skeleton } from '@/shared/ui/skeleton'
+import { memo } from 'react'
 
-export function UserProfile() {
+export const UserProfile = memo(() => {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -80,4 +81,4 @@ export function UserProfile() {
       </DropdownMenu>
     </>
   )
-}
+})

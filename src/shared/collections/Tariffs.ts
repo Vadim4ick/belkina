@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload'
-import { JwtService } from '../services/jwt-service'
 
 export const Tariffs: CollectionConfig = {
   slug: 'tariffs',
@@ -26,24 +25,25 @@ export const Tariffs: CollectionConfig = {
       })
       return docs?.length < 3
     },
-    read: async ({ req }) => {
-      const authHeader = req.headers.get('authorization')
-      const token = authHeader?.replace(/^Bearer\s/, '')
+    // read: async ({ req }) => {
+    //   const authHeader = req.headers.get('authorization')
+    //   const token = authHeader?.replace(/^Bearer\s/, '')
 
-      if (!token) {
-        console.warn('🚫 Нет токена — доступ по умолчанию запрещён')
-        return false
-      }
+    //   if (!token) {
+    //     console.warn('🚫 Нет токена — доступ по умолчанию запрещён')
+    //     return false
+    //   }
 
-      try {
-        const decoded = await JwtService.verifyToken(token)
-        console.log('✅ Токен валиден:', decoded)
-        return true
-      } catch (err) {
-        console.warn('⚠️ Токен невалиден:', (err as Error)?.message)
-        return false // ← не бросаем исключение, просто отказываем
-      }
-    },
+    //   try {
+    //     const decoded = await JwtService.verifyToken(token)
+    //     console.log('✅ Токен валиден:', decoded)
+    //     return true
+    //   } catch (err) {
+    //     console.warn('⚠️ Токен невалиден:', (err as Error)?.message)
+    //     return false // ← не бросаем исключение, просто отказываем
+    //   }
+    // },
+    read: () => true,
   },
 
   fields: [
