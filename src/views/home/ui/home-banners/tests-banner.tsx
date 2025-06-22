@@ -40,14 +40,16 @@ const TestsBanner = ({
 
             <img
               src={'/img/teacher.png'}
+              alt="teacher"
               className="max-mobile:block z-10 -mb-[24px] hidden max-h-[350px]"
             />
           </div>
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute right-[20px] w-[1500px] px-4">
-            <img src={'/img/bannerLine.png'} />
+            <img alt="line" src={'/img/bannerLine.png'} />
           </div>
           <img
             src={'/img/teacher.png'}
+            alt="teacher"
             className="max-tablet:right-0 tablet:left-1/2 tablet:-translate-x-1/2 max-mobile:hidden absolute bottom-0 max-[1200px]:max-h-[450px]"
           />
         </div>

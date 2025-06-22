@@ -69,7 +69,7 @@ const MainNav = memo(({ headerItems, className }: MainNavProps) => {
             ))}
           </div>
 
-          <div className="flex items-center justify-end space-x-3">
+          <div>
             <UserProfile />
           </div>
         </div>

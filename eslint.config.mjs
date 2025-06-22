@@ -17,6 +17,7 @@ const eslintConfig = [
       '@typescript-eslint/no-empty-object-type': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
       'react/display-name': 'off',
+      '@next/next/no-img-element': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {

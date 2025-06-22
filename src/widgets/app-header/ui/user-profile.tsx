@@ -20,8 +20,13 @@ import { useRouter } from 'next/navigation'
 import { getRouteAuth } from '@/shared/lib/routes'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { memo } from 'react'
+import { cn } from '@/shared/lib/utils'
 
-export const UserProfile = memo(() => {
+interface UserProfileProps {
+  className?: string
+}
+
+export const UserProfile = memo(({ className }: UserProfileProps) => {
   const { data: session, status } = useSession()
   const router = useRouter()
 
@@ -38,7 +43,7 @@ export const UserProfile = memo(() => {
   }
 
   return (
-    <>
+    <div className={cn('flex items-center justify-end gap-4', className)}>
       <Typography variant="poppins-md-16">{session.user && session.user?.name}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -79,6 +84,6 @@ export const UserProfile = memo(() => {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   )
 })

@@ -1,18 +1,27 @@
-import { AppHeader } from "@/widgets/app-header";
-import { AppSidebar } from "@/widgets/app-sidebar";
+'use client'
 
-export default async function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { Container } from '@/shared/ui/container'
+import { SidebarInset, SidebarProvider } from '@/shared/ui/sidebar'
+import { AppSidebar } from '@/widgets/app-sidebar'
+import { SiteBarHeader } from '@/widgets/app-sidebar/_ui/site-bar-header'
+
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <AppHeader route="PUBLIC" />
-      <div className="flex h-full pt-16">
-        <AppSidebar />
-        <main className="h-full w-full flex-1">{children}</main>
-      </div>
-    </>
-  );
+    <SidebarProvider
+      style={
+        {
+          '--sidebar-width': 'calc(var(--spacing) * 72)',
+          '--header-height': 'calc(var(--spacing) * 14)',
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteBarHeader />
+        <div className="flex flex-1 flex-col">
+          <Container>{children}</Container>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }

@@ -40,6 +40,7 @@ export const AppHeader = memo(({ route }: AppHeaderProps) => {
   return (
     <>
       <MainNav headerItems={headerItems} className="z-[1000] hidden md:flex" />
+
       {route !== 'PRIVATE' && (
         <MobileNav headerItems={headerItems} className="z-[1000] flex !w-fit md:hidden" />
       )}
