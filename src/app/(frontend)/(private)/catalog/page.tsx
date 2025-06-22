@@ -1,7 +1,7 @@
+import { CatalogPage } from '@/views/catalog'
+
 function Catalog() {
-  return (
-    <div className="flex items-center justify-center">Страница каталога</div>
-  );
+  return <CatalogPage />
 }
 
-export default Catalog;
+export default Catalog

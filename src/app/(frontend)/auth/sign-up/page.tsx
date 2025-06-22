@@ -49,8 +49,8 @@ export default function RegisterPage() {
 
       // redirect вручную, чтобы Next 13 не руга­лся на «wrapped fetch»
       window.location.assign(getRouteHome())
-    } catch (e: any) {
-      setError(e.message ?? 'Неизвестная ошибка')
+    } catch (e) {
+      setError((e as Error).message ?? 'Неизвестная ошибка')
     } finally {
       setPending(false)
     }
@@ -66,8 +66,8 @@ export default function RegisterPage() {
       code={code}
       onPasswordChange={setPassword}
       onSubmit={register}
-      pending={false}
-      error=""
+      pending={pending}
+      error={error}
       onToggleAgree={() => setAgreed(!agreed)}
       onVerify={() => {}}
       agreed={agreed}

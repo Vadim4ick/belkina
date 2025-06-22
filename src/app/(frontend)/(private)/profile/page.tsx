@@ -1,5 +1,11 @@
+import { Recomendations } from '@/views/recomendations'
+
 function Profile() {
-  return <div>Главная</div>;
+  return (
+    <>
+      <Recomendations />
+    </>
+  )
 }
 
-export default Profile;
+export default Profile
