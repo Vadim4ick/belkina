@@ -1,11 +1,7 @@
-import { AppHeader } from "@/widgets/app-header";
-import { Suspense } from "react";
+import { AppHeader } from '@/widgets/app-header'
+import { Suspense } from 'react'
 
-export default async function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AppHeader route="PUBLIC" />
@@ -13,5 +9,5 @@ export default async function AuthLayout({
         <Suspense>{children}</Suspense>
       </main>
     </>
-  );
+  )
 }
