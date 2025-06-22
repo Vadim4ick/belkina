@@ -1,12 +1,3 @@
-mutation LoginUser($email: String!, $password: String!) {
-  loginUser(email: $email, password: $password) {
-    user {
-      id
-      email
-    }
-  }
-}
-
 mutation CreateUser(
   $email: String!
   $password: String!
@@ -17,17 +8,19 @@ mutation CreateUser(
     data: { email: $email, password: $password, role: $role, signupMethod: $signupMethod }
   ) {
     id
+    email
   }
 }
 
 query GetUserByEmail($email: EmailAddress!) {
   Users(where: { email: { equals: $email } }) {
-    totalDocs
     docs {
       id
       email
-      role
+      password
       signupMethod
+      role
     }
+    totalDocs
   }
 }

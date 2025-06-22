@@ -1,9 +1,11 @@
 import type { CollectionConfig } from 'payload'
+import bcrypt from 'bcryptjs'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
     useAsTitle: 'email',
+
     group: {
       ru: 'Пользователи',
       en: 'Users',
@@ -24,14 +26,27 @@ export const Users: CollectionConfig = {
     },
   },
   access: {
-    // 🔐 Админка доступна только "admin"-ам
-    admin: ({ req }) => req.user?.role === 'admin',
-
     read: () => true,
+    update: () => true,
     create: () => true,
   },
-  auth: true,
+  auth: false,
   fields: [
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+      unique: true,
+    },
+    {
+      name: 'password',
+      type: 'text',
+      required: true,
+      // access: {
+      //   read: () => false, // 🔐 никто не может прочитать пароль
+      // },
+    },
+
     {
       name: 'role',
       type: 'select',
@@ -39,7 +54,6 @@ export const Users: CollectionConfig = {
       defaultValue: 'user',
       options: [
         { label: 'Admin', value: 'admin' },
-        { label: 'Editor', value: 'editor' },
         { label: 'User', value: 'user' },
       ],
       // access: {
@@ -85,4 +99,15 @@ export const Users: CollectionConfig = {
       },
     },
   ],
+
+  hooks: {
+    beforeChange: [
+      async ({ data, operation }) => {
+        if ((operation === 'create' || operation === 'update') && data.password) {
+          data.password = await bcrypt.hash(data.password, 10)
+        }
+        return data
+      },
+    ],
+  },
 }

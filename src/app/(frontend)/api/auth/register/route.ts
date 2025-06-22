@@ -17,12 +17,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Такой пользователь уже существует' }, { status: 409 })
   }
 
-  await gql.CreateUser({
-    email,
-    password,
-    role: 'user',
-    signupMethod: 'email',
-  })
+  try {
+    await gql.CreateUser({
+      email,
+      password: password,
+      role: 'user',
+      signupMethod: 'email',
+    })
 
-  return NextResponse.json({ ok: true })
+    return NextResponse.json({ message: 'Пользователь успешно зарегистрирован' }, { status: 200 })
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
 }

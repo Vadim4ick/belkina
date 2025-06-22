@@ -4,10 +4,17 @@ import { TestsBanner } from './home-banners/tests-banner'
 import { AboutBanner } from './home-banners/about-banner'
 import { AskedQuestions } from '@/features/asked-questions'
 import { TestCardQuestions } from '@/widgets/test-card-questions'
-import { gql } from '@/shared/graphql/client'
+import { createGqlClient } from '@/shared/graphql/client'
 import { getSettledValue } from '@/shared/lib/utils'
+import { auth } from '@/entities/user/auth'
 
 const Home = async () => {
+  const session = await auth()
+
+  const token = session?.tokens.accessToken
+
+  const gql = createGqlClient(token)
+
   const [res, faqs, tarrifs] = await Promise.allSettled([
     gql.GetHomePage(),
     gql.GetFAGs(),

@@ -23,6 +23,7 @@ export type Scalars = {
 
 export type Access = {
   readonly __typename?: 'Access';
+  readonly admins: Maybe<AdminsAccess>;
   readonly canAccessAdmin: Scalars['Boolean']['output'];
   readonly faqs: Maybe<FaqsAccess>;
   readonly homePage: Maybe<HomePageAccess>;
@@ -30,7 +31,436 @@ export type Access = {
   readonly payload_locked_documents: Maybe<Payload_Locked_DocumentsAccess>;
   readonly payload_preferences: Maybe<Payload_PreferencesAccess>;
   readonly tariffs: Maybe<TariffsAccess>;
+  readonly test_questions: Maybe<Test_QuestionsAccess>;
+  readonly tests: Maybe<TestsAccess>;
+  readonly user_test_progress: Maybe<User_Test_ProgressAccess>;
   readonly users: Maybe<UsersAccess>;
+};
+
+export type Admin = {
+  readonly __typename?: 'Admin';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly email: Scalars['EmailAddress']['output'];
+  readonly hash: Maybe<Scalars['String']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly lockUntil: Maybe<Scalars['DateTime']['output']>;
+  readonly loginAttempts: Maybe<Scalars['Float']['output']>;
+  readonly resetPasswordExpiration: Maybe<Scalars['DateTime']['output']>;
+  readonly resetPasswordToken: Maybe<Scalars['String']['output']>;
+  readonly role: Admin_Role;
+  readonly salt: Maybe<Scalars['String']['output']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type AdminUpdate_Role_MutationInput =
+  | 'admin'
+  | 'super';
+
+export type Admin_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Admin_Email_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  readonly contains: InputMaybe<Scalars['EmailAddress']['input']>;
+  readonly equals: InputMaybe<Scalars['EmailAddress']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['EmailAddress']['input']>>>;
+  readonly like: InputMaybe<Scalars['EmailAddress']['input']>;
+  readonly not_equals: InputMaybe<Scalars['EmailAddress']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['EmailAddress']['input']>>>;
+};
+
+export type Admin_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Admin_Role =
+  | 'admin'
+  | 'super';
+
+export type Admin_Role_Input =
+  | 'admin'
+  | 'super';
+
+export type Admin_Role_MutationInput =
+  | 'admin'
+  | 'super';
+
+export type Admin_Role_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Admin_Role_Input>>>;
+  readonly equals: InputMaybe<Admin_Role_Input>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Admin_Role_Input>>>;
+  readonly not_equals: InputMaybe<Admin_Role_Input>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Admin_Role_Input>>>;
+};
+
+export type Admin_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Admin_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_Or>>>;
+  readonly createdAt: InputMaybe<Admin_CreatedAt_Operator>;
+  readonly email: InputMaybe<Admin_Email_Operator>;
+  readonly id: InputMaybe<Admin_Id_Operator>;
+  readonly role: InputMaybe<Admin_Role_Operator>;
+  readonly updatedAt: InputMaybe<Admin_UpdatedAt_Operator>;
+};
+
+export type Admin_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_Or>>>;
+  readonly createdAt: InputMaybe<Admin_CreatedAt_Operator>;
+  readonly email: InputMaybe<Admin_Email_Operator>;
+  readonly id: InputMaybe<Admin_Id_Operator>;
+  readonly role: InputMaybe<Admin_Role_Operator>;
+  readonly updatedAt: InputMaybe<Admin_UpdatedAt_Operator>;
+};
+
+export type Admin_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Admin_Where_Or>>>;
+  readonly createdAt: InputMaybe<Admin_CreatedAt_Operator>;
+  readonly email: InputMaybe<Admin_Email_Operator>;
+  readonly id: InputMaybe<Admin_Id_Operator>;
+  readonly role: InputMaybe<Admin_Role_Operator>;
+  readonly updatedAt: InputMaybe<Admin_UpdatedAt_Operator>;
+};
+
+export type Admins = {
+  readonly __typename?: 'Admins';
+  readonly docs: ReadonlyArray<Admin>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type AdminsCreateAccess = {
+  readonly __typename?: 'AdminsCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsCreateDocAccess = {
+  readonly __typename?: 'AdminsCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsDeleteAccess = {
+  readonly __typename?: 'AdminsDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsDeleteDocAccess = {
+  readonly __typename?: 'AdminsDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsDocAccessFields = {
+  readonly __typename?: 'AdminsDocAccessFields';
+  readonly createdAt: Maybe<AdminsDocAccessFields_CreatedAt>;
+  readonly email: Maybe<AdminsDocAccessFields_Email>;
+  readonly role: Maybe<AdminsDocAccessFields_Role>;
+  readonly updatedAt: Maybe<AdminsDocAccessFields_UpdatedAt>;
+};
+
+export type AdminsDocAccessFields_CreatedAt = {
+  readonly __typename?: 'AdminsDocAccessFields_createdAt';
+  readonly create: Maybe<AdminsDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<AdminsDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<AdminsDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<AdminsDocAccessFields_CreatedAt_Update>;
+};
+
+export type AdminsDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'AdminsDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'AdminsDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'AdminsDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'AdminsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Email = {
+  readonly __typename?: 'AdminsDocAccessFields_email';
+  readonly create: Maybe<AdminsDocAccessFields_Email_Create>;
+  readonly delete: Maybe<AdminsDocAccessFields_Email_Delete>;
+  readonly read: Maybe<AdminsDocAccessFields_Email_Read>;
+  readonly update: Maybe<AdminsDocAccessFields_Email_Update>;
+};
+
+export type AdminsDocAccessFields_Email_Create = {
+  readonly __typename?: 'AdminsDocAccessFields_email_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Email_Delete = {
+  readonly __typename?: 'AdminsDocAccessFields_email_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Email_Read = {
+  readonly __typename?: 'AdminsDocAccessFields_email_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Email_Update = {
+  readonly __typename?: 'AdminsDocAccessFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Role = {
+  readonly __typename?: 'AdminsDocAccessFields_role';
+  readonly create: Maybe<AdminsDocAccessFields_Role_Create>;
+  readonly delete: Maybe<AdminsDocAccessFields_Role_Delete>;
+  readonly read: Maybe<AdminsDocAccessFields_Role_Read>;
+  readonly update: Maybe<AdminsDocAccessFields_Role_Update>;
+};
+
+export type AdminsDocAccessFields_Role_Create = {
+  readonly __typename?: 'AdminsDocAccessFields_role_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Role_Delete = {
+  readonly __typename?: 'AdminsDocAccessFields_role_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Role_Read = {
+  readonly __typename?: 'AdminsDocAccessFields_role_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_Role_Update = {
+  readonly __typename?: 'AdminsDocAccessFields_role_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'AdminsDocAccessFields_updatedAt';
+  readonly create: Maybe<AdminsDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<AdminsDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<AdminsDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<AdminsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type AdminsDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'AdminsDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'AdminsDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'AdminsDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'AdminsDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields = {
+  readonly __typename?: 'AdminsFields';
+  readonly createdAt: Maybe<AdminsFields_CreatedAt>;
+  readonly email: Maybe<AdminsFields_Email>;
+  readonly role: Maybe<AdminsFields_Role>;
+  readonly updatedAt: Maybe<AdminsFields_UpdatedAt>;
+};
+
+export type AdminsFields_CreatedAt = {
+  readonly __typename?: 'AdminsFields_createdAt';
+  readonly create: Maybe<AdminsFields_CreatedAt_Create>;
+  readonly delete: Maybe<AdminsFields_CreatedAt_Delete>;
+  readonly read: Maybe<AdminsFields_CreatedAt_Read>;
+  readonly update: Maybe<AdminsFields_CreatedAt_Update>;
+};
+
+export type AdminsFields_CreatedAt_Create = {
+  readonly __typename?: 'AdminsFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_CreatedAt_Delete = {
+  readonly __typename?: 'AdminsFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_CreatedAt_Read = {
+  readonly __typename?: 'AdminsFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_CreatedAt_Update = {
+  readonly __typename?: 'AdminsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Email = {
+  readonly __typename?: 'AdminsFields_email';
+  readonly create: Maybe<AdminsFields_Email_Create>;
+  readonly delete: Maybe<AdminsFields_Email_Delete>;
+  readonly read: Maybe<AdminsFields_Email_Read>;
+  readonly update: Maybe<AdminsFields_Email_Update>;
+};
+
+export type AdminsFields_Email_Create = {
+  readonly __typename?: 'AdminsFields_email_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Email_Delete = {
+  readonly __typename?: 'AdminsFields_email_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Email_Read = {
+  readonly __typename?: 'AdminsFields_email_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Email_Update = {
+  readonly __typename?: 'AdminsFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Role = {
+  readonly __typename?: 'AdminsFields_role';
+  readonly create: Maybe<AdminsFields_Role_Create>;
+  readonly delete: Maybe<AdminsFields_Role_Delete>;
+  readonly read: Maybe<AdminsFields_Role_Read>;
+  readonly update: Maybe<AdminsFields_Role_Update>;
+};
+
+export type AdminsFields_Role_Create = {
+  readonly __typename?: 'AdminsFields_role_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Role_Delete = {
+  readonly __typename?: 'AdminsFields_role_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Role_Read = {
+  readonly __typename?: 'AdminsFields_role_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_Role_Update = {
+  readonly __typename?: 'AdminsFields_role_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_UpdatedAt = {
+  readonly __typename?: 'AdminsFields_updatedAt';
+  readonly create: Maybe<AdminsFields_UpdatedAt_Create>;
+  readonly delete: Maybe<AdminsFields_UpdatedAt_Delete>;
+  readonly read: Maybe<AdminsFields_UpdatedAt_Read>;
+  readonly update: Maybe<AdminsFields_UpdatedAt_Update>;
+};
+
+export type AdminsFields_UpdatedAt_Create = {
+  readonly __typename?: 'AdminsFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_UpdatedAt_Delete = {
+  readonly __typename?: 'AdminsFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_UpdatedAt_Read = {
+  readonly __typename?: 'AdminsFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsFields_UpdatedAt_Update = {
+  readonly __typename?: 'AdminsFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type AdminsReadAccess = {
+  readonly __typename?: 'AdminsReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsReadDocAccess = {
+  readonly __typename?: 'AdminsReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsUnlockAccess = {
+  readonly __typename?: 'AdminsUnlockAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsUnlockDocAccess = {
+  readonly __typename?: 'AdminsUnlockDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsUpdateAccess = {
+  readonly __typename?: 'AdminsUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsUpdateDocAccess = {
+  readonly __typename?: 'AdminsUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type FallbackLocaleInputType =
@@ -2489,37 +2919,60 @@ export type Media_Width_Operator = {
 
 export type Mutation = {
   readonly __typename?: 'Mutation';
+  readonly createAdmin: Maybe<Admin>;
   readonly createFaq: Maybe<Faq>;
   readonly createMedia: Maybe<Media>;
   readonly createPayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly createPayloadPreference: Maybe<PayloadPreference>;
   readonly createTariff: Maybe<Tariff>;
+  readonly createTest: Maybe<Test>;
+  readonly createTestQuestion: Maybe<TestQuestion>;
   readonly createUser: Maybe<User>;
+  readonly createUserTestProgress: Maybe<UserTestProgress>;
+  readonly deleteAdmin: Maybe<Admin>;
   readonly deleteFaq: Maybe<Faq>;
   readonly deleteMedia: Maybe<Media>;
   readonly deletePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly deletePayloadPreference: Maybe<PayloadPreference>;
   readonly deleteTariff: Maybe<Tariff>;
+  readonly deleteTest: Maybe<Test>;
+  readonly deleteTestQuestion: Maybe<TestQuestion>;
   readonly deleteUser: Maybe<User>;
+  readonly deleteUserTestProgress: Maybe<UserTestProgress>;
   readonly duplicateFaq: Maybe<Faq>;
   readonly duplicateMedia: Maybe<Media>;
   readonly duplicatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly duplicatePayloadPreference: Maybe<PayloadPreference>;
   readonly duplicateTariff: Maybe<Tariff>;
-  readonly forgotPasswordUser: Scalars['Boolean']['output'];
-  readonly loginUser: Maybe<UsersLoginResult>;
-  readonly logoutUser: Maybe<Scalars['String']['output']>;
-  readonly refreshTokenUser: Maybe<UsersRefreshedUser>;
-  readonly resetPasswordUser: Maybe<UsersResetPassword>;
-  readonly unlockUser: Scalars['Boolean']['output'];
+  readonly duplicateTest: Maybe<Test>;
+  readonly duplicateTestQuestion: Maybe<TestQuestion>;
+  readonly duplicateUser: Maybe<User>;
+  readonly duplicateUserTestProgress: Maybe<UserTestProgress>;
+  readonly forgotPasswordAdmin: Scalars['Boolean']['output'];
+  readonly loginAdmin: Maybe<AdminsLoginResult>;
+  readonly logoutAdmin: Maybe<Scalars['String']['output']>;
+  readonly refreshTokenAdmin: Maybe<AdminsRefreshedAdmin>;
+  readonly resetPasswordAdmin: Maybe<AdminsResetPassword>;
+  readonly unlockAdmin: Scalars['Boolean']['output'];
+  readonly updateAdmin: Maybe<Admin>;
   readonly updateFaq: Maybe<Faq>;
   readonly updateHomePage: Maybe<HomePage>;
   readonly updateMedia: Maybe<Media>;
   readonly updatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly updatePayloadPreference: Maybe<PayloadPreference>;
   readonly updateTariff: Maybe<Tariff>;
+  readonly updateTest: Maybe<Test>;
+  readonly updateTestQuestion: Maybe<TestQuestion>;
   readonly updateUser: Maybe<User>;
-  readonly verifyEmailUser: Maybe<Scalars['Boolean']['output']>;
+  readonly updateUserTestProgress: Maybe<UserTestProgress>;
+  readonly verifyEmailAdmin: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+export type MutationCreateAdminArgs = {
+  data: MutationAdminInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -2558,10 +3011,36 @@ export type MutationCreateTariffArgs = {
 };
 
 
+export type MutationCreateTestArgs = {
+  data: MutationTestInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationCreateTestQuestionArgs = {
+  data: MutationTestQuestionInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationCreateUserArgs = {
   data: MutationUserInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationCreateUserTestProgressArgs = {
+  data: MutationUserTestProgressInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationDeleteAdminArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -2590,7 +3069,22 @@ export type MutationDeleteTariffArgs = {
 };
 
 
+export type MutationDeleteTestArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteTestQuestionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDeleteUserArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteUserTestProgressArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -2625,27 +3119,60 @@ export type MutationDuplicateTariffArgs = {
 };
 
 
-export type MutationForgotPasswordUserArgs = {
+export type MutationDuplicateTestArgs = {
+  data: MutationTestInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateTestQuestionArgs = {
+  data: MutationTestQuestionInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateUserArgs = {
+  data: MutationUserInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateUserTestProgressArgs = {
+  data: MutationUserTestProgressInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationForgotPasswordAdminArgs = {
   disableEmail: InputMaybe<Scalars['Boolean']['input']>;
   email: Scalars['String']['input'];
   expiration: InputMaybe<Scalars['Int']['input']>;
 };
 
 
-export type MutationLoginUserArgs = {
+export type MutationLoginAdminArgs = {
   email: Scalars['String']['input'];
   password: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type MutationResetPasswordUserArgs = {
+export type MutationResetPasswordAdminArgs = {
   password: InputMaybe<Scalars['String']['input']>;
   token: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type MutationUnlockUserArgs = {
+export type MutationUnlockAdminArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateAdminArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationAdminUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -2701,6 +3228,24 @@ export type MutationUpdateTariffArgs = {
 };
 
 
+export type MutationUpdateTestArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationTestUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateTestQuestionArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationTestQuestionUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationUpdateUserArgs = {
   autosave: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationUserUpdateInput;
@@ -2710,7 +3255,16 @@ export type MutationUpdateUserArgs = {
 };
 
 
-export type MutationVerifyEmailUserArgs = {
+export type MutationUpdateUserTestProgressArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationUserTestProgressUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationVerifyEmailAdminArgs = {
   token: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2742,9 +3296,13 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInput = {
 };
 
 export type PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo =
+  | 'admins'
   | 'faqs'
   | 'media'
   | 'tariffs'
+  | 'test_questions'
+  | 'tests'
+  | 'user_test_progress'
   | 'users';
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -2753,9 +3311,9 @@ export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
 };
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo =
-  | 'users';
+  | 'admins';
 
-export type PayloadLockedDocument_Document = Faq | Media | Tariff | User;
+export type PayloadLockedDocument_Document = Admin | Faq | Media | Tariff | Test | TestQuestion | User | UserTestProgress;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -2763,15 +3321,23 @@ export type PayloadLockedDocument_DocumentRelationshipInput = {
 };
 
 export type PayloadLockedDocument_DocumentRelationshipInputRelationTo =
+  | 'admins'
   | 'faqs'
   | 'media'
   | 'tariffs'
+  | 'test_questions'
+  | 'tests'
+  | 'user_test_progress'
   | 'users';
 
 export type PayloadLockedDocument_Document_RelationTo =
+  | 'admins'
   | 'faqs'
   | 'media'
   | 'tariffs'
+  | 'test_questions'
+  | 'tests'
+  | 'user_test_progress'
   | 'users';
 
 export type PayloadLockedDocument_Document_Relationship = {
@@ -2780,7 +3346,7 @@ export type PayloadLockedDocument_Document_Relationship = {
   readonly value: Maybe<PayloadLockedDocument_Document>;
 };
 
-export type PayloadLockedDocument_User = User;
+export type PayloadLockedDocument_User = Admin;
 
 export type PayloadLockedDocument_UserRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_UserRelationshipInputRelationTo>;
@@ -2788,10 +3354,10 @@ export type PayloadLockedDocument_UserRelationshipInput = {
 };
 
 export type PayloadLockedDocument_UserRelationshipInputRelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadLockedDocument_User_RelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadLockedDocument_User_Relationship = {
   readonly __typename?: 'PayloadLockedDocument_User_Relationship';
@@ -2816,9 +3382,13 @@ export type PayloadLockedDocument_Document_Relation = {
 };
 
 export type PayloadLockedDocument_Document_Relation_RelationTo =
+  | 'admins'
   | 'faqs'
   | 'media'
   | 'tariffs'
+  | 'test_questions'
+  | 'tests'
+  | 'user_test_progress'
   | 'users';
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -2859,7 +3429,7 @@ export type PayloadLockedDocument_User_Relation = {
 };
 
 export type PayloadLockedDocument_User_Relation_RelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadLockedDocument_Where = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<PayloadLockedDocument_Where_And>>>;
@@ -3277,9 +3847,9 @@ export type PayloadPreferenceUpdate_UserRelationshipInput = {
 };
 
 export type PayloadPreferenceUpdate_UserRelationshipInputRelationTo =
-  | 'users';
+  | 'admins';
 
-export type PayloadPreference_User = User;
+export type PayloadPreference_User = Admin;
 
 export type PayloadPreference_UserRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadPreference_UserRelationshipInputRelationTo>;
@@ -3287,10 +3857,10 @@ export type PayloadPreference_UserRelationshipInput = {
 };
 
 export type PayloadPreference_UserRelationshipInputRelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadPreference_User_RelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadPreference_User_Relationship = {
   readonly __typename?: 'PayloadPreference_User_Relationship';
@@ -3347,7 +3917,7 @@ export type PayloadPreference_User_Relation = {
 };
 
 export type PayloadPreference_User_Relation_RelationTo =
-  | 'users';
+  | 'admins';
 
 export type PayloadPreference_Value_Operator = {
   readonly contains: InputMaybe<Scalars['JSON']['input']>;
@@ -3756,6 +4326,8 @@ export type PayloadPreferencesUpdateDocAccess = {
 export type Query = {
   readonly __typename?: 'Query';
   readonly Access: Maybe<Access>;
+  readonly Admin: Maybe<Admin>;
+  readonly Admins: Maybe<Admins>;
   readonly Faq: Maybe<Faq>;
   readonly Faqs: Maybe<Faqs>;
   readonly HomePage: Maybe<HomePage>;
@@ -3766,24 +4338,58 @@ export type Query = {
   readonly PayloadPreferences: Maybe<PayloadPreferences>;
   readonly Tariff: Maybe<Tariff>;
   readonly Tariffs: Maybe<Tariffs>;
+  readonly Test: Maybe<Test>;
+  readonly TestQuestion: Maybe<TestQuestion>;
+  readonly TestQuestions: Maybe<TestQuestions>;
+  readonly Tests: Maybe<Tests>;
   readonly User: Maybe<User>;
+  readonly UserTestProgress: Maybe<UserTestProgress>;
+  readonly UserTestProgresses: Maybe<UserTestProgresses>;
   readonly Users: Maybe<Users>;
   readonly allMedia: Maybe<AllMedia>;
+  readonly countAdmins: Maybe<CountAdmins>;
   readonly countFaqs: Maybe<CountFaqs>;
   readonly countPayloadLockedDocuments: Maybe<CountPayloadLockedDocuments>;
   readonly countPayloadPreferences: Maybe<CountPayloadPreferences>;
   readonly countTariffs: Maybe<CountTariffs>;
+  readonly countTestQuestions: Maybe<CountTestQuestions>;
+  readonly countTests: Maybe<CountTests>;
+  readonly countUserTestProgresses: Maybe<CountUserTestProgresses>;
   readonly countUsers: Maybe<CountUsers>;
   readonly countallMedia: Maybe<CountallMedia>;
+  readonly docAccessAdmin: Maybe<AdminsDocAccess>;
   readonly docAccessFaq: Maybe<FaqsDocAccess>;
   readonly docAccessHomePage: Maybe<HomePageDocAccess>;
   readonly docAccessMedia: Maybe<MediaDocAccess>;
   readonly docAccessPayloadLockedDocument: Maybe<Payload_Locked_DocumentsDocAccess>;
   readonly docAccessPayloadPreference: Maybe<Payload_PreferencesDocAccess>;
   readonly docAccessTariff: Maybe<TariffsDocAccess>;
+  readonly docAccessTest: Maybe<TestsDocAccess>;
+  readonly docAccessTestQuestion: Maybe<Test_QuestionsDocAccess>;
   readonly docAccessUser: Maybe<UsersDocAccess>;
-  readonly initializedUser: Maybe<Scalars['Boolean']['output']>;
-  readonly meUser: Maybe<UsersMe>;
+  readonly docAccessUserTestProgress: Maybe<User_Test_ProgressDocAccess>;
+  readonly initializedAdmin: Maybe<Scalars['Boolean']['output']>;
+  readonly meAdmin: Maybe<AdminsMe>;
+};
+
+
+export type QueryAdminArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryAdminsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<Admin_Where>;
 };
 
 
@@ -3882,11 +4488,71 @@ export type QueryTariffsArgs = {
 };
 
 
+export type QueryTestArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryTestQuestionArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryTestQuestionsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<TestQuestion_Where>;
+};
+
+
+export type QueryTestsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<Test_Where>;
+};
+
+
 export type QueryUserArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
   locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryUserTestProgressArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryUserTestProgressesArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<UserTestProgress_Where>;
 };
 
 
@@ -3911,6 +4577,13 @@ export type QueryAllMediaArgs = {
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
   where: InputMaybe<Media_Where>;
+};
+
+
+export type QueryCountAdminsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<Admin_Where>;
 };
 
 
@@ -3942,6 +4615,27 @@ export type QueryCountTariffsArgs = {
 };
 
 
+export type QueryCountTestQuestionsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<TestQuestion_Where>;
+};
+
+
+export type QueryCountTestsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<Test_Where>;
+};
+
+
+export type QueryCountUserTestProgressesArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<UserTestProgress_Where>;
+};
+
+
 export type QueryCountUsersArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
@@ -3953,6 +4647,11 @@ export type QueryCountallMediaArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
   where: InputMaybe<Media_Where>;
+};
+
+
+export type QueryDocAccessAdminArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -3981,7 +4680,22 @@ export type QueryDocAccessTariffArgs = {
 };
 
 
+export type QueryDocAccessTestArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDocAccessTestQuestionArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type QueryDocAccessUserArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDocAccessUserTestProgressArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -4737,25 +5451,1874 @@ export type TariffsUpdateDocAccess = {
   readonly where: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Test = {
+  readonly __typename?: 'Test';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly instruction: Scalars['String']['output'];
+  readonly title: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TestQuestion = {
+  readonly __typename?: 'TestQuestion';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly errors: ReadonlyArray<TestQuestion_Errors>;
+  readonly id: Scalars['Int']['output'];
+  readonly proposals: ReadonlyArray<TestQuestion_Proposals>;
+  readonly test: Test;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type TestQuestionTestArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type TestQuestion_Errors = {
+  readonly __typename?: 'TestQuestion_Errors';
+  readonly id: Maybe<Scalars['String']['output']>;
+  readonly label: Maybe<Scalars['String']['output']>;
+};
+
+export type TestQuestion_Proposals = {
+  readonly __typename?: 'TestQuestion_Proposals';
+  readonly id: Maybe<Scalars['String']['output']>;
+  readonly label: Maybe<Scalars['String']['output']>;
+};
+
+export type TestQuestion_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type TestQuestion_Errors__Id_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TestQuestion_Errors__Label_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TestQuestion_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TestQuestion_Proposals__Id_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TestQuestion_Proposals__Label_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TestQuestion_Test_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type TestQuestion_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type TestQuestion_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_Or>>>;
+  readonly createdAt: InputMaybe<TestQuestion_CreatedAt_Operator>;
+  readonly errors__id: InputMaybe<TestQuestion_Errors__Id_Operator>;
+  readonly errors__label: InputMaybe<TestQuestion_Errors__Label_Operator>;
+  readonly id: InputMaybe<TestQuestion_Id_Operator>;
+  readonly proposals__id: InputMaybe<TestQuestion_Proposals__Id_Operator>;
+  readonly proposals__label: InputMaybe<TestQuestion_Proposals__Label_Operator>;
+  readonly test: InputMaybe<TestQuestion_Test_Operator>;
+  readonly updatedAt: InputMaybe<TestQuestion_UpdatedAt_Operator>;
+};
+
+export type TestQuestion_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_Or>>>;
+  readonly createdAt: InputMaybe<TestQuestion_CreatedAt_Operator>;
+  readonly errors__id: InputMaybe<TestQuestion_Errors__Id_Operator>;
+  readonly errors__label: InputMaybe<TestQuestion_Errors__Label_Operator>;
+  readonly id: InputMaybe<TestQuestion_Id_Operator>;
+  readonly proposals__id: InputMaybe<TestQuestion_Proposals__Id_Operator>;
+  readonly proposals__label: InputMaybe<TestQuestion_Proposals__Label_Operator>;
+  readonly test: InputMaybe<TestQuestion_Test_Operator>;
+  readonly updatedAt: InputMaybe<TestQuestion_UpdatedAt_Operator>;
+};
+
+export type TestQuestion_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TestQuestion_Where_Or>>>;
+  readonly createdAt: InputMaybe<TestQuestion_CreatedAt_Operator>;
+  readonly errors__id: InputMaybe<TestQuestion_Errors__Id_Operator>;
+  readonly errors__label: InputMaybe<TestQuestion_Errors__Label_Operator>;
+  readonly id: InputMaybe<TestQuestion_Id_Operator>;
+  readonly proposals__id: InputMaybe<TestQuestion_Proposals__Id_Operator>;
+  readonly proposals__label: InputMaybe<TestQuestion_Proposals__Label_Operator>;
+  readonly test: InputMaybe<TestQuestion_Test_Operator>;
+  readonly updatedAt: InputMaybe<TestQuestion_UpdatedAt_Operator>;
+};
+
+export type TestQuestions = {
+  readonly __typename?: 'TestQuestions';
+  readonly docs: ReadonlyArray<TestQuestion>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type TestQuestionsCreateAccess = {
+  readonly __typename?: 'TestQuestionsCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsCreateDocAccess = {
+  readonly __typename?: 'TestQuestionsCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsDeleteAccess = {
+  readonly __typename?: 'TestQuestionsDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsDeleteDocAccess = {
+  readonly __typename?: 'TestQuestionsDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsDocAccessFields = {
+  readonly __typename?: 'TestQuestionsDocAccessFields';
+  readonly createdAt: Maybe<TestQuestionsDocAccessFields_CreatedAt>;
+  readonly errors: Maybe<TestQuestionsDocAccessFields_Errors>;
+  readonly proposals: Maybe<TestQuestionsDocAccessFields_Proposals>;
+  readonly test: Maybe<TestQuestionsDocAccessFields_Test>;
+  readonly updatedAt: Maybe<TestQuestionsDocAccessFields_UpdatedAt>;
+};
+
+export type TestQuestionsDocAccessFields_CreatedAt = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_createdAt';
+  readonly create: Maybe<TestQuestionsDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_CreatedAt_Update>;
+};
+
+export type TestQuestionsDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Errors_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Errors_Delete>;
+  readonly fields: Maybe<TestQuestionsDocAccessFields_Errors_Fields>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Errors_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Errors_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Errors_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Fields = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_Fields';
+  readonly id: Maybe<TestQuestionsDocAccessFields_Errors_Id>;
+  readonly label: Maybe<TestQuestionsDocAccessFields_Errors_Label>;
+};
+
+export type TestQuestionsDocAccessFields_Errors_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Id = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_id';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Errors_Id_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Errors_Id_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Errors_Id_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Errors_Id_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Errors_Id_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Id_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Id_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Id_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Label = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_label';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Errors_Label_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Errors_Label_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Errors_Label_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Errors_Label_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Errors_Label_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Label_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Label_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Errors_Label_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_errors_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Proposals_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Proposals_Delete>;
+  readonly fields: Maybe<TestQuestionsDocAccessFields_Proposals_Fields>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Proposals_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Proposals_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Fields = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_Fields';
+  readonly id: Maybe<TestQuestionsDocAccessFields_Proposals_Id>;
+  readonly label: Maybe<TestQuestionsDocAccessFields_Proposals_Label>;
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Id = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_id';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Proposals_Id_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Proposals_Id_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Proposals_Id_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Proposals_Id_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Id_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Id_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Id_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Id_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Label = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_label';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Proposals_Label_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Proposals_Label_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Proposals_Label_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Proposals_Label_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Label_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Label_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Label_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Proposals_Label_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_proposals_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Test = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_test';
+  readonly create: Maybe<TestQuestionsDocAccessFields_Test_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_Test_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_Test_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_Test_Update>;
+};
+
+export type TestQuestionsDocAccessFields_Test_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_test_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Test_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_test_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Test_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_test_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_Test_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_test_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_updatedAt';
+  readonly create: Maybe<TestQuestionsDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TestQuestionsDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TestQuestionsDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<TestQuestionsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type TestQuestionsDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'TestQuestionsDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields = {
+  readonly __typename?: 'TestQuestionsFields';
+  readonly createdAt: Maybe<TestQuestionsFields_CreatedAt>;
+  readonly errors: Maybe<TestQuestionsFields_Errors>;
+  readonly proposals: Maybe<TestQuestionsFields_Proposals>;
+  readonly test: Maybe<TestQuestionsFields_Test>;
+  readonly updatedAt: Maybe<TestQuestionsFields_UpdatedAt>;
+};
+
+export type TestQuestionsFields_CreatedAt = {
+  readonly __typename?: 'TestQuestionsFields_createdAt';
+  readonly create: Maybe<TestQuestionsFields_CreatedAt_Create>;
+  readonly delete: Maybe<TestQuestionsFields_CreatedAt_Delete>;
+  readonly read: Maybe<TestQuestionsFields_CreatedAt_Read>;
+  readonly update: Maybe<TestQuestionsFields_CreatedAt_Update>;
+};
+
+export type TestQuestionsFields_CreatedAt_Create = {
+  readonly __typename?: 'TestQuestionsFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_CreatedAt_Delete = {
+  readonly __typename?: 'TestQuestionsFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_CreatedAt_Read = {
+  readonly __typename?: 'TestQuestionsFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_CreatedAt_Update = {
+  readonly __typename?: 'TestQuestionsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors = {
+  readonly __typename?: 'TestQuestionsFields_errors';
+  readonly create: Maybe<TestQuestionsFields_Errors_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Errors_Delete>;
+  readonly fields: Maybe<TestQuestionsFields_Errors_Fields>;
+  readonly read: Maybe<TestQuestionsFields_Errors_Read>;
+  readonly update: Maybe<TestQuestionsFields_Errors_Update>;
+};
+
+export type TestQuestionsFields_Errors_Create = {
+  readonly __typename?: 'TestQuestionsFields_errors_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Delete = {
+  readonly __typename?: 'TestQuestionsFields_errors_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Fields = {
+  readonly __typename?: 'TestQuestionsFields_errors_Fields';
+  readonly id: Maybe<TestQuestionsFields_Errors_Id>;
+  readonly label: Maybe<TestQuestionsFields_Errors_Label>;
+};
+
+export type TestQuestionsFields_Errors_Read = {
+  readonly __typename?: 'TestQuestionsFields_errors_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Update = {
+  readonly __typename?: 'TestQuestionsFields_errors_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Id = {
+  readonly __typename?: 'TestQuestionsFields_errors_id';
+  readonly create: Maybe<TestQuestionsFields_Errors_Id_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Errors_Id_Delete>;
+  readonly read: Maybe<TestQuestionsFields_Errors_Id_Read>;
+  readonly update: Maybe<TestQuestionsFields_Errors_Id_Update>;
+};
+
+export type TestQuestionsFields_Errors_Id_Create = {
+  readonly __typename?: 'TestQuestionsFields_errors_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Id_Delete = {
+  readonly __typename?: 'TestQuestionsFields_errors_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Id_Read = {
+  readonly __typename?: 'TestQuestionsFields_errors_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Id_Update = {
+  readonly __typename?: 'TestQuestionsFields_errors_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Label = {
+  readonly __typename?: 'TestQuestionsFields_errors_label';
+  readonly create: Maybe<TestQuestionsFields_Errors_Label_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Errors_Label_Delete>;
+  readonly read: Maybe<TestQuestionsFields_Errors_Label_Read>;
+  readonly update: Maybe<TestQuestionsFields_Errors_Label_Update>;
+};
+
+export type TestQuestionsFields_Errors_Label_Create = {
+  readonly __typename?: 'TestQuestionsFields_errors_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Label_Delete = {
+  readonly __typename?: 'TestQuestionsFields_errors_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Label_Read = {
+  readonly __typename?: 'TestQuestionsFields_errors_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Errors_Label_Update = {
+  readonly __typename?: 'TestQuestionsFields_errors_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals = {
+  readonly __typename?: 'TestQuestionsFields_proposals';
+  readonly create: Maybe<TestQuestionsFields_Proposals_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Proposals_Delete>;
+  readonly fields: Maybe<TestQuestionsFields_Proposals_Fields>;
+  readonly read: Maybe<TestQuestionsFields_Proposals_Read>;
+  readonly update: Maybe<TestQuestionsFields_Proposals_Update>;
+};
+
+export type TestQuestionsFields_Proposals_Create = {
+  readonly __typename?: 'TestQuestionsFields_proposals_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Delete = {
+  readonly __typename?: 'TestQuestionsFields_proposals_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Fields = {
+  readonly __typename?: 'TestQuestionsFields_proposals_Fields';
+  readonly id: Maybe<TestQuestionsFields_Proposals_Id>;
+  readonly label: Maybe<TestQuestionsFields_Proposals_Label>;
+};
+
+export type TestQuestionsFields_Proposals_Read = {
+  readonly __typename?: 'TestQuestionsFields_proposals_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Update = {
+  readonly __typename?: 'TestQuestionsFields_proposals_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Id = {
+  readonly __typename?: 'TestQuestionsFields_proposals_id';
+  readonly create: Maybe<TestQuestionsFields_Proposals_Id_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Proposals_Id_Delete>;
+  readonly read: Maybe<TestQuestionsFields_Proposals_Id_Read>;
+  readonly update: Maybe<TestQuestionsFields_Proposals_Id_Update>;
+};
+
+export type TestQuestionsFields_Proposals_Id_Create = {
+  readonly __typename?: 'TestQuestionsFields_proposals_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Id_Delete = {
+  readonly __typename?: 'TestQuestionsFields_proposals_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Id_Read = {
+  readonly __typename?: 'TestQuestionsFields_proposals_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Id_Update = {
+  readonly __typename?: 'TestQuestionsFields_proposals_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Label = {
+  readonly __typename?: 'TestQuestionsFields_proposals_label';
+  readonly create: Maybe<TestQuestionsFields_Proposals_Label_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Proposals_Label_Delete>;
+  readonly read: Maybe<TestQuestionsFields_Proposals_Label_Read>;
+  readonly update: Maybe<TestQuestionsFields_Proposals_Label_Update>;
+};
+
+export type TestQuestionsFields_Proposals_Label_Create = {
+  readonly __typename?: 'TestQuestionsFields_proposals_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Label_Delete = {
+  readonly __typename?: 'TestQuestionsFields_proposals_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Label_Read = {
+  readonly __typename?: 'TestQuestionsFields_proposals_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Proposals_Label_Update = {
+  readonly __typename?: 'TestQuestionsFields_proposals_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Test = {
+  readonly __typename?: 'TestQuestionsFields_test';
+  readonly create: Maybe<TestQuestionsFields_Test_Create>;
+  readonly delete: Maybe<TestQuestionsFields_Test_Delete>;
+  readonly read: Maybe<TestQuestionsFields_Test_Read>;
+  readonly update: Maybe<TestQuestionsFields_Test_Update>;
+};
+
+export type TestQuestionsFields_Test_Create = {
+  readonly __typename?: 'TestQuestionsFields_test_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Test_Delete = {
+  readonly __typename?: 'TestQuestionsFields_test_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Test_Read = {
+  readonly __typename?: 'TestQuestionsFields_test_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_Test_Update = {
+  readonly __typename?: 'TestQuestionsFields_test_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_UpdatedAt = {
+  readonly __typename?: 'TestQuestionsFields_updatedAt';
+  readonly create: Maybe<TestQuestionsFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TestQuestionsFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TestQuestionsFields_UpdatedAt_Read>;
+  readonly update: Maybe<TestQuestionsFields_UpdatedAt_Update>;
+};
+
+export type TestQuestionsFields_UpdatedAt_Create = {
+  readonly __typename?: 'TestQuestionsFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TestQuestionsFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_UpdatedAt_Read = {
+  readonly __typename?: 'TestQuestionsFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsFields_UpdatedAt_Update = {
+  readonly __typename?: 'TestQuestionsFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestQuestionsReadAccess = {
+  readonly __typename?: 'TestQuestionsReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsReadDocAccess = {
+  readonly __typename?: 'TestQuestionsReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsUpdateAccess = {
+  readonly __typename?: 'TestQuestionsUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestQuestionsUpdateDocAccess = {
+  readonly __typename?: 'TestQuestionsUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Test_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Test_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type Test_Instruction_Operator = {
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Test_Title_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Test_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Test_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_Or>>>;
+  readonly createdAt: InputMaybe<Test_CreatedAt_Operator>;
+  readonly id: InputMaybe<Test_Id_Operator>;
+  readonly instruction: InputMaybe<Test_Instruction_Operator>;
+  readonly title: InputMaybe<Test_Title_Operator>;
+  readonly updatedAt: InputMaybe<Test_UpdatedAt_Operator>;
+};
+
+export type Test_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_Or>>>;
+  readonly createdAt: InputMaybe<Test_CreatedAt_Operator>;
+  readonly id: InputMaybe<Test_Id_Operator>;
+  readonly instruction: InputMaybe<Test_Instruction_Operator>;
+  readonly title: InputMaybe<Test_Title_Operator>;
+  readonly updatedAt: InputMaybe<Test_UpdatedAt_Operator>;
+};
+
+export type Test_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Test_Where_Or>>>;
+  readonly createdAt: InputMaybe<Test_CreatedAt_Operator>;
+  readonly id: InputMaybe<Test_Id_Operator>;
+  readonly instruction: InputMaybe<Test_Instruction_Operator>;
+  readonly title: InputMaybe<Test_Title_Operator>;
+  readonly updatedAt: InputMaybe<Test_UpdatedAt_Operator>;
+};
+
+export type Tests = {
+  readonly __typename?: 'Tests';
+  readonly docs: ReadonlyArray<Test>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type TestsCreateAccess = {
+  readonly __typename?: 'TestsCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsCreateDocAccess = {
+  readonly __typename?: 'TestsCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsDeleteAccess = {
+  readonly __typename?: 'TestsDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsDeleteDocAccess = {
+  readonly __typename?: 'TestsDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsDocAccessFields = {
+  readonly __typename?: 'TestsDocAccessFields';
+  readonly createdAt: Maybe<TestsDocAccessFields_CreatedAt>;
+  readonly instruction: Maybe<TestsDocAccessFields_Instruction>;
+  readonly title: Maybe<TestsDocAccessFields_Title>;
+  readonly updatedAt: Maybe<TestsDocAccessFields_UpdatedAt>;
+};
+
+export type TestsDocAccessFields_CreatedAt = {
+  readonly __typename?: 'TestsDocAccessFields_createdAt';
+  readonly create: Maybe<TestsDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<TestsDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<TestsDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<TestsDocAccessFields_CreatedAt_Update>;
+};
+
+export type TestsDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'TestsDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'TestsDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'TestsDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'TestsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Instruction = {
+  readonly __typename?: 'TestsDocAccessFields_instruction';
+  readonly create: Maybe<TestsDocAccessFields_Instruction_Create>;
+  readonly delete: Maybe<TestsDocAccessFields_Instruction_Delete>;
+  readonly read: Maybe<TestsDocAccessFields_Instruction_Read>;
+  readonly update: Maybe<TestsDocAccessFields_Instruction_Update>;
+};
+
+export type TestsDocAccessFields_Instruction_Create = {
+  readonly __typename?: 'TestsDocAccessFields_instruction_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Instruction_Delete = {
+  readonly __typename?: 'TestsDocAccessFields_instruction_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Instruction_Read = {
+  readonly __typename?: 'TestsDocAccessFields_instruction_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Instruction_Update = {
+  readonly __typename?: 'TestsDocAccessFields_instruction_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Title = {
+  readonly __typename?: 'TestsDocAccessFields_title';
+  readonly create: Maybe<TestsDocAccessFields_Title_Create>;
+  readonly delete: Maybe<TestsDocAccessFields_Title_Delete>;
+  readonly read: Maybe<TestsDocAccessFields_Title_Read>;
+  readonly update: Maybe<TestsDocAccessFields_Title_Update>;
+};
+
+export type TestsDocAccessFields_Title_Create = {
+  readonly __typename?: 'TestsDocAccessFields_title_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Title_Delete = {
+  readonly __typename?: 'TestsDocAccessFields_title_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Title_Read = {
+  readonly __typename?: 'TestsDocAccessFields_title_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_Title_Update = {
+  readonly __typename?: 'TestsDocAccessFields_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'TestsDocAccessFields_updatedAt';
+  readonly create: Maybe<TestsDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TestsDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TestsDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<TestsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type TestsDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'TestsDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TestsDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'TestsDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'TestsDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields = {
+  readonly __typename?: 'TestsFields';
+  readonly createdAt: Maybe<TestsFields_CreatedAt>;
+  readonly instruction: Maybe<TestsFields_Instruction>;
+  readonly title: Maybe<TestsFields_Title>;
+  readonly updatedAt: Maybe<TestsFields_UpdatedAt>;
+};
+
+export type TestsFields_CreatedAt = {
+  readonly __typename?: 'TestsFields_createdAt';
+  readonly create: Maybe<TestsFields_CreatedAt_Create>;
+  readonly delete: Maybe<TestsFields_CreatedAt_Delete>;
+  readonly read: Maybe<TestsFields_CreatedAt_Read>;
+  readonly update: Maybe<TestsFields_CreatedAt_Update>;
+};
+
+export type TestsFields_CreatedAt_Create = {
+  readonly __typename?: 'TestsFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_CreatedAt_Delete = {
+  readonly __typename?: 'TestsFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_CreatedAt_Read = {
+  readonly __typename?: 'TestsFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_CreatedAt_Update = {
+  readonly __typename?: 'TestsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Instruction = {
+  readonly __typename?: 'TestsFields_instruction';
+  readonly create: Maybe<TestsFields_Instruction_Create>;
+  readonly delete: Maybe<TestsFields_Instruction_Delete>;
+  readonly read: Maybe<TestsFields_Instruction_Read>;
+  readonly update: Maybe<TestsFields_Instruction_Update>;
+};
+
+export type TestsFields_Instruction_Create = {
+  readonly __typename?: 'TestsFields_instruction_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Instruction_Delete = {
+  readonly __typename?: 'TestsFields_instruction_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Instruction_Read = {
+  readonly __typename?: 'TestsFields_instruction_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Instruction_Update = {
+  readonly __typename?: 'TestsFields_instruction_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Title = {
+  readonly __typename?: 'TestsFields_title';
+  readonly create: Maybe<TestsFields_Title_Create>;
+  readonly delete: Maybe<TestsFields_Title_Delete>;
+  readonly read: Maybe<TestsFields_Title_Read>;
+  readonly update: Maybe<TestsFields_Title_Update>;
+};
+
+export type TestsFields_Title_Create = {
+  readonly __typename?: 'TestsFields_title_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Title_Delete = {
+  readonly __typename?: 'TestsFields_title_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Title_Read = {
+  readonly __typename?: 'TestsFields_title_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_Title_Update = {
+  readonly __typename?: 'TestsFields_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_UpdatedAt = {
+  readonly __typename?: 'TestsFields_updatedAt';
+  readonly create: Maybe<TestsFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TestsFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TestsFields_UpdatedAt_Read>;
+  readonly update: Maybe<TestsFields_UpdatedAt_Update>;
+};
+
+export type TestsFields_UpdatedAt_Create = {
+  readonly __typename?: 'TestsFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TestsFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_UpdatedAt_Read = {
+  readonly __typename?: 'TestsFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsFields_UpdatedAt_Update = {
+  readonly __typename?: 'TestsFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TestsReadAccess = {
+  readonly __typename?: 'TestsReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsReadDocAccess = {
+  readonly __typename?: 'TestsReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsUpdateAccess = {
+  readonly __typename?: 'TestsUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TestsUpdateDocAccess = {
+  readonly __typename?: 'TestsUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
 export type User = {
   readonly __typename?: 'User';
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly email: Scalars['EmailAddress']['output'];
-  readonly hash: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['Int']['output'];
-  readonly lockUntil: Maybe<Scalars['DateTime']['output']>;
-  readonly loginAttempts: Maybe<Scalars['Float']['output']>;
-  readonly resetPasswordExpiration: Maybe<Scalars['DateTime']['output']>;
-  readonly resetPasswordToken: Maybe<Scalars['String']['output']>;
+  readonly password: Scalars['String']['output'];
   readonly role: User_Role;
-  readonly salt: Maybe<Scalars['String']['output']>;
   readonly signupMethod: User_SignupMethod;
+  readonly tariff: Tariff;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type UserTariffArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type UserTestProgress = {
+  readonly __typename?: 'UserTestProgress';
+  readonly completedQuestions: Maybe<ReadonlyArray<UserTestProgress_CompletedQuestions>>;
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly progress: Scalars['Float']['output'];
+  readonly test: Test;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly user: User;
+};
+
+
+export type UserTestProgressTestArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type UserTestProgressUserArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type UserTestProgressCreateAccess = {
+  readonly __typename?: 'UserTestProgressCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressCreateDocAccess = {
+  readonly __typename?: 'UserTestProgressCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressDeleteAccess = {
+  readonly __typename?: 'UserTestProgressDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressDeleteDocAccess = {
+  readonly __typename?: 'UserTestProgressDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressDocAccessFields = {
+  readonly __typename?: 'UserTestProgressDocAccessFields';
+  readonly completedQuestions: Maybe<UserTestProgressDocAccessFields_CompletedQuestions>;
+  readonly createdAt: Maybe<UserTestProgressDocAccessFields_CreatedAt>;
+  readonly progress: Maybe<UserTestProgressDocAccessFields_Progress>;
+  readonly test: Maybe<UserTestProgressDocAccessFields_Test>;
+  readonly updatedAt: Maybe<UserTestProgressDocAccessFields_UpdatedAt>;
+  readonly user: Maybe<UserTestProgressDocAccessFields_User>;
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions';
+  readonly create: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Delete>;
+  readonly fields: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Fields>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Update>;
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Fields = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_Fields';
+  readonly id: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Id>;
+  readonly question: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Question>;
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Id = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_id';
+  readonly create: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Id_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Id_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Id_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Id_Update>;
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Id_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Id_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Id_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Id_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Question = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_question';
+  readonly create: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Question_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Question_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Question_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_CompletedQuestions_Question_Update>;
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Question_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_question_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Question_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_question_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Question_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_question_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CompletedQuestions_Question_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_completedQuestions_question_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CreatedAt = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_createdAt';
+  readonly create: Maybe<UserTestProgressDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_CreatedAt_Update>;
+};
+
+export type UserTestProgressDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Progress = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_progress';
+  readonly create: Maybe<UserTestProgressDocAccessFields_Progress_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_Progress_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_Progress_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_Progress_Update>;
+};
+
+export type UserTestProgressDocAccessFields_Progress_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_progress_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Progress_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_progress_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Progress_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_progress_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Progress_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_progress_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Test = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_test';
+  readonly create: Maybe<UserTestProgressDocAccessFields_Test_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_Test_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_Test_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_Test_Update>;
+};
+
+export type UserTestProgressDocAccessFields_Test_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_test_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Test_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_test_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Test_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_test_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_Test_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_test_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_updatedAt';
+  readonly create: Maybe<UserTestProgressDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_UpdatedAt_Update>;
+};
+
+export type UserTestProgressDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_User = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_user';
+  readonly create: Maybe<UserTestProgressDocAccessFields_User_Create>;
+  readonly delete: Maybe<UserTestProgressDocAccessFields_User_Delete>;
+  readonly read: Maybe<UserTestProgressDocAccessFields_User_Read>;
+  readonly update: Maybe<UserTestProgressDocAccessFields_User_Update>;
+};
+
+export type UserTestProgressDocAccessFields_User_Create = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_user_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_User_Delete = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_user_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_User_Read = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_user_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressDocAccessFields_User_Update = {
+  readonly __typename?: 'UserTestProgressDocAccessFields_user_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields = {
+  readonly __typename?: 'UserTestProgressFields';
+  readonly completedQuestions: Maybe<UserTestProgressFields_CompletedQuestions>;
+  readonly createdAt: Maybe<UserTestProgressFields_CreatedAt>;
+  readonly progress: Maybe<UserTestProgressFields_Progress>;
+  readonly test: Maybe<UserTestProgressFields_Test>;
+  readonly updatedAt: Maybe<UserTestProgressFields_UpdatedAt>;
+  readonly user: Maybe<UserTestProgressFields_User>;
+};
+
+export type UserTestProgressFields_CompletedQuestions = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions';
+  readonly create: Maybe<UserTestProgressFields_CompletedQuestions_Create>;
+  readonly delete: Maybe<UserTestProgressFields_CompletedQuestions_Delete>;
+  readonly fields: Maybe<UserTestProgressFields_CompletedQuestions_Fields>;
+  readonly read: Maybe<UserTestProgressFields_CompletedQuestions_Read>;
+  readonly update: Maybe<UserTestProgressFields_CompletedQuestions_Update>;
+};
+
+export type UserTestProgressFields_CompletedQuestions_Create = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Delete = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Fields = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_Fields';
+  readonly id: Maybe<UserTestProgressFields_CompletedQuestions_Id>;
+  readonly question: Maybe<UserTestProgressFields_CompletedQuestions_Question>;
+};
+
+export type UserTestProgressFields_CompletedQuestions_Read = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Update = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Id = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_id';
+  readonly create: Maybe<UserTestProgressFields_CompletedQuestions_Id_Create>;
+  readonly delete: Maybe<UserTestProgressFields_CompletedQuestions_Id_Delete>;
+  readonly read: Maybe<UserTestProgressFields_CompletedQuestions_Id_Read>;
+  readonly update: Maybe<UserTestProgressFields_CompletedQuestions_Id_Update>;
+};
+
+export type UserTestProgressFields_CompletedQuestions_Id_Create = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_id_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Id_Delete = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_id_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Id_Read = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_id_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Id_Update = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_id_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Question = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_question';
+  readonly create: Maybe<UserTestProgressFields_CompletedQuestions_Question_Create>;
+  readonly delete: Maybe<UserTestProgressFields_CompletedQuestions_Question_Delete>;
+  readonly read: Maybe<UserTestProgressFields_CompletedQuestions_Question_Read>;
+  readonly update: Maybe<UserTestProgressFields_CompletedQuestions_Question_Update>;
+};
+
+export type UserTestProgressFields_CompletedQuestions_Question_Create = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_question_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Question_Delete = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_question_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Question_Read = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_question_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CompletedQuestions_Question_Update = {
+  readonly __typename?: 'UserTestProgressFields_completedQuestions_question_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CreatedAt = {
+  readonly __typename?: 'UserTestProgressFields_createdAt';
+  readonly create: Maybe<UserTestProgressFields_CreatedAt_Create>;
+  readonly delete: Maybe<UserTestProgressFields_CreatedAt_Delete>;
+  readonly read: Maybe<UserTestProgressFields_CreatedAt_Read>;
+  readonly update: Maybe<UserTestProgressFields_CreatedAt_Update>;
+};
+
+export type UserTestProgressFields_CreatedAt_Create = {
+  readonly __typename?: 'UserTestProgressFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CreatedAt_Delete = {
+  readonly __typename?: 'UserTestProgressFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CreatedAt_Read = {
+  readonly __typename?: 'UserTestProgressFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_CreatedAt_Update = {
+  readonly __typename?: 'UserTestProgressFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Progress = {
+  readonly __typename?: 'UserTestProgressFields_progress';
+  readonly create: Maybe<UserTestProgressFields_Progress_Create>;
+  readonly delete: Maybe<UserTestProgressFields_Progress_Delete>;
+  readonly read: Maybe<UserTestProgressFields_Progress_Read>;
+  readonly update: Maybe<UserTestProgressFields_Progress_Update>;
+};
+
+export type UserTestProgressFields_Progress_Create = {
+  readonly __typename?: 'UserTestProgressFields_progress_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Progress_Delete = {
+  readonly __typename?: 'UserTestProgressFields_progress_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Progress_Read = {
+  readonly __typename?: 'UserTestProgressFields_progress_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Progress_Update = {
+  readonly __typename?: 'UserTestProgressFields_progress_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Test = {
+  readonly __typename?: 'UserTestProgressFields_test';
+  readonly create: Maybe<UserTestProgressFields_Test_Create>;
+  readonly delete: Maybe<UserTestProgressFields_Test_Delete>;
+  readonly read: Maybe<UserTestProgressFields_Test_Read>;
+  readonly update: Maybe<UserTestProgressFields_Test_Update>;
+};
+
+export type UserTestProgressFields_Test_Create = {
+  readonly __typename?: 'UserTestProgressFields_test_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Test_Delete = {
+  readonly __typename?: 'UserTestProgressFields_test_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Test_Read = {
+  readonly __typename?: 'UserTestProgressFields_test_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_Test_Update = {
+  readonly __typename?: 'UserTestProgressFields_test_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_UpdatedAt = {
+  readonly __typename?: 'UserTestProgressFields_updatedAt';
+  readonly create: Maybe<UserTestProgressFields_UpdatedAt_Create>;
+  readonly delete: Maybe<UserTestProgressFields_UpdatedAt_Delete>;
+  readonly read: Maybe<UserTestProgressFields_UpdatedAt_Read>;
+  readonly update: Maybe<UserTestProgressFields_UpdatedAt_Update>;
+};
+
+export type UserTestProgressFields_UpdatedAt_Create = {
+  readonly __typename?: 'UserTestProgressFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_UpdatedAt_Delete = {
+  readonly __typename?: 'UserTestProgressFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_UpdatedAt_Read = {
+  readonly __typename?: 'UserTestProgressFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_UpdatedAt_Update = {
+  readonly __typename?: 'UserTestProgressFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_User = {
+  readonly __typename?: 'UserTestProgressFields_user';
+  readonly create: Maybe<UserTestProgressFields_User_Create>;
+  readonly delete: Maybe<UserTestProgressFields_User_Delete>;
+  readonly read: Maybe<UserTestProgressFields_User_Read>;
+  readonly update: Maybe<UserTestProgressFields_User_Update>;
+};
+
+export type UserTestProgressFields_User_Create = {
+  readonly __typename?: 'UserTestProgressFields_user_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_User_Delete = {
+  readonly __typename?: 'UserTestProgressFields_user_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_User_Read = {
+  readonly __typename?: 'UserTestProgressFields_user_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressFields_User_Update = {
+  readonly __typename?: 'UserTestProgressFields_user_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UserTestProgressReadAccess = {
+  readonly __typename?: 'UserTestProgressReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressReadDocAccess = {
+  readonly __typename?: 'UserTestProgressReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressUpdateAccess = {
+  readonly __typename?: 'UserTestProgressUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgressUpdateDocAccess = {
+  readonly __typename?: 'UserTestProgressUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type UserTestProgress_CompletedQuestions = {
+  readonly __typename?: 'UserTestProgress_CompletedQuestions';
+  readonly id: Maybe<Scalars['String']['output']>;
+  readonly question: Maybe<TestQuestion>;
+};
+
+
+export type UserTestProgress_CompletedQuestionsQuestionArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type UserTestProgress_CompletedQuestions__Id_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type UserTestProgress_CompletedQuestions__Question_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type UserTestProgress_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type UserTestProgress_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type UserTestProgress_Progress_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type UserTestProgress_Test_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type UserTestProgress_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type UserTestProgress_User_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type UserTestProgress_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_Or>>>;
+  readonly completedQuestions__id: InputMaybe<UserTestProgress_CompletedQuestions__Id_Operator>;
+  readonly completedQuestions__question: InputMaybe<UserTestProgress_CompletedQuestions__Question_Operator>;
+  readonly createdAt: InputMaybe<UserTestProgress_CreatedAt_Operator>;
+  readonly id: InputMaybe<UserTestProgress_Id_Operator>;
+  readonly progress: InputMaybe<UserTestProgress_Progress_Operator>;
+  readonly test: InputMaybe<UserTestProgress_Test_Operator>;
+  readonly updatedAt: InputMaybe<UserTestProgress_UpdatedAt_Operator>;
+  readonly user: InputMaybe<UserTestProgress_User_Operator>;
+};
+
+export type UserTestProgress_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_Or>>>;
+  readonly completedQuestions__id: InputMaybe<UserTestProgress_CompletedQuestions__Id_Operator>;
+  readonly completedQuestions__question: InputMaybe<UserTestProgress_CompletedQuestions__Question_Operator>;
+  readonly createdAt: InputMaybe<UserTestProgress_CreatedAt_Operator>;
+  readonly id: InputMaybe<UserTestProgress_Id_Operator>;
+  readonly progress: InputMaybe<UserTestProgress_Progress_Operator>;
+  readonly test: InputMaybe<UserTestProgress_Test_Operator>;
+  readonly updatedAt: InputMaybe<UserTestProgress_UpdatedAt_Operator>;
+  readonly user: InputMaybe<UserTestProgress_User_Operator>;
+};
+
+export type UserTestProgress_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<UserTestProgress_Where_Or>>>;
+  readonly completedQuestions__id: InputMaybe<UserTestProgress_CompletedQuestions__Id_Operator>;
+  readonly completedQuestions__question: InputMaybe<UserTestProgress_CompletedQuestions__Question_Operator>;
+  readonly createdAt: InputMaybe<UserTestProgress_CreatedAt_Operator>;
+  readonly id: InputMaybe<UserTestProgress_Id_Operator>;
+  readonly progress: InputMaybe<UserTestProgress_Progress_Operator>;
+  readonly test: InputMaybe<UserTestProgress_Test_Operator>;
+  readonly updatedAt: InputMaybe<UserTestProgress_UpdatedAt_Operator>;
+  readonly user: InputMaybe<UserTestProgress_User_Operator>;
+};
+
+export type UserTestProgresses = {
+  readonly __typename?: 'UserTestProgresses';
+  readonly docs: ReadonlyArray<UserTestProgress>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
 };
 
 export type UserUpdate_Role_MutationInput =
   | 'admin'
-  | 'editor'
   | 'user';
 
 export type UserUpdate_SignupMethod_MutationInput =
@@ -4793,9 +7356,18 @@ export type User_Id_Operator = {
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type User_Password_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type User_Role =
   | 'admin'
-  | 'editor'
   | 'user';
 
 export type User_Role_Input =
@@ -4805,7 +7377,6 @@ export type User_Role_Input =
 
 export type User_Role_MutationInput =
   | 'admin'
-  | 'editor'
   | 'user';
 
 export type User_Role_Operator = {
@@ -4836,6 +7407,14 @@ export type User_SignupMethod_Operator = {
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<User_SignupMethod_Input>>>;
 };
 
+export type User_Tariff_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
 export type User_UpdatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
@@ -4853,8 +7432,10 @@ export type User_Where = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
+  readonly tariff: InputMaybe<User_Tariff_Operator>;
   readonly updatedAt: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -4864,8 +7445,10 @@ export type User_Where_And = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
+  readonly tariff: InputMaybe<User_Tariff_Operator>;
   readonly updatedAt: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -4875,8 +7458,10 @@ export type User_Where_Or = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
+  readonly tariff: InputMaybe<User_Tariff_Operator>;
   readonly updatedAt: InputMaybe<User_UpdatedAt_Operator>;
 };
 
@@ -4923,8 +7508,10 @@ export type UsersDocAccessFields = {
   readonly __typename?: 'UsersDocAccessFields';
   readonly createdAt: Maybe<UsersDocAccessFields_CreatedAt>;
   readonly email: Maybe<UsersDocAccessFields_Email>;
+  readonly password: Maybe<UsersDocAccessFields_Password>;
   readonly role: Maybe<UsersDocAccessFields_Role>;
   readonly signupMethod: Maybe<UsersDocAccessFields_SignupMethod>;
+  readonly tariff: Maybe<UsersDocAccessFields_Tariff>;
   readonly updatedAt: Maybe<UsersDocAccessFields_UpdatedAt>;
 };
 
@@ -4984,6 +7571,34 @@ export type UsersDocAccessFields_Email_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type UsersDocAccessFields_Password = {
+  readonly __typename?: 'UsersDocAccessFields_password';
+  readonly create: Maybe<UsersDocAccessFields_Password_Create>;
+  readonly delete: Maybe<UsersDocAccessFields_Password_Delete>;
+  readonly read: Maybe<UsersDocAccessFields_Password_Read>;
+  readonly update: Maybe<UsersDocAccessFields_Password_Update>;
+};
+
+export type UsersDocAccessFields_Password_Create = {
+  readonly __typename?: 'UsersDocAccessFields_password_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Password_Delete = {
+  readonly __typename?: 'UsersDocAccessFields_password_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Password_Read = {
+  readonly __typename?: 'UsersDocAccessFields_password_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Password_Update = {
+  readonly __typename?: 'UsersDocAccessFields_password_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type UsersDocAccessFields_Role = {
   readonly __typename?: 'UsersDocAccessFields_role';
   readonly create: Maybe<UsersDocAccessFields_Role_Create>;
@@ -5040,6 +7655,34 @@ export type UsersDocAccessFields_SignupMethod_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type UsersDocAccessFields_Tariff = {
+  readonly __typename?: 'UsersDocAccessFields_tariff';
+  readonly create: Maybe<UsersDocAccessFields_Tariff_Create>;
+  readonly delete: Maybe<UsersDocAccessFields_Tariff_Delete>;
+  readonly read: Maybe<UsersDocAccessFields_Tariff_Read>;
+  readonly update: Maybe<UsersDocAccessFields_Tariff_Update>;
+};
+
+export type UsersDocAccessFields_Tariff_Create = {
+  readonly __typename?: 'UsersDocAccessFields_tariff_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Tariff_Delete = {
+  readonly __typename?: 'UsersDocAccessFields_tariff_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Tariff_Read = {
+  readonly __typename?: 'UsersDocAccessFields_tariff_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Tariff_Update = {
+  readonly __typename?: 'UsersDocAccessFields_tariff_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type UsersDocAccessFields_UpdatedAt = {
   readonly __typename?: 'UsersDocAccessFields_updatedAt';
   readonly create: Maybe<UsersDocAccessFields_UpdatedAt_Create>;
@@ -5072,8 +7715,10 @@ export type UsersFields = {
   readonly __typename?: 'UsersFields';
   readonly createdAt: Maybe<UsersFields_CreatedAt>;
   readonly email: Maybe<UsersFields_Email>;
+  readonly password: Maybe<UsersFields_Password>;
   readonly role: Maybe<UsersFields_Role>;
   readonly signupMethod: Maybe<UsersFields_SignupMethod>;
+  readonly tariff: Maybe<UsersFields_Tariff>;
   readonly updatedAt: Maybe<UsersFields_UpdatedAt>;
 };
 
@@ -5133,6 +7778,34 @@ export type UsersFields_Email_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type UsersFields_Password = {
+  readonly __typename?: 'UsersFields_password';
+  readonly create: Maybe<UsersFields_Password_Create>;
+  readonly delete: Maybe<UsersFields_Password_Delete>;
+  readonly read: Maybe<UsersFields_Password_Read>;
+  readonly update: Maybe<UsersFields_Password_Update>;
+};
+
+export type UsersFields_Password_Create = {
+  readonly __typename?: 'UsersFields_password_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Password_Delete = {
+  readonly __typename?: 'UsersFields_password_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Password_Read = {
+  readonly __typename?: 'UsersFields_password_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Password_Update = {
+  readonly __typename?: 'UsersFields_password_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type UsersFields_Role = {
   readonly __typename?: 'UsersFields_role';
   readonly create: Maybe<UsersFields_Role_Create>;
@@ -5189,6 +7862,34 @@ export type UsersFields_SignupMethod_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type UsersFields_Tariff = {
+  readonly __typename?: 'UsersFields_tariff';
+  readonly create: Maybe<UsersFields_Tariff_Create>;
+  readonly delete: Maybe<UsersFields_Tariff_Delete>;
+  readonly read: Maybe<UsersFields_Tariff_Read>;
+  readonly update: Maybe<UsersFields_Tariff_Update>;
+};
+
+export type UsersFields_Tariff_Create = {
+  readonly __typename?: 'UsersFields_tariff_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Tariff_Delete = {
+  readonly __typename?: 'UsersFields_tariff_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Tariff_Read = {
+  readonly __typename?: 'UsersFields_tariff_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Tariff_Update = {
+  readonly __typename?: 'UsersFields_tariff_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type UsersFields_UpdatedAt = {
   readonly __typename?: 'UsersFields_updatedAt';
   readonly create: Maybe<UsersFields_UpdatedAt_Create>;
@@ -5229,18 +7930,6 @@ export type UsersReadDocAccess = {
   readonly where: Maybe<Scalars['JSONObject']['output']>;
 };
 
-export type UsersUnlockAccess = {
-  readonly __typename?: 'UsersUnlockAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type UsersUnlockDocAccess = {
-  readonly __typename?: 'UsersUnlockDocAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
 export type UsersUpdateAccess = {
   readonly __typename?: 'UsersUpdateAccess';
   readonly permission: Scalars['Boolean']['output'];
@@ -5251,6 +7940,62 @@ export type UsersUpdateDocAccess = {
   readonly __typename?: 'UsersUpdateDocAccess';
   readonly permission: Scalars['Boolean']['output'];
   readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type AdminsAccess = {
+  readonly __typename?: 'adminsAccess';
+  readonly create: Maybe<AdminsCreateAccess>;
+  readonly delete: Maybe<AdminsDeleteAccess>;
+  readonly fields: Maybe<AdminsFields>;
+  readonly read: Maybe<AdminsReadAccess>;
+  readonly unlock: Maybe<AdminsUnlockAccess>;
+  readonly update: Maybe<AdminsUpdateAccess>;
+};
+
+export type AdminsDocAccess = {
+  readonly __typename?: 'adminsDocAccess';
+  readonly create: Maybe<AdminsCreateDocAccess>;
+  readonly delete: Maybe<AdminsDeleteDocAccess>;
+  readonly fields: Maybe<AdminsDocAccessFields>;
+  readonly read: Maybe<AdminsReadDocAccess>;
+  readonly unlock: Maybe<AdminsUnlockDocAccess>;
+  readonly update: Maybe<AdminsUpdateDocAccess>;
+};
+
+export type AdminsJwt = {
+  readonly __typename?: 'adminsJWT';
+  readonly collection: Scalars['String']['output'];
+  readonly email: Scalars['EmailAddress']['output'];
+};
+
+export type AdminsLoginResult = {
+  readonly __typename?: 'adminsLoginResult';
+  readonly exp: Maybe<Scalars['Int']['output']>;
+  readonly token: Maybe<Scalars['String']['output']>;
+  readonly user: Maybe<Admin>;
+};
+
+export type AdminsMe = {
+  readonly __typename?: 'adminsMe';
+  readonly collection: Maybe<Scalars['String']['output']>;
+  readonly exp: Maybe<Scalars['Int']['output']>;
+  readonly strategy: Maybe<Scalars['String']['output']>;
+  readonly token: Maybe<Scalars['String']['output']>;
+  readonly user: Maybe<Admin>;
+};
+
+export type AdminsRefreshedAdmin = {
+  readonly __typename?: 'adminsRefreshedAdmin';
+  readonly exp: Maybe<Scalars['Int']['output']>;
+  readonly refreshedToken: Maybe<Scalars['String']['output']>;
+  readonly strategy: Maybe<Scalars['String']['output']>;
+  readonly user: Maybe<AdminsJwt>;
+};
+
+export type AdminsResetPassword = {
+  readonly __typename?: 'adminsResetPassword';
+  readonly token: Maybe<Scalars['String']['output']>;
+  readonly user: Maybe<Admin>;
 };
 
 export type AllMedia = {
@@ -5266,6 +8011,11 @@ export type AllMedia = {
   readonly prevPage: Maybe<Scalars['Int']['output']>;
   readonly totalDocs: Scalars['Int']['output'];
   readonly totalPages: Scalars['Int']['output'];
+};
+
+export type CountAdmins = {
+  readonly __typename?: 'countAdmins';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
 };
 
 export type CountFaqs = {
@@ -5285,6 +8035,21 @@ export type CountPayloadPreferences = {
 
 export type CountTariffs = {
   readonly __typename?: 'countTariffs';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountTestQuestions = {
+  readonly __typename?: 'countTestQuestions';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountTests = {
+  readonly __typename?: 'countTests';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
+export type CountUserTestProgresses = {
+  readonly __typename?: 'countUserTestProgresses';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
 };
 
@@ -5346,6 +8111,34 @@ export type MediaDocAccess = {
   readonly fields: Maybe<MediaDocAccessFields>;
   readonly read: Maybe<MediaReadDocAccess>;
   readonly update: Maybe<MediaUpdateDocAccess>;
+};
+
+export type MutationAdminInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly email: Scalars['String']['input'];
+  readonly hash: InputMaybe<Scalars['String']['input']>;
+  readonly lockUntil: InputMaybe<Scalars['String']['input']>;
+  readonly loginAttempts: InputMaybe<Scalars['Float']['input']>;
+  readonly password: Scalars['String']['input'];
+  readonly resetPasswordExpiration: InputMaybe<Scalars['String']['input']>;
+  readonly resetPasswordToken: InputMaybe<Scalars['String']['input']>;
+  readonly role: Admin_Role_MutationInput;
+  readonly salt: InputMaybe<Scalars['String']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationAdminUpdateInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly email: InputMaybe<Scalars['String']['input']>;
+  readonly hash: InputMaybe<Scalars['String']['input']>;
+  readonly lockUntil: InputMaybe<Scalars['String']['input']>;
+  readonly loginAttempts: InputMaybe<Scalars['Float']['input']>;
+  readonly password: InputMaybe<Scalars['String']['input']>;
+  readonly resetPasswordExpiration: InputMaybe<Scalars['String']['input']>;
+  readonly resetPasswordToken: InputMaybe<Scalars['String']['input']>;
+  readonly role: InputMaybe<AdminUpdate_Role_MutationInput>;
+  readonly salt: InputMaybe<Scalars['String']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationFaqInput = {
@@ -5486,33 +8279,101 @@ export type MutationTariff_BenefitsInput = {
   readonly value: Scalars['String']['input'];
 };
 
+export type MutationTestInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly instruction: Scalars['String']['input'];
+  readonly title: Scalars['String']['input'];
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTestQuestionInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly errors: InputMaybe<ReadonlyArray<MutationTestQuestion_ErrorsInput>>;
+  readonly proposals: InputMaybe<ReadonlyArray<MutationTestQuestion_ProposalsInput>>;
+  readonly test: InputMaybe<Scalars['Int']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTestQuestionUpdateInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly errors: InputMaybe<ReadonlyArray<InputMaybe<MutationTestQuestionUpdate_ErrorsInput>>>;
+  readonly proposals: InputMaybe<ReadonlyArray<InputMaybe<MutationTestQuestionUpdate_ProposalsInput>>>;
+  readonly test: InputMaybe<Scalars['Int']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTestQuestionUpdate_ErrorsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly label: Scalars['String']['input'];
+};
+
+export type MutationTestQuestionUpdate_ProposalsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly label: Scalars['String']['input'];
+};
+
+export type MutationTestQuestion_ErrorsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly label: Scalars['String']['input'];
+};
+
+export type MutationTestQuestion_ProposalsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly label: Scalars['String']['input'];
+};
+
+export type MutationTestUpdateInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly instruction: InputMaybe<Scalars['String']['input']>;
+  readonly title: InputMaybe<Scalars['String']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MutationUserInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: Scalars['String']['input'];
-  readonly hash: InputMaybe<Scalars['String']['input']>;
-  readonly lockUntil: InputMaybe<Scalars['String']['input']>;
-  readonly loginAttempts: InputMaybe<Scalars['Float']['input']>;
   readonly password: Scalars['String']['input'];
-  readonly resetPasswordExpiration: InputMaybe<Scalars['String']['input']>;
-  readonly resetPasswordToken: InputMaybe<Scalars['String']['input']>;
   readonly role: User_Role_MutationInput;
-  readonly salt: InputMaybe<Scalars['String']['input']>;
   readonly signupMethod: User_SignupMethod_MutationInput;
+  readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationUserTestProgressInput = {
+  readonly completedQuestions: InputMaybe<ReadonlyArray<InputMaybe<MutationUserTestProgress_CompletedQuestionsInput>>>;
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly progress: Scalars['Float']['input'];
+  readonly test: InputMaybe<Scalars['Int']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+  readonly user: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationUserTestProgressUpdateInput = {
+  readonly completedQuestions: InputMaybe<ReadonlyArray<InputMaybe<MutationUserTestProgressUpdate_CompletedQuestionsInput>>>;
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly progress: InputMaybe<Scalars['Float']['input']>;
+  readonly test: InputMaybe<Scalars['Int']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+  readonly user: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationUserTestProgressUpdate_CompletedQuestionsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly question: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationUserTestProgress_CompletedQuestionsInput = {
+  readonly id: InputMaybe<Scalars['String']['input']>;
+  readonly question: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MutationUserUpdateInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: InputMaybe<Scalars['String']['input']>;
-  readonly hash: InputMaybe<Scalars['String']['input']>;
-  readonly lockUntil: InputMaybe<Scalars['String']['input']>;
-  readonly loginAttempts: InputMaybe<Scalars['Float']['input']>;
   readonly password: InputMaybe<Scalars['String']['input']>;
-  readonly resetPasswordExpiration: InputMaybe<Scalars['String']['input']>;
-  readonly resetPasswordToken: InputMaybe<Scalars['String']['input']>;
   readonly role: InputMaybe<UserUpdate_Role_MutationInput>;
-  readonly salt: InputMaybe<Scalars['String']['input']>;
   readonly signupMethod: InputMaybe<UserUpdate_SignupMethod_MutationInput>;
+  readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -5570,13 +8431,66 @@ export type TariffsDocAccess = {
   readonly update: Maybe<TariffsUpdateDocAccess>;
 };
 
+export type Test_QuestionsAccess = {
+  readonly __typename?: 'test_questionsAccess';
+  readonly create: Maybe<TestQuestionsCreateAccess>;
+  readonly delete: Maybe<TestQuestionsDeleteAccess>;
+  readonly fields: Maybe<TestQuestionsFields>;
+  readonly read: Maybe<TestQuestionsReadAccess>;
+  readonly update: Maybe<TestQuestionsUpdateAccess>;
+};
+
+export type Test_QuestionsDocAccess = {
+  readonly __typename?: 'test_questionsDocAccess';
+  readonly create: Maybe<TestQuestionsCreateDocAccess>;
+  readonly delete: Maybe<TestQuestionsDeleteDocAccess>;
+  readonly fields: Maybe<TestQuestionsDocAccessFields>;
+  readonly read: Maybe<TestQuestionsReadDocAccess>;
+  readonly update: Maybe<TestQuestionsUpdateDocAccess>;
+};
+
+export type TestsAccess = {
+  readonly __typename?: 'testsAccess';
+  readonly create: Maybe<TestsCreateAccess>;
+  readonly delete: Maybe<TestsDeleteAccess>;
+  readonly fields: Maybe<TestsFields>;
+  readonly read: Maybe<TestsReadAccess>;
+  readonly update: Maybe<TestsUpdateAccess>;
+};
+
+export type TestsDocAccess = {
+  readonly __typename?: 'testsDocAccess';
+  readonly create: Maybe<TestsCreateDocAccess>;
+  readonly delete: Maybe<TestsDeleteDocAccess>;
+  readonly fields: Maybe<TestsDocAccessFields>;
+  readonly read: Maybe<TestsReadDocAccess>;
+  readonly update: Maybe<TestsUpdateDocAccess>;
+};
+
+export type User_Test_ProgressAccess = {
+  readonly __typename?: 'user_test_progressAccess';
+  readonly create: Maybe<UserTestProgressCreateAccess>;
+  readonly delete: Maybe<UserTestProgressDeleteAccess>;
+  readonly fields: Maybe<UserTestProgressFields>;
+  readonly read: Maybe<UserTestProgressReadAccess>;
+  readonly update: Maybe<UserTestProgressUpdateAccess>;
+};
+
+export type User_Test_ProgressDocAccess = {
+  readonly __typename?: 'user_test_progressDocAccess';
+  readonly create: Maybe<UserTestProgressCreateDocAccess>;
+  readonly delete: Maybe<UserTestProgressDeleteDocAccess>;
+  readonly fields: Maybe<UserTestProgressDocAccessFields>;
+  readonly read: Maybe<UserTestProgressReadDocAccess>;
+  readonly update: Maybe<UserTestProgressUpdateDocAccess>;
+};
+
 export type UsersAccess = {
   readonly __typename?: 'usersAccess';
   readonly create: Maybe<UsersCreateAccess>;
   readonly delete: Maybe<UsersDeleteAccess>;
   readonly fields: Maybe<UsersFields>;
   readonly read: Maybe<UsersReadAccess>;
-  readonly unlock: Maybe<UsersUnlockAccess>;
   readonly update: Maybe<UsersUpdateAccess>;
 };
 
@@ -5586,44 +8500,7 @@ export type UsersDocAccess = {
   readonly delete: Maybe<UsersDeleteDocAccess>;
   readonly fields: Maybe<UsersDocAccessFields>;
   readonly read: Maybe<UsersReadDocAccess>;
-  readonly unlock: Maybe<UsersUnlockDocAccess>;
   readonly update: Maybe<UsersUpdateDocAccess>;
-};
-
-export type UsersJwt = {
-  readonly __typename?: 'usersJWT';
-  readonly collection: Scalars['String']['output'];
-  readonly email: Scalars['EmailAddress']['output'];
-};
-
-export type UsersLoginResult = {
-  readonly __typename?: 'usersLoginResult';
-  readonly exp: Maybe<Scalars['Int']['output']>;
-  readonly token: Maybe<Scalars['String']['output']>;
-  readonly user: Maybe<User>;
-};
-
-export type UsersMe = {
-  readonly __typename?: 'usersMe';
-  readonly collection: Maybe<Scalars['String']['output']>;
-  readonly exp: Maybe<Scalars['Int']['output']>;
-  readonly strategy: Maybe<Scalars['String']['output']>;
-  readonly token: Maybe<Scalars['String']['output']>;
-  readonly user: Maybe<User>;
-};
-
-export type UsersRefreshedUser = {
-  readonly __typename?: 'usersRefreshedUser';
-  readonly exp: Maybe<Scalars['Int']['output']>;
-  readonly refreshedToken: Maybe<Scalars['String']['output']>;
-  readonly strategy: Maybe<Scalars['String']['output']>;
-  readonly user: Maybe<UsersJwt>;
-};
-
-export type UsersResetPassword = {
-  readonly __typename?: 'usersResetPassword';
-  readonly token: Maybe<Scalars['String']['output']>;
-  readonly user: Maybe<User>;
 };
 
 export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -5643,14 +8520,6 @@ export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetTaraffisQuery = { readonly __typename?: 'Query', readonly Tariffs: { readonly __typename?: 'Tariffs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }> } };
 
-export type LoginUserMutationVariables = Exact<{
-  email: Scalars['String']['input'];
-  password: Scalars['String']['input'];
-}>;
-
-
-export type LoginUserMutation = { readonly __typename?: 'Mutation', readonly loginUser: { readonly __typename?: 'usersLoginResult', readonly user: { readonly __typename?: 'User', readonly id: number, readonly email: any } } };
-
 export type CreateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -5659,14 +8528,14 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly __typename?: 'Mutation', readonly createUser: { readonly __typename?: 'User', readonly id: number } };
+export type CreateUserMutation = { readonly __typename?: 'Mutation', readonly createUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
 
 export type GetUserByEmailQueryVariables = Exact<{
   email: Scalars['EmailAddress']['input'];
 }>;
 
 
-export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly role: User_Role, readonly signupMethod: User_SignupMethod }> } };
+export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role }> } };
 
 export const TariffFragmentFragmentDoc = gql`
     fragment TariffFragment on Tariff {
@@ -5726,35 +8595,27 @@ export const GetTaraffisDocument = gql`
   }
 }
     ${TariffFragmentFragmentDoc}`;
-export const LoginUserDocument = gql`
-    mutation LoginUser($email: String!, $password: String!) {
-  loginUser(email: $email, password: $password) {
-    user {
-      id
-      email
-    }
-  }
-}
-    `;
 export const CreateUserDocument = gql`
     mutation CreateUser($email: String!, $password: String!, $role: User_role_MutationInput!, $signupMethod: User_signupMethod_MutationInput!) {
   createUser(
     data: {email: $email, password: $password, role: $role, signupMethod: $signupMethod}
   ) {
     id
+    email
   }
 }
     `;
 export const GetUserByEmailDocument = gql`
     query GetUserByEmail($email: EmailAddress!) {
   Users(where: {email: {equals: $email}}) {
-    totalDocs
     docs {
       id
       email
-      role
+      password
       signupMethod
+      role
     }
+    totalDocs
   }
 }
     `;
@@ -5774,9 +8635,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetTaraffis(variables?: GetTaraffisQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTaraffisQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTaraffisQuery>({ document: GetTaraffisDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTaraffis', 'query', variables);
-    },
-    LoginUser(variables: LoginUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<LoginUserMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<LoginUserMutation>({ document: LoginUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'LoginUser', 'mutation', variables);
     },
     CreateUser(variables: CreateUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>({ document: CreateUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateUser', 'mutation', variables);
