@@ -1,52 +1,36 @@
-import { type DefaultSession } from "next-auth"
+// types/next-auth.d.ts
+import NextAuth from 'next-auth'
 
-declare module "next-auth" {
-  interface Session extends DefaultSession {
+declare module 'next-auth' {
+  interface User {
+    id: string
+    email: string
+    role: 'user' | 'admin'
+  }
+
+  interface Session {
     user: {
       id: string
-      name: string
       email: string
-      image?: string | null
-      role: string
-      emailVerified?: Date | null
-    } & DefaultSession["user"]
-    backendTokens: {
+      name: string
+      image: string
+      role: 'user' | 'admin'
+    }
+    tokens: {
       accessToken: string
       refreshToken: string
+      accessTokenExpires: number
     }
-    provider?: string
-  }
-
-  interface User {
-    picture: string | null | undefined
-    role: string
-    backendTokens: {
-      accessToken: string
-      refreshToken: string
-    }
-  }
-
-  interface BackendTokens {
-    accessToken: string
-    refreshToken: string
   }
 }
 
-declare module "next-auth/jwt" {
-  interface JWT extends DefaultJWT {
-    user: {
-      id: string
-      name: string
-      email: string
-      image: string | null
-      role: string
-      emailVerified?: Date | null
-    } & DefaultSession["user"]
-    backendTokens: {
-      accessToken?: string
-      refreshToken?: string
-    }
-    provider?: string
-    role: string
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string
+    email: string
+    role: 'user' | 'admin'
+    accessToken: string
+    refreshToken: string
+    accessTokenExpires: number
   }
 }
