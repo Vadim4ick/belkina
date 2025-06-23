@@ -26,11 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full">
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
-        <Providers>
-          {children}
-
-          <AppFooter />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
