@@ -85,7 +85,7 @@ export const Users: CollectionConfig = {
       label: 'Тариф',
       type: 'relationship',
       relationTo: 'tariffs',
-      required: true,
+      required: false,
       defaultValue: async ({ req }) => {
         const { docs } = await req.payload.find({
           collection: 'tariffs',

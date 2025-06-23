@@ -141,7 +141,7 @@ export interface User {
   password: string;
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex';
-  tariff: number | Tariff;
+  tariff?: (number | null) | Tariff;
   testResults?: (number | TestResult)[] | null;
   updatedAt: string;
   createdAt: string;
