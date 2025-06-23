@@ -1,8 +1,7 @@
 import { cn } from '@/shared/lib/utils'
 import { Button, ButtonProps } from '@/shared/ui/button'
 import { SheetClose } from '@/shared/ui/sheet'
-import { LucideIcon } from 'lucide-react'
-import { FC, ReactElement, ReactNode, SVGProps } from 'react'
+import { FC, ReactNode, SVGProps } from 'react'
 
 interface SidebarButtonProps extends ButtonProps {
   icon?: FC<SVGProps<SVGSVGElement>> | null

@@ -13,7 +13,7 @@ export interface IsideBarItems {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
