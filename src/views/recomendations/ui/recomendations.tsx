@@ -27,8 +27,8 @@ export function Recomendations({ title = 'Рекомендации' }: { title?:
           </ul>
         </div>
 
-        <Card className="flex w-full flex-col gap-6 rounded-xl bg-white px-4 py-5 shadow-none md:flex-row lg:px-8 lg:py-10">
-          <div className="flex h-full w-full flex-col gap-2 overflow-y-auto">
+        <Card className="flex w-full flex-col gap-6 rounded-xl bg-white px-4 py-5 shadow-none lg:px-8 lg:py-10 xl:flex-row">
+          <div className="flex h-full min-w-1/2 flex-col gap-2 overflow-y-auto">
             {[
               'Экспресс-тест с анализом ошибок',
               'Полный видеоразбор заданий и тем',
