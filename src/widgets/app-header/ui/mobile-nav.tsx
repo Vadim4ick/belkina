@@ -10,13 +10,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/ui/sheet'
-import { Button, ButtonProps } from '@/shared/ui/button'
+import { ButtonProps } from '@/shared/ui/button'
 import { IHeaderItems } from '..'
 import { MenuIcon } from '@/shared/icons/menu-icon'
 import { XIcon } from '@/shared/icons/x-icon'
 import { UserProfile } from './user-profile'
 import { Logo } from '@/shared/ui/logo'
-import { cn } from '@/shared/lib/utils'
 import { memo, useState } from 'react'
 import { MobileNavButton } from './mobile-nav-button'
 import { usePathname } from 'next/navigation'
@@ -25,7 +24,7 @@ interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[]
 }
 
-const MobileNav = memo(({ headerItems, className }: MobileNavProps) => {
+const MobileNav = memo(({ headerItems }: MobileNavProps) => {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   return (

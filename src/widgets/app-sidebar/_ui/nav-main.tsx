@@ -9,7 +9,6 @@ import {
 } from '@/shared/ui/sidebar'
 import Link from 'next/link'
 import { FC, SVGProps } from 'react'
-import { SidebarButton } from './sidebar-button'
 import { usePathname } from 'next/navigation'
 
 export function NavMain({
