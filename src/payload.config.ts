@@ -18,6 +18,10 @@ import { TestQuestions } from './shared/collections/test/questions'
 import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
 
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
