@@ -1,7 +1,7 @@
-import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { cn } from '@/shared/lib/utils'
 import { TariffFragmentFragment } from '@/shared/graphql/__generated__'
+import { TariffButton } from './tariff-button'
 
 const TariffCard = ({ item, className }: { item: TariffFragmentFragment; className?: string }) => {
   return (
@@ -50,7 +50,7 @@ const TariffCard = ({ item, className }: { item: TariffFragmentFragment; classNa
           От {item.price} рублей
         </Typography>
 
-        <Button size={'xl'}>Выбрать</Button>
+        <TariffButton tariffId={item.id} />
       </div>
     </div>
   )

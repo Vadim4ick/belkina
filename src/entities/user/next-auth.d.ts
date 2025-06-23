@@ -7,6 +7,7 @@ declare module 'next-auth' {
     id: string
     email: string
     role: 'user' | 'admin'
+    tariffId: number
   }
 
   interface Session {
@@ -16,6 +17,7 @@ declare module 'next-auth' {
       name: string
       image: string
       role: 'user' | 'admin'
+      tariffId: number
     }
     tokens: {
       accessToken: string
@@ -33,5 +35,6 @@ declare module 'next-auth/jwt' {
     accessToken: string
     refreshToken: string
     accessTokenExpires: number
+    tariffId: number
   }
 }
