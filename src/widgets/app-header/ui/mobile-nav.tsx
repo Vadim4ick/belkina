@@ -8,6 +8,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetTrigger,
 } from '@/shared/ui/sheet'
 import { Button, ButtonProps } from '@/shared/ui/button'
 import { IHeaderItems } from '..'
@@ -17,6 +18,8 @@ import { UserProfile } from './user-profile'
 import { Logo } from '@/shared/ui/logo'
 import { cn } from '@/shared/lib/utils'
 import { memo, useState } from 'react'
+import { MobileNavButton } from './mobile-nav-button'
+import { usePathname } from 'next/navigation'
 
 interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[]
@@ -24,39 +27,34 @@ interface MobileNavProps extends ButtonProps {
 
 const MobileNav = memo(({ headerItems, className }: MobileNavProps) => {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
   return (
     <>
-      <Button
-        onClick={() => setOpen(true)}
-        variant="ghost"
-        className={cn(
-          'border-dark-grey fixed top-4 left-4 w-full justify-between border px-3 py-4',
-          className,
-        )}
-        aria-label="Open menu"
-      >
-        <MenuIcon className="h-6 w-6" />
-      </Button>
-
       <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger className="absolute top-4 left-4">
+          <MenuIcon className="h-6 w-6" />
+        </SheetTrigger>
         <SheetContent side="left" hideClose className="z-[51] w-[90%] px-5 py-4">
           <SheetHeader className="mb-3 p-0">
             <SheetTitle>
               <Logo />
             </SheetTitle>
             <SheetDescription></SheetDescription>
-            <div className="flex flex-row-reverse items-center justify-end gap-x-4">
-              <UserProfile />
-            </div>
+            <UserProfile className="flex flex-row-reverse items-center justify-end gap-x-4" />
             <SheetClose className="absolute right-5">
               <XIcon />
             </SheetClose>
           </SheetHeader>
           <ul className="space-y-4">
             {headerItems.map((item, idx) => (
-              <li key={idx}>
-                <Link href={item.url}>{item.title}</Link>
-              </li>
+              <Link key={idx} href={item.url}>
+                <MobileNavButton
+                  variant={pathname === item.url ? 'secondary' : 'ghost'}
+                  icon={item.icon}
+                >
+                  <span>{item.title}</span>
+                </MobileNavButton>
+              </Link>
             ))}
           </ul>
         </SheetContent>
