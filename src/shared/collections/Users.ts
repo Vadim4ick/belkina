@@ -98,6 +98,14 @@ export const Users: CollectionConfig = {
         position: 'sidebar',
       },
     },
+
+    {
+      name: 'testResults',
+      label: 'Результаты тестов',
+      type: 'relationship',
+      relationTo: 'testResults',
+      hasMany: true,
+    },
   ],
 
   hooks: {

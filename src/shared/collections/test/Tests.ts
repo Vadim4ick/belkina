@@ -8,11 +8,7 @@ export const Tests: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title'],
-    group: 'Тесты',
-  },
-  access: {
-    read: () => true,
+    group: 'Тестирование',
   },
   fields: [
     {
@@ -22,12 +18,24 @@ export const Tests: CollectionConfig = {
       required: true,
     },
     {
-      name: 'instruction',
-      label: 'Инструкция',
-      type: 'textarea',
+      name: 'tariff',
+      label: 'Тариф',
+      type: 'relationship',
+      relationTo: 'tariffs',
       required: true,
-      defaultValue:
-        'Установите соответствие между грамматическими ошибками и предложениями, в которых они допущены...',
+      admin: { position: 'sidebar' },
+    },
+    {
+      name: 'description',
+      label: 'Описание',
+      type: 'textarea',
+    },
+    {
+      name: 'questions',
+      label: 'Вопросы',
+      type: 'relationship',
+      relationTo: 'questions',
+      hasMany: true,
     },
   ],
 }
