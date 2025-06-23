@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
 import './../../shared/assets/css/globals.css'
 import { Providers } from '@/shared/providers/providers'
-import { AppFooter } from '@/widgets/app-footer'
-
+import { SessionProvider } from 'next-auth/react'
 const geistSans = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -26,7 +25,9 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full">
       <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
-        <Providers>{children}</Providers>
+        <SessionProvider>
+          <Providers>{children}</Providers>
+        </SessionProvider>
       </body>
     </html>
   )

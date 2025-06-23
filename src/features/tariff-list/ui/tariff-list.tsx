@@ -1,4 +1,5 @@
 import { TariffCard } from '@/entities/tariff'
+import { auth } from '@/entities/user/auth'
 import { GetTaraffisQuery } from '@/shared/graphql/client'
 import { cn } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
@@ -11,6 +12,8 @@ const TariffList = async ({
   title?: string
   tarrifs?: GetTaraffisQuery['Tariffs']['docs']
 }) => {
+  const session = await auth()
+
   if (!tarrifs) return null
 
   return (
@@ -23,7 +26,12 @@ const TariffList = async ({
 
           <div className="max-tablet:grid-cols-1 grid grid-cols-3 gap-6">
             {tarrifs.map((item, idx) => (
-              <TariffCard key={idx} item={item} className={cn(idx === 1 && 'border-blue border')} />
+              <TariffCard
+                key={idx}
+                currentTariffId={session?.user.tariffId}
+                item={item}
+                className={cn(idx === 1 && 'border-blue border')}
+              />
             ))}
           </div>
         </div>
