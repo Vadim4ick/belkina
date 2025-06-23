@@ -1,7 +1,6 @@
 import { CartIcon } from '@/shared/icons/cart-icon'
 import { Separator } from '@/shared/ui/separator'
 import { SidebarTrigger } from '@/shared/ui/sidebar'
-import { UserProfile } from '@/widgets/app-header/ui/user-profile'
 import { Bell, PanelLeft } from 'lucide-react'
 
 export function SiteBarHeader() {
@@ -16,7 +15,6 @@ export function SiteBarHeader() {
         <div className="ml-auto flex items-center gap-4">
           <Bell fill="black" />
           <CartIcon />
-          <UserProfile />
         </div>
       </div>
     </header>
