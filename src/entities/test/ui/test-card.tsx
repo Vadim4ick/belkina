@@ -1,9 +1,12 @@
+'use client'
+
 import { useFormContext, Controller } from 'react-hook-form'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
 import { Progress } from '@/shared/ui/progress'
 import { QuestionFragmentFragment } from '@/shared/graphql/__generated__'
 import { memo } from 'react'
+import { useShuffledOnClient } from '@/shared/hooks/useShuffledOnClient'
 
 type Props = {
   question: QuestionFragmentFragment
@@ -16,6 +19,8 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
   const { control } = useFormContext()
 
   const questionName = `q_${question.id}`
+
+  const shuffledRight = useShuffledOnClient(question.matchingPairs?.map((p) => p))
 
   const renderContent = () => {
     switch (question.questionType) {
@@ -104,7 +109,7 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
                   </div>
                   <div className="flex flex-col gap-2">
                     <Typography variant="poppins-md-16">Правая часть</Typography>
-                    {question.matchingPairs.map((pair, idx) => (
+                    {shuffledRight.map((pair, idx) => (
                       <div key={pair.id} className="flex items-center gap-2">
                         <Typography variant="poppins-md-16">
                           {idx + 1}) {pair.right}

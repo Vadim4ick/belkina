@@ -20,6 +20,7 @@ export const Tests: CollectionConfig = {
       type: 'text',
       required: true,
     },
+
     {
       name: 'tariff',
       label: 'Тариф',
