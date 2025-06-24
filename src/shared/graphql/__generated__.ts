@@ -6525,7 +6525,7 @@ export type Test = {
   readonly description: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['Int']['output'];
   readonly questions: Maybe<ReadonlyArray<Question>>;
-  readonly tariff: Tariff;
+  readonly tariff: Maybe<Tariff>;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
@@ -7493,6 +7493,7 @@ export type Test_Questions_Operator = {
 export type Test_Tariff_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
@@ -9280,7 +9281,11 @@ export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetFaGsQuery = { readonly __typename?: 'Query', readonly Faqs: { readonly __typename?: 'Faqs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Faq', readonly id: number, readonly question: string, readonly answer: string }> } };
 
+export type QuestionFragmentFragment = { readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> };
+
 export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
+
+export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9291,6 +9296,11 @@ export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetTaraffisQuery = { readonly __typename?: 'Query', readonly Tariffs: { readonly __typename?: 'Tariffs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }> } };
+
+export type GetAllTestsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTestsQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> }> } };
 
 export type CreateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -9322,6 +9332,39 @@ export const TariffFragmentFragmentDoc = gql`
   }
 }
     `;
+export const QuestionFragmentFragmentDoc = gql`
+    fragment QuestionFragment on Question {
+  id
+  questionText
+  questionType
+  answers {
+    id
+    label
+    isCorrect
+    value
+  }
+  matchingPairs {
+    id
+    left
+    right
+  }
+  createdAt
+}
+    `;
+export const TestFragmentFragmentDoc = gql`
+    fragment TestFragment on Test {
+  id
+  title
+  tariff {
+    ...TariffFragment
+  }
+  description
+  questions {
+    ...QuestionFragment
+  }
+}
+    ${TariffFragmentFragmentDoc}
+${QuestionFragmentFragmentDoc}`;
 export const GetFaGsDocument = gql`
     query GetFAGs {
   Faqs {
@@ -9367,6 +9410,15 @@ export const GetTaraffisDocument = gql`
   }
 }
     ${TariffFragmentFragmentDoc}`;
+export const GetAllTestsDocument = gql`
+    query GetAllTests {
+  Tests {
+    docs {
+      ...TestFragment
+    }
+  }
+}
+    ${TestFragmentFragmentDoc}`;
 export const CreateUserDocument = gql`
     mutation CreateUser($email: String!, $password: String!, $role: User_role_MutationInput!, $signupMethod: User_signupMethod_MutationInput!) {
   createUser(
@@ -9410,6 +9462,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetTaraffis(variables?: GetTaraffisQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTaraffisQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTaraffisQuery>({ document: GetTaraffisDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTaraffis', 'query', variables);
+    },
+    GetAllTests(variables?: GetAllTestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllTestsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllTestsQuery>({ document: GetAllTestsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllTests', 'query', variables);
     },
     CreateUser(variables: CreateUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateUserMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>({ document: CreateUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateUser', 'mutation', variables);

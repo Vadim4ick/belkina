@@ -10,22 +10,24 @@ import { getSettledValue } from '@/shared/lib/utils'
 const Home = async () => {
   const gql = await getServerGqlClient()
 
-  const [res, faqs, tarrifs] = await Promise.allSettled([
+  const [res, faqs, tarrifs, tests] = await Promise.allSettled([
     gql.GetHomePage(),
     gql.GetFAGs(),
     gql.GetTaraffis(),
+    gql.GetAllTests(),
   ])
 
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)
   const tarrifsVal = getSettledValue(tarrifs)
+  const testsVal = getSettledValue(tests)
 
   return (
     <>
       <MainBanner content={resVal?.HomePage.mainOfferBanner} />
       <TariffList tarrifs={tarrifsVal?.Tariffs.docs} />
       <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
-      <TestCardQuestions />
+      <TestCardQuestions tests={testsVal?.Tests.docs} />
       <AskedQuestions faqs={faqsVal?.Faqs.docs} />
       <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
     </>

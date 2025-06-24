@@ -191,7 +191,7 @@ export interface TestResult {
 export interface Test {
   id: number;
   title: string;
-  tariff: number | Tariff;
+  tariff?: (number | null) | Tariff;
   description?: string | null;
   questions?: (number | Question)[] | null;
   updatedAt: string;

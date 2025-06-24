@@ -1,50 +1,109 @@
-import { TestCard } from "@/entities/test";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { Typography } from "@/shared/ui/typography";
+'use client'
 
-const TestForm = () => {
+import { memo, useEffect, useMemo, useState } from 'react'
+import { useForm, FormProvider } from 'react-hook-form'
+import { TestCard } from '@/entities/test'
+import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
+import { Button } from '@/shared/ui/button'
+import { Typography } from '@/shared/ui/typography'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createStepSchema } from '@/entities/test/model/schema'
+import { Input } from '@/shared/ui/input'
+
+const TestForm = memo(({ tests }: { tests: GetAllTestsQuery['Tests']['docs'] }) => {
+  const currentTest = tests[0]
+  const questions = currentTest?.questions || []
+
+  const [step, setStep] = useState(0)
+  const [completed, setCompleted] = useState(false)
+
+  const currentQuestion = questions[step]
+  const schema = useMemo(() => createStepSchema(currentQuestion), [currentQuestion])
+
+  const resolver = zodResolver(schema)
+
+  const form = useForm({
+    defaultValues: {},
+    mode: 'onChange',
+    resolver,
+  })
+  const { handleSubmit, getValues, formState } = form
+
+  useEffect(() => {
+    form.reset(form.getValues())
+    form.trigger()
+  }, [step])
+
+  const onNext = () => {
+    if (step < questions.length - 1) {
+      setStep((prev) => prev + 1)
+    } else {
+      setCompleted(true)
+      const allAnswers = getValues()
+      console.log('Ответы:', allAnswers)
+    }
+  }
+
+  const handleBack = () => {
+    setStep((prev) => Math.max(prev - 1, 0))
+  }
+
+  if (completed) {
+    return (
+      <div className="border-blue mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
+        <div className="text-4xl">🎉</div>
+
+        <Typography tag="h2" variant="poppins-md-16" className="font-semibold text-green-400">
+          Вы успешно прошли тест!
+        </Typography>
+
+        <Typography tag="p" variant="poppins-md-16" className="text-dark-grey">
+          Для получения бесплатного видеоурока укажите свой e-mail
+        </Typography>
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+          }}
+          className="flex w-full flex-col gap-4"
+        >
+          <Input type="email" name="email" placeholder="Ваш e-mail" />
+
+          <Button>Отправить</Button>
+        </form>
+      </div>
+    )
+  }
+
   return (
-    <div className="max-mobile:gap-6 flex flex-col gap-18">
-      <div className="relative w-fit">
-        <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
+    <FormProvider {...form}>
+      <form onSubmit={handleSubmit(onNext)}>
+        <div className="relative w-full">
+          <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
+          <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
+            <TestCard
+              question={currentQuestion}
+              index={step}
+              total={questions.length}
+              step={step}
+            />
 
-        <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
-          <TestCard />
-        </div>
-      </div>
+            <div className="mt-6 flex justify-between">
+              {step !== 0 && (
+                <Button type="button" variant="ghost" onClick={handleBack}>
+                  Назад
+                </Button>
+              )}
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-6">
-            <Typography
-              className="text-dark-grey"
-              tag="p"
-              variant="poppins-md-16"
-            >
-              А
-            </Typography>
-
-            <Input className="bg-transparent" placeholder="Написать" />
-          </div>
-
-          <div className="flex items-center gap-6">
-            <Typography
-              className="text-dark-grey"
-              tag="p"
-              variant="poppins-md-16"
-            >
-              Б
-            </Typography>
-
-            <Input className="bg-transparent" placeholder="Написать" />
+              <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
+                {step === questions.length - 1 ? 'Завершить' : 'Далее'}
+              </Button>
+            </div>
           </div>
         </div>
+      </form>
+    </FormProvider>
+  )
+})
 
-        <Button size={"xl"}>Далее</Button>
-      </div>
-    </div>
-  );
-};
-
-export { TestForm };
+export { TestForm }

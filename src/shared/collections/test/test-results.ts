@@ -11,13 +11,7 @@ export const TestResults: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: ({ req }) => {
-      const user = req.user
-      if (!user) return false
-      return {
-        user: { equals: user.id },
-      }
-    },
+    read: () => true,
   },
   fields: [
     {
