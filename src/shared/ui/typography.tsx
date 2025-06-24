@@ -3,6 +3,7 @@ import { cn } from '@/shared/lib/utils'
 export type TypographyVariant =
   | 'visuelt-bold-48'
   | 'visuelt-bold-32'
+  | 'poppins-md-24'
   | 'poppins-md-16'
   | 'poppins-reg-14'
 
@@ -18,6 +19,7 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 const variantStyles: Record<TypographyVariant, string> = {
   'visuelt-bold-48': 'text-[48px] leading-[120%] font-[family-name:Visuelt] font-bold',
   'visuelt-bold-32': 'text-[32px] leading-[120%] font-[family-name:Visuelt] font-bold',
+  'poppins-md-24': 'text-[24px] leading-[120%] var(--font-poppins) font-medium',
   'poppins-md-16': 'text-[16px] leading-[20px] var(--font-poppins) font-medium',
   'poppins-reg-14': 'text-[14px] leading-[20px] var(--font-poppins) font-normal',
 }

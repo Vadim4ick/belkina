@@ -7,7 +7,7 @@ import { Typography } from '@/shared/ui/typography'
 export function Recomendations({ title = 'Рекомендации' }: { title?: string }) {
   return (
     <section className="max-mobile:py-6 py-12">
-      <Typography tag="h2" variant="visuelt-bold-48" className="mb-6">
+      <Typography tag="h1" variant="visuelt-bold-48" className="mb-6">
         {title}
       </Typography>
 
