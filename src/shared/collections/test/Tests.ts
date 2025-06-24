@@ -11,7 +11,7 @@ export const Tests: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true, // можно читать публично
+    read: () => true,
   },
   fields: [
     {

@@ -11,7 +11,7 @@ export const TestQuestions: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true, // можно читать публично
+    read: () => true,
   },
   fields: [
     {
@@ -40,6 +40,22 @@ export const TestQuestions: CollectionConfig = {
         condition: (_, siblingData) =>
           siblingData.questionType === 'single_choice' ||
           siblingData.questionType === 'multiple_choice',
+      },
+
+      validate: (answers, { data }) => {
+        const questionType = (data as { questionType?: string })?.questionType
+
+        if (questionType !== 'single_choice') return true
+
+        const correctCnt = Array.isArray(answers)
+          ? answers.filter((a) => (a as { isCorrect?: boolean })?.isCorrect).length
+          : 0
+
+        if (correctCnt !== 1) {
+          return 'Для вопросов с одним правильным ответом должна быть выбрана ровно одна галочка «Правильный?»'
+        }
+
+        return true
       },
       fields: [
         { name: 'label', label: 'Ответ', type: 'text' },
