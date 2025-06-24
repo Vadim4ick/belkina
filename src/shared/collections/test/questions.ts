@@ -10,6 +10,9 @@ export const TestQuestions: CollectionConfig = {
     useAsTitle: 'questionText',
     group: 'Тестирование',
   },
+  access: {
+    read: () => true, // можно читать публично
+  },
   fields: [
     {
       name: 'questionText',

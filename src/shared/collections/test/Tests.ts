@@ -10,6 +10,9 @@ export const Tests: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Тестирование',
   },
+  access: {
+    read: () => true, // можно читать публично
+  },
   fields: [
     {
       name: 'title',
@@ -22,7 +25,7 @@ export const Tests: CollectionConfig = {
       label: 'Тариф',
       type: 'relationship',
       relationTo: 'tariffs',
-      required: true,
+      required: false,
       admin: { position: 'sidebar' },
     },
     {
