@@ -4,7 +4,7 @@ import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 
 const TestCardQuestions = ({ tests }: { tests?: GetAllTestsQuery['Tests']['docs'] }) => {
-  if (!tests) return null
+  if (!tests || tests.length === 0) return null
 
   return (
     <section className="max-mobile:py-6 bg-[#F6F6F6] py-12">
