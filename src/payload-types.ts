@@ -525,6 +525,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
+  featuredTest?: (number | null) | Test;
   mainOfferBanner: {
     title: string;
     description: string;
@@ -552,6 +553,7 @@ export interface HomePage {
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  featuredTest?: T;
   mainOfferBanner?:
     | T
     | {

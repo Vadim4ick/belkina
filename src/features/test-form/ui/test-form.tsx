@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { memo, useEffect, useMemo, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 
-import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
+import { TestFragmentFragment } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -12,9 +13,8 @@ import { Input } from '@/shared/ui/input'
 import { TestCard } from '@/entities/test'
 import { checkMatchingCorrectness } from '../model/const'
 
-const TestForm = memo(({ tests }: { tests: GetAllTestsQuery['Tests']['docs'] }) => {
-  const currentTest = tests[0]
-  const questions = currentTest?.questions || []
+const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
+  const questions = test?.questions || []
 
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)

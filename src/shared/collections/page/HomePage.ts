@@ -11,6 +11,14 @@ export const HomePage: GlobalConfig = {
   },
   fields: [
     {
+      name: 'featuredTest',
+      label: 'Выбранный тест для отображения',
+      type: 'relationship',
+      relationTo: 'tests',
+      required: false, // или true — по желанию
+      maxDepth: 1, // подтянет поля теста, например, title
+    },
+    {
       name: 'mainOfferBanner',
       label: 'БЕСПЛАТНЫЙ ПЕРВЫЙ ВИДЕОУРОК',
       type: 'group',
