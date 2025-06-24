@@ -2,13 +2,15 @@
 
 import { memo, useEffect, useMemo, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
-import { TestCard } from '@/entities/test'
+
 import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createStepSchema } from '@/entities/test/model/schema'
 import { Input } from '@/shared/ui/input'
+import { TestCard } from '@/entities/test'
+import { checkMatchingCorrectness } from '../model/const'
 
 const TestForm = memo(({ tests }: { tests: GetAllTestsQuery['Tests']['docs'] }) => {
   const currentTest = tests[0]
@@ -39,8 +41,44 @@ const TestForm = memo(({ tests }: { tests: GetAllTestsQuery['Tests']['docs'] }) 
       setStep((prev) => prev + 1)
     } else {
       setCompleted(true)
-      const allAnswers = getValues()
+
+      const allAnswers: Record<string, any> = getValues()
+
       console.log('Ответы:', allAnswers)
+
+      const results: Record<string, boolean> = {}
+
+      questions.forEach((question) => {
+        switch (question.questionType) {
+          case 'matching': {
+            const userAnswer = allAnswers[`q_${question.id}`] as Record<string, string>
+
+            if (!userAnswer) {
+              results[question.id] = false
+              break
+            }
+
+            const matchResults = checkMatchingCorrectness(
+              question.matchingPairs.map((el) => el),
+              userAnswer,
+            )
+
+            // вопрос считается верным, если все пары правильные
+            const isAllCorrect = Object.values(matchResults).every(Boolean)
+
+            results[question.id] = isAllCorrect
+            break
+          }
+
+          default:
+            results[question.id] = false
+        }
+      })
+
+      console.log('Результаты:', results)
+      // Можно добавить: подсчёт правильных
+      const correctCount = Object.values(results).filter(Boolean).length
+      console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
     }
   }
 

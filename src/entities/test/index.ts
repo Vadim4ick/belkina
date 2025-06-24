@@ -1,1 +1,1 @@
-export { TestCard } from "./ui/test-card";
+export { TestCard } from './ui/test-card'
