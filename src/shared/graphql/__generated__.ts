@@ -864,8 +864,15 @@ export type HomePage = {
   readonly aboutProjectBanner: Maybe<HomePage_AboutProjectBanner>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly diagnosticTestBanner: Maybe<HomePage_DiagnosticTestBanner>;
+  readonly featuredTest: Maybe<Test>;
   readonly mainOfferBanner: Maybe<HomePage_MainOfferBanner>;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type HomePageFeaturedTestArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 export type HomePageDocAccessFields = {
@@ -873,6 +880,7 @@ export type HomePageDocAccessFields = {
   readonly aboutProjectBanner: Maybe<HomePageDocAccessFields_AboutProjectBanner>;
   readonly createdAt: Maybe<HomePageDocAccessFields_CreatedAt>;
   readonly diagnosticTestBanner: Maybe<HomePageDocAccessFields_DiagnosticTestBanner>;
+  readonly featuredTest: Maybe<HomePageDocAccessFields_FeaturedTest>;
   readonly mainOfferBanner: Maybe<HomePageDocAccessFields_MainOfferBanner>;
   readonly updatedAt: Maybe<HomePageDocAccessFields_UpdatedAt>;
 };
@@ -1145,6 +1153,34 @@ export type HomePageDocAccessFields_DiagnosticTestBanner_Title_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type HomePageDocAccessFields_FeaturedTest = {
+  readonly __typename?: 'HomePageDocAccessFields_featuredTest';
+  readonly create: Maybe<HomePageDocAccessFields_FeaturedTest_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_FeaturedTest_Delete>;
+  readonly read: Maybe<HomePageDocAccessFields_FeaturedTest_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_FeaturedTest_Update>;
+};
+
+export type HomePageDocAccessFields_FeaturedTest_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_featuredTest_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_FeaturedTest_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_featuredTest_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_FeaturedTest_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_featuredTest_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_FeaturedTest_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_featuredTest_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type HomePageDocAccessFields_MainOfferBanner = {
   readonly __typename?: 'HomePageDocAccessFields_mainOfferBanner';
   readonly create: Maybe<HomePageDocAccessFields_MainOfferBanner_Create>;
@@ -1390,6 +1426,7 @@ export type HomePageFields = {
   readonly aboutProjectBanner: Maybe<HomePageFields_AboutProjectBanner>;
   readonly createdAt: Maybe<HomePageFields_CreatedAt>;
   readonly diagnosticTestBanner: Maybe<HomePageFields_DiagnosticTestBanner>;
+  readonly featuredTest: Maybe<HomePageFields_FeaturedTest>;
   readonly mainOfferBanner: Maybe<HomePageFields_MainOfferBanner>;
   readonly updatedAt: Maybe<HomePageFields_UpdatedAt>;
 };
@@ -1659,6 +1696,34 @@ export type HomePageFields_DiagnosticTestBanner_Title_Read = {
 
 export type HomePageFields_DiagnosticTestBanner_Title_Update = {
   readonly __typename?: 'HomePageFields_diagnosticTestBanner_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_FeaturedTest = {
+  readonly __typename?: 'HomePageFields_featuredTest';
+  readonly create: Maybe<HomePageFields_FeaturedTest_Create>;
+  readonly delete: Maybe<HomePageFields_FeaturedTest_Delete>;
+  readonly read: Maybe<HomePageFields_FeaturedTest_Read>;
+  readonly update: Maybe<HomePageFields_FeaturedTest_Update>;
+};
+
+export type HomePageFields_FeaturedTest_Create = {
+  readonly __typename?: 'HomePageFields_featuredTest_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_FeaturedTest_Delete = {
+  readonly __typename?: 'HomePageFields_featuredTest_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_FeaturedTest_Read = {
+  readonly __typename?: 'HomePageFields_featuredTest_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_FeaturedTest_Update = {
+  readonly __typename?: 'HomePageFields_featuredTest_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -8912,6 +8977,7 @@ export type MutationHomePageInput = {
   readonly aboutProjectBanner: MutationHomePage_AboutProjectBannerInput;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly diagnosticTestBanner: MutationHomePage_DiagnosticTestBannerInput;
+  readonly featuredTest: InputMaybe<Scalars['Int']['input']>;
   readonly mainOfferBanner: MutationHomePage_MainOfferBannerInput;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
@@ -9290,7 +9356,7 @@ export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9398,9 +9464,12 @@ export const GetHomePageDocument = gql`
       subtitle
       label
     }
+    featuredTest {
+      ...TestFragment
+    }
   }
 }
-    `;
+    ${TestFragmentFragmentDoc}`;
 export const GetTaraffisDocument = gql`
     query GetTaraffis {
   Tariffs {

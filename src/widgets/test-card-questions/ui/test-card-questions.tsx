@@ -1,10 +1,10 @@
 import { TestForm } from '@/features/test-form'
-import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
+import { TestFragmentFragment } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 
-const TestCardQuestions = ({ tests }: { tests?: GetAllTestsQuery['Tests']['docs'] }) => {
-  if (!tests || tests.length === 0) return null
+const TestCardQuestions = ({ test }: { test?: TestFragmentFragment }) => {
+  if (!test) return null
 
   return (
     <section className="max-mobile:py-6 bg-[#F6F6F6] py-12">
@@ -17,7 +17,7 @@ const TestCardQuestions = ({ tests }: { tests?: GetAllTestsQuery['Tests']['docs'
           Пройди тест и получи бесплатный видеоурок
         </Typography>
 
-        <TestForm tests={tests} />
+        <TestForm test={test} />
       </Container>
     </section>
   )
