@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { memo, useEffect, useMemo, useState } from 'react'
@@ -11,13 +10,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createStepSchema } from '@/entities/test/model/schema'
 import { Input } from '@/shared/ui/input'
 import { TestCard } from '@/entities/test'
-import { checkMatchingCorrectness } from '../model/const'
+import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
 
 const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const questions = test?.questions || []
 
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
+
+  const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
 
   const currentQuestion = questions[step]
   const schema = useMemo(() => createStepSchema(currentQuestion), [currentQuestion])
@@ -34,7 +35,7 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   useEffect(() => {
     form.reset(form.getValues())
     form.trigger()
-  }, [step])
+  }, [form, step])
 
   const onNext = () => {
     if (step < questions.length - 1) {
@@ -42,42 +43,11 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
     } else {
       setCompleted(true)
 
-      const allAnswers: Record<string, any> = getValues()
+      const answers = getValues()
+      const { results, correctCount } = evaluate(answers)
 
-      console.log('Ответы:', allAnswers)
-
-      const results: Record<string, boolean> = {}
-
-      questions.forEach((question) => {
-        switch (question.questionType) {
-          case 'matching': {
-            const userAnswer = allAnswers[`q_${question.id}`] as Record<string, string>
-
-            if (!userAnswer) {
-              results[question.id] = false
-              break
-            }
-
-            const matchResults = checkMatchingCorrectness(
-              question.matchingPairs.map((el) => el),
-              userAnswer,
-            )
-
-            // вопрос считается верным, если все пары правильные
-            const isAllCorrect = Object.values(matchResults).every(Boolean)
-
-            results[question.id] = isAllCorrect
-            break
-          }
-
-          default:
-            results[question.id] = false
-        }
-      })
-
+      console.log('Ответы:', answers)
       console.log('Результаты:', results)
-      // Можно добавить: подсчёт правильных
-      const correctCount = Object.values(results).filter(Boolean).length
       console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
     }
   }
