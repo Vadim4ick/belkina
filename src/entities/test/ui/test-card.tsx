@@ -7,6 +7,9 @@ import { Progress } from '@/shared/ui/progress'
 import { QuestionFragmentFragment } from '@/shared/graphql/__generated__'
 import { memo } from 'react'
 import { useShuffledOnClient } from '@/shared/hooks/useShuffledOnClient'
+import { Checkbox } from '@/shared/ui/checkbox'
+import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
+import { RUS_LETTERS } from '@/shared/const'
 
 type Props = {
   question: QuestionFragmentFragment
@@ -25,42 +28,66 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
   const renderContent = () => {
     switch (question.questionType) {
       case 'single_choice':
-      case 'multiple_choice':
         return (
           <Controller
+            key={question.id}
             control={control}
             name={questionName}
+            defaultValue=""
             render={({ field }) => (
-              <div className="flex flex-col gap-4">
+              <RadioGroup
+                value={field.value}
+                onValueChange={field.onChange}
+                className="flex flex-col gap-4"
+              >
                 {question.answers.map((answer) => (
-                  <label key={answer.id} className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type={question.questionType === 'single_choice' ? 'radio' : 'checkbox'}
-                      name={questionName}
-                      value={answer.value}
-                      checked={
-                        question.questionType === 'single_choice'
-                          ? field.value === answer.value
-                          : field.value?.includes?.(answer.value)
-                      }
-                      onChange={(e) => {
-                        if (question.questionType === 'single_choice') {
-                          field.onChange(answer.value)
-                        } else {
-                          const newValue = field.value || []
-                          if (e.target.checked) {
-                            field.onChange([...newValue, answer.value])
-                          } else {
-                            field.onChange(newValue.filter((v: string) => v !== answer.value))
-                          }
-                        }
-                      }}
-                    />
+                  <label
+                    key={answer.id}
+                    className="flex cursor-pointer items-center gap-2"
+                    htmlFor={`${questionName}_${answer.value}`}
+                  >
+                    <RadioGroupItem value={answer.value} id={`${questionName}_${answer.value}`} />
                     <Typography tag="span" variant="poppins-md-16">
                       {answer.label}
                     </Typography>
                   </label>
                 ))}
+              </RadioGroup>
+            )}
+          />
+        )
+
+      case 'multiple_choice':
+        return (
+          <Controller
+            key={question.id}
+            control={control}
+            name={questionName}
+            defaultValue={[]}
+            render={({ field }) => (
+              <div className="flex flex-col gap-4">
+                {question.answers.map((answer) => {
+                  const isChecked = field.value?.includes?.(answer.value)
+
+                  const handleChange = (checked: boolean) => {
+                    const value = String(answer.value)
+                    const current = field.value || []
+
+                    field.onChange(
+                      checked ? [...current, value] : current.filter((v: string) => v !== value),
+                    )
+                  }
+
+                  return (
+                    <label key={answer.id} className="flex cursor-pointer items-center gap-2">
+                      <Checkbox checked={isChecked} onCheckedChange={handleChange} />
+
+                      <Typography tag="span" variant="poppins-md-16">
+                        {answer.label}
+                      </Typography>
+                    </label>
+                  )
+                })}
               </div>
             )}
           />
@@ -69,6 +96,7 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
       case 'text_input':
         return (
           <Controller
+            key={question.id}
             control={control}
             name={questionName}
             defaultValue=""
@@ -86,6 +114,7 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
       case 'matching':
         return (
           <Controller
+            key={question.id}
             control={control}
             name={questionName}
             defaultValue={{}}
@@ -103,7 +132,7 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
                     <Typography variant="poppins-md-16">Левая часть</Typography>
                     {question.matchingPairs.map((pair, idx) => (
                       <Typography key={pair.id} variant="poppins-md-16">
-                        {String.fromCharCode(65 + idx)}) {pair.left}
+                        {RUS_LETTERS[idx]}) {pair.left}
                       </Typography>
                     ))}
                   </div>
