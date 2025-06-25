@@ -1,4 +1,4 @@
-import { FC, SVGProps } from "react";
+import { FC, SVGProps } from 'react'
 
 const MessagesIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
   return (
@@ -19,7 +19,7 @@ const MessagesIcon: FC<SVGProps<SVGSVGElement>> = (props) => {
         fill="currentColor"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { MessagesIcon };
+export { MessagesIcon }
