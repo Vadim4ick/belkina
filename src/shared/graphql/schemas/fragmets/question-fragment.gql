@@ -13,5 +13,6 @@ fragment QuestionFragment on Question {
     left
     right
   }
+  textAnswer
   createdAt
 }

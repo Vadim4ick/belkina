@@ -213,6 +213,7 @@ export interface Question {
         id?: string | null;
       }[]
     | null;
+  textAnswer?: string | null;
   matchingPairs?:
     | {
         left?: string | null;
@@ -441,6 +442,7 @@ export interface QuestionsSelect<T extends boolean = true> {
         isCorrect?: T;
         id?: T;
       };
+  textAnswer?: T;
   matchingPairs?:
     | T
     | {

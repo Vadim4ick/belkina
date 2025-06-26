@@ -60,6 +60,7 @@ export const createQuestions = async () => {
       data: {
         questionText: 'Кто написал "Преступление и наказание"?',
         questionType: 'text_input',
+        textAnswer: 'Достоевский',
       },
     }),
   )

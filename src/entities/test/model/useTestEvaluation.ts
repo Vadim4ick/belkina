@@ -34,19 +34,26 @@ export const useTestEvaluation = (questions: QuestionFragmentFragment[]) => {
 
         case 'text_input': {
           const userAnswer = (allAnswers[answerKey] || '').trim().toLowerCase()
-          const correctAnswers = question.answers
-            .filter((a) => a.isCorrect)
-            .map((a) => a.value.trim().toLowerCase())
+          const correct = question.textAnswer.trim().toLowerCase()
 
-          results[question.id] = correctAnswers.includes(userAnswer)
+          const normalize = (str: string) =>
+            str
+              .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '') // удалить диакритику (ё → е)
+              .replace(/[^\w\s]|_/g, '') // удалить пунктуацию
+              .replace(/\s+/g, ' ') // убрать лишние пробелы
+              .trim()
+
+          results[question.id] = normalize(userAnswer) === normalize(correct)
           break
         }
 
         case 'matching': {
-          const userAnswer = allAnswers[answerKey] || {}
+          const { answer = '', shuffled = [] } = allAnswers[answerKey] || {}
           const matchResults = checkMatchingCorrectness(
             question.matchingPairs.map((p) => p),
-            userAnswer,
+            shuffled,
+            answer,
           )
           results[question.id] = Object.values(matchResults).every(Boolean)
           break

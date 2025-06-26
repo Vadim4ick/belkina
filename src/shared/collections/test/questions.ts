@@ -63,6 +63,15 @@ export const TestQuestions: CollectionConfig = {
         { name: 'isCorrect', label: 'Правильный?', type: 'checkbox' },
       ],
     },
+
+    {
+      name: 'textAnswer',
+      label: 'Правильный ответ',
+      type: 'text',
+      admin: {
+        condition: (_, siblingData) => siblingData.questionType === 'text_input',
+      },
+    },
     {
       name: 'matchingPairs',
       label: 'Пары соответствий',
