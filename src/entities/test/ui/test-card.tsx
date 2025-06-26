@@ -9,16 +9,17 @@ import { memo } from 'react'
 import { useShuffledOnClient } from '@/shared/hooks/useShuffledOnClient'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
-import { RUS_LETTERS } from '@/shared/const'
+import { getSymbolLabel, RUS_LETTERS } from '@/shared/const'
 
 type Props = {
   question: QuestionFragmentFragment
   index: number
   total: number
   step: number
+  title: string
 }
 
-const TestCard = memo(({ question, index, total, step }: Props) => {
+const TestCard = memo(({ question, index, total, step, title }: Props) => {
   const { control } = useFormContext()
 
   const questionName = `q_${question.id}`
@@ -117,17 +118,10 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
             key={question.id}
             control={control}
             name={questionName}
-            defaultValue={{}}
-            render={({ field }) => {
-              const handleChange = (rightId: string, value: string) => {
-                field.onChange({
-                  ...field.value,
-                  [rightId]: value.trim().toUpperCase(),
-                })
-              }
-
-              return (
-                <div className="bg-light-grey grid grid-cols-2 gap-4 rounded-md p-4">
+            defaultValue={{ answer: '', shuffled: shuffledRight }}
+            render={({ field }) => (
+              <div className="flex flex-col gap-4">
+                <div className="bg-light-grey max-mobile:grid-cols-1 grid grid-cols-2 justify-center gap-4 rounded-md p-4">
                   <div className="flex flex-col gap-2">
                     <Typography variant="poppins-md-16">Левая часть</Typography>
                     {question.matchingPairs.map((pair, idx) => (
@@ -143,19 +137,30 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
                         <Typography variant="poppins-md-16">
                           {idx + 1}) {pair.right}
                         </Typography>
-                        <Input
-                          className="w-16"
-                          placeholder="A"
-                          maxLength={1}
-                          value={field.value?.[pair.id] || ''}
-                          onChange={(e) => handleChange(pair.id, e.target.value)}
-                        />
                       </div>
                     ))}
                   </div>
                 </div>
-              )
-            }}
+
+                <div className="flex items-center gap-2">
+                  <Typography tag="p" variant="poppins-md-16">
+                    Ответ:
+                  </Typography>
+                  <Input
+                    className="h-[35px] w-full bg-transparent"
+                    placeholder="Например: 123"
+                    maxLength={question.matchingPairs.length}
+                    value={field.value.answer || ''}
+                    onChange={(e) =>
+                      field.onChange({
+                        answer: e.target.value.toUpperCase(),
+                        shuffled: shuffledRight,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            )}
           />
         )
 
@@ -165,22 +170,37 @@ const TestCard = memo(({ question, index, total, step }: Props) => {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <Progress value={((step + 1) / total) * 100} />
-
-      <Typography
-        className="bg-green w-fit rounded-[12px] px-4 py-3 uppercase"
-        tag="p"
-        variant="poppins-md-16"
-      >
-        Вопрос {index + 1}
+    <div>
+      <Typography tag="p" variant="visuelt-bold-32" className="max-tablet:text-[26px]">
+        {title}
       </Typography>
+      <div className="flex flex-col gap-6">
+        <Progress value={((step + 1) / total) * 100} />
 
-      <Typography tag="p" variant="poppins-md-16">
-        {question.questionText}
-      </Typography>
+        <div className="max-tablet:flex-col max-tablet:items-start flex items-center gap-4">
+          <Typography
+            className="bg-green w-fit rounded-[12px] px-4 py-3 uppercase"
+            tag="p"
+            variant="poppins-md-16"
+          >
+            Вопрос {index + 1}
+          </Typography>
 
-      {renderContent()}
+          {question.questionType === 'matching' && (
+            <Typography className="" tag="p" variant="poppins-md-16">
+              Введите номера соответствий (<b>{getSymbolLabel(question.matchingPairs.length)}</b>)
+              без пробелов, например 132 — означает: {RUS_LETTERS[0]} → 1,
+              {RUS_LETTERS[1]} → 3, {RUS_LETTERS[2]} → 2
+            </Typography>
+          )}
+        </div>
+
+        <Typography tag="p" variant="poppins-md-16">
+          {question.questionText}
+        </Typography>
+
+        {renderContent()}
+      </div>
     </div>
   )
 })

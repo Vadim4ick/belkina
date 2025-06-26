@@ -18,6 +18,8 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
 
+  const [correctCount, setCorrectCount] = useState(0)
+
   const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
 
   const currentQuestion = questions[step]
@@ -46,6 +48,8 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
       const answers = getValues()
       const { results, correctCount } = evaluate(answers)
 
+      setCorrectCount(correctCount)
+
       console.log('Ответы:', answers)
       console.log('Результаты:', results)
       console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
@@ -62,7 +66,8 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
         <div className="text-4xl">🎉</div>
 
         <Typography tag="h2" variant="poppins-md-16" className="font-semibold text-green-400">
-          Вы успешно прошли тест!
+          Вы успешно прошли тест! <br />
+          {`Количество правильных ответов: ${correctCount} из ${questions.length}`}
         </Typography>
 
         <Typography tag="p" variant="poppins-md-16" className="text-dark-grey">
@@ -94,6 +99,7 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
               index={step}
               total={questions.length}
               step={step}
+              title={test?.title ?? ''}
             />
 
             <div className="mt-6 flex justify-between">

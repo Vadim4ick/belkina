@@ -7,7 +7,7 @@ const TestCardQuestions = ({ test }: { test?: TestFragmentFragment }) => {
   if (!test) return null
 
   return (
-    <section className="max-mobile:py-6 bg-[#F6F6F6] py-12">
+    <section className="max-mobile:py-12 bg-[#F6F6F6] py-20">
       <Container className="max-mobile:gap-6 flex flex-col gap-20">
         <Typography
           tag="h2"
