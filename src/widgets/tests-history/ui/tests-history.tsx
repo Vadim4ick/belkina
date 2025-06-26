@@ -1,13 +1,13 @@
 import { Typography } from '@/shared/ui/typography'
-import TestItem from '@/views/recomendations/ui/test-item'
+import TestHistoryItem from '@/widgets/tests-history/ui/test-history-item'
 
-export interface TestsListItem {
+export interface ITestsHystoryListItem {
   name: string
   date: string
   status: 'Пройдено' | 'Не Пройдено'
 }
 
-export const testsList: TestsListItem[] = [
+export const testsHystoryList: ITestsHystoryListItem[] = [
   { name: 'Тест на определение уровня', date: '22:00 23.05.2022', status: 'Пройдено' },
   { name: 'Тест по русскому языку', date: '22:00 23.05.2022', status: 'Пройдено' },
   { name: 'Тест по русскому языку', date: '22:00 23.05.2022', status: 'Не Пройдено' },
@@ -21,8 +21,8 @@ const TestsHistory = () => {
         История тестов
       </Typography>
       <div className="bg-light-grey flex flex-col gap-3 rounded-xl px-3 py-6 md:px-6 md:py-5">
-        {testsList.map((test, idx) => (
-          <TestItem key={idx} test={test} />
+        {testsHystoryList.map((test, idx) => (
+          <TestHistoryItem key={idx} test={test} />
         ))}
       </div>
     </section>

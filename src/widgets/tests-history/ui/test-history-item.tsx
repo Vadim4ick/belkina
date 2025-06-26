@@ -1,8 +1,8 @@
 import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
-import { TestsListItem } from '@/widgets/tests-history/ui/tests-history'
+import { ITestsHystoryListItem } from './tests-history'
 
-const TestItem = ({ test }: { test: TestsListItem }) => {
+const TestHistoryItem = ({ test }: { test: ITestsHystoryListItem }) => {
   return (
     <>
       <div className="grid items-center gap-3 rounded-[6px] bg-white px-2.5 py-3 lg:grid-cols-8 lg:grid-rows-1">
@@ -28,4 +28,4 @@ const TestItem = ({ test }: { test: TestsListItem }) => {
   )
 }
 
-export default TestItem
+export default TestHistoryItem
