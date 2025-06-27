@@ -1,1 +1,0 @@
-export { Recomendations } from './ui/recomendations'
