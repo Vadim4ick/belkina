@@ -2,6 +2,7 @@ import { Typography } from '@/shared/ui/typography'
 import { ITestsListItem } from './tests-list'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/shared/lib/utils'
+import Link from 'next/link'
 
 interface TestsListItemProps {
   test: ITestsListItem
@@ -27,9 +28,11 @@ const TestsListItem = ({ test, className }: TestsListItemProps) => {
         </Typography>
       </div>
       <div className="justify-self-end lg:col-span-2 lg:col-start-7">
-        <Button variant="primary-inverted" className="w-[288px]">
-          Пройти тест
-        </Button>
+        <Link href={`/testslist/${test.slug}`}>
+          <Button variant="primary-inverted" className="w-[288px]">
+            Пройти тест
+          </Button>
+        </Link>
       </div>
     </div>
   )

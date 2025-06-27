@@ -5,14 +5,15 @@ export interface ITestsListItem {
   id: string
   name: string
   topic: string
+  slug: string
 }
 
 export const testsListItem: ITestsListItem[] = [
-  { id: '1', name: 'Название теста', topic: 'Тема 1' },
-  { id: '2', name: 'Название теста', topic: 'Тема 2' },
-  { id: '3', name: 'Название теста', topic: 'Тема 3' },
-  { id: '4', name: 'Название теста', topic: 'Тема 4' },
-  { id: '5', name: 'Название теста', topic: 'Тема 5' },
+  { id: '1', name: 'Название теста 1', topic: 'Тема 1', slug: 'test-1' },
+  { id: '2', name: 'Название теста 2', topic: 'Тема 2', slug: 'test-2' },
+  { id: '3', name: 'Название теста 3', topic: 'Тема 3', slug: 'test-3' },
+  { id: '4', name: 'Название теста 4', topic: 'Тема 4', slug: 'test-4' },
+  { id: '5', name: 'Название теста 5', topic: 'Тема 5', slug: 'test-5' },
 ]
 
 const TestsList = ({ title }: { title?: string }) => {
@@ -23,7 +24,7 @@ const TestsList = ({ title }: { title?: string }) => {
       </Typography>
       <div className="border-light-grey flex flex-col gap-3 rounded-xl py-6 md:py-5">
         {testsListItem.map((test, idx) => (
-          <TestsListItem className="border-light-grey border-b-2" key={idx} test={test}/>
+          <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
         ))}
       </div>
     </section>
