@@ -75,6 +75,7 @@ export interface Config {
     questions: Question;
     testResults: TestResult;
     admins: Admin;
+    recomendations: Recomendation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +90,7 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     testResults: TestResultsSelect<false> | TestResultsSelect<true>;
     admins: AdminsSelect<false> | AdminsSelect<true>;
+    recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -214,6 +216,7 @@ export interface Question {
       }[]
     | null;
   textAnswer?: string | null;
+  recommendation?: (number | null) | Recomendation;
   matchingPairs?:
     | {
         left?: string | null;
@@ -221,6 +224,35 @@ export interface Question {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recomendations".
+ */
+export interface Recomendation {
+  id: number;
+  title: string;
+  tariff?: (number | null) | Tariff;
+  /**
+   * Можно использовать заголовки и нумерованные списки
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -312,6 +344,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'admins';
         value: number | Admin;
+      } | null)
+    | ({
+        relationTo: 'recomendations';
+        value: number | Recomendation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -443,6 +479,7 @@ export interface QuestionsSelect<T extends boolean = true> {
         id?: T;
       };
   textAnswer?: T;
+  recommendation?: T;
   matchingPairs?:
     | T
     | {
@@ -488,6 +525,17 @@ export interface AdminsSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recomendations_select".
+ */
+export interface RecomendationsSelect<T extends boolean = true> {
+  title?: T;
+  tariff?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

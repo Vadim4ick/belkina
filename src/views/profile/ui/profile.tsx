@@ -1,10 +1,9 @@
-'use client'
-
+import { getServerGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { TestsHistory } from '@/widgets/tests-history'
-import { Topic } from '@/widgets/topic'
+import { Topic } from './topic'
 
 const mockProducts = [
   {
@@ -67,13 +66,22 @@ const mockProducts = [
   },
 ]
 
-export function Recomendations({ title = 'Рекомендации' }: { title?: string }) {
+export async function Profile() {
+  const gql = await getServerGqlClient()
+
+  const res = await gql.GetRecomendationByIds({
+    // @ts-ignore
+    whereOR: [{ id: { equals: 1 } }],
+  })
+
   return (
     <section className="max-mobile:py-6 py-12">
       <Typography tag="h1" variant="visuelt-bold-48" className="mb-6">
-        {title}
+        Рекомендации
       </Typography>
-      <Topic />
+
+      <Topic recomendations={res.Recomendations.docs} />
+
       <TestsHistory />
       <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (

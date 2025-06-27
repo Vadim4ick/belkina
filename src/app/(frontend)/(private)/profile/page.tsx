@@ -1,5 +1,5 @@
-import { Recomendations } from '@/views/recomendations'
+import { Profile } from '@/views/profile'
 
-export default function Page() {
-  return <Recomendations />
+export default async function PageProfile() {
+  return <Profile />
 }
