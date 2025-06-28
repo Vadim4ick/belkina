@@ -10125,6 +10125,14 @@ export type CreateTestResultMutationVariables = Exact<{
 
 export type CreateTestResultMutation = { readonly __typename?: 'Mutation', readonly createTestResult: { readonly __typename?: 'TestResult', readonly id: number } };
 
+export type GetByIdTestResultQueryVariables = Exact<{
+  userId: InputMaybe<Scalars['JSON']['input']>;
+  testId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly id: number, readonly status: TestResult_Status }> } };
+
 export type GetRecommendationsQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
 }>;
@@ -10294,6 +10302,16 @@ export const CreateTestResultDocument = gql`
   }
 }
     `;
+export const GetByIdTestResultDocument = gql`
+    query GetByIdTestResult($userId: JSON, $testId: JSON) {
+  TestResults(where: {user: {equals: $userId}, test: {equals: $testId}}) {
+    docs {
+      id
+      status
+    }
+  }
+}
+    `;
 export const GetRecommendationsDocument = gql`
     query GetRecommendations($userId: JSON) {
   TestResults(
@@ -10389,6 +10407,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     CreateTestResult(variables?: CreateTestResultMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<CreateTestResultMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<CreateTestResultMutation>({ document: CreateTestResultDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'CreateTestResult', 'mutation', variables);
+    },
+    GetByIdTestResult(variables?: GetByIdTestResultQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetByIdTestResultQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetByIdTestResultQuery>({ document: GetByIdTestResultDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetByIdTestResult', 'query', variables);
     },
     GetRecommendations(variables?: GetRecommendationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsQuery>({ document: GetRecommendationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendations', 'query', variables);
