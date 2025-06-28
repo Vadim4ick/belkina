@@ -17,6 +17,7 @@ import { Tests } from './shared/collections/test/Tests'
 import { TestQuestions } from './shared/collections/test/questions'
 import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
+import { Recomendations } from './shared/collections/Recomendations'
 
 import dotenv from 'dotenv'
 
@@ -42,7 +43,17 @@ export default buildConfig({
     defaultLocale: 'ru', // required
   },
 
-  collections: [Users, Media, Tariffs, FAQs, Tests, TestQuestions, TestResults, Admins],
+  collections: [
+    Users,
+    Media,
+    Tariffs,
+    FAQs,
+    Tests,
+    TestQuestions,
+    TestResults,
+    Admins,
+    Recomendations,
+  ],
   globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.NEXTAUTH_SECRET || '',

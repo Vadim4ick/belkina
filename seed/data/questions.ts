@@ -3,6 +3,8 @@ import payload from 'payload'
 export const createQuestions = async () => {
   const questions = []
 
+  console.log('🌱 Сидим вопросы...')
+
   // 1. Один правильный ответ
   questions.push(
     await payload.create({
