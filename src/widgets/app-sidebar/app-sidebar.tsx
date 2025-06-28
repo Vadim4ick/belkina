@@ -4,7 +4,7 @@ import { NavMain } from './_ui/nav-main'
 import { Logo } from '@/shared/ui/logo'
 import { FC, SVGProps } from 'react'
 import { NavUser } from './_ui/nav-user'
-import { useSession } from 'next-auth/react'
+import { useAuthStore } from '@/shared/hooks/use-auth-store'
 
 export interface IsideBarItems {
   title: string
@@ -13,7 +13,7 @@ export interface IsideBarItems {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: session } = useSession()
+  const session = useAuthStore((state) => state.session)
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>

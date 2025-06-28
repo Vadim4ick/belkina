@@ -58,6 +58,7 @@ export const authOptions: NextAuthConfig = {
     async signIn({ user, account }) {
       if (account?.provider === 'yandex') {
         const exists = await gql.GetUserByEmail({ email: user.email })
+
         if (exists.Users.totalDocs <= 0) {
           await gql.CreateUser({
             email: user.email!,

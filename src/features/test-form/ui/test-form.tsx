@@ -11,6 +11,7 @@ import { createStepSchema } from '@/entities/test/model/schema'
 import { Input } from '@/shared/ui/input'
 import { TestCard } from '@/entities/test'
 import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
+import { useCreateTestResult, useGetTestResultById } from '@/shared/services/test.service'
 
 const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const questions = test?.questions || []
@@ -21,6 +22,15 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const [start, setStart] = useState(false)
 
   const [correctCount, setCorrectCount] = useState(0)
+
+  const { mutateAsync: createTestResult, isPending: isPendingStart } = useCreateTestResult()
+  const {
+    data: testResult,
+    isLoading,
+    isFetching,
+  } = useGetTestResultById({
+    testId: test?.id,
+  })
 
   const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
 
@@ -40,6 +50,16 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
     form.reset(form.getValues())
     form.trigger()
   }, [form, step])
+
+  useEffect(() => {
+    if (
+      testResult &&
+      testResult.TestResults.docs.length > 0 &&
+      testResult.TestResults.docs[0].status === 'in_progress'
+    ) {
+      setStart(true)
+    }
+  }, [testResult])
 
   const onNext = () => {
     if (step < questions.length - 1) {
@@ -63,7 +83,22 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   }
 
   const startFn = () => {
-    setStart(true)
+    if (test) {
+      createTestResult(
+        {
+          testId: test.id,
+        },
+        {
+          onSuccess: () => {
+            setStart(true)
+          },
+        },
+      )
+    }
+  }
+
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>
   }
 
   if (completed) {
@@ -108,6 +143,7 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
               title={test?.title ?? ''}
               startFn={startFn}
               start={start}
+              isPendingStart={isPendingStart}
             />
 
             {start && (
