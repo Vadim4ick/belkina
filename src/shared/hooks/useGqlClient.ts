@@ -1,10 +1,10 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import { createGqlClient } from '../graphql/client'
+import { useAuthStore } from './use-auth-store'
 
 export const useGqlClient = () => {
-  const { data: session } = useSession()
+  const session = useAuthStore((state) => state.session)
 
   const token = session?.tokens?.accessToken || null
   return createGqlClient(token)

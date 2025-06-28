@@ -29,6 +29,7 @@ export const Tests: CollectionConfig = {
       required: false,
       admin: { position: 'sidebar' },
     },
+
     {
       name: 'description',
       label: 'Описание',

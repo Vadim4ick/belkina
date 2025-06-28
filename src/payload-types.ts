@@ -75,6 +75,7 @@ export interface Config {
     questions: Question;
     testResults: TestResult;
     admins: Admin;
+    recomendations: Recomendation;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +90,7 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     testResults: TestResultsSelect<false> | TestResultsSelect<true>;
     admins: AdminsSelect<false> | AdminsSelect<true>;
+    recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -142,7 +144,6 @@ export interface User {
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex';
   tariff?: (number | null) | Tariff;
-  testResults?: (number | TestResult)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -165,22 +166,31 @@ export interface Tariff {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testResults".
+ * via the `definition` "media".
  */
-export interface TestResult {
+export interface Media {
   id: number;
-  test: number | Test;
-  user: number | User;
-  answers?:
-    | {
-        question: number | Question;
-        userAnswer?: string | null;
-        isCorrect?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  score?: number | null;
-  completedAt?: string | null;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -214,6 +224,7 @@ export interface Question {
       }[]
     | null;
   textAnswer?: string | null;
+  recommendation?: (number | null) | Recomendation;
   matchingPairs?:
     | {
         left?: string | null;
@@ -226,31 +237,60 @@ export interface Question {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "recomendations".
  */
-export interface Media {
+export interface Recomendation {
   id: number;
-  alt: string;
+  title: string;
+  tariff?: (number | null) | Tariff;
+  /**
+   * Можно использовать заголовки и нумерованные списки
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
+ * via the `definition` "testResults".
  */
-export interface Faq {
+export interface TestResult {
   id: number;
-  question: string;
-  answer: string;
+  user: number | User;
+  test: number | Test;
+  status: 'completed' | 'in_progress';
+  answers?:
+    | {
+        question: number | Question;
+        userAnswer:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        isCorrect?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  score?: number | null;
+  completedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -312,6 +352,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'admins';
         value: number | Admin;
+      } | null)
+    | ({
+        relationTo: 'recomendations';
+        value: number | Recomendation;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -365,7 +409,6 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   signupMethod?: T;
   tariff?: T;
-  testResults?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -443,6 +486,7 @@ export interface QuestionsSelect<T extends boolean = true> {
         id?: T;
       };
   textAnswer?: T;
+  recommendation?: T;
   matchingPairs?:
     | T
     | {
@@ -458,8 +502,9 @@ export interface QuestionsSelect<T extends boolean = true> {
  * via the `definition` "testResults_select".
  */
 export interface TestResultsSelect<T extends boolean = true> {
-  test?: T;
   user?: T;
+  test?: T;
+  status?: T;
   answers?:
     | T
     | {
@@ -488,6 +533,17 @@ export interface AdminsSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recomendations_select".
+ */
+export interface RecomendationsSelect<T extends boolean = true> {
+  title?: T;
+  tariff?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

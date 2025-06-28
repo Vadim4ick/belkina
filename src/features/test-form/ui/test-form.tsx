@@ -11,6 +11,7 @@ import { createStepSchema } from '@/entities/test/model/schema'
 import { Input } from '@/shared/ui/input'
 import { TestCard } from '@/entities/test'
 import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
+import { useCreateTestResult, useGetTestResultById } from '@/shared/services/test.service'
 
 const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const questions = test?.questions || []
@@ -18,7 +19,18 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
 
+  const [start, setStart] = useState(false)
+
   const [correctCount, setCorrectCount] = useState(0)
+
+  const { mutateAsync: createTestResult, isPending: isPendingStart } = useCreateTestResult()
+  const {
+    data: testResult,
+    isLoading,
+    isFetching,
+  } = useGetTestResultById({
+    testId: test?.id,
+  })
 
   const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
 
@@ -39,6 +51,16 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
     form.trigger()
   }, [form, step])
 
+  useEffect(() => {
+    if (
+      testResult &&
+      testResult.TestResults.docs.length > 0 &&
+      testResult.TestResults.docs[0].status === 'in_progress'
+    ) {
+      setStart(true)
+    }
+  }, [testResult])
+
   const onNext = () => {
     if (step < questions.length - 1) {
       setStep((prev) => prev + 1)
@@ -58,6 +80,25 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
 
   const handleBack = () => {
     setStep((prev) => Math.max(prev - 1, 0))
+  }
+
+  const startFn = () => {
+    if (test) {
+      createTestResult(
+        {
+          testId: test.id,
+        },
+        {
+          onSuccess: () => {
+            setStart(true)
+          },
+        },
+      )
+    }
+  }
+
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>
   }
 
   if (completed) {
@@ -100,19 +141,24 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
               total={questions.length}
               step={step}
               title={test?.title ?? ''}
+              startFn={startFn}
+              start={start}
+              isPendingStart={isPendingStart}
             />
 
-            <div className="mt-6 flex justify-between">
-              {step !== 0 && (
-                <Button type="button" variant="ghost" onClick={handleBack}>
-                  Назад
-                </Button>
-              )}
+            {start && (
+              <div className="mt-6 flex justify-between">
+                {step !== 0 && (
+                  <Button type="button" variant="ghost" onClick={handleBack}>
+                    Назад
+                  </Button>
+                )}
 
-              <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
-                {step === questions.length - 1 ? 'Завершить' : 'Далее'}
-              </Button>
-            </div>
+                <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
+                  {step === questions.length - 1 ? 'Завершить' : 'Далее'}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </form>

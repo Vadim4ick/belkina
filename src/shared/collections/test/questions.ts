@@ -72,6 +72,18 @@ export const TestQuestions: CollectionConfig = {
         condition: (_, siblingData) => siblingData.questionType === 'text_input',
       },
     },
+
+    {
+      name: 'recommendation',
+      label: 'Рекомендация (В случае неправильного ответа)',
+      type: 'relationship',
+      relationTo: 'recomendations',
+      required: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+
     {
       name: 'matchingPairs',
       label: 'Пары соответствий',
