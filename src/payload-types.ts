@@ -289,8 +289,6 @@ export interface TestResult {
         id?: string | null;
       }[]
     | null;
-  score?: number | null;
-  completedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -513,8 +511,6 @@ export interface TestResultsSelect<T extends boolean = true> {
         isCorrect?: T;
         id?: T;
       };
-  score?: T;
-  completedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

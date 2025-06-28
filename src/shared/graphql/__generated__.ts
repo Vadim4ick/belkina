@@ -10131,7 +10131,7 @@ export type GetByIdTestResultQueryVariables = Exact<{
 }>;
 
 
-export type GetByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly id: number, readonly status: TestResult_Status }> } };
+export type GetByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly id: number, readonly status: TestResult_Status, readonly answers: ReadonlyArray<{ readonly __typename?: 'TestResult_Answers', readonly id: string, readonly userAnswer: any, readonly question: { readonly __typename?: 'Question', readonly id: number } }> }> } };
 
 export type GetRecommendationsQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -10157,10 +10157,11 @@ export type UpdateTestResultMutationVariables = Exact<{
   isCorrect: InputMaybe<Scalars['Boolean']['input']>;
   questionId: InputMaybe<Scalars['Int']['input']>;
   answerJSON: Scalars['JSON']['input'];
+  status: InputMaybe<TestResultUpdate_Status_MutationInput>;
 }>;
 
 
-export type UpdateTestResultMutation = { readonly __typename?: 'Mutation', readonly updateTestResult: { readonly __typename?: 'TestResult', readonly id: number } };
+export type UpdateTestResultMutation = { readonly __typename?: 'Mutation', readonly updateTestResult: { readonly __typename?: 'TestResult', readonly id: number, readonly status: TestResult_Status } };
 
 export type CreateUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -10307,6 +10308,13 @@ export const GetByIdTestResultDocument = gql`
   TestResults(where: {user: {equals: $userId}, test: {equals: $testId}}) {
     docs {
       id
+      answers {
+        id
+        userAnswer
+        question {
+          id
+        }
+      }
       status
     }
   }
@@ -10349,12 +10357,13 @@ export const GetByIdTestDocument = gql`
 }
     ${TestFragmentFragmentDoc}`;
 export const UpdateTestResultDocument = gql`
-    mutation UpdateTestResult($testResId: Int!, $isCorrect: Boolean, $questionId: Int, $answerJSON: JSON!) {
+    mutation UpdateTestResult($testResId: Int!, $isCorrect: Boolean, $questionId: Int, $answerJSON: JSON!, $status: TestResultUpdate_status_MutationInput) {
   updateTestResult(
     id: $testResId
-    data: {answers: {userAnswer: $answerJSON, isCorrect: $isCorrect, question: $questionId}}
+    data: {answers: {userAnswer: $answerJSON, isCorrect: $isCorrect, question: $questionId}, status: $status}
   ) {
     id
+    status
   }
 }
     `;

@@ -1,5 +1,5 @@
 import { PrivateMenuItems } from './_vm/privite-menu-items'
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/shared/ui/sidebar'
+import { Sidebar, SidebarContent, SidebarFooter } from '@/shared/ui/sidebar'
 import { NavMain } from './_ui/nav-main'
 import { Logo } from '@/shared/ui/logo'
 import { FC, SVGProps } from 'react'

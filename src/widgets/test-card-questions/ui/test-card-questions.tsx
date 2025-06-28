@@ -17,7 +17,7 @@ const TestCardQuestions = ({ test }: { test?: TestFragmentFragment }) => {
           Пройди тест и получи бесплатный видеоурок
         </Typography>
 
-        <TestForm test={test} />
+        <TestForm publicFlag={true} test={test} />
       </Container>
     </section>
   )

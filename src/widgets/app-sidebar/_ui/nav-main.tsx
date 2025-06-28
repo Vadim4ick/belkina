@@ -32,7 +32,7 @@ export function NavMain({
                   tooltip={item.title}
                   size="lg"
                   variant={pathname === item.url ? 'secondary' : 'outline'}
-                  className=""
+                  className="cursor-pointer"
                 >
                   {item.icon && <item.icon className="h-6 w-6" />}
                   <span>{item.title}</span>

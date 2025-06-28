@@ -1,169 +1,105 @@
 'use client'
 
-import { memo, useEffect, useMemo, useState } from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
+import { memo } from 'react'
+import { FormProvider } from 'react-hook-form'
 
 import { TestFragmentFragment } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
-import { Typography } from '@/shared/ui/typography'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { createStepSchema } from '@/entities/test/model/schema'
-import { Input } from '@/shared/ui/input'
 import { TestCard } from '@/entities/test'
-import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
-import { useCreateTestResult, useGetTestResultById } from '@/shared/services/test.service'
+import { totalCorrectAnswersFn } from '../model/lib'
+import { SkeletonTestCard } from './skeleton-test-card'
+import { CompletedInfo } from './completed-info'
+import { useTestLogic } from '../model/hooks/useTestLogic'
 
-const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
-  const questions = test?.questions || []
+const TestForm = memo(
+  ({ test, publicFlag }: { test?: TestFragmentFragment; publicFlag: boolean }) => {
+    const {
+      questions,
+      step,
+      setStep,
+      start,
+      startFn,
+      currentQuestion,
+      testRes,
+      isLoading,
+      isFetching,
+      isPendingUpdate,
+      isPendingStart,
+      form,
+      onNext,
 
-  const [step, setStep] = useState(0)
-  const [completed, setCompleted] = useState(false)
+      publicCorrectAnswers,
+      publicCompleted,
+    } = useTestLogic({ test, publicFlag })
 
-  const [start, setStart] = useState(false)
+    const totalCorrectAnswers = totalCorrectAnswersFn(currentQuestion.answers)
 
-  const [correctCount, setCorrectCount] = useState(0)
+    const { formState, handleSubmit } = form
 
-  const { mutateAsync: createTestResult, isPending: isPendingStart } = useCreateTestResult()
-  const {
-    data: testResult,
-    isLoading,
-    isFetching,
-  } = useGetTestResultById({
-    testId: test?.id,
-  })
-
-  const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
-
-  const currentQuestion = questions[step]
-  const schema = useMemo(() => createStepSchema(currentQuestion), [currentQuestion])
-
-  const resolver = zodResolver(schema)
-
-  const form = useForm({
-    defaultValues: {},
-    mode: 'onChange',
-    resolver,
-  })
-  const { handleSubmit, getValues, formState } = form
-
-  useEffect(() => {
-    form.reset(form.getValues())
-    form.trigger()
-  }, [form, step])
-
-  useEffect(() => {
-    if (
-      testResult &&
-      testResult.TestResults.docs.length > 0 &&
-      testResult.TestResults.docs[0].status === 'in_progress'
-    ) {
-      setStart(true)
+    if (isLoading || isFetching || isPendingUpdate) {
+      return <SkeletonTestCard />
     }
-  }, [testResult])
 
-  const onNext = () => {
-    if (step < questions.length - 1) {
-      setStep((prev) => prev + 1)
-    } else {
-      setCompleted(true)
-
-      const answers = getValues()
-      const { results, correctCount } = evaluate(answers)
-
-      setCorrectCount(correctCount)
-
-      console.log('Ответы:', answers)
-      console.log('Результаты:', results)
-      console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
-    }
-  }
-
-  const handleBack = () => {
-    setStep((prev) => Math.max(prev - 1, 0))
-  }
-
-  const startFn = () => {
-    if (test) {
-      createTestResult(
-        {
-          testId: test.id,
-        },
-        {
-          onSuccess: () => {
-            setStart(true)
-          },
-        },
-      )
-    }
-  }
-
-  if (isLoading || isFetching) {
-    return <div>Loading...</div>
-  }
-
-  if (completed) {
     return (
-      <div className="border-blue mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
-        <div className="text-4xl">🎉</div>
+      <FormProvider {...form}>
+        <form onSubmit={handleSubmit(onNext)}>
+          <div className="relative w-full">
+            <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
 
-        <Typography tag="h2" variant="poppins-md-16" className="font-semibold text-green-400">
-          Вы успешно прошли тест! <br />
-          {`Количество правильных ответов: ${correctCount} из ${questions.length}`}
-        </Typography>
+            <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
+              {testRes?.status !== 'completed' && !publicCompleted && (
+                <>
+                  <TestCard
+                    question={currentQuestion}
+                    index={step}
+                    total={questions.length}
+                    step={step}
+                    title={test?.title ?? ''}
+                    startFn={startFn}
+                    start={start}
+                    isPendingStart={isPendingStart}
+                  />
 
-        <Typography tag="p" variant="poppins-md-16" className="text-dark-grey">
-          Для получения бесплатного видеоурока укажите свой e-mail
-        </Typography>
+                  {start && (
+                    <div className="mt-6 flex justify-between">
+                      {step !== 0 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="xl"
+                          onClick={() => setStep((prev) => prev - 1)}
+                        >
+                          Назад
+                        </Button>
+                      )}
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-          }}
-          className="flex w-full flex-col gap-4"
-        >
-          <Input type="email" name="email" placeholder="Ваш e-mail" />
+                      <Button
+                        className="ml-auto"
+                        type="submit"
+                        size="xl"
+                        disabled={!formState.isValid}
+                      >
+                        {step === questions.length - 1 ? 'Завершить' : 'Далее'}
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
 
-          <Button>Отправить</Button>
-        </form>
-      </div>
-    )
-  }
-
-  return (
-    <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onNext)}>
-        <div className="relative w-full">
-          <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
-          <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
-            <TestCard
-              question={currentQuestion}
-              index={step}
-              total={questions.length}
-              step={step}
-              title={test?.title ?? ''}
-              startFn={startFn}
-              start={start}
-              isPendingStart={isPendingStart}
-            />
-
-            {start && (
-              <div className="mt-6 flex justify-between">
-                {step !== 0 && (
-                  <Button type="button" variant="ghost" onClick={handleBack}>
-                    Назад
-                  </Button>
-                )}
-
-                <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
-                  {step === questions.length - 1 ? 'Завершить' : 'Далее'}
-                </Button>
-              </div>
-            )}
+              {(testRes?.status === 'completed' || publicCompleted) && (
+                <CompletedInfo
+                  totalCorrectAnswers={totalCorrectAnswers}
+                  countQuestions={questions.length}
+                  publicFlag={publicFlag}
+                  publicCorrectAnswers={publicCorrectAnswers}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </form>
-    </FormProvider>
-  )
-})
+        </form>
+      </FormProvider>
+    )
+  },
+)
 
 export { TestForm }
