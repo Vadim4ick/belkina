@@ -144,7 +144,6 @@ export interface User {
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex';
   tariff?: (number | null) | Tariff;
-  testResults?: (number | TestResult)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -167,22 +166,31 @@ export interface Tariff {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testResults".
+ * via the `definition` "media".
  */
-export interface TestResult {
+export interface Media {
   id: number;
-  test: number | Test;
-  user: number | User;
-  answers?:
-    | {
-        question: number | Question;
-        userAnswer?: string | null;
-        isCorrect?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  score?: number | null;
-  completedAt?: string | null;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -258,31 +266,31 @@ export interface Recomendation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "testResults".
  */
-export interface Media {
+export interface TestResult {
   id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "faqs".
- */
-export interface Faq {
-  id: number;
-  question: string;
-  answer: string;
+  user: number | User;
+  test: number | Test;
+  status: 'completed' | 'in_progress';
+  answers?:
+    | {
+        question: number | Question;
+        userAnswer:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        isCorrect?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  score?: number | null;
+  completedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -401,7 +409,6 @@ export interface UsersSelect<T extends boolean = true> {
   role?: T;
   signupMethod?: T;
   tariff?: T;
-  testResults?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -495,8 +502,9 @@ export interface QuestionsSelect<T extends boolean = true> {
  * via the `definition` "testResults_select".
  */
 export interface TestResultsSelect<T extends boolean = true> {
-  test?: T;
   user?: T;
+  test?: T;
+  status?: T;
   answers?:
     | T
     | {

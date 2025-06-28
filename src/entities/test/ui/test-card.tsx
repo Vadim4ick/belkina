@@ -10,6 +10,7 @@ import { useShuffledOnClient } from '@/shared/hooks/useShuffledOnClient'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import { getSymbolLabel, RUS_LETTERS } from '@/shared/const'
+import { Button } from '@/shared/ui/button'
 
 type Props = {
   question: QuestionFragmentFragment
@@ -17,9 +18,11 @@ type Props = {
   total: number
   step: number
   title: string
+  startFn: VoidFunction
+  start: boolean
 }
 
-const TestCard = memo(({ question, index, total, step, title }: Props) => {
+const TestCard = memo(({ question, index, total, step, title, startFn, start }: Props) => {
   const { control } = useFormContext()
 
   const questionName = `q_${question.id}`
@@ -167,6 +170,22 @@ const TestCard = memo(({ question, index, total, step, title }: Props) => {
       default:
         return null
     }
+  }
+
+  if (!start) {
+    return (
+      <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-6 rounded-2xl px-10 py-12 text-center">
+        <div className="text-5xl">🧠</div>
+
+        <Typography tag="h1" variant="poppins-md-16" className="font-bold text-blue-600">
+          Готовы пройти тест?
+        </Typography>
+
+        <Button size="xl" onClick={startFn} className="mt-4 w-full max-w-xs">
+          Начать тест
+        </Button>
+      </div>
+    )
   }
 
   return (

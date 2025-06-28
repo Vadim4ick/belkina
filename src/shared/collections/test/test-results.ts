@@ -2,25 +2,19 @@ import { CollectionConfig } from 'payload'
 
 export const TestResults: CollectionConfig = {
   slug: 'testResults',
-  labels: {
-    singular: 'Результат теста',
-    plural: 'Результаты тестов',
-  },
   admin: {
-    useAsTitle: 'test',
+    useAsTitle: 'id',
     group: 'Тестирование',
   },
   access: {
     read: () => true,
+    create: () => true,
+    update: () => true,
+    // read: ({ req: { user } }) => !!user,
+    // create: ({ req: { user } }) => !!user,
+    // update: ({ req: { user } }) => !!user,
   },
   fields: [
-    {
-      name: 'test',
-      label: 'Тест',
-      type: 'relationship',
-      relationTo: 'tests',
-      required: true,
-    },
     {
       name: 'user',
       label: 'Пользователь',
@@ -29,8 +23,26 @@ export const TestResults: CollectionConfig = {
       required: true,
     },
     {
+      name: 'test',
+      label: 'Тест',
+      type: 'relationship',
+      relationTo: 'tests',
+      required: true,
+    },
+    {
+      name: 'status',
+      label: 'Статус',
+      type: 'select',
+      required: true,
+      defaultValue: 'in_progress',
+      options: [
+        { label: 'Завершён', value: 'completed' },
+        { label: 'В процессе', value: 'in_progress' },
+      ],
+    },
+    {
       name: 'answers',
-      label: 'Ответы',
+      label: 'Ответы пользователя',
       type: 'array',
       fields: [
         {
@@ -43,23 +55,26 @@ export const TestResults: CollectionConfig = {
         {
           name: 'userAnswer',
           label: 'Ответ пользователя',
-          type: 'text',
+          type: 'json', // для поддержки разных типов: строка, массив, объект
+          required: true,
         },
         {
           name: 'isCorrect',
-          label: 'Правильно?',
+          label: 'Правильный ответ?',
           type: 'checkbox',
         },
       ],
     },
     {
       name: 'score',
-      label: 'Баллы',
+      label: 'Процент правильных ответов',
       type: 'number',
+      min: 0,
+      max: 100,
     },
     {
       name: 'completedAt',
-      label: 'Дата прохождения',
+      label: 'Дата завершения',
       type: 'date',
     },
   ],

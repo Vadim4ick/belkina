@@ -1,0 +1,5 @@
+mutation CreateTestResult($userId: Int, $testId: Int) {
+  createTestResult(data: { user: $userId, test: $testId, status: in_progress }) {
+    id
+  }
+}

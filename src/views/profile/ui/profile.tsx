@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
@@ -71,13 +72,13 @@ export async function Profile() {
 
   const res = await gql.GetRecomendationByIds({
     // @ts-ignore
-    whereOR: [{ id: { equals: 1 } }],
+    whereOR: [{ id: { equals: 4 } }],
   })
 
   return (
     <section className="max-mobile:py-6 py-12">
       <Typography tag="h1" variant="visuelt-bold-48" className="mb-6">
-        Рекомендации
+        Профиль
       </Typography>
 
       <Topic recomendations={res.Recomendations.docs} />
