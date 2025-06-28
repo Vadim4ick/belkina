@@ -24,7 +24,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ru" className="h-full">
-      <body className={`${geistSans.variable} h-full min-h-screen antialiased`}>
+      <body className={`${geistSans.variable} flex min-h-screen flex-col antialiased`}>
         <SessionProvider>
           <Providers>{children}</Providers>
         </SessionProvider>

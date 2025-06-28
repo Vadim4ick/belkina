@@ -17,12 +17,14 @@ import { ProfileAvatar } from '@/shared/ui/profile-avatar'
 import { Typography } from '@/shared/ui/typography'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { getRouteAuth } from '@/shared/lib/routes'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { memo } from 'react'
 import { cn } from '@/shared/lib/utils'
+import { Session } from 'next-auth'
+import { getRouteAuth, getRouteHome } from '@/shared/lib/routes'
 
 interface UserProfileProps {
+  session?: Session | null
   className?: string
 }
 
@@ -31,12 +33,12 @@ export const UserProfile = memo(({ className }: UserProfileProps) => {
   const router = useRouter()
 
   if (status === 'loading') {
-    return <Skeleton className="h-[48px] w-[150px]" />
+    return <Skeleton className="h-[48px] w-[100px]" />
   }
 
   if (status !== 'authenticated') {
     return (
-      <Button onClick={() => router.push(getRouteAuth())} variant="ghost">
+      <Button onClick={() => router.push(getRouteAuth())} variant="ghostWhite">
         Войти
       </Button>
     )
@@ -73,7 +75,7 @@ export const UserProfile = memo(({ className }: UserProfileProps) => {
                 variant="ghostWhite"
                 onClick={() =>
                   signOut({
-                    callbackUrl: getRouteAuth(),
+                    callbackUrl: getRouteHome(),
                   })
                 }
               >

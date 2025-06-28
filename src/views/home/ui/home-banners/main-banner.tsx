@@ -7,7 +7,7 @@ const MainBanner = ({ content }: { content?: GetHomePageQuery['HomePage']['mainO
   if (!content) return null
 
   return (
-    <section className="bg-light-grey max-tablet:h-full max-mobile:pb-6 mt-[var(--header-height)] h-fit py-6 lg:py-12">
+    <section className="bg-light-grey max-tablet:h-full max-mobile:pb-6 h-fit py-6 lg:py-12">
       {/* <section className="bg-light-grey max-tablet:h-full max-mobile:pb-6 max-tablet:pt-[calc(var(--header-height)_+_24px)] h-[calc(100vh_-_var(--header-height))]"> */}
       <Container className="flex items-center justify-center">
         <div className="bg-blue max-tablet:flex-col max-mobile:py-[24px] max-mobile:px-4 flex h-fit w-full items-start justify-between gap-6 rounded-[16px] px-[40px] py-[48px]">
