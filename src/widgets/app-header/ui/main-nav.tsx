@@ -19,7 +19,6 @@ interface MainNavProps {
 
 const MainNav = memo(({ headerItems, className }: MainNavProps) => {
   const { data: session, status } = useSession()
-  console.log('session ==> ', session)
   const pathname = usePathname()
   const [visible, setVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
@@ -73,8 +72,8 @@ const MainNav = memo(({ headerItems, className }: MainNavProps) => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <UserProfile session={session} />
-            {!session ? (
+            <UserProfile session={session} status={status} />
+            {!session && (
               <Button
                 className=""
                 variant="secondary"
@@ -82,8 +81,6 @@ const MainNav = memo(({ headerItems, className }: MainNavProps) => {
               >
                 Записаться на урок
               </Button>
-            ) : (
-              ''
             )}
           </div>
         </div>

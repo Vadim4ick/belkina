@@ -1,6 +1,6 @@
 import { auth } from '@/entities/user/auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { authRoutes, getRouteAuth, getRouteHome, privateRoutes } from './shared/lib/routes'
+import { authRoutes, getRouteAuth, getRouteProfile, privateRoutes } from './shared/lib/routes'
 
 export default auth(async (req: NextRequest) => {
   const { pathname } = req.nextUrl
@@ -18,7 +18,7 @@ export default auth(async (req: NextRequest) => {
 
   // 🔐 Авторизован и пытается зайти на login/register — редирект на домашнюю страницу
   if (isAuth && isAuthRoute) {
-    return NextResponse.redirect(new URL(getRouteHome(), req.url))
+    return NextResponse.redirect(new URL(getRouteProfile(), req.url))
   }
 
   // ✅ Всё в порядке — пропускаем
