@@ -14,7 +14,6 @@ import { ButtonProps } from '@/shared/ui/button'
 import { IHeaderItems } from '..'
 import { MenuIcon } from '@/shared/icons/menu-icon'
 import { XIcon } from '@/shared/icons/x-icon'
-import { UserProfile } from './user-profile'
 import { Logo } from '@/shared/ui/logo'
 import { MobileNavButtonSheet as MobileNavButton } from './mobile-nav-button'
 import { usePathname } from 'next/navigation'
@@ -38,7 +37,7 @@ const MobileNav = ({ headerItems }: MobileNavProps) => {
               <Logo />
             </SheetTitle>
             <SheetDescription></SheetDescription>
-            {/* <UserProfile className="flex flex-row-reverse items-center justify-end gap-x-4" /> */}
+
             <SheetClose className="absolute right-5">
               <XIcon />
             </SheetClose>
