@@ -30,3 +30,5 @@ export function checkMatchingCorrectness(
 
   return result
 }
+
+export const questionNameFn = (id: string | number) => `q_${id}`

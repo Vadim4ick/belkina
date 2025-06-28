@@ -84,8 +84,12 @@ export const authOptions: NextAuthConfig = {
           // Если через Yandex — достаём из БД
           const existing = await gql.GetUserByEmail({ email: (user as any).email })
           const found = existing.Users?.docs?.[0]
-          token.role = found?.role ?? 'user'
-          token.tariffId = found?.tariff?.id ?? null
+
+          if (found) {
+            token.id = found.id
+            token.role = found.role
+            token.tariffId = found.tariff?.id ?? null
+          }
         }
 
         token.accessToken = await JwtService.signAccessToken({

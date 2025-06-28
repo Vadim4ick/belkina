@@ -65,17 +65,12 @@ export const TestResults: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'score',
-      label: 'Процент правильных ответов',
-      type: 'number',
-      min: 0,
-      max: 100,
-    },
-    {
-      name: 'completedAt',
-      label: 'Дата завершения',
-      type: 'date',
-    },
+    // {
+    //   name: 'score',
+    //   label: 'Процент правильных ответов',
+    //   type: 'number',
+    //   min: 0,
+    //   max: 100,
+    // },
   ],
 }

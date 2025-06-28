@@ -11,6 +11,7 @@ import { Checkbox } from '@/shared/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
 import { getSymbolLabel, RUS_LETTERS } from '@/shared/const'
 import { Button } from '@/shared/ui/button'
+import { questionNameFn } from '../model/const'
 
 type Props = {
   question: QuestionFragmentFragment
@@ -27,7 +28,7 @@ const TestCard = memo(
   ({ question, index, total, step, title, startFn, start, isPendingStart }: Props) => {
     const { control } = useFormContext()
 
-    const questionName = `q_${question.id}`
+    const questionName = questionNameFn(question.id)
 
     const shuffledRight = useShuffledOnClient(question.matchingPairs?.map((p) => p))
 
