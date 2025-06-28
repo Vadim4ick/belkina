@@ -1,5 +1,6 @@
 import { Typography } from '@/shared/ui/typography'
 import TestsListItem from './tests-list-item'
+import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
 
 export interface ITestsListItem {
   id: string
@@ -8,26 +9,33 @@ export interface ITestsListItem {
   slug: string
 }
 
-export const testsListItem: ITestsListItem[] = [
-  { id: '1', name: 'Название теста 1', topic: 'Тема 1', slug: 'test-1' },
-  { id: '2', name: 'Название теста 2', topic: 'Тема 2', slug: 'test-2' },
-  { id: '3', name: 'Название теста 3', topic: 'Тема 3', slug: 'test-3' },
-  { id: '4', name: 'Название теста 4', topic: 'Тема 4', slug: 'test-4' },
-  { id: '5', name: 'Название теста 5', topic: 'Тема 5', slug: 'test-5' },
-]
-
-const TestsList = ({ title }: { title?: string }) => {
+const TestsList = ({
+  tests,
+  title,
+}: {
+  tests?: GetAllTestsQuery['Tests']['docs']
+  title?: string
+}) => {
   return (
-    <section className="py-6">
-      <Typography tag="h2" variant="poppins-md-24" className="mb-4">
-        {title}
-      </Typography>
-      <div className="border-light-grey flex flex-col gap-3 rounded-xl py-6 md:py-5">
-        {testsListItem.map((test, idx) => (
-          <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
-        ))}
-      </div>
-    </section>
+    <>
+      {tests && tests.length > 0 && (
+        <section className="py-6">
+          {title && (
+            <Typography tag="h2" variant="poppins-md-24" className="mb-4">
+              {title}
+            </Typography>
+          )}
+
+          {tests && (
+            <div className="border-light-grey flex flex-col gap-3 rounded-xl py-6 md:py-5">
+              {tests.map((test, idx) => (
+                <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+    </>
   )
 }
 

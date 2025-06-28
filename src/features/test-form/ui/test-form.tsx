@@ -18,6 +18,8 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
   const [step, setStep] = useState(0)
   const [completed, setCompleted] = useState(false)
 
+  const [start, setStart] = useState(false)
+
   const [correctCount, setCorrectCount] = useState(0)
 
   const { evaluate } = useTestEvaluation(questions?.map((q) => q) || [])
@@ -60,6 +62,10 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
     setStep((prev) => Math.max(prev - 1, 0))
   }
 
+  const startFn = () => {
+    setStart(true)
+  }
+
   if (completed) {
     return (
       <div className="border-blue mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
@@ -100,19 +106,23 @@ const TestForm = memo(({ test }: { test?: TestFragmentFragment }) => {
               total={questions.length}
               step={step}
               title={test?.title ?? ''}
+              startFn={startFn}
+              start={start}
             />
 
-            <div className="mt-6 flex justify-between">
-              {step !== 0 && (
-                <Button type="button" variant="ghost" onClick={handleBack}>
-                  Назад
-                </Button>
-              )}
+            {start && (
+              <div className="mt-6 flex justify-between">
+                {step !== 0 && (
+                  <Button type="button" variant="ghost" onClick={handleBack}>
+                    Назад
+                  </Button>
+                )}
 
-              <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
-                {step === questions.length - 1 ? 'Завершить' : 'Далее'}
-              </Button>
-            </div>
+                <Button className="ml-auto" type="submit" size="xl" disabled={!formState.isValid}>
+                  {step === questions.length - 1 ? 'Завершить' : 'Далее'}
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </form>

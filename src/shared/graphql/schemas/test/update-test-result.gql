@@ -1,0 +1,13 @@
+mutation UpdateTestResult(
+  $testResId: Int!
+  $isCorrect: Boolean
+  $questionId: Int
+  $answerJSON: JSON!
+) {
+  updateTestResult(
+    id: $testResId
+    data: { answers: { userAnswer: $answerJSON, isCorrect: $isCorrect, question: $questionId } }
+  ) {
+    id
+  }
+}

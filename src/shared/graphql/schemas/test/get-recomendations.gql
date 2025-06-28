@@ -1,0 +1,17 @@
+query GetRecommendations($userId: JSON) {
+  TestResults(where: { user: { equals: $userId }, answers__isCorrect: { equals: false } }) {
+    docs {
+      id
+      answers {
+        question {
+          id
+          questionText
+
+          recommendation {
+            ...RecomendationFragment
+          }
+        }
+      }
+    }
+  }
+}
