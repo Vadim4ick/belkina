@@ -20,7 +20,7 @@ const MobileNavButton = ({ icon: Icon, className, children, ...props }: SidebarB
 
 export { MobileNavButton }
 
-const SidebarButtonSheet = (props: SidebarButtonProps) => {
+const MobileNavButtonSheet = (props: SidebarButtonProps) => {
   return (
     <SheetClose asChild>
       <MobileNavButton {...props} />
@@ -28,4 +28,4 @@ const SidebarButtonSheet = (props: SidebarButtonProps) => {
   )
 }
 
-export { SidebarButtonSheet }
+export { MobileNavButtonSheet }

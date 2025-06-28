@@ -16,39 +16,38 @@ import { MenuIcon } from '@/shared/icons/menu-icon'
 import { XIcon } from '@/shared/icons/x-icon'
 import { UserProfile } from './user-profile'
 import { Logo } from '@/shared/ui/logo'
-import { memo, useState } from 'react'
-import { MobileNavButton } from './mobile-nav-button'
+import { MobileNavButtonSheet as MobileNavButton } from './mobile-nav-button'
 import { usePathname } from 'next/navigation'
 
 interface MobileNavProps extends ButtonProps {
   headerItems: IHeaderItems[]
 }
 
-const MobileNav = memo(({ headerItems }: MobileNavProps) => {
-  const [open, setOpen] = useState(false)
+const MobileNav = ({ headerItems }: MobileNavProps) => {
   const pathname = usePathname()
+
   return (
     <>
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger className="absolute top-4 left-4">
+      <Sheet>
+        <SheetTrigger className="absolute top-9 left-4 z-50 lg:hidden">
           <MenuIcon className="h-6 w-6" />
         </SheetTrigger>
-        <SheetContent side="left" hideClose className="z-[51] w-[90%] px-5 py-4">
+        <SheetContent side="left" hideClose className="w-[90%] px-5 py-4">
           <SheetHeader className="mb-3 p-0">
             <SheetTitle>
               <Logo />
             </SheetTitle>
             <SheetDescription></SheetDescription>
-            <UserProfile className="flex flex-row-reverse items-center justify-end gap-x-4" />
+            {/* <UserProfile className="flex flex-row-reverse items-center justify-end gap-x-4" /> */}
             <SheetClose className="absolute right-5">
               <XIcon />
             </SheetClose>
           </SheetHeader>
-          <ul className="space-y-4">
+          <ul className="flex flex-col gap-y-2">
             {headerItems.map((item, idx) => (
               <Link key={idx} href={item.url}>
                 <MobileNavButton
-                  variant={pathname === item.url ? 'secondary' : 'ghost'}
+                  variant={pathname === item.url ? 'secondary' : 'ghostWhite'}
                   icon={item.icon}
                 >
                   <span>{item.title}</span>
@@ -60,6 +59,6 @@ const MobileNav = memo(({ headerItems }: MobileNavProps) => {
       </Sheet>
     </>
   )
-})
+}
 
 export { MobileNav }

@@ -17,7 +17,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      <SidebarHeader></SidebarHeader>
+      {/* <SidebarHeader></SidebarHeader> */}
       <SidebarContent>
         <Logo />
         <NavMain items={PrivateMenuItems} />

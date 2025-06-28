@@ -34,7 +34,7 @@ const headerItems: IHeaderItems[] = [
   },
   {
     title: 'Блог',
-    url: '#',
+    url: '/blog',
     icon: Newspaper,
   },
 ]
@@ -46,10 +46,10 @@ interface AppHeaderProps {
 export const AppHeader = memo(({ route }: AppHeaderProps) => {
   return (
     <>
-      <MainNav headerItems={headerItems} className="z-[1000] hidden md:flex" />
+      <MainNav headerItems={headerItems} className="z-50 md:flex" />
 
       {route !== 'PRIVATE' && (
-        <MobileNav headerItems={headerItems} className="z-[1000] flex !w-fit md:hidden" />
+        <MobileNav headerItems={headerItems} className="z-[500] flex !w-fit md:hidden" />
       )}
     </>
   )

@@ -14,6 +14,9 @@ import {
 } from '@/shared/ui/dropdown-menu'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/shared/ui/sidebar'
 import { CartIcon } from '@/shared/icons/cart-icon'
+import { Button } from '@/shared/ui/button'
+import { signOut } from 'next-auth/react'
+import { getRouteHome } from '@/shared/lib/routes'
 
 export function NavUser({
   user,
@@ -83,9 +86,19 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Выйти
+            <DropdownMenuItem asChild>
+              <Button
+                className="h-[32px] w-full cursor-pointer justify-start"
+                variant="ghostWhite"
+                onClick={() =>
+                  signOut({
+                    callbackUrl: getRouteHome(),
+                  })
+                }
+              >
+                <LogOut />
+                Выйти
+              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
