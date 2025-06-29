@@ -7305,10 +7305,8 @@ export type TestTariffArgs = {
 export type TestResult = {
   readonly __typename?: 'TestResult';
   readonly answers: Maybe<ReadonlyArray<TestResult_Answers>>;
-  readonly completedAt: Maybe<Scalars['DateTime']['output']>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly id: Scalars['Int']['output'];
-  readonly score: Maybe<Scalars['Float']['output']>;
   readonly status: TestResult_Status;
   readonly test: Test;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
@@ -7379,17 +7377,6 @@ export type TestResult_Answers__UserAnswer_Operator = {
   readonly within: InputMaybe<Scalars['JSON']['input']>;
 };
 
-export type TestResult_CompletedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
 export type TestResult_CreatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
@@ -7409,16 +7396,6 @@ export type TestResult_Id_Operator = {
   readonly less_than: InputMaybe<Scalars['Int']['input']>;
   readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type TestResult_Score_Operator = {
-  readonly equals: InputMaybe<Scalars['Float']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
-  readonly less_than: InputMaybe<Scalars['Float']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type TestResult_Status =
@@ -7475,10 +7452,8 @@ export type TestResult_Where = {
   readonly answers__isCorrect: InputMaybe<TestResult_Answers__IsCorrect_Operator>;
   readonly answers__question: InputMaybe<TestResult_Answers__Question_Operator>;
   readonly answers__userAnswer: InputMaybe<TestResult_Answers__UserAnswer_Operator>;
-  readonly completedAt: InputMaybe<TestResult_CompletedAt_Operator>;
   readonly createdAt: InputMaybe<TestResult_CreatedAt_Operator>;
   readonly id: InputMaybe<TestResult_Id_Operator>;
-  readonly score: InputMaybe<TestResult_Score_Operator>;
   readonly status: InputMaybe<TestResult_Status_Operator>;
   readonly test: InputMaybe<TestResult_Test_Operator>;
   readonly updatedAt: InputMaybe<TestResult_UpdatedAt_Operator>;
@@ -7492,10 +7467,8 @@ export type TestResult_Where_And = {
   readonly answers__isCorrect: InputMaybe<TestResult_Answers__IsCorrect_Operator>;
   readonly answers__question: InputMaybe<TestResult_Answers__Question_Operator>;
   readonly answers__userAnswer: InputMaybe<TestResult_Answers__UserAnswer_Operator>;
-  readonly completedAt: InputMaybe<TestResult_CompletedAt_Operator>;
   readonly createdAt: InputMaybe<TestResult_CreatedAt_Operator>;
   readonly id: InputMaybe<TestResult_Id_Operator>;
-  readonly score: InputMaybe<TestResult_Score_Operator>;
   readonly status: InputMaybe<TestResult_Status_Operator>;
   readonly test: InputMaybe<TestResult_Test_Operator>;
   readonly updatedAt: InputMaybe<TestResult_UpdatedAt_Operator>;
@@ -7509,10 +7482,8 @@ export type TestResult_Where_Or = {
   readonly answers__isCorrect: InputMaybe<TestResult_Answers__IsCorrect_Operator>;
   readonly answers__question: InputMaybe<TestResult_Answers__Question_Operator>;
   readonly answers__userAnswer: InputMaybe<TestResult_Answers__UserAnswer_Operator>;
-  readonly completedAt: InputMaybe<TestResult_CompletedAt_Operator>;
   readonly createdAt: InputMaybe<TestResult_CreatedAt_Operator>;
   readonly id: InputMaybe<TestResult_Id_Operator>;
-  readonly score: InputMaybe<TestResult_Score_Operator>;
   readonly status: InputMaybe<TestResult_Status_Operator>;
   readonly test: InputMaybe<TestResult_Test_Operator>;
   readonly updatedAt: InputMaybe<TestResult_UpdatedAt_Operator>;
@@ -7561,9 +7532,7 @@ export type TestResultsDeleteDocAccess = {
 export type TestResultsDocAccessFields = {
   readonly __typename?: 'TestResultsDocAccessFields';
   readonly answers: Maybe<TestResultsDocAccessFields_Answers>;
-  readonly completedAt: Maybe<TestResultsDocAccessFields_CompletedAt>;
   readonly createdAt: Maybe<TestResultsDocAccessFields_CreatedAt>;
-  readonly score: Maybe<TestResultsDocAccessFields_Score>;
   readonly status: Maybe<TestResultsDocAccessFields_Status>;
   readonly test: Maybe<TestResultsDocAccessFields_Test>;
   readonly updatedAt: Maybe<TestResultsDocAccessFields_UpdatedAt>;
@@ -7719,34 +7688,6 @@ export type TestResultsDocAccessFields_Answers_UserAnswer_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type TestResultsDocAccessFields_CompletedAt = {
-  readonly __typename?: 'TestResultsDocAccessFields_completedAt';
-  readonly create: Maybe<TestResultsDocAccessFields_CompletedAt_Create>;
-  readonly delete: Maybe<TestResultsDocAccessFields_CompletedAt_Delete>;
-  readonly read: Maybe<TestResultsDocAccessFields_CompletedAt_Read>;
-  readonly update: Maybe<TestResultsDocAccessFields_CompletedAt_Update>;
-};
-
-export type TestResultsDocAccessFields_CompletedAt_Create = {
-  readonly __typename?: 'TestResultsDocAccessFields_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_CompletedAt_Delete = {
-  readonly __typename?: 'TestResultsDocAccessFields_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_CompletedAt_Read = {
-  readonly __typename?: 'TestResultsDocAccessFields_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_CompletedAt_Update = {
-  readonly __typename?: 'TestResultsDocAccessFields_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
 export type TestResultsDocAccessFields_CreatedAt = {
   readonly __typename?: 'TestResultsDocAccessFields_createdAt';
   readonly create: Maybe<TestResultsDocAccessFields_CreatedAt_Create>;
@@ -7772,34 +7713,6 @@ export type TestResultsDocAccessFields_CreatedAt_Read = {
 
 export type TestResultsDocAccessFields_CreatedAt_Update = {
   readonly __typename?: 'TestResultsDocAccessFields_createdAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_Score = {
-  readonly __typename?: 'TestResultsDocAccessFields_score';
-  readonly create: Maybe<TestResultsDocAccessFields_Score_Create>;
-  readonly delete: Maybe<TestResultsDocAccessFields_Score_Delete>;
-  readonly read: Maybe<TestResultsDocAccessFields_Score_Read>;
-  readonly update: Maybe<TestResultsDocAccessFields_Score_Update>;
-};
-
-export type TestResultsDocAccessFields_Score_Create = {
-  readonly __typename?: 'TestResultsDocAccessFields_score_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_Score_Delete = {
-  readonly __typename?: 'TestResultsDocAccessFields_score_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_Score_Read = {
-  readonly __typename?: 'TestResultsDocAccessFields_score_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsDocAccessFields_Score_Update = {
-  readonly __typename?: 'TestResultsDocAccessFields_score_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -7918,9 +7831,7 @@ export type TestResultsDocAccessFields_User_Update = {
 export type TestResultsFields = {
   readonly __typename?: 'TestResultsFields';
   readonly answers: Maybe<TestResultsFields_Answers>;
-  readonly completedAt: Maybe<TestResultsFields_CompletedAt>;
   readonly createdAt: Maybe<TestResultsFields_CreatedAt>;
-  readonly score: Maybe<TestResultsFields_Score>;
   readonly status: Maybe<TestResultsFields_Status>;
   readonly test: Maybe<TestResultsFields_Test>;
   readonly updatedAt: Maybe<TestResultsFields_UpdatedAt>;
@@ -8076,34 +7987,6 @@ export type TestResultsFields_Answers_UserAnswer_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type TestResultsFields_CompletedAt = {
-  readonly __typename?: 'TestResultsFields_completedAt';
-  readonly create: Maybe<TestResultsFields_CompletedAt_Create>;
-  readonly delete: Maybe<TestResultsFields_CompletedAt_Delete>;
-  readonly read: Maybe<TestResultsFields_CompletedAt_Read>;
-  readonly update: Maybe<TestResultsFields_CompletedAt_Update>;
-};
-
-export type TestResultsFields_CompletedAt_Create = {
-  readonly __typename?: 'TestResultsFields_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_CompletedAt_Delete = {
-  readonly __typename?: 'TestResultsFields_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_CompletedAt_Read = {
-  readonly __typename?: 'TestResultsFields_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_CompletedAt_Update = {
-  readonly __typename?: 'TestResultsFields_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
 export type TestResultsFields_CreatedAt = {
   readonly __typename?: 'TestResultsFields_createdAt';
   readonly create: Maybe<TestResultsFields_CreatedAt_Create>;
@@ -8129,34 +8012,6 @@ export type TestResultsFields_CreatedAt_Read = {
 
 export type TestResultsFields_CreatedAt_Update = {
   readonly __typename?: 'TestResultsFields_createdAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_Score = {
-  readonly __typename?: 'TestResultsFields_score';
-  readonly create: Maybe<TestResultsFields_Score_Create>;
-  readonly delete: Maybe<TestResultsFields_Score_Delete>;
-  readonly read: Maybe<TestResultsFields_Score_Read>;
-  readonly update: Maybe<TestResultsFields_Score_Update>;
-};
-
-export type TestResultsFields_Score_Create = {
-  readonly __typename?: 'TestResultsFields_score_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_Score_Delete = {
-  readonly __typename?: 'TestResultsFields_score_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_Score_Read = {
-  readonly __typename?: 'TestResultsFields_score_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TestResultsFields_Score_Update = {
-  readonly __typename?: 'TestResultsFields_score_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -9880,9 +9735,7 @@ export type MutationTestInput = {
 
 export type MutationTestResultInput = {
   readonly answers: InputMaybe<ReadonlyArray<InputMaybe<MutationTestResult_AnswersInput>>>;
-  readonly completedAt: InputMaybe<Scalars['String']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly score: InputMaybe<Scalars['Float']['input']>;
   readonly status: TestResult_Status_MutationInput;
   readonly test: InputMaybe<Scalars['Int']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
@@ -9891,9 +9744,7 @@ export type MutationTestResultInput = {
 
 export type MutationTestResultUpdateInput = {
   readonly answers: InputMaybe<ReadonlyArray<InputMaybe<MutationTestResultUpdate_AnswersInput>>>;
-  readonly completedAt: InputMaybe<Scalars['String']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly score: InputMaybe<Scalars['Float']['input']>;
   readonly status: InputMaybe<TestResultUpdate_Status_MutationInput>;
   readonly test: InputMaybe<Scalars['Int']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
@@ -10133,6 +9984,13 @@ export type GetByIdTestResultQueryVariables = Exact<{
 
 export type GetByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly id: number, readonly status: TestResult_Status, readonly answers: ReadonlyArray<{ readonly __typename?: 'TestResult_Answers', readonly id: string, readonly userAnswer: any, readonly question: { readonly __typename?: 'Question', readonly id: number } }> }> } };
 
+export type GetUserByIdTestResultQueryVariables = Exact<{
+  userId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetUserByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly status: TestResult_Status, readonly test: { readonly __typename?: 'Test', readonly id: number } }> } };
+
 export type GetRecommendationsQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
 }>;
@@ -10320,6 +10178,18 @@ export const GetByIdTestResultDocument = gql`
   }
 }
     `;
+export const GetUserByIdTestResultDocument = gql`
+    query GetUserByIdTestResult($userId: JSON) {
+  TestResults(where: {user: {equals: $userId}}) {
+    docs {
+      test {
+        id
+      }
+      status
+    }
+  }
+}
+    `;
 export const GetRecommendationsDocument = gql`
     query GetRecommendations($userId: JSON) {
   TestResults(
@@ -10419,6 +10289,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetByIdTestResult(variables?: GetByIdTestResultQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetByIdTestResultQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetByIdTestResultQuery>({ document: GetByIdTestResultDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetByIdTestResult', 'query', variables);
+    },
+    GetUserByIdTestResult(variables?: GetUserByIdTestResultQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserByIdTestResultQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserByIdTestResultQuery>({ document: GetUserByIdTestResultDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUserByIdTestResult', 'query', variables);
     },
     GetRecommendations(variables?: GetRecommendationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsQuery>({ document: GetRecommendationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendations', 'query', variables);

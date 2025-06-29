@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { QuestionFragmentFragment } from '@/shared/graphql/__generated__'
 import { checkMatchingCorrectness } from './const'
 
