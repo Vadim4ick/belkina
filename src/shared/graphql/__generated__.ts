@@ -10026,9 +10026,7 @@ export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: {
 
 export type UpdateTestResultMutationVariables = Exact<{
   testResId: Scalars['Int']['input'];
-  isCorrect: InputMaybe<Scalars['Boolean']['input']>;
-  questionId: InputMaybe<Scalars['Int']['input']>;
-  answerJSON: Scalars['JSON']['input'];
+  answers: InputMaybe<ReadonlyArray<MutationTestResultUpdate_AnswersInput> | MutationTestResultUpdate_AnswersInput>;
   status: InputMaybe<TestResultUpdate_Status_MutationInput>;
 }>;
 
@@ -10279,11 +10277,8 @@ export const GetByIdTestDocument = gql`
 }
     ${TestFragmentFragmentDoc}`;
 export const UpdateTestResultDocument = gql`
-    mutation UpdateTestResult($testResId: Int!, $isCorrect: Boolean, $questionId: Int, $answerJSON: JSON!, $status: TestResultUpdate_status_MutationInput) {
-  updateTestResult(
-    id: $testResId
-    data: {answers: {userAnswer: $answerJSON, isCorrect: $isCorrect, question: $questionId}, status: $status}
-  ) {
+    mutation UpdateTestResult($testResId: Int!, $answers: [mutationTestResultUpdate_AnswersInput!], $status: TestResultUpdate_status_MutationInput) {
+  updateTestResult(id: $testResId, data: {answers: $answers, status: $status}) {
     id
     status
   }

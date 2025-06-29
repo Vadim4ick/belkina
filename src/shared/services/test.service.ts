@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useGqlClient } from '../hooks/useGqlClient'
 import { useAuthStore } from '../hooks/use-auth-store'
-import { TestResultUpdate_Status_MutationInput } from '../graphql/__generated__'
+import {
+  MutationTestResultUpdate_AnswersInput,
+  TestResultUpdate_Status_MutationInput,
+} from '../graphql/__generated__'
 
 export const useCreateTestResult = () => {
   const gql = useGqlClient()
@@ -70,15 +73,11 @@ export const useUpdateTestResult = () => {
 
     mutationFn: async ({
       testResId,
-      questionId,
-      answerJSON,
-      isCorrect,
+      answers,
       status = 'in_progress',
     }: {
       testResId?: number
-      questionId: number
-      answerJSON: string
-      isCorrect: boolean
+      answers: [Omit<MutationTestResultUpdate_AnswersInput, 'id'>]
       status?: TestResultUpdate_Status_MutationInput
     }) => {
       try {
@@ -88,9 +87,9 @@ export const useUpdateTestResult = () => {
 
         await gql.UpdateTestResult({
           testResId: testResId,
-          questionId: questionId,
-          answerJSON: answerJSON,
-          isCorrect: isCorrect,
+
+          // @ts-ignore
+          answers: answers,
           status: status,
         })
       } catch (err) {
