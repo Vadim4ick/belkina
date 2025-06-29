@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useGqlClient } from '../hooks/useGqlClient'
 import { useAuthStore } from '../hooks/use-auth-store'
 import { TestResultUpdate_Status_MutationInput } from '../graphql/__generated__'
@@ -7,12 +7,14 @@ export const useCreateTestResult = () => {
   const gql = useGqlClient()
   const session = useAuthStore((state) => state.session)
 
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationKey: ['createTestResult', session?.user?.id],
 
     mutationFn: async ({ testId }: { testId: number }) => {
       try {
-        gql.CreateTestResult({
+        await gql.CreateTestResult({
           testId: testId,
           userId: Number(session?.user?.id),
         })
@@ -20,6 +22,14 @@ export const useCreateTestResult = () => {
         console.error('createTestResult', err)
 
         throw err
+      }
+    },
+
+    onSuccess: (_, { testId }) => {
+      if (session?.user?.id && testId) {
+        queryClient.invalidateQueries({
+          queryKey: ['getTestResultById', session.user.id, testId],
+        })
       }
     },
   })
@@ -38,7 +48,7 @@ export const useGetTestResultById = ({ testId }: { testId?: number }) => {
       if (!userId || !testId) throw new Error('Missing testId or userId')
 
       try {
-        return gql.GetByIdTestResult({
+        return await gql.GetByIdTestResult({
           testId: Number(testId),
           userId: Number(userId),
         })
@@ -65,14 +75,18 @@ export const useUpdateTestResult = () => {
       isCorrect,
       status = 'in_progress',
     }: {
-      testResId: number
+      testResId?: number
       questionId: number
       answerJSON: string
       isCorrect: boolean
       status?: TestResultUpdate_Status_MutationInput
     }) => {
       try {
-        gql.UpdateTestResult({
+        if (!testResId) {
+          throw new Error('Missing testResId')
+        }
+
+        await gql.UpdateTestResult({
           testResId: testResId,
           questionId: questionId,
           answerJSON: answerJSON,

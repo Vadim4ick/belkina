@@ -20,16 +20,15 @@ const TestForm = memo(
       start,
       startFn,
       currentQuestion,
-      testRes,
-      isLoading,
-      isFetching,
       isPendingUpdate,
       isPendingStart,
       form,
       onNext,
-
       publicCorrectAnswers,
       publicCompleted,
+      isLoading,
+      isFetching,
+      testRes,
     } = useTestLogic({ test, publicFlag })
 
     const totalCorrectAnswers = totalCorrectAnswersFn(currentQuestion.answers)
