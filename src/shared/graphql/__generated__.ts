@@ -9998,6 +9998,13 @@ export type GetRecommendationsQueryVariables = Exact<{
 
 export type GetRecommendationsQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly id: number, readonly answers: ReadonlyArray<{ readonly __typename?: 'TestResult_Answers', readonly question: { readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly recommendation: { readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> } } } }> }> } };
 
+export type GetTestResHistoryQueryVariables = Exact<{
+  userId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetTestResHistoryQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly status: TestResult_Status, readonly test: { readonly __typename?: 'Test', readonly id: number, readonly title: string } }> } };
+
 export type GetAllTestsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10210,6 +10217,19 @@ export const GetRecommendationsDocument = gql`
   }
 }
     ${RecomendationFragmentFragmentDoc}`;
+export const GetTestResHistoryDocument = gql`
+    query GetTestResHistory($userId: JSON) {
+  TestResults(where: {user: {equals: $userId}}) {
+    docs {
+      status
+      test {
+        id
+        title
+      }
+    }
+  }
+}
+    `;
 export const GetAllTestsDocument = gql`
     query GetAllTests {
   Tests {
@@ -10295,6 +10315,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetRecommendations(variables?: GetRecommendationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsQuery>({ document: GetRecommendationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendations', 'query', variables);
+    },
+    GetTestResHistory(variables?: GetTestResHistoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTestResHistoryQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTestResHistoryQuery>({ document: GetTestResHistoryDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTestResHistory', 'query', variables);
     },
     GetAllTests(variables?: GetAllTestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllTestsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllTestsQuery>({ document: GetAllTestsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllTests', 'query', variables);
