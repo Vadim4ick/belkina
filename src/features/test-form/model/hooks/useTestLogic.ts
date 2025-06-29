@@ -45,10 +45,10 @@ export const useTestLogic = ({
   const { mutateAsync: updateTestResult, isPending: isPendingUpdate } = useUpdateTestResult()
   const { data: testResult, isLoading, isFetching } = useGetTestResultById({ testId: test?.id })
 
+  const testRes = testResult?.TestResults?.docs[0]
+
   const [publicCorrectAnswers, setPublicCorrectAnswers] = useState(0)
   const [publicCompleted, setPublicCompleted] = useState(false)
-
-  const testRes = testResult?.TestResults?.docs?.[0]
 
   useEffect(() => {
     const prevAnswer = testRes?.answers.find((a) => +a.question.id === +currentQuestion.id)
@@ -79,9 +79,11 @@ export const useTestLogic = ({
       const isCorrect = evaluateSingle(currentQuestion.id, values)
       const isNotLast = step < questions.length - 1
 
+      console.log('testRes', testRes)
+
       updateTestResult(
         {
-          testResId: testRes?.id || 0,
+          testResId: testRes?.id,
           questionId: currentQuestion.id,
           answerJSON: JSON.stringify(values[questionName]),
           isCorrect,
@@ -136,15 +138,15 @@ export const useTestLogic = ({
     start,
     startFn,
     currentQuestion,
-    testRes,
-    testResult,
-    isLoading,
-    isFetching,
     isPendingUpdate,
     isPendingStart,
     form,
     onNext,
     publicCorrectAnswers,
     publicCompleted,
+
+    isLoading,
+    isFetching,
+    testRes,
   }
 }
