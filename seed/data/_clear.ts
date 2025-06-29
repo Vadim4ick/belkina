@@ -23,8 +23,8 @@ export const clearTariffsInUsers = async () => {
     })
   }
 
+  await payload.delete({ collection: 'testResults', where: {} })
   await payload.delete({ collection: 'tests', where: {} })
   await payload.delete({ collection: 'questions', where: {} })
-  await payload.delete({ collection: 'testResults', where: {} })
   await payload.delete({ collection: 'recomendations', where: {} })
 }
