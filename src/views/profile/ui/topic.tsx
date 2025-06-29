@@ -6,14 +6,61 @@ import { Card } from '@/shared/ui/card'
 import { Typography } from '@/shared/ui/typography'
 import { memo } from 'react'
 
+type LexicalNode = {
+  type: string
+  text?: string
+  tag?: string
+  children?: LexicalNode[]
+}
+
+export const LexicalRenderer = ({ node }: { node: LexicalNode }) => {
+  const renderNode = (node: LexicalNode, key?: number): React.ReactNode => {
+    if (!node) return null
+
+    switch (node.type) {
+      case 'root':
+        return <div key={key}>{node.children?.map((child, i) => renderNode(child, i))}</div>
+
+      case 'list':
+        return (
+          <ul key={key} className="space-y-1 text-base text-[#626262]">
+            {node.children?.map((child, i) => renderNode(child, i))}
+          </ul>
+        )
+
+      case 'listitem':
+        return (
+          <Typography
+            className="flex items-center gap-1"
+            key={key}
+            tag="li"
+            variant="poppins-md-16"
+          >
+            - {node.children?.map((child, i) => renderNode(child, i))}
+          </Typography>
+        )
+
+      case 'text':
+        return (
+          <Typography key={key} tag="p" variant="poppins-md-16">
+            {node.text}
+          </Typography>
+        )
+
+      default:
+        return null
+    }
+  }
+
+  return <div className="prose">{renderNode(node)}</div>
+}
+
 const Topic = memo(
   ({
     recomendations,
   }: {
     recomendations: GetRecomendationByIdsQuery['Recomendations']['docs']
   }) => {
-    if (recomendations && recomendations?.length === 0) return null
-
     return (
       <>
         {recomendations?.map((el) => {
@@ -24,7 +71,7 @@ const Topic = memo(
             >
               <div className="flex flex-col gap-6">
                 <h2 className="text-3xl font-bold text-black">{el.title}</h2>
-                <ul className="space-y-1 text-base text-[#626262]">
+                {/* <ul className="space-y-1 text-base text-[#626262]">
                   <Typography tag="li" variant="poppins-md-16">
                     – Учи правила правописания приставок, корней, суффиксов и окончаний.
                   </Typography>
@@ -34,7 +81,9 @@ const Topic = memo(
                   <Typography tag="li" variant="poppins-md-16">
                     – Рекомендация: делай по 10–15 заданий ежедневно, анализируя ошибки.
                   </Typography>
-                </ul>
+                </ul> */}
+
+                <LexicalRenderer node={el.description.root} />
               </div>
 
               <Card className="flex w-full flex-col gap-6 rounded-xl bg-white px-4 py-5 shadow-none lg:px-8 lg:py-10 xl:flex-row">

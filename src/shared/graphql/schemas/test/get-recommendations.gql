@@ -1,0 +1,23 @@
+query GetNotCorrectedAnswer($userId: JSON) {
+  TestResults(where: { user: { equals: $userId }, answers__isCorrect: { equals: false } }) {
+    docs {
+      answers {
+        question {
+          questionText
+
+          recommendation {
+            id
+            title
+            description
+            tariff {
+              title
+              price
+            }
+          }
+        }
+
+        isCorrect
+      }
+    }
+  }
+}
