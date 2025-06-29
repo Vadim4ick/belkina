@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
 import {
@@ -11,9 +12,13 @@ import {
 } from '@/shared/services/test.service'
 import { questionNameFn } from '@/entities/test/model/const'
 import { createStepSchema } from '@/entities/test/model/schema'
-import { TestFragmentFragment } from '@/shared/graphql/__generated__'
-import { useQueryClient } from '@tanstack/react-query'
+import {
+  MutationTestResultUpdate_AnswersInput,
+  TestFragmentFragment,
+} from '@/shared/graphql/__generated__'
 import { useAuthStore } from '@/shared/hooks/use-auth-store'
+
+export type AnswerInput = Omit<MutationTestResultUpdate_AnswersInput, 'id'>
 
 export const useTestLogic = ({
   test,
@@ -22,17 +27,22 @@ export const useTestLogic = ({
   test?: TestFragmentFragment
   publicFlag: boolean
 }) => {
+  /* ------------------------- исходные данные ------------------------ */
   const questions = test?.questions || []
   const [step, setStep] = useState(0)
   const [start, setStart] = useState(false)
 
   const queryClient = useQueryClient()
+  const session = useAuthStore((s) => s.session)
 
-  const session = useAuthStore((state) => state.session)
-
+  /* ----------------------- текущий вопрос --------------------------- */
   const currentQuestion = questions[step]
   const questionName = questionNameFn(currentQuestion.id)
 
+  /* ----------------------- ответы пользователя ---------------------- */
+  const [answers, setAnswers] = useState<AnswerInput[]>([]) // ВСЕГДА массив
+
+  /* -------------------- служебные утилиты/хуки ---------------------- */
   const { evaluateSingle, evaluate } = useTestEvaluation(questions.map((q) => q))
   const form = useForm({
     defaultValues: {},
@@ -43,112 +53,153 @@ export const useTestLogic = ({
 
   const { mutateAsync: createTestResult, isPending: isPendingStart } = useCreateTestResult()
   const { mutateAsync: updateTestResult, isPending: isPendingUpdate } = useUpdateTestResult()
-  const { data: testResult, isLoading, isFetching } = useGetTestResultById({ testId: test?.id })
+  const {
+    data: testResult,
+    isLoading,
+    isFetching,
+  } = useGetTestResultById({
+    testId: test?.id,
+  })
 
   const testRes = testResult?.TestResults?.docs[0]
 
+  /* ------------------------- режим «публичный» ---------------------- */
   const [publicCorrectAnswers, setPublicCorrectAnswers] = useState(0)
   const [publicCompleted, setPublicCompleted] = useState(false)
 
+  /* ------------------------------------------------------------------ */
+  /*                             EFFECTS                                */
+  /* ------------------------------------------------------------------ */
+
+  // заполняем форму предыдущим ответом
   useEffect(() => {
     const prevAnswer = testRes?.answers.find((a) => +a.question.id === +currentQuestion.id)
 
     if (prevAnswer) {
       reset({ [questionName]: prevAnswer.userAnswer })
-      setTimeout(() => {
-        trigger()
-      }, 0)
+      // нужно триггернуть в следующий tick, чтобы RHF увидел изменения
+      setTimeout(() => trigger(), 0)
     }
   }, [currentQuestion.id, questionName, reset, testRes, trigger])
 
+  // если результат уже существует и в статусе in_progress — сразу стартуем
   useEffect(() => {
-    if (testRes?.status === 'in_progress') {
-      setStart(true)
+    if (testRes?.status === 'in_progress') setStart(true)
+  }, [testRes])
+
+  // превращаем ответы с сервера в массив AnswerInput
+  useEffect(() => {
+    if (testRes) {
+      const prepared: AnswerInput[] = testRes.answers.map((a) => ({
+        question: +a.question.id,
+        userAnswer: a.userAnswer,
+        isCorrect: a.isCorrect,
+      }))
+
+      setAnswers(prepared)
     }
   }, [testRes])
 
-  useEffect(() => {
-    return () => {
-      setPublicCompleted(false)
-    }
-  }, [])
+  /* ------------------------------------------------------------------ */
+  /*                           ОБРАБОТЧИКИ                              */
+  /* ------------------------------------------------------------------ */
 
+  /** нажали «Далее» */
   const onNext = () => {
+    /* ------------------ НЕпубличный (записываем в БД) ---------------- */
     if (!publicFlag) {
       const values = getValues() as Record<string, any>
       const isCorrect = evaluateSingle(currentQuestion.id, values)
+
+      // если ответ на вопрос уже есть — перезаписываем
+      const nextAnswers: AnswerInput[] = [
+        ...answers.filter((a) => a.question !== currentQuestion.id),
+        {
+          question: currentQuestion.id,
+          userAnswer: JSON.stringify(values[questionName]),
+          isCorrect,
+        },
+      ]
+
+      setAnswers(nextAnswers) // локально обновили
+
       const isNotLast = step < questions.length - 1
+
+      if (!testRes?.id) return // на всякий случай
 
       updateTestResult(
         {
-          answers: [
-            {
-              isCorrect,
-              question: currentQuestion.id,
-              userAnswer: JSON.stringify(values[questionName]),
-            },
-          ],
-          testResId: testRes?.id,
+          testResId: testRes.id,
+          answers: nextAnswers, // без поля id
           status: isNotLast ? 'in_progress' : 'completed',
         },
         {
           onSuccess: () => {
-            if (isNotLast) {
-              setStep((prev) => prev + 1)
-            } else {
+            if (isNotLast) setStep((s) => s + 1)
+            else
               queryClient.invalidateQueries({
                 queryKey: ['getTestResultById', session?.user?.id, test?.id],
               })
-            }
           },
         },
       )
+
+      return // дальше публичная ветка нам не нужна
     }
 
-    if (publicFlag) {
-      if (step < questions.length - 1) {
-        setStep((prev) => prev + 1)
-      } else {
-        setPublicCompleted(true)
+    /* ---------------------- ПУБЛИЧНЫЙ ПРОСМОТР ---------------------- */
+    if (step < questions.length - 1) {
+      setStep((s) => s + 1)
+    } else {
+      setPublicCompleted(true)
 
-        const answers = getValues()
-        const { results, correctCount } = evaluate(answers)
+      const answers = getValues()
+      const { correctCount } = evaluate(answers)
 
-        setPublicCorrectAnswers(correctCount)
+      setPublicCorrectAnswers(correctCount)
 
-        console.log('Ответы:', answers)
-        console.log('Результаты:', results)
-        console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
-      }
+      // you can drop these console logs later
+      // console.log('Ответы:', answers)
+      // console.log('Результаты:', results)
+      // console.log(`Правильных ответов: ${correctCount} из ${questions.length}`)
     }
   }
 
+  /** пользователь нажал «Начать тест» */
   const startFn = () => {
     if (test && !publicFlag) {
       createTestResult({ testId: test.id }, { onSuccess: () => setStart(true) })
     }
 
-    if (publicFlag) {
-      setStart(true)
-    }
+    if (publicFlag) setStart(true)
   }
 
+  /* ------------------------------------------------------------------ */
+  /*                           ВОЗВРАЩАЕМ                               */
+  /* ------------------------------------------------------------------ */
+
   return {
+    /* данные */
     questions,
-    step,
-    setStep,
-    start,
-    startFn,
     currentQuestion,
-    isPendingUpdate,
-    isPendingStart,
-    form,
-    onNext,
+    testRes,
+
+    /* состояние */
+    step,
+    start,
     publicCorrectAnswers,
     publicCompleted,
 
+    /* лоадеры */
+    isPendingUpdate,
+    isPendingStart,
     isLoading,
     isFetching,
-    testRes,
+
+    /* методы */
+    setStep,
+    startFn,
+    onNext,
+    form,
   }
 }

@@ -9,6 +9,7 @@ query GetByIdTestResult($userId: JSON, $testId: JSON) {
         question {
           id
         }
+        isCorrect
       }
 
       status
