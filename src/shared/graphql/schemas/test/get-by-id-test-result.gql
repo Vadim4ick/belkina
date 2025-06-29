@@ -15,3 +15,15 @@ query GetByIdTestResult($userId: JSON, $testId: JSON) {
     }
   }
 }
+
+query GetUserByIdTestResult($userId: JSON) {
+  TestResults(where: { user: { equals: $userId } }) {
+    docs {
+      test {
+        id
+      }
+
+      status
+    }
+  }
+}

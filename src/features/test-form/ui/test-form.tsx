@@ -12,7 +12,7 @@ import { CompletedInfo } from './completed-info'
 import { useTestLogic } from '../model/hooks/useTestLogic'
 
 const TestForm = memo(
-  ({ test, publicFlag }: { test?: TestFragmentFragment; publicFlag: boolean }) => {
+  ({ test, publicFlag = false }: { test?: TestFragmentFragment; publicFlag?: boolean }) => {
     const {
       questions,
       step,
