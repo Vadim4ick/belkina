@@ -5,6 +5,7 @@ import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { TestsHistory } from '@/widgets/tests-history'
 import { Topic } from './topic'
+import { auth } from '@/entities/user/auth'
 
 const mockProducts = [
   {
@@ -70,6 +71,11 @@ const mockProducts = [
 export async function Profile() {
   const gql = await getServerGqlClient()
 
+  const session = await auth()
+  const userId = session?.user?.id
+
+  const testHistory = await gql.GetTestResHistory({ userId: userId })
+
   const res = await gql.GetRecomendationByIds({
     // @ts-ignore
     whereOR: [{ id: { equals: 4 } }],
@@ -83,7 +89,10 @@ export async function Profile() {
 
       <Topic recomendations={res.Recomendations.docs} />
 
-      <TestsHistory />
+      {testHistory?.TestResults.docs.length > 0 && (
+        <TestsHistory testHistory={testHistory.TestResults.docs} />
+      )}
+
       <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (
           <ProductCard key={product.id} {...product} />

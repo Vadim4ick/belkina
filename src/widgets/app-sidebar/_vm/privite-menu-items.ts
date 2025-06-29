@@ -5,11 +5,17 @@ import { TagIcon } from '@/shared/icons/tag-icon'
 import { CalendarIcon } from '@/shared/icons/calendar-icon'
 import { MessagesIcon } from '@/shared/icons/messages-icon'
 import { TariffsIcon } from '@/shared/icons/tariffs-icon'
-import { getRouteCatalog, getRouteMyCourses, getRouteProfile, getRouteTariffs, getRouteTests } from '@/shared/lib/routes'
+import {
+  getRouteCatalog,
+  getRouteMyCourses,
+  getRouteProfile,
+  getRouteTariffs,
+  getRouteTests,
+} from '@/shared/lib/routes'
 
 export const PrivateMenuItems: IsideBarItems[] = [
   {
-    title: 'Главная',
+    title: 'Профиль',
     url: getRouteProfile(),
     icon: UserIcon,
   },
