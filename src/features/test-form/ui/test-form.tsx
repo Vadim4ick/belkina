@@ -31,7 +31,7 @@ const TestForm = memo(
       testRes,
     } = useTestLogic({ test, publicFlag })
 
-    const totalCorrectAnswers = totalCorrectAnswersFn(currentQuestion.answers)
+    const totalCorrectAnswers = totalCorrectAnswersFn(testRes?.answers ?? [])
 
     const { formState, handleSubmit } = form
 

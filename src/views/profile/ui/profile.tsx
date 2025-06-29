@@ -75,10 +75,16 @@ export async function Profile() {
 
   const testHistory = await gql.GetTestResHistory({ userId: userId })
 
-  const res = await gql.GetRecommendations({ userId: userId })
+  const res = await gql.GetNotCorrectedAnswers({ userId: userId })
 
-  const recommendations = res.TestResults.docs.flatMap((doc) =>
-    doc.answers.map((answer) => answer.question.recommendation).filter((rec) => rec !== null),
+  const recommendations = Array.from(
+    new Map(
+      res.TestResults.docs
+        .flatMap((doc) => doc.answers)
+        .filter((answer) => answer.isCorrect === false && answer.question?.recommendation)
+        .map((answer) => answer.question.recommendation!)
+        .map((rec) => [rec.id, rec]),
+    ).values(),
   )
 
   return (

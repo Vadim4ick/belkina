@@ -1,4 +1,4 @@
-query GetNotCorrectedAnswer($userId: JSON) {
+query GetNotCorrectedAnswers($userId: JSON) {
   TestResults(where: { user: { equals: $userId }, answers__isCorrect: { equals: false } }) {
     docs {
       answers {
