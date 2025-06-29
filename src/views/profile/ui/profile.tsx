@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
@@ -76,10 +75,11 @@ export async function Profile() {
 
   const testHistory = await gql.GetTestResHistory({ userId: userId })
 
-  const res = await gql.GetRecomendationByIds({
-    // @ts-ignore
-    whereOR: [{ id: { equals: 4 } }],
-  })
+  const res = await gql.GetRecommendations({ userId: userId })
+
+  const recommendations = res.TestResults.docs.flatMap((doc) =>
+    doc.answers.map((answer) => answer.question.recommendation).filter((rec) => rec !== null),
+  )
 
   return (
     <section className="max-mobile:py-6 py-12">
@@ -87,7 +87,7 @@ export async function Profile() {
         Профиль
       </Typography>
 
-      <Topic recomendations={res.Recomendations.docs} />
+      {recommendations && recommendations?.length > 0 && <Topic recomendations={recommendations} />}
 
       {testHistory?.TestResults.docs.length > 0 && (
         <TestsHistory testHistory={testHistory.TestResults.docs} />
