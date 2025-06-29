@@ -79,14 +79,16 @@ export const useTestLogic = ({
       const isCorrect = evaluateSingle(currentQuestion.id, values)
       const isNotLast = step < questions.length - 1
 
-      console.log('testRes', testRes)
-
       updateTestResult(
         {
+          answers: [
+            {
+              isCorrect,
+              question: currentQuestion.id,
+              userAnswer: JSON.stringify(values[questionName]),
+            },
+          ],
           testResId: testRes?.id,
-          questionId: currentQuestion.id,
-          answerJSON: JSON.stringify(values[questionName]),
-          isCorrect,
           status: isNotLast ? 'in_progress' : 'completed',
         },
         {

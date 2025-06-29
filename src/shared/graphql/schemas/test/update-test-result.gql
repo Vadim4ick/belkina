@@ -1,17 +1,9 @@
 mutation UpdateTestResult(
   $testResId: Int!
-  $isCorrect: Boolean
-  $questionId: Int
-  $answerJSON: JSON!
+  $answers: [mutationTestResultUpdate_AnswersInput!]
   $status: TestResultUpdate_status_MutationInput
 ) {
-  updateTestResult(
-    id: $testResId
-    data: {
-      answers: { userAnswer: $answerJSON, isCorrect: $isCorrect, question: $questionId }
-      status: $status
-    }
-  ) {
+  updateTestResult(id: $testResId, data: { answers: $answers, status: $status }) {
     id
     status
   }
