@@ -5,7 +5,7 @@ import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
 import { Progress } from '@/shared/ui/progress'
 import { QuestionFragmentFragment } from '@/shared/graphql/__generated__'
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { useShuffledOnClient } from '@/shared/hooks/useShuffledOnClient'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/shared/ui/radio-group'
@@ -32,7 +32,7 @@ const TestCard = memo(
 
     const shuffledRight = useShuffledOnClient(question.matchingPairs?.map((p) => p))
 
-    const renderContent = () => {
+    const renderContent = useMemo(() => {
       switch (question.questionType) {
         case 'single_choice':
           return (
@@ -173,7 +173,7 @@ const TestCard = memo(
         default:
           return null
       }
-    }
+    }, [question, control, shuffledRight, questionName])
 
     if (!start) {
       return (
@@ -226,7 +226,7 @@ const TestCard = memo(
             {question.questionText}
           </Typography>
 
-          {renderContent()}
+          {renderContent}
         </div>
       </div>
     )
