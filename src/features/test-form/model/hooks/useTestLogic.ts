@@ -204,7 +204,23 @@ export const useTestLogic = ({
       { testResId: testRes.id, answers: [], status: 'in_progress' },
       {
         onSuccess: () => {
+          setAnswers([])
           setStep(0)
+          // @ts-ignore
+          Object.keys(form.getValues()).forEach((name) => form.unregister(name))
+          form.reset(
+            {}, // newValues
+            {
+              keepValues: false,
+              keepDirty: false,
+              keepDirtyValues: false,
+              keepTouched: false,
+              keepDefaultValues: false,
+              keepIsSubmitted: false,
+              keepErrors: false,
+              keepSubmitCount: false,
+            },
+          )
           queryClient.invalidateQueries({
             queryKey: ['getTestResultById', session?.user?.id, test?.id],
           })
