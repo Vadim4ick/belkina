@@ -7,25 +7,31 @@ import { notFound } from 'next/navigation'
 const TestByIdPage = async ({ id }: { id: string }) => {
   const gql = await getServerGqlClient()
 
-  const res = await gql.GetByIdTest({ id: Number(id) })
+  try {
+    const res = await gql.GetByIdTest({ id: Number(id) })
 
-  const test = res.Test
+    // Даже если нет ошибки, но `Test` = null (например, удалённый тест)
+    if (!res?.Test) {
+      return notFound()
+    }
 
-  if (!test) {
+    const test = res.Test
+
+    return (
+      <section className="max-mobile:py-6 mb-12 flex flex-col gap-y-21 py-12">
+        <Typography tag="h1" variant="visuelt-bold-48">
+          {test.title}
+        </Typography>
+
+        <TestForm test={test} />
+
+        <TestsList title="Так же рекомендуем" />
+      </section>
+    )
+  } catch {
+    // GraphQL-ошибка типа NotFound тоже сюда попадёт
     return notFound()
   }
-
-  return (
-    <section className="max-mobile:py-6 mb-12 flex flex-col gap-y-21 py-12">
-      <Typography tag="h1" variant="visuelt-bold-48">
-        {test.title}
-      </Typography>
-
-      <TestForm test={test} />
-
-      <TestsList title="Так же рекомендуем" />
-    </section>
-  )
 }
 
 export { TestByIdPage }

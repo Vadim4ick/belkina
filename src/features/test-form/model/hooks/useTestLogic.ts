@@ -17,6 +17,7 @@ import {
   TestFragmentFragment,
 } from '@/shared/graphql/__generated__'
 import { useAuthStore } from '@/shared/hooks/use-auth-store'
+import { formatUserAnswer } from '../const'
 
 export type AnswerInput = Omit<MutationTestResultUpdate_AnswersInput, 'id'>
 
@@ -130,12 +131,14 @@ export const useTestLogic = ({
       const values = getValues() as Record<string, any>
       const isCorrect = evaluateSingle(currentQuestion.id, values)
 
+      const userAnswer = formatUserAnswer(currentQuestion.questionType, values[questionName])
+
       // если ответ на вопрос уже есть — перезаписываем
       const nextAnswers: AnswerInput[] = [
         ...answers.filter((a) => a.question !== currentQuestion.id),
         {
           question: currentQuestion.id,
-          userAnswer: JSON.stringify(values[questionName]),
+          userAnswer: userAnswer,
           isCorrect,
         },
       ]
