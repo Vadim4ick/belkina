@@ -165,6 +165,26 @@ export const useTestLogic = ({
     }
   }
 
+  const resetTestRes = () => {
+    if (testRes?.id) {
+      updateTestResult(
+        {
+          testResId: testRes.id,
+          answers: [],
+          status: 'in_progress',
+        },
+        {
+          onSuccess: () => {
+            setStep(0)
+            queryClient.invalidateQueries({
+              queryKey: ['getTestResultById', session?.user?.id, test?.id],
+            })
+          },
+        },
+      )
+    }
+  }
+
   /** пользователь нажал «Начать тест» */
   const startFn = () => {
     if (test && !publicFlag) {
@@ -201,5 +221,7 @@ export const useTestLogic = ({
     startFn,
     onNext,
     form,
+
+    resetTestRes,
   }
 }
