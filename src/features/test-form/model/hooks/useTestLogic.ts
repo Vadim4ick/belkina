@@ -73,16 +73,29 @@ export const useTestLogic = ({
   /*                             EFFECTS                                */
   /* ------------------------------------------------------------------ */
 
-  // заполняем форму предыдущим ответом
+  // заполняем форму предыдущими ответом
   useEffect(() => {
-    const prevAnswer = testRes?.answers.find((a) => +a.question.id === +currentQuestion.id)
+    if (!testRes) return
 
-    if (prevAnswer) {
-      reset({ [questionName]: prevAnswer.userAnswer })
-      // нужно триггернуть в следующий tick, чтобы RHF увидел изменения
-      setTimeout(() => trigger(), 0)
+    const values: Record<string, any> = {}
+
+    for (const answer of testRes.answers) {
+      const key = questionNameFn(+answer.question.id)
+      const questionType = questions.find((q) => q.id === +answer.question.id)?.questionType
+
+      if (!questionType) continue
+
+      values[key] =
+        questionType === 'multiple_choice'
+          ? answer.userAnswer
+          : Array.isArray(answer.userAnswer)
+            ? answer.userAnswer[0] // ❗️Восстанавливаем строку из массива
+            : answer.userAnswer
     }
-  }, [currentQuestion.id, questionName, reset, testRes, trigger])
+
+    reset(values)
+    setTimeout(() => trigger(), 0)
+  }, [testRes, reset, trigger, questions])
 
   // если результат уже существует и в статусе in_progress — сразу стартуем
   useEffect(() => {
@@ -143,6 +156,8 @@ export const useTestLogic = ({
         },
       ]
 
+      console.log('nextAnswers', nextAnswers)
+
       setAnswers(nextAnswers) // локально обновили
 
       const isNotLast = step < questions.length - 1
@@ -198,6 +213,7 @@ export const useTestLogic = ({
         {
           onSuccess: () => {
             setStep(0)
+
             queryClient.invalidateQueries({
               queryKey: ['getTestResultById', session?.user?.id, test?.id],
             })
