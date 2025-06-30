@@ -3,7 +3,7 @@ import payload from 'payload'
 export const seedRecommendations = async () => {
   console.log('🌱 Сидим рекомендации...')
 
-  await payload.create({
+  const recommendation = await payload.create({
     collection: 'recomendations',
     data: {
       title: 'Орфография',
@@ -89,4 +89,6 @@ export const seedRecommendations = async () => {
       },
     },
   })
+
+  return recommendation
 }

@@ -29,6 +29,7 @@ export const useTestLogic = ({
 }) => {
   /* ------------------------- исходные данные ------------------------ */
   const questions = test?.questions || []
+
   const [step, setStep] = useState(0)
   const [start, setStart] = useState(false)
 
@@ -99,6 +100,24 @@ export const useTestLogic = ({
       setAnswers(prepared)
     }
   }, [testRes])
+
+  // при перезагрузке страницы восстанавливаем номер последнего отвеченного вопроса
+  useEffect(() => {
+    if (testRes && questions.length > 0) {
+      const answeredIds = testRes.answers.map((a) => +a.question.id)
+
+      // Найти индекс последнего отвеченного вопроса
+      const lastAnsweredIndex = questions.findIndex((q, idx) => {
+        const isAnswered = answeredIds.includes(q.id)
+        const isNextUnanswered = !answeredIds.includes(questions[idx + 1]?.id)
+        return isAnswered && (isNextUnanswered || idx === questions.length - 1)
+      })
+
+      if (lastAnsweredIndex >= 0) {
+        setStep(lastAnsweredIndex)
+      }
+    }
+  }, [testRes, questions])
 
   /* ------------------------------------------------------------------ */
   /*                           ОБРАБОТЧИКИ                              */

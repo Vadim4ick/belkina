@@ -1,8 +1,8 @@
 import payload from 'payload'
 import { createQuestions } from './questions'
 
-export const createTests = async () => {
-  const allQuestions = await createQuestions()
+export const createTests = async (recommendationId: number) => {
+  const allQuestions = await createQuestions(recommendationId)
 
   const test1 = await payload.create({
     collection: 'tests',
