@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
@@ -67,6 +68,35 @@ const mockProducts = [
   },
 ]
 
+async function loadRecommendations(userId?: string) {
+  const gql = await getServerGqlClient()
+
+  if (!userId) return []
+
+  const res = await gql.GetNotCorrectedAnswers({ userId })
+
+  const recommendationIds = Array.from(
+    new Map(
+      res.TestResults.docs
+        .flatMap((doc) => doc.answers)
+        .filter((answer) => !answer.isCorrect && answer.question?.recommendation?.id)
+        .map((answer) => {
+          const rec = answer.question.recommendation
+          return [rec.id, rec]
+        }),
+    ).values(),
+  ).map((rec) => rec.id)
+
+  if (recommendationIds.length === 0) return []
+
+  const where = { OR: recommendationIds.map((id) => ({ id: { equals: id } })) }
+
+  // @ts-ignore
+  const recommendationsRes = await gql.GetRecommendationsByIds({ where })
+
+  return recommendationsRes.Recomendations.docs
+}
+
 export async function Profile() {
   const gql = await getServerGqlClient()
 
@@ -75,17 +105,7 @@ export async function Profile() {
 
   const testHistory = await gql.GetTestResHistory({ userId: userId })
 
-  const res = await gql.GetNotCorrectedAnswers({ userId: userId })
-
-  const recommendations = Array.from(
-    new Map(
-      res.TestResults.docs
-        .flatMap((doc) => doc.answers)
-        .filter((answer) => answer.isCorrect === false && answer.question?.recommendation)
-        .map((answer) => answer.question.recommendation!)
-        .map((rec) => [rec.id, rec]),
-    ).values(),
-  )
+  const recommendations = await loadRecommendations(userId)
 
   return (
     <section className="max-mobile:py-6 py-12">
@@ -93,7 +113,7 @@ export async function Profile() {
         Профиль
       </Typography>
 
-      {recommendations && recommendations?.length > 0 && <Topic recomendations={recommendations} />}
+      {recommendations.length > 0 && <Topic recomendations={recommendations} />}
 
       {testHistory?.TestResults.docs.length > 0 && (
         <TestsHistory testHistory={testHistory.TestResults.docs} />

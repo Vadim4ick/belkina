@@ -1,6 +1,6 @@
 'use client'
 
-import { GetRecomendationByIdsQuery } from '@/shared/graphql/__generated__'
+import { GetRecommendationsByIdsQuery } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
 import { Card } from '@/shared/ui/card'
 import { Typography } from '@/shared/ui/typography'
@@ -59,7 +59,7 @@ const Topic = memo(
   ({
     recomendations,
   }: {
-    recomendations: GetRecomendationByIdsQuery['Recomendations']['docs']
+    recomendations: GetRecommendationsByIdsQuery['Recomendations']['docs']
   }) => {
     return (
       <>
