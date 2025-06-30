@@ -1,6 +1,6 @@
 import payload from 'payload'
 
-export const createQuestions = async () => {
+export const createQuestions = async (recommendationId: number) => {
   const questions = []
 
   console.log('🌱 Сидим вопросы...')
@@ -12,6 +12,7 @@ export const createQuestions = async () => {
       data: {
         questionText: 'Какой цвет не является основным?',
         questionType: 'single_choice',
+        recommendation: recommendationId,
         answers: [
           { label: 'Красный', value: 'red', isCorrect: false },
           { label: 'Синий', value: 'blue', isCorrect: false },
@@ -62,6 +63,7 @@ export const createQuestions = async () => {
       data: {
         questionText: 'Кто написал "Преступление и наказание"?',
         questionType: 'text_input',
+        recommendation: recommendationId,
         textAnswer: 'Достоевский',
       },
     }),

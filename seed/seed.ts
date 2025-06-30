@@ -12,8 +12,9 @@ export const seed = async () => {
   await seedTariffs()
   await seedFaqs()
   await seedHomePage()
-  await createTests()
-  await seedRecommendations()
+
+  const recommendation = await seedRecommendations()
+  await createTests(recommendation.id)
 
   console.log('✅ Сидеры завершены.')
 }
