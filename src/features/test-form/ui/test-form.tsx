@@ -36,7 +36,7 @@ const TestForm = memo(
 
     const { formState, handleSubmit } = form
 
-    if (isLoading || isFetching || isPendingUpdate) {
+    if (isLoading || isFetching) {
       return <SkeletonTestCard />
     }
 
@@ -77,9 +77,13 @@ const TestForm = memo(
                         className="ml-auto"
                         type="submit"
                         size="xl"
-                        disabled={!formState.isValid}
+                        disabled={!formState.isValid || isPendingUpdate}
                       >
-                        {step === questions.length - 1 ? 'Завершить' : 'Далее'}
+                        {isPendingUpdate
+                          ? 'Сохраняем...'
+                          : step === questions.length - 1
+                            ? 'Завершить'
+                            : 'Далее'}
                       </Button>
                     </div>
                   )}
