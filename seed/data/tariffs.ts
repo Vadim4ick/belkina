@@ -15,7 +15,7 @@ export const seedTariffs = async () => {
     })
   }
 
-  await Promise.all([
+  const tariffs = await Promise.all([
     payload.create({
       collection: 'tariffs',
       data: {
@@ -56,4 +56,6 @@ export const seedTariffs = async () => {
       },
     }),
   ])
+
+  return tariffs
 }
