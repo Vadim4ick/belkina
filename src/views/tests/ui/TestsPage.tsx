@@ -29,8 +29,8 @@ const TestsPage = async () => {
       </Typography>
 
       <TestsList title="Не начатые" tests={notStartedTests} />
-      <TestsList type="in_progress" title="В процессе" tests={inProgressTests} />
-      <TestsList type="completed" title="Пройденные" tests={completedTests} />
+      <TestsList title="В процессе" tests={inProgressTests} />
+      <TestsList title="Пройденные" tests={completedTests} />
     </section>
   )
 }

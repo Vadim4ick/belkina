@@ -4,16 +4,13 @@ import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { TestFragmentFragment } from '@/shared/graphql/__generated__'
 import { getRouteTestById } from '@/shared/lib/routes'
-import { StatusTestResult } from '@/entities/test'
-import { TEST_BTN_TEXT } from '../model/const'
 
 interface TestsListItemProps {
   test: TestFragmentFragment
   className?: string
-  type: StatusTestResult
 }
 
-const TestsListItem = ({ test, className, type }: TestsListItemProps) => {
+const TestsListItem = ({ test, className }: TestsListItemProps) => {
   return (
     <div
       className={cn(
@@ -35,8 +32,8 @@ const TestsListItem = ({ test, className, type }: TestsListItemProps) => {
 
       <div className="justify-self-end lg:col-span-2 lg:col-start-7">
         <Link href={getRouteTestById({ id: test.id })}>
-          <Button variant="primary-inverted" className="w-[288px]">
-            {TEST_BTN_TEXT[type]}
+          <Button variant="primary-inverted" className="w-[200px]">
+            Перейти к тесту
           </Button>
         </Link>
       </div>

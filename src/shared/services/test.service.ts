@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useGqlClient } from '../hooks/useGqlClient'
 import { useAuthStore } from '../hooks/use-auth-store'

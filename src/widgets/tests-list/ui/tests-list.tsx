@@ -1,16 +1,13 @@
 import { Typography } from '@/shared/ui/typography'
 import TestsListItem from './tests-list-item'
 import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
-import { StatusTestResult } from '@/entities/test'
 
 const TestsList = ({
   tests,
   title,
-  type = 'all',
 }: {
   tests?: GetAllTestsQuery['Tests']['docs']
   title?: string
-  type?: StatusTestResult
 }) => {
   return (
     <>
@@ -25,12 +22,7 @@ const TestsList = ({
           {tests && (
             <div className="border-light-grey flex flex-col gap-3 rounded-xl py-6 md:py-5">
               {tests.map((test, idx) => (
-                <TestsListItem
-                  type={type}
-                  className="border-light-grey border-b-2"
-                  key={idx}
-                  test={test}
-                />
+                <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
               ))}
             </div>
           )}
