@@ -1,16 +1,30 @@
-query GetRecommendations($userId: JSON) {
+query GetNotCorrectedAnswers($userId: JSON) {
   TestResults(where: { user: { equals: $userId }, answers__isCorrect: { equals: false } }) {
     docs {
-      id
       answers {
         question {
-          id
           questionText
 
           recommendation {
-            ...RecomendationFragment
+            id
           }
         }
+
+        isCorrect
+      }
+    }
+  }
+}
+
+query GetRecommendationsByIds($where: Recomendation_where) {
+  Recomendations(where: $where) {
+    docs {
+      id
+      title
+      description
+      tariff {
+        title
+        price
       }
     }
   }
