@@ -60,9 +60,8 @@ function evaluateSingleAnswer(
       const normalize = (str: string) =>
         str
           .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '') // удалить диакритику (ё → е)
-          .replace(/[^\w\s]|_/g, '') // удалить пунктуацию
-          .replace(/\s+/g, ' ') // убрать лишние пробелы
+          .replace(/[\u0300-\u036f]/g, '') // ё → е
+          .toLowerCase()
           .trim()
 
       return normalize(userAnswer) === normalize(correct)
