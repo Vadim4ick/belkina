@@ -17,6 +17,7 @@ const TestForm = memo(
       questions,
       step,
       setStep,
+      resetTestRes,
       start,
       startFn,
       currentQuestion,
@@ -87,6 +88,7 @@ const TestForm = memo(
 
               {(testRes?.status === 'completed' || publicCompleted) && (
                 <CompletedInfo
+                  resetTestRes={resetTestRes}
                   totalCorrectAnswers={totalCorrectAnswers}
                   countQuestions={questions.length}
                   publicFlag={publicFlag}

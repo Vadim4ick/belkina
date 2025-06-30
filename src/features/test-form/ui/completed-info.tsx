@@ -5,12 +5,14 @@ import { memo } from 'react'
 
 const CompletedInfo = memo(
   ({
+    resetTestRes,
     totalCorrectAnswers,
     countQuestions,
     publicFlag,
     publicCorrectAnswers,
   }: {
     totalCorrectAnswers: number
+    resetTestRes: () => void
     countQuestions: number
     publicFlag: boolean
     publicCorrectAnswers: number
@@ -47,7 +49,9 @@ const CompletedInfo = memo(
           {`Количество правильных ответов: ${totalCorrectAnswers} из ${countQuestions}`}
         </Typography>
 
-        <Button type="button">Пройти снова</Button>
+        <Button onClick={resetTestRes} type="button">
+          Пройти снова
+        </Button>
       </div>
     )
   },
