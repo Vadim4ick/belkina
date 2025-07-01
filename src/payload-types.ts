@@ -76,6 +76,8 @@ export interface Config {
     testResults: TestResult;
     admins: Admin;
     recomendations: Recomendation;
+    exams: Exam;
+    subjects: Subject;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -91,6 +93,8 @@ export interface Config {
     testResults: TestResultsSelect<false> | TestResultsSelect<true>;
     admins: AdminsSelect<false> | AdminsSelect<true>;
     recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
+    subjects: SubjectsSelect<false> | SubjectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -202,7 +206,7 @@ export interface Faq {
 export interface Test {
   id: number;
   title: string;
-  tariff?: (number | null) | Tariff;
+  tariff: number | Tariff;
   description?: string | null;
   questions?: (number | Question)[] | null;
   updatedAt: string;
@@ -315,6 +319,34 @@ export interface Admin {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: number;
+  title: string;
+  /**
+   * Например: oge, ege
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: number;
+  title: string;
+  /**
+   * Например: russian, math, social, physics
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -355,6 +387,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'recomendations';
         value: number | Recomendation;
+      } | null)
+    | ({
+        relationTo: 'exams';
+        value: number | Exam;
+      } | null)
+    | ({
+        relationTo: 'subjects';
+        value: number | Subject;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -540,6 +580,26 @@ export interface RecomendationsSelect<T extends boolean = true> {
   title?: T;
   tariff?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects_select".
+ */
+export interface SubjectsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
   updatedAt?: T;
   createdAt?: T;
 }

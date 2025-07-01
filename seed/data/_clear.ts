@@ -1,8 +1,9 @@
 import payload from 'payload'
 
-export const clearTariffsInUsers = async () => {
-  console.log('🧹 Обнуляем тарифы у пользователей...')
+export const clearSeeds = async () => {
+  console.log('🧹 Обнуляем коллекции...')
 
+  await payload.delete({ collection: 'tests', where: {} })
   const { docs: usersWithTariff } = await payload.find({
     collection: 'users',
     where: {
@@ -24,7 +25,8 @@ export const clearTariffsInUsers = async () => {
   }
 
   await payload.delete({ collection: 'testResults', where: {} })
-  await payload.delete({ collection: 'tests', where: {} })
   await payload.delete({ collection: 'questions', where: {} })
   await payload.delete({ collection: 'recomendations', where: {} })
+  await payload.delete({ collection: 'exams', where: {} })
+  await payload.delete({ collection: 'subjects', where: {} })
 }
