@@ -1,3 +1,4 @@
+import { checkAccessToken } from '@/shared/lib/utils'
 import { CollectionConfig } from 'payload'
 
 export const TestQuestions: CollectionConfig = {
@@ -11,7 +12,7 @@ export const TestQuestions: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true,
+    read: checkAccessToken,
   },
   fields: [
     {

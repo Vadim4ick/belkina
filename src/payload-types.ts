@@ -155,6 +155,7 @@ export interface Tariff {
   id: number;
   title: string;
   price: number;
+  type: 'basic' | 'corporate' | 'pro';
   subtitle: string;
   description: string;
   benefits: {
@@ -435,6 +436,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TariffsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
+  type?: T;
   subtitle?: T;
   description?: T;
   benefits?:

@@ -92,7 +92,7 @@ export const Users: CollectionConfig = {
           limit: 1,
           sort: 'createdAt',
         })
-        return docs[0]?.id // первый созданный тариф по умолчанию
+        return docs.find((doc) => doc.type === 'basic')?.id // первый созданный тариф по умолчанию
       },
       admin: {
         position: 'sidebar',
