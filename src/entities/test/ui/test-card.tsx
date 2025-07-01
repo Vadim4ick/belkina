@@ -50,7 +50,7 @@ const TestCard = memo(
                   {question.answers.map((answer) => (
                     <label
                       key={answer.id}
-                      className="flex cursor-pointer items-center gap-2"
+                      className="flex w-fit cursor-pointer items-center gap-2"
                       htmlFor={`${questionName}_${answer.value}`}
                     >
                       <RadioGroupItem value={answer.value} id={`${questionName}_${answer.value}`} />
@@ -86,7 +86,10 @@ const TestCard = memo(
                     }
 
                     return (
-                      <label key={answer.id} className="flex cursor-pointer items-center gap-2">
+                      <label
+                        key={answer.id}
+                        className="flex w-fit cursor-pointer items-center gap-2"
+                      >
                         <Checkbox checked={isChecked} onCheckedChange={handleChange} />
 
                         <Typography tag="span" variant="poppins-md-16">
