@@ -115,9 +115,7 @@ export async function Profile() {
 
       {recommendations.length > 0 && <Topic recomendations={recommendations} />}
 
-      {testHistory?.TestResults.docs.length > 0 && (
-        <TestsHistory testHistory={testHistory.TestResults.docs} />
-      )}
+      <TestsHistory testHistory={testHistory.TestResults.docs} />
 
       <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (
