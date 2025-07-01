@@ -20,6 +20,7 @@ import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
 
 import dotenv from 'dotenv'
+import { Posts } from './shared/collections/posts'
 
 dotenv.config()
 
@@ -53,6 +54,7 @@ export default buildConfig({
     TestResults,
     Admins,
     Recomendations,
+    Posts,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
