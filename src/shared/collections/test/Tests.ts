@@ -1,4 +1,3 @@
-import { checkAccessToken } from '@/shared/lib/utils'
 import { CollectionConfig } from 'payload'
 
 export const Tests: CollectionConfig = {
@@ -12,12 +11,12 @@ export const Tests: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: async ({ req }) => {
+    read: async () => {
       // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
-      if (await checkAccessToken({ req })) return true
+      // if (await checkAccessToken({ req })) return true
 
-      // 3. Если тариф не базовый — доступ только с токеном
-      return false
+      // 2. Если тариф не базовый — доступ только с токеном
+      return true
     },
   },
   fields: [
@@ -33,7 +32,7 @@ export const Tests: CollectionConfig = {
       label: 'Тариф',
       type: 'relationship',
       relationTo: 'tariffs',
-      required: false,
+      required: true,
       admin: { position: 'sidebar' },
     },
 
