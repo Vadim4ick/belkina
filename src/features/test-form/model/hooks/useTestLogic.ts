@@ -54,6 +54,8 @@ export const useTestLogic = ({
   /* ----------------------- текущий вопрос --------------------------- */
 
   const renderStep = publicFlag ? publicStep : optimisticStep
+  const renderSetStep = publicFlag ? setPublicStep : setStep
+
   const currentQuestion = questions[renderStep]
   const questionName = questionNameFn(currentQuestion?.id)
   /* -------------------- служебные утилиты / формы ------------------- */
@@ -266,7 +268,7 @@ export const useTestLogic = ({
     isFetching,
 
     /* методы */
-    setStep, // нужен в resetTestRes
+    setStep: renderSetStep, // нужен в resetTestRes
     startFn,
     onNext,
     form,

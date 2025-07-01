@@ -1,3 +1,4 @@
+import { checkAccessToken } from '@/shared/lib/utils'
 import { CollectionConfig } from 'payload'
 
 export const Tests: CollectionConfig = {
@@ -11,7 +12,13 @@ export const Tests: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true,
+    read: async ({ req }) => {
+      // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
+      if (await checkAccessToken({ req })) return true
+
+      // 3. Если тариф не базовый — доступ только с токеном
+      return false
+    },
   },
   fields: [
     {

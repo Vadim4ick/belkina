@@ -1,3 +1,4 @@
+import { checkAccessToken } from '@/shared/lib/utils'
 import { CollectionConfig } from 'payload'
 
 export const TestResults: CollectionConfig = {
@@ -7,9 +8,9 @@ export const TestResults: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
+    read: checkAccessToken,
+    create: checkAccessToken,
+    update: checkAccessToken,
     // read: ({ req: { user } }) => !!user,
     // create: ({ req: { user } }) => !!user,
     // update: ({ req: { user } }) => !!user,

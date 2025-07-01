@@ -5,6 +5,7 @@ import {
   UnorderedListFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { checkAccessToken } from '../lib/utils'
 
 export const Recomendations: CollectionConfig = {
   slug: 'recomendations',
@@ -24,7 +25,7 @@ export const Recomendations: CollectionConfig = {
   },
 
   access: {
-    read: () => true,
+    read: checkAccessToken,
   },
 
   fields: [

@@ -22,6 +22,7 @@ export const seedTariffs = async () => {
         title: 'Базовый',
         price: 0,
         subtitle: 'Для начинающих',
+        type: 'basic',
         description: 'Доступ к базовым функциям и ограниченному числу тестов.',
         benefits: [{ value: 'Доступ к 5 тестам' }, { value: 'Базовая аналитика' }],
       },
@@ -31,6 +32,7 @@ export const seedTariffs = async () => {
       data: {
         title: 'Профессиональный',
         price: 990,
+        type: 'pro',
         subtitle: 'Для активных пользователей',
         description: 'Расширенный доступ к обучающим материалам и тестам.',
         benefits: [
@@ -45,6 +47,7 @@ export const seedTariffs = async () => {
       data: {
         title: 'Корпоративный',
         price: 4990,
+        type: 'corporate',
         subtitle: 'Для команд и компаний',
         description:
           'Возможность прохождения тестов в команде и расширенные функции администрирования.',
