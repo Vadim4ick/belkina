@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib/utils'
+import { Typography } from '@/shared/ui/typography'
 
 interface ProductCardsGridCatalogProps {
   title?: string
@@ -10,12 +11,10 @@ const ProductCardsGridCatalog = ({ title, children, className }: ProductCardsGri
   return (
     <section className={cn('py-8 antialiased md:py-12 dark:bg-gray-900', className)}>
       <div className="mx-auto 2xl:px-0">
-        <div className="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
-          <div>
-            <h2 className="mt-3 text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-              {title}
-            </h2>
-          </div>
+        <div className="items-end justify-between space-y-4 sm:flex sm:space-y-0">
+          <Typography tag="h2" variant="poppins-md-24">
+            {title}
+          </Typography>
         </div>
 
         <div className="mb-4 grid gap-6 md:mb-8 md:grid-cols-2 xl:grid-cols-3">{children}</div>
