@@ -1,7 +1,5 @@
 import { CatalogPage } from '@/views/catalog'
 
-function Catalog() {
+export default function Page() {
   return <CatalogPage />
 }
-
-export default Catalog

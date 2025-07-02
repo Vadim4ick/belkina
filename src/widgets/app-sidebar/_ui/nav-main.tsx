@@ -4,11 +4,11 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/ui/sidebar'
 import Link from 'next/link'
 import { FC, SVGProps } from 'react'
-import { SidebarButton } from './sidebar-button'
 import { usePathname } from 'next/navigation'
 
 export function NavMain({
@@ -28,12 +28,15 @@ export function NavMain({
           {items.map((item, idx) => (
             <SidebarMenuItem key={item.title}>
               <Link key={idx} href={item.url}>
-                <SidebarButton
-                  variant={pathname === item.url ? 'secondary' : 'ghostWhite'}
-                  icon={item.icon}
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  size="lg"
+                  variant={pathname === item.url ? 'secondary' : 'outline'}
+                  className="cursor-pointer"
                 >
+                  {item.icon && <item.icon className="h-6 w-6" />}
                   <span>{item.title}</span>
-                </SidebarButton>
+                </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
           ))}

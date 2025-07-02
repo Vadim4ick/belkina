@@ -1,1 +1,2 @@
-export { TestCard } from "./ui/test-card";
+export type { StatusTestResult } from './model/type'
+export { TestCard } from './ui/test-card'

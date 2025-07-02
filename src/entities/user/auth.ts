@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import NextAuth, { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
@@ -33,15 +34,14 @@ export const authOptions: NextAuthConfig = {
           foundUser.password,
         )
 
-        if (!isPasswordValid) {
-          return null // Неверный пароль
-        }
+        if (!isPasswordValid) return null
 
         // Возвращаем объект пользователя для NextAuth
         return {
           id: foundUser.id,
           email: foundUser.email,
           role: foundUser.role,
+          tariffId: foundUser.tariff.id,
           signupMethod: foundUser.signupMethod,
         }
       },
@@ -58,6 +58,7 @@ export const authOptions: NextAuthConfig = {
     async signIn({ user, account }) {
       if (account?.provider === 'yandex') {
         const exists = await gql.GetUserByEmail({ email: user.email })
+
         if (exists.Users.totalDocs <= 0) {
           await gql.CreateUser({
             email: user.email!,
@@ -71,25 +72,41 @@ export const authOptions: NextAuthConfig = {
     },
 
     async jwt({ token, user }) {
-      // При первом входе
       if (user) {
-        if (!user?.id || !user?.email) {
-          throw new Error('User ID or email or role is missing')
-        }
-
-        const payload = { id: user.id, email: user.email }
         token.id = user.id
         token.email = user.email
-        token.accessToken = await JwtService.signAccessToken(payload)
-        token.refreshToken = await JwtService.signRefreshToken(payload)
-        token.accessTokenExpires = Date.now() + 15 * 60 * 1000 // 15 минут
+
+        // Если авторизация через Credentials
+        if ('role' in user && 'tariffId' in user) {
+          token.role = user.role
+          token.tariffId = user.tariffId
+        } else {
+          // Если через Yandex — достаём из БД
+          const existing = await gql.GetUserByEmail({ email: (user as any).email })
+          const found = existing.Users?.docs?.[0]
+
+          if (found) {
+            token.id = found.id
+            token.role = found.role
+            token.tariffId = found.tariff?.id ?? null
+          }
+        }
+
+        token.accessToken = await JwtService.signAccessToken({
+          id: token.id as string,
+          email: token.email,
+        })
+        token.refreshToken = await JwtService.signRefreshToken({
+          id: token.id as string,
+          email: token.email,
+        })
+        token.accessTokenExpires = Date.now() + 15 * 60 * 1000
       }
 
-      // При обновлении (если accessToken истёк)
+      // Обновление accessToken
       if (Date.now() > (token.accessTokenExpires as number)) {
         try {
           const decoded = await JwtService.verifyToken(token.refreshToken as string)
-
           const newAccessToken = await JwtService.signAccessToken({
             id: decoded.id,
             email: decoded.email,
@@ -106,23 +123,18 @@ export const authOptions: NextAuthConfig = {
     },
 
     async session({ session, token }) {
-      const t = token as {
-        id: string
-        email: string
-        role: 'admin' | 'user'
-        accessToken: string
-        refreshToken: string
-        accessTokenExpires: number
+      session.user = {
+        ...session.user,
+        id: token.id as string,
+        email: token.email as string,
+        role: token.role as 'admin' | 'user',
+        tariffId: token.tariffId as number,
       }
 
-      session.user.id = t.id
-      session.user.email = t.email
-      session.user.role = t.role
-
       session.tokens = {
-        accessToken: t.accessToken,
-        refreshToken: t.refreshToken,
-        accessTokenExpires: t.accessTokenExpires,
+        accessToken: token.accessToken as string,
+        refreshToken: token.refreshToken as string,
+        accessTokenExpires: token.accessTokenExpires as number,
       }
 
       return session

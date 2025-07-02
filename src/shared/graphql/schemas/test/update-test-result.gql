@@ -1,0 +1,10 @@
+mutation UpdateTestResult(
+  $testResId: Int!
+  $answers: [mutationTestResultUpdate_AnswersInput!]
+  $status: TestResultUpdate_status_MutationInput
+) {
+  updateTestResult(id: $testResId, data: { answers: $answers, status: $status }) {
+    id
+    status
+  }
+}

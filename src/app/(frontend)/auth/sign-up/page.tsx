@@ -1,6 +1,6 @@
 'use client'
 
-import { getRouteHome } from '@/shared/lib/routes'
+import { getRouteHome, getRouteProfile } from '@/shared/lib/routes'
 import { AuthForm } from '@/widgets/auth-form'
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
@@ -48,7 +48,7 @@ export default function RegisterPage() {
       if (signInRes?.error) throw new Error(signInRes.error)
 
       // redirect вручную, чтобы Next 13 не руга­лся на «wrapped fetch»
-      window.location.assign(getRouteHome())
+      window.location.assign(getRouteProfile())
     } catch (e) {
       setError((e as Error).message ?? 'Неизвестная ошибка')
     } finally {

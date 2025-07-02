@@ -1,50 +1,110 @@
-import { TestCard } from "@/entities/test";
-import { Button } from "@/shared/ui/button";
-import { Input } from "@/shared/ui/input";
-import { Typography } from "@/shared/ui/typography";
+'use client'
 
-const TestForm = () => {
-  return (
-    <div className="max-mobile:gap-6 flex flex-col gap-18">
-      <div className="relative w-fit">
-        <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
+import { memo } from 'react'
+import { FormProvider } from 'react-hook-form'
 
-        <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
-          <TestCard />
-        </div>
-      </div>
+import { TestFragmentFragment } from '@/shared/graphql/__generated__'
+import { Button } from '@/shared/ui/button'
+import { TestCard } from '@/entities/test'
+import { totalCorrectAnswersFn } from '../model/lib'
+import { SkeletonTestCard } from './skeleton-test-card'
+import { CompletedInfo } from './completed-info'
+import { useTestLogic } from '../model/hooks/useTestLogic'
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-6">
-            <Typography
-              className="text-dark-grey"
-              tag="p"
-              variant="poppins-md-16"
-            >
-              А
-            </Typography>
+const TestForm = memo(
+  ({ test, publicFlag = false }: { test?: TestFragmentFragment; publicFlag?: boolean }) => {
+    const {
+      questions,
+      step,
+      setStep,
+      resetTestRes,
+      start,
+      startFn,
+      currentQuestion,
+      isPendingUpdate,
+      isPendingStart,
+      form,
+      onNext,
+      publicCorrectAnswers,
+      publicCompleted,
+      isLoading,
+      isFetching,
+      testRes,
+    } = useTestLogic({ test, publicFlag })
 
-            <Input className="bg-transparent" placeholder="Написать" />
+    const totalCorrectAnswers = totalCorrectAnswersFn(testRes?.answers ?? [])
+
+    const { formState, handleSubmit } = form
+
+    if (isLoading || isFetching) {
+      return <SkeletonTestCard />
+    }
+
+    return (
+      <FormProvider {...form}>
+        <form onSubmit={handleSubmit(onNext)}>
+          <div className="relative w-full">
+            <div className="max-mobile:hidden absolute top-0 right-0 bottom-0 left-0 z-0 h-full rotate-[3deg] rounded-[20px] bg-[#CDCDCD]" />
+
+            <div className="max-tablet:px-3 max-tablet:py-4 relative z-10 rounded-[20px] bg-white px-9 py-6 shadow-lg">
+              {testRes?.status !== 'completed' && !publicCompleted && (
+                <>
+                  <TestCard
+                    question={currentQuestion}
+                    index={step}
+                    total={questions.length}
+                    step={step}
+                    title={test?.title ?? ''}
+                    startFn={startFn}
+                    start={start}
+                    isPendingStart={isPendingStart}
+                  />
+
+                  {start && (
+                    <div className="mt-6 flex justify-between">
+                      {step !== 0 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="xl"
+                          onClick={() => setStep((prev) => prev - 1)}
+                        >
+                          Назад
+                        </Button>
+                      )}
+
+                      <Button
+                        className="ml-auto"
+                        type="submit"
+                        size="xl"
+                        disabled={!formState.isValid || isPendingUpdate}
+                      >
+                        {isPendingUpdate
+                          ? 'Сохраняем...'
+                          : step === questions.length - 1
+                            ? 'Завершить'
+                            : 'Далее'}
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {(testRes?.status === 'completed' || publicCompleted) && (
+                <CompletedInfo
+                  resetTestRes={resetTestRes}
+                  totalCorrectAnswers={totalCorrectAnswers}
+                  countQuestions={questions.length}
+                  publicFlag={publicFlag}
+                  publicCorrectAnswers={publicCorrectAnswers}
+                />
+              )}
+            </div>
           </div>
+        </form>
+      </FormProvider>
+    )
+  },
+)
 
-          <div className="flex items-center gap-6">
-            <Typography
-              className="text-dark-grey"
-              tag="p"
-              variant="poppins-md-16"
-            >
-              Б
-            </Typography>
-
-            <Input className="bg-transparent" placeholder="Написать" />
-          </div>
-        </div>
-
-        <Button size={"xl"}>Далее</Button>
-      </div>
-    </div>
-  );
-};
-
-export { TestForm };
+export { TestForm }

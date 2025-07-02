@@ -72,9 +72,12 @@ export interface Config {
     tariffs: Tariff;
     faqs: Faq;
     tests: Test;
-    'test-questions': TestQuestion;
-    'user-test-progress': UserTestProgress;
+    questions: Question;
+    testResults: TestResult;
     admins: Admin;
+    recomendations: Recomendation;
+    exams: Exam;
+    subjects: Subject;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -86,9 +89,12 @@ export interface Config {
     tariffs: TariffsSelect<false> | TariffsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     tests: TestsSelect<false> | TestsSelect<true>;
-    'test-questions': TestQuestionsSelect<false> | TestQuestionsSelect<true>;
-    'user-test-progress': UserTestProgressSelect<false> | UserTestProgressSelect<true>;
+    questions: QuestionsSelect<false> | QuestionsSelect<true>;
+    testResults: TestResultsSelect<false> | TestResultsSelect<true>;
     admins: AdminsSelect<false> | AdminsSelect<true>;
+    recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
+    subjects: SubjectsSelect<false> | SubjectsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -141,7 +147,7 @@ export interface User {
   password: string;
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex';
-  tariff: number | Tariff;
+  tariff?: (number | null) | Tariff;
   updatedAt: string;
   createdAt: string;
 }
@@ -153,6 +159,7 @@ export interface Tariff {
   id: number;
   title: string;
   price: number;
+  type: 'basic' | 'corporate' | 'pro';
   subtitle: string;
   description: string;
   benefits: {
@@ -199,40 +206,91 @@ export interface Faq {
 export interface Test {
   id: number;
   title: string;
-  instruction: string;
+  tariff: number | Tariff;
+  description?: string | null;
+  questions?: (number | Question)[] | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "test-questions".
+ * via the `definition` "questions".
  */
-export interface TestQuestion {
+export interface Question {
   id: number;
-  test: number | Test;
-  errors: {
-    label: string;
-    id?: string | null;
-  }[];
-  proposals: {
-    label: string;
-    id?: string | null;
-  }[];
+  questionText: string;
+  questionType: 'single_choice' | 'multiple_choice' | 'matching' | 'text_input';
+  answers?:
+    | {
+        label?: string | null;
+        value?: string | null;
+        isCorrect?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  textAnswer?: string | null;
+  recommendation?: (number | null) | Recomendation;
+  matchingPairs?:
+    | {
+        left?: string | null;
+        right?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-test-progress".
+ * via the `definition` "recomendations".
  */
-export interface UserTestProgress {
+export interface Recomendation {
+  id: number;
+  title: string;
+  tariff?: (number | null) | Tariff;
+  /**
+   * Можно использовать заголовки и нумерованные списки
+   */
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testResults".
+ */
+export interface TestResult {
   id: number;
   user: number | User;
   test: number | Test;
-  progress: number;
-  completedQuestions?:
+  status: 'completed' | 'in_progress';
+  answers?:
     | {
-        question: number | TestQuestion;
+        question: number | Question;
+        userAnswer:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        isCorrect?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -258,6 +316,34 @@ export interface Admin {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: number;
+  title: string;
+  /**
+   * Например: oge, ege
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: number;
+  title: string;
+  /**
+   * Например: russian, math, social, physics
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -287,16 +373,28 @@ export interface PayloadLockedDocument {
         value: number | Test;
       } | null)
     | ({
-        relationTo: 'test-questions';
-        value: number | TestQuestion;
+        relationTo: 'questions';
+        value: number | Question;
       } | null)
     | ({
-        relationTo: 'user-test-progress';
-        value: number | UserTestProgress;
+        relationTo: 'testResults';
+        value: number | TestResult;
       } | null)
     | ({
         relationTo: 'admins';
         value: number | Admin;
+      } | null)
+    | ({
+        relationTo: 'recomendations';
+        value: number | Recomendation;
+      } | null)
+    | ({
+        relationTo: 'exams';
+        value: number | Exam;
+      } | null)
+    | ({
+        relationTo: 'subjects';
+        value: number | Subject;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -378,6 +476,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TariffsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
+  type?: T;
   subtitle?: T;
   description?: T;
   benefits?:
@@ -405,26 +504,34 @@ export interface FaqsSelect<T extends boolean = true> {
  */
 export interface TestsSelect<T extends boolean = true> {
   title?: T;
-  instruction?: T;
+  tariff?: T;
+  description?: T;
+  questions?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "test-questions_select".
+ * via the `definition` "questions_select".
  */
-export interface TestQuestionsSelect<T extends boolean = true> {
-  test?: T;
-  errors?:
+export interface QuestionsSelect<T extends boolean = true> {
+  questionText?: T;
+  questionType?: T;
+  answers?:
     | T
     | {
         label?: T;
+        value?: T;
+        isCorrect?: T;
         id?: T;
       };
-  proposals?:
+  textAnswer?: T;
+  recommendation?: T;
+  matchingPairs?:
     | T
     | {
-        label?: T;
+        left?: T;
+        right?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -432,16 +539,18 @@ export interface TestQuestionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "user-test-progress_select".
+ * via the `definition` "testResults_select".
  */
-export interface UserTestProgressSelect<T extends boolean = true> {
+export interface TestResultsSelect<T extends boolean = true> {
   user?: T;
   test?: T;
-  progress?: T;
-  completedQuestions?:
+  status?: T;
+  answers?:
     | T
     | {
         question?: T;
+        userAnswer?: T;
+        isCorrect?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -462,6 +571,37 @@ export interface AdminsSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "recomendations_select".
+ */
+export interface RecomendationsSelect<T extends boolean = true> {
+  title?: T;
+  tariff?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects_select".
+ */
+export interface SubjectsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -501,6 +641,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
+  featuredTest?: (number | null) | Test;
   mainOfferBanner: {
     title: string;
     description: string;
@@ -528,6 +669,7 @@ export interface HomePage {
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  featuredTest?: T;
   mainOfferBanner?:
     | T
     | {
