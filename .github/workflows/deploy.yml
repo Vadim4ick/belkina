@@ -68,7 +68,7 @@ jobs:
           if pm2 list | grep -q belkina-app; then
             pm2 restart belkina-app --update-env
           else
-            pm2 start node --name belkina-app -- .next/standalone/server.js
+            pm2 start npm --name belkina-app -- run start
           fi
 
           pm2 save
