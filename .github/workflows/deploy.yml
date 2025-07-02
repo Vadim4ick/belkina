@@ -63,10 +63,6 @@ jobs:
           echo "📦 Копируем .env"
           cp ~/secrets/env .env.local
 
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          printenv | grep NEXT_
-
           echo "📦 Устанавливаем зависимости"
           npm install --frozen-lockfile
 
