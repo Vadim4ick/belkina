@@ -23,7 +23,7 @@ import dotenv from 'dotenv'
 import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
 
-dotenv.config()
+dotenv.config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env' })
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
