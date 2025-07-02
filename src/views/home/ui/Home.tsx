@@ -22,7 +22,6 @@ const Home = async () => {
 
   return (
     <>
-      <h1>1</h1>
       <MainBanner content={resVal?.HomePage.mainOfferBanner} />
       <TariffList tarrifs={tarrifsVal?.Tariffs.docs} />
       <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
