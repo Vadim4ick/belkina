@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
-// import bcrypt from 'bcryptjs'
-import { HashService } from '../lib/hash'
+import bcrypt from 'bcryptjs'
+// import { HashService } from '../lib/hash'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -105,7 +105,7 @@ export const Users: CollectionConfig = {
     beforeChange: [
       async ({ data, operation }) => {
         if ((operation === 'create' || operation === 'update') && data.password) {
-          data.password = await HashService.hash(data.password)
+          data.password = await bcrypt.hash(data.password, 10)
         }
         return data
       },
