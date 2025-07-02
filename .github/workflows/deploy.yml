@@ -67,7 +67,7 @@ jobs:
           npm ci --frozen-lockfile
 
           echo "⚙️ Билдим проект"
-          NODE_OPTIONS=--no-deprecation npm run build
+          NODE_OPTIONS=--no-deprecation npm run build --debug
 
           echo "🚀 Запускаем через PM2"
           if pm2 list | grep -q belkina-app; then
