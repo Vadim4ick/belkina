@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import bcrypt from 'bcryptjs'
-// import { HashService } from '../lib/hash'
 
 export const Users: CollectionConfig = {
   slug: 'users',

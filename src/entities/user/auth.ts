@@ -6,7 +6,6 @@ import Yandex from 'next-auth/providers/yandex'
 import { gql } from '@/shared/graphql/client'
 import bcrypt from 'bcryptjs'
 import { JwtService } from '@/shared/services/jwt-service'
-// import { HashService } from '@/shared/lib/hash'
 
 export const authOptions: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
