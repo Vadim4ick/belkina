@@ -1,4 +1,3 @@
-// Используем нативный bcrypt для Node.js
 import bcrypt from 'bcryptjs'
 
 export const HashService = {
