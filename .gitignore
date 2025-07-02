@@ -9,6 +9,8 @@
 /.idea/*
 !/.idea/runConfigurations
 
+payload-types.ts
+
 .vscode
 
 # testing

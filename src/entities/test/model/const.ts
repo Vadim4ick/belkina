@@ -1,28 +1,34 @@
-import { MatchTestQuestion } from "./type";
+type MatchingPair = {
+  id: string
+  left: string
+  right: string
+}
 
-export const mockQuestions: MatchTestQuestion[] = [
-  {
-    id: "q1",
-    title: "Установите соответствие между терминами и определениями",
-    leftColumn: [
-      { text: "Сложноподчинённое предложение" },
-      { text: "Однородные члены" },
-      { text: "Глагольная форма" },
-    ],
-    rightColumn: [
-      {
-        text: "Предложение, в котором есть главное и зависимое придаточное",
-      },
-      {
-        text: "Элементы, выполняющие одну и ту же синтаксическую функцию",
-      },
-      { text: "Форма глагола, выражающая время, лицо и число" },
-    ],
-  },
-  {
-    id: "q2",
-    title: "Найди соответствие между формулой и названием",
-    leftColumn: [{ text: "a² + b² = c²" }, { text: "S = πr²" }],
-    rightColumn: [{ text: "Формула Пифагора" }, { text: "Площадь круга" }],
-  },
-];
+/**
+ * Проверяет корректность сопоставлений на основе цифрового ответа пользователя
+ * @param originalPairs - Оригинальный порядок пар (левая часть)
+ * @param shuffledRight - Перемешанный порядок правой части (видел пользователь)
+ * @param userAnswerString - Строка цифр, например "213"
+ */
+export function checkMatchingCorrectness(
+  originalPairs: MatchingPair[],
+  shuffledRight: MatchingPair[],
+  userAnswerString: string,
+): Record<string, boolean> {
+  const result: Record<string, boolean> = {}
+  const answers = userAnswerString.trim().split('') // ['2', '1', '3']
+
+  answers.forEach((char, idx) => {
+    const selectedIndex = parseInt(char, 10) - 1 // '1' → 0, '2' → 1 и т.д.
+
+    const expectedRight = originalPairs[idx]?.right
+    const actualRight = shuffledRight[selectedIndex]?.right
+    const id = originalPairs[idx]?.id
+
+    result[id] = actualRight === expectedRight
+  })
+
+  return result
+}
+
+export const questionNameFn = (id: string | number) => `q_${id}`

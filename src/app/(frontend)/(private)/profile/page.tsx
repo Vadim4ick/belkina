@@ -1,11 +1,5 @@
-import { Recomendations } from '@/views/recomendations'
+import { Profile } from '@/views/profile'
 
-function Profile() {
-  return (
-    <>
-      <Recomendations />
-    </>
-  )
+export default async function PageProfile() {
+  return <Profile />
 }
-
-export default Profile

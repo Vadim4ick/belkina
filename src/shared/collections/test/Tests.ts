@@ -8,11 +8,16 @@ export const Tests: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title'],
-    group: 'Тесты',
+    group: 'Тестирование',
   },
   access: {
-    read: () => true,
+    read: async () => {
+      // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
+      // if (await checkAccessToken({ req })) return true
+
+      // 2. Если тариф не базовый — доступ только с токеном
+      return true
+    },
   },
   fields: [
     {
@@ -21,13 +26,27 @@ export const Tests: CollectionConfig = {
       type: 'text',
       required: true,
     },
+
     {
-      name: 'instruction',
-      label: 'Инструкция',
-      type: 'textarea',
+      name: 'tariff',
+      label: 'Тариф',
+      type: 'relationship',
+      relationTo: 'tariffs',
       required: true,
-      defaultValue:
-        'Установите соответствие между грамматическими ошибками и предложениями, в которых они допущены...',
+      admin: { position: 'sidebar' },
+    },
+
+    {
+      name: 'description',
+      label: 'Описание',
+      type: 'textarea',
+    },
+    {
+      name: 'questions',
+      label: 'Вопросы',
+      type: 'relationship',
+      relationTo: 'questions',
+      hasMany: true,
     },
   ],
 }

@@ -1,0 +1,9 @@
+query GetRecomendationByIds($whereOR: [Recomendation_where_or]) {
+  Recomendations(where: { OR: $whereOR }) {
+    docs {
+      id
+      title
+      description
+    }
+  }
+}

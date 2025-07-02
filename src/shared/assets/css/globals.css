@@ -70,6 +70,7 @@
 
 body {
   font-family: var(--font-poppins), sans-serif;
+  overflow-x: hidden;
 }
 
 :root {
@@ -106,14 +107,14 @@ body {
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
 
-  --header-height: 65px;
+  --header-height: 70px;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   :root {
     --header-height: 44px;
   }
-}
+} */
 
 .dark {
   --background: oklch(0.129 0.042 264.695);

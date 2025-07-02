@@ -1,0 +1,12 @@
+query GetTestResHistory($userId: JSON) {
+  TestResults(where: { user: { equals: $userId } }) {
+    docs {
+      status
+
+      test {
+        id
+        title
+      }
+    }
+  }
+}

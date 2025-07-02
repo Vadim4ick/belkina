@@ -1,0 +1,30 @@
+query GetByIdTestResult($userId: JSON, $testId: JSON) {
+  TestResults(where: { user: { equals: $userId }, test: { equals: $testId } }) {
+    docs {
+      id
+
+      answers {
+        id
+        userAnswer
+        question {
+          id
+        }
+        isCorrect
+      }
+
+      status
+    }
+  }
+}
+
+query GetUserByIdTestResult($userId: JSON) {
+  TestResults(where: { user: { equals: $userId } }) {
+    docs {
+      test {
+        id
+      }
+
+      status
+    }
+  }
+}

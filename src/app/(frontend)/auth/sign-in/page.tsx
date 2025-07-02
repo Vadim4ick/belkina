@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import { getRouteAuth } from "@/shared/lib/routes";
-import { AuthForm } from "@/widgets/auth-form";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { getRouteProfile } from '@/shared/lib/routes'
+import { AuthForm } from '@/widgets/auth-form'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleLogin = async () => {
-    await signIn("credentials", {
+    await signIn('credentials', {
       email,
       password,
-      callbackUrl: getRouteAuth(),
-    });
-  };
+      callbackUrl: getRouteProfile(),
+    })
+  }
 
   return (
     <AuthForm
@@ -28,5 +28,5 @@ export default function LoginPage() {
       pending={false}
       error=""
     />
-  );
+  )
 }
