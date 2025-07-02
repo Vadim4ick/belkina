@@ -1,7 +1,7 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
 import dotenv from 'dotenv'
 
-dotenv.config({ path: '.env.production' })
+dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
 
 const config: CodegenConfig = {
   overwrite: true, // Перезаписывать файл на каждой генерации
