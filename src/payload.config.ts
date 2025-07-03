@@ -57,6 +57,7 @@ export default buildConfig({
     Recomendations,
     Exams,
     Subjects,
+    // Videos,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
