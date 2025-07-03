@@ -22,6 +22,7 @@ import { Recomendations } from './shared/collections/Recomendations'
 import dotenv from 'dotenv'
 import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
+import Courses from './shared/collections/Courses'
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
 
@@ -57,6 +58,7 @@ export default buildConfig({
     Recomendations,
     Exams,
     Subjects,
+    Courses,
     // Videos,
   ],
   globals: [HomePage],

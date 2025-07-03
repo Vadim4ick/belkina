@@ -1,10 +1,9 @@
 'use client'
 
-import { KinescopeVideo } from '@/shared/types/kinescope.types'
 import { useField } from '@payloadcms/ui'
 import React, { useEffect, useState, useMemo } from 'react'
-
 import styles from './style.module.scss'
+import { KinescopeVideo } from '@/shared/types/kinescope.types'
 
 interface KinescopeVideoSelectProps {
   path: string
@@ -12,6 +11,10 @@ interface KinescopeVideoSelectProps {
 
 const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => {
   const { value, setValue, errorMessage } = useField<string>({ path })
+  const { setValue: setTitle } = useField<string>({ path: path.replace(/kinescopeId$/, 'title') })
+  const { setValue: setDuration } = useField<number>({
+    path: path.replace(/kinescopeId$/, 'duration'),
+  })
 
   const [videos, setVideos] = useState<KinescopeVideo[]>([])
   const [loading, setLoading] = useState(true)
@@ -72,7 +75,7 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
         value={projectFilter}
         onChange={(e) => {
           setProjectFilter(e.target.value)
-          setSearch('') // опционально: сбрасываем поиск при смене проекта
+          setSearch('')
         }}
         style={{ marginBottom: 8, maxWidth: 260 }}
       >
@@ -90,7 +93,6 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
         placeholder="Поиск по названию или ID"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        autoFocus
       />
 
       {/* Таблица */}
@@ -103,6 +105,7 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
               <tr>
                 <th>Название</th>
                 <th>Проект</th>
+                <th>Длительность</th>
                 <th>Превью</th>
                 <th></th>
               </tr>
@@ -119,7 +122,11 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
                   <tr
                     key={v.id}
                     className={value === v.id ? styles.selected : undefined}
-                    onClick={() => setValue(value === v.id ? '' : v.id)}
+                    onClick={() => {
+                      setValue(v.id)
+                      setTitle(v.title)
+                      setDuration(v.duration)
+                    }}
                   >
                     <td>{v.title}</td>
                     <td>
@@ -127,6 +134,7 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
                         <span style={{ color: '#aaa' }}>{v.project_id}</span>
                       )}
                     </td>
+                    <td>{Math.round(v.duration)} сек.</td>
                     <td>
                       <a
                         href={v.play_link}
@@ -149,10 +157,9 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
         )}
       </div>
 
-      {/* Ошибка */}
       {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
-      {/* Превью выбранного видео */}
+      {/* Превью выбранного видео + инфо */}
       {value && (
         <div className={styles.iframePreview}>
           <iframe
