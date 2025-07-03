@@ -78,6 +78,7 @@ export interface Config {
     recomendations: Recomendation;
     exams: Exam;
     subjects: Subject;
+    courses: Course;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +96,7 @@ export interface Config {
     recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
     subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    courses: CoursesSelect<false> | CoursesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -347,6 +349,27 @@ export interface Subject {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  description: string;
+  banner: number | Media;
+  exams: number | Exam;
+  subjects: (number | Subject)[];
+  tariff: number | Tariff;
+  kinescopeVideos: {
+    kinescopeId: string;
+    title: string;
+    duration: number;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -395,6 +418,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subjects';
         value: number | Subject;
+      } | null)
+    | ({
+        relationTo: 'courses';
+        value: number | Course;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -600,6 +627,28 @@ export interface ExamsSelect<T extends boolean = true> {
 export interface SubjectsSelect<T extends boolean = true> {
   title?: T;
   code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  banner?: T;
+  exams?: T;
+  subjects?: T;
+  tariff?: T;
+  kinescopeVideos?:
+    | T
+    | {
+        kinescopeId?: T;
+        title?: T;
+        duration?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
