@@ -30,6 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.detect-changes.outputs.frontend_changed == 'true'
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0'
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -56,13 +61,17 @@ jobs:
           cd ~/belkina-app
 
           echo "📦 Копируем .env"
-          cp ~/secrets/env .env
+          cp ~/secrets/env .env.production
 
           echo "📦 Устанавливаем зависимости"
-          npm install
+          npm ci --frozen-lockfile
+
+          # echo "⚙️ Билдим проект"
+          # NODE_OPTIONS=--no-deprecation npm run build --debug
 
           echo "⚙️ Билдим проект"
-          npm run build
+          # Установка на ограничение потребляемой памяти
+          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
 
           echo "🚀 Запускаем через PM2"
           if pm2 list | grep -q belkina-app; then

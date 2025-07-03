@@ -29,7 +29,6 @@ export const authOptions: NextAuthConfig = {
         const foundUser = user.Users.docs[0]
 
         // Сравниваем введенный пароль с хешированным паролем из базы
-
         const isPasswordValid = await bcrypt.compare(
           credentials.password as string,
           foundUser.password,
