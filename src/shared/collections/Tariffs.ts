@@ -25,24 +25,6 @@ export const Tariffs: CollectionConfig = {
       })
       return docs?.length < 3
     },
-    // read: async ({ req }) => {
-    //   const authHeader = req.headers.get('authorization')
-    //   const token = authHeader?.replace(/^Bearer\s/, '')
-
-    //   if (!token) {
-    //     console.warn('🚫 Нет токена — доступ по умолчанию запрещён')
-    //     return false
-    //   }
-
-    //   try {
-    //     const decoded = await JwtService.verifyToken(token)
-    //     console.log('✅ Токен валиден:', decoded)
-    //     return true
-    //   } catch (err) {
-    //     console.warn('⚠️ Токен невалиден:', (err as Error)?.message)
-    //     return false // ← не бросаем исключение, просто отказываем
-    //   }
-    // },
     read: () => true,
   },
 
@@ -66,6 +48,17 @@ export const Tariffs: CollectionConfig = {
             width: '50%',
           },
         },
+      ],
+    },
+    {
+      name: 'type',
+      label: 'Тип тарифа',
+      type: 'select',
+      required: true,
+      options: [
+        { label: 'Базовый', value: 'basic' },
+        { label: 'Корпоративный', value: 'corporate' },
+        { label: 'Профессиональный', value: 'pro' },
       ],
     },
     {

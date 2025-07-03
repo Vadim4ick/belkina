@@ -33,6 +33,10 @@ export const authOptions: NextAuthConfig = {
           credentials.password as string,
           foundUser.password,
         )
+        // const isPasswordValid = await bcrypt.compare(
+        //   credentials.password as string,
+        //   foundUser.password,
+        // )
 
         if (!isPasswordValid) return null
 

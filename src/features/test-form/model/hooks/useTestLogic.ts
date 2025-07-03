@@ -32,6 +32,8 @@ export const useTestLogic = ({
 
   /** Базовое состояние, «истина» после ответа сервера */
   const [answers, setAnswers] = useState<AnswerInput[]>([])
+
+  const [publicStep, setPublicStep] = useState(0)
   const [step, setStep] = useState(0)
 
   /** Optimistic-состояния – мгновенно отражаются в UI */
@@ -50,9 +52,12 @@ export const useTestLogic = ({
   const session = useAuthStore((s) => s.session)
 
   /* ----------------------- текущий вопрос --------------------------- */
-  const currentQuestion = questions[optimisticStep]
-  const questionName = questionNameFn(currentQuestion?.id)
 
+  const renderStep = publicFlag ? publicStep : optimisticStep
+  const renderSetStep = publicFlag ? setPublicStep : setStep
+
+  const currentQuestion = questions[renderStep]
+  const questionName = questionNameFn(currentQuestion?.id)
   /* -------------------- служебные утилиты / формы ------------------- */
   const { evaluateSingle, evaluate } = useTestEvaluation(questions.map((q) => q))
   const form = useForm({
@@ -118,6 +123,7 @@ export const useTestLogic = ({
 
   /** Восстанавливаем последний отвеченный вопрос после перезагрузки */
   useEffect(() => {
+    if (publicFlag) return
     if (testRes && questions.length) {
       const answeredIds = testRes.answers.map((a) => +a.question.id)
       const lastAnsweredIndex = questions.findIndex((q, idx) => {
@@ -127,7 +133,7 @@ export const useTestLogic = ({
       })
       if (lastAnsweredIndex >= 0) setStep(lastAnsweredIndex)
     }
-  }, [testRes, questions])
+  }, [testRes, questions, publicFlag])
 
   /* ------------------------------------------------------------------ */
   /*                           ОБРАБОТЧИКИ                              */
@@ -187,13 +193,16 @@ export const useTestLogic = ({
     }
 
     /* ------------------------ Публичный режим ----------------------- */
-    if (optimisticStep < questions.length - 1) {
-      addOptimisticStep(optimisticStep + 1)
-    } else {
-      setPublicCompleted(true)
-      const answers = getValues()
-      const { correctCount } = evaluate(answers)
-      setPublicCorrectAnswers(correctCount)
+    if (publicFlag) {
+      if (publicStep < questions.length - 1) {
+        setPublicStep(publicStep + 1)
+      } else {
+        setPublicCompleted(true)
+        const answers = getValues()
+        const { correctCount } = evaluate(answers)
+        setPublicCorrectAnswers(correctCount)
+      }
+      return
     }
   }
 
@@ -247,7 +256,7 @@ export const useTestLogic = ({
     testRes,
 
     /* состояние (optimistic) */
-    step: optimisticStep,
+    step: renderStep,
     start,
     publicCorrectAnswers,
     publicCompleted,
@@ -259,7 +268,7 @@ export const useTestLogic = ({
     isFetching,
 
     /* методы */
-    setStep, // нужен в resetTestRes
+    setStep: renderSetStep, // нужен в resetTestRes
     startFn,
     onNext,
     form,

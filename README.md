@@ -65,3 +65,28 @@ That's it! The Docker instance will help you get up and running quickly while al
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+
+## Настройка VPS
+
+<!-- создание конфигурационного файла -->
+
+sudo nano /etc/nginx/sites-available/belkina.online.conf
+
+ <!-- добавление в sites enabled -->
+
+sudo ln -s /etc/nginx/sites-available/belkina.online.conf /etc/nginx/sites-enabled/
+
+<!-- проверка -->
+
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+<!-- рестарт nginx -->
+
+sudo systemctl reload nginx
+
+<!-- Установка и выпуск сертификатов SSL -->
+
+sudo apt install certbot python3-certbot-nginx -y
+sudo certbot --nginx -d belkina.online

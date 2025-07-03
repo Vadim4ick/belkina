@@ -11,7 +11,13 @@ export const Tests: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
-    read: () => true,
+    read: async () => {
+      // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
+      // if (await checkAccessToken({ req })) return true
+
+      // 2. Если тариф не базовый — доступ только с токеном
+      return true
+    },
   },
   fields: [
     {
@@ -26,7 +32,7 @@ export const Tests: CollectionConfig = {
       label: 'Тариф',
       type: 'relationship',
       relationTo: 'tariffs',
-      required: false,
+      required: true,
       admin: { position: 'sidebar' },
     },
 
