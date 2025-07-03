@@ -1,8 +1,12 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
+import dotenv from 'dotenv'
+import path from 'path'
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
 
 const config: CodegenConfig = {
   overwrite: true, // Перезаписывать файл на каждой генерации
-  schema: 'http://localhost:3000/api/graphql', // или URL сервера Payload
+  schema: process.env.NEXT_PUBLIC_PAYLOAD_GRAPHQL, // или URL сервера Payload
   documents: 'src/shared/graphql/schemas/**/*.gql', // путь к .gql запросам
   generates: {
     './src/shared/graphql/__generated__.ts': {

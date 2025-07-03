@@ -21,8 +21,10 @@ import { Recomendations } from './shared/collections/Recomendations'
 
 import dotenv from 'dotenv'
 import { Posts } from './shared/collections/posts'
+import { Exams } from './shared/collections/categories/Exams'
+import { Subjects } from './shared/collections/categories/Subjects'
 
-dotenv.config()
+dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -54,7 +56,6 @@ export default buildConfig({
     TestResults,
     Admins,
     Recomendations,
-    Posts,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),

@@ -7,12 +7,12 @@ export const TestResults: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
+    // read: checkAccessToken,
+    // create: checkAccessToken,
+    // update: checkAccessToken,
     read: () => true,
     create: () => true,
     update: () => true,
-    // read: ({ req: { user } }) => !!user,
-    // create: ({ req: { user } }) => !!user,
-    // update: ({ req: { user } }) => !!user,
   },
   fields: [
     {

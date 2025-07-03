@@ -19,7 +19,8 @@ export const createTests = async (recommendationId: number, tariffId: number) =>
     data: {
       title: 'Общий тест №2',
       description: 'Ещё один тест с разными форматами вопросов',
-      tariff: null,
+      tariff: tariffId,
+
       questions: [allQuestions[2].id, allQuestions[3].id, allQuestions[6].id, allQuestions[7].id],
     },
   })

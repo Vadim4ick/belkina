@@ -11,6 +11,7 @@ export const TestQuestions: CollectionConfig = {
     group: 'Тестирование',
   },
   access: {
+    // read: checkAccessToken,
     read: () => true,
   },
   fields: [
