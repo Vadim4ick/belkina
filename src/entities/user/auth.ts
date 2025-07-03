@@ -4,9 +4,8 @@ import NextAuth, { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import Yandex from 'next-auth/providers/yandex'
 import { gql } from '@/shared/graphql/client'
-// import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 import { JwtService } from '@/shared/services/jwt-service'
-import { HashService } from '@/shared/lib/hash'
 
 export const authOptions: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -30,14 +29,11 @@ export const authOptions: NextAuthConfig = {
         const foundUser = user.Users.docs[0]
 
         // Сравниваем введенный пароль с хешированным паролем из базы
-        const isPasswordValid = await HashService.compare(
+
+        const isPasswordValid = await bcrypt.compare(
           credentials.password as string,
           foundUser.password,
         )
-        // const isPasswordValid = await bcrypt.compare(
-        //   credentials.password as string,
-        //   foundUser.password,
-        // )
 
         if (!isPasswordValid) return null
 
