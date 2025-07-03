@@ -59,89 +59,91 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
-    admins: AdminAuthOperations
-  }
-  blocks: {}
+    admins: AdminAuthOperations;
+  };
+  blocks: {};
   collections: {
-    users: User
-    media: Media
-    tariffs: Tariff
-    faqs: Faq
-    tests: Test
-    questions: Question
-    testResults: TestResult
-    admins: Admin
-    recomendations: Recomendation
-    exams: Exam
-    subjects: Subject
-    posts: Post
-    'payload-jobs': PayloadJob
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
-  collectionsJoins: {}
+    users: User;
+    media: Media;
+    tariffs: Tariff;
+    faqs: Faq;
+    tests: Test;
+    questions: Question;
+    testResults: TestResult;
+    admins: Admin;
+    recomendations: Recomendation;
+    exams: Exam;
+    subjects: Subject;
+    posts: Post;
+    'payload-jobs': PayloadJob;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
+  collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>
-    media: MediaSelect<false> | MediaSelect<true>
-    tariffs: TariffsSelect<false> | TariffsSelect<true>
-    faqs: FaqsSelect<false> | FaqsSelect<true>
-    tests: TestsSelect<false> | TestsSelect<true>
-    questions: QuestionsSelect<false> | QuestionsSelect<true>
-    testResults: TestResultsSelect<false> | TestResultsSelect<true>
-    admins: AdminsSelect<false> | AdminsSelect<true>
-    recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>
-    'payload-locked-documents':
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
-  }
+    users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    tariffs: TariffsSelect<false> | TariffsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
+    tests: TestsSelect<false> | TestsSelect<true>;
+    questions: QuestionsSelect<false> | QuestionsSelect<true>;
+    testResults: TestResultsSelect<false> | TestResultsSelect<true>;
+    admins: AdminsSelect<false> | AdminsSelect<true>;
+    recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
+    subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
-    defaultIDType: number
-  }
+    defaultIDType: number;
+  };
   globals: {
-    homePage: HomePage
-  }
+    homePage: HomePage;
+  };
   globalsSelect: {
-    homePage: HomePageSelect<false> | HomePageSelect<true>
-  }
-  locale: 'en' | 'ru'
+    homePage: HomePageSelect<false> | HomePageSelect<true>;
+  };
+  locale: 'en' | 'ru';
   user: Admin & {
-    collection: 'admins'
-  }
+    collection: 'admins';
+  };
   jobs: {
     tasks: {
-      schedulePublish: TaskSchedulePublish
+      schedulePublish: TaskSchedulePublish;
       inline: {
-        input: unknown
-        output: unknown
-      }
-    }
-    workflows: unknown
-  }
+        input: unknown;
+        output: unknown;
+      };
+    };
+    workflows: unknown;
+  };
 }
 export interface AdminAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * User management
@@ -150,160 +152,160 @@ export interface AdminAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number
-  email: string
-  password: string
-  role: 'admin' | 'user'
-  signupMethod: 'email' | 'yandex'
-  tariff?: (number | null) | Tariff
-  updatedAt: string
-  createdAt: string
+  id: number;
+  email: string;
+  password: string;
+  role: 'admin' | 'user';
+  signupMethod: 'email' | 'yandex';
+  tariff?: (number | null) | Tariff;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tariffs".
  */
 export interface Tariff {
-  id: number
-  title: string
-  price: number
-  type: 'basic' | 'corporate' | 'pro'
-  subtitle: string
-  description: string
+  id: number;
+  title: string;
+  price: number;
+  type: 'basic' | 'corporate' | 'pro';
+  subtitle: string;
+  description: string;
   benefits: {
-    value: string
-    id?: string | null
-  }[]
-  updatedAt: string
-  createdAt: string
+    value: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: number
-  alt: string
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqs".
  */
 export interface Faq {
-  id: number
-  question: string
-  answer: string
-  updatedAt: string
-  createdAt: string
+  id: number;
+  question: string;
+  answer: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tests".
  */
 export interface Test {
-  id: number
-  title: string
-  tariff: number | Tariff
-  description?: string | null
-  questions?: (number | Question)[] | null
-  updatedAt: string
-  createdAt: string
+  id: number;
+  title: string;
+  tariff: number | Tariff;
+  description?: string | null;
+  questions?: (number | Question)[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "questions".
  */
 export interface Question {
-  id: number
-  questionText: string
-  questionType: 'single_choice' | 'multiple_choice' | 'matching' | 'text_input'
+  id: number;
+  questionText: string;
+  questionType: 'single_choice' | 'multiple_choice' | 'matching' | 'text_input';
   answers?:
     | {
-        label?: string | null
-        value?: string | null
-        isCorrect?: boolean | null
-        id?: string | null
+        label?: string | null;
+        value?: string | null;
+        isCorrect?: boolean | null;
+        id?: string | null;
       }[]
-    | null
-  textAnswer?: string | null
-  recommendation?: (number | null) | Recomendation
+    | null;
+  textAnswer?: string | null;
+  recommendation?: (number | null) | Recomendation;
   matchingPairs?:
     | {
-        left?: string | null
-        right?: string | null
-        id?: string | null
+        left?: string | null;
+        right?: string | null;
+        id?: string | null;
       }[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "recomendations".
  */
 export interface Recomendation {
-  id: number
-  title: string
-  tariff?: (number | null) | Tariff
+  id: number;
+  title: string;
+  tariff?: (number | null) | Tariff;
   /**
    * Можно использовать заголовки и нумерованные списки
    */
   description: {
     root: {
-      type: string
+      type: string;
       children: {
-        type: string
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
-  updatedAt: string
-  createdAt: string
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testResults".
  */
 export interface TestResult {
-  id: number
-  user: number | User
-  test: number | Test
-  status: 'completed' | 'in_progress'
+  id: number;
+  user: number | User;
+  test: number | Test;
+  status: 'completed' | 'in_progress';
   answers?:
     | {
-        question: number | Question
+        question: number | Question;
         userAnswer:
           | {
-              [k: string]: unknown
+              [k: string]: unknown;
             }
           | unknown[]
           | string
           | number
           | boolean
-          | null
-        isCorrect?: boolean | null
-        id?: string | null
+          | null;
+        isCorrect?: boolean | null;
+        id?: string | null;
       }[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Admin access management
@@ -312,346 +314,595 @@ export interface TestResult {
  * via the `definition` "admins".
  */
 export interface Admin {
-  id: number
-  role: 'admin' | 'super'
-  updatedAt: string
-  createdAt: string
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
-  password?: string | null
+  id: number;
+  role: 'admin' | 'super';
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: number;
+  title: string;
+  /**
+   * Например: oge, ege
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: number;
+  title: string;
+  /**
+   * Например: russian, math, social, physics
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  heroImage?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  authors?: (number | User)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs".
+ */
+export interface PayloadJob {
+  id: number;
+  /**
+   * Input data provided to the job
+   */
+  input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  taskStatus?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  completedAt?: string | null;
+  totalTried?: number | null;
+  /**
+   * If hasError is true this job will not be retried
+   */
+  hasError?: boolean | null;
+  /**
+   * If hasError is true, this is the error that caused it
+   */
+  error?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Task execution log
+   */
+  log?:
+    | {
+        executedAt: string;
+        completedAt: string;
+        taskSlug: 'inline' | 'schedulePublish';
+        taskID: string;
+        input?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        output?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        state: 'failed' | 'succeeded';
+        error?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  taskSlug?: ('inline' | 'schedulePublish') | null;
+  queue?: string | null;
+  waitUntil?: string | null;
+  processing?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number
+  id: number;
   document?:
     | ({
-        relationTo: 'users'
-        value: number | User
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
-        relationTo: 'media'
-        value: number | Media
+        relationTo: 'media';
+        value: number | Media;
       } | null)
     | ({
-        relationTo: 'tariffs'
-        value: number | Tariff
+        relationTo: 'tariffs';
+        value: number | Tariff;
       } | null)
     | ({
-        relationTo: 'faqs'
-        value: number | Faq
+        relationTo: 'faqs';
+        value: number | Faq;
       } | null)
     | ({
-        relationTo: 'tests'
-        value: number | Test
+        relationTo: 'tests';
+        value: number | Test;
       } | null)
     | ({
-        relationTo: 'questions'
-        value: number | Question
+        relationTo: 'questions';
+        value: number | Question;
       } | null)
     | ({
-        relationTo: 'testResults'
-        value: number | TestResult
+        relationTo: 'testResults';
+        value: number | TestResult;
       } | null)
     | ({
-        relationTo: 'admins'
-        value: number | Admin
+        relationTo: 'admins';
+        value: number | Admin;
       } | null)
     | ({
-        relationTo: 'recomendations'
-        value: number | Recomendation
+        relationTo: 'recomendations';
+        value: number | Recomendation;
       } | null)
-  globalSlug?: string | null
+    | ({
+        relationTo: 'exams';
+        value: number | Exam;
+      } | null)
+    | ({
+        relationTo: 'subjects';
+        value: number | Subject;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'payload-jobs';
+        value: number | PayloadJob;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'admins'
-    value: number | Admin
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'admins';
+    value: number | Admin;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number
+  id: number;
   user: {
-    relationTo: 'admins'
-    value: number | Admin
-  }
-  key?: string | null
+    relationTo: 'admins';
+    value: number | Admin;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  email?: T
-  password?: T
-  role?: T
-  signupMethod?: T
-  tariff?: T
-  updatedAt?: T
-  createdAt?: T
+  email?: T;
+  password?: T;
+  role?: T;
+  signupMethod?: T;
+  tariff?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T
-  updatedAt?: T
-  createdAt?: T
-  url?: T
-  thumbnailURL?: T
-  filename?: T
-  mimeType?: T
-  filesize?: T
-  width?: T
-  height?: T
-  focalX?: T
-  focalY?: T
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tariffs_select".
  */
 export interface TariffsSelect<T extends boolean = true> {
-  title?: T
-  price?: T
-  type?: T
-  subtitle?: T
-  description?: T
+  title?: T;
+  price?: T;
+  type?: T;
+  subtitle?: T;
+  description?: T;
   benefits?:
     | T
     | {
-        value?: T
-        id?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+        value?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqs_select".
  */
 export interface FaqsSelect<T extends boolean = true> {
-  question?: T
-  answer?: T
-  updatedAt?: T
-  createdAt?: T
+  question?: T;
+  answer?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "tests_select".
  */
 export interface TestsSelect<T extends boolean = true> {
-  title?: T
-  tariff?: T
-  description?: T
-  questions?: T
-  updatedAt?: T
-  createdAt?: T
+  title?: T;
+  tariff?: T;
+  description?: T;
+  questions?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "questions_select".
  */
 export interface QuestionsSelect<T extends boolean = true> {
-  questionText?: T
-  questionType?: T
+  questionText?: T;
+  questionType?: T;
   answers?:
     | T
     | {
-        label?: T
-        value?: T
-        isCorrect?: T
-        id?: T
-      }
-  textAnswer?: T
-  recommendation?: T
+        label?: T;
+        value?: T;
+        isCorrect?: T;
+        id?: T;
+      };
+  textAnswer?: T;
+  recommendation?: T;
   matchingPairs?:
     | T
     | {
-        left?: T
-        right?: T
-        id?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+        left?: T;
+        right?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testResults_select".
  */
 export interface TestResultsSelect<T extends boolean = true> {
-  user?: T
-  test?: T
-  status?: T
+  user?: T;
+  test?: T;
+  status?: T;
   answers?:
     | T
     | {
-        question?: T
-        userAnswer?: T
-        isCorrect?: T
-        id?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+        question?: T;
+        userAnswer?: T;
+        isCorrect?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "admins_select".
  */
 export interface AdminsSelect<T extends boolean = true> {
-  role?: T
-  updatedAt?: T
-  createdAt?: T
-  email?: T
-  resetPasswordToken?: T
-  resetPasswordExpiration?: T
-  salt?: T
-  hash?: T
-  loginAttempts?: T
-  lockUntil?: T
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "recomendations_select".
  */
 export interface RecomendationsSelect<T extends boolean = true> {
-  title?: T
-  tariff?: T
-  description?: T
-  updatedAt?: T
-  createdAt?: T
+  title?: T;
+  tariff?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects_select".
+ */
+export interface SubjectsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  heroImage?: T;
+  content?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  authors?: T;
+  slug?: T;
+  slugLock?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs_select".
+ */
+export interface PayloadJobsSelect<T extends boolean = true> {
+  input?: T;
+  taskStatus?: T;
+  completedAt?: T;
+  totalTried?: T;
+  hasError?: T;
+  error?: T;
+  log?:
+    | T
+    | {
+        executedAt?: T;
+        completedAt?: T;
+        taskSlug?: T;
+        taskID?: T;
+        input?: T;
+        output?: T;
+        state?: T;
+        error?: T;
+        id?: T;
+      };
+  taskSlug?: T;
+  queue?: T;
+  waitUntil?: T;
+  processing?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T
-  globalSlug?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T
-  key?: T
-  value?: T
-  updatedAt?: T
-  createdAt?: T
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T
-  batch?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homePage".
  */
 export interface HomePage {
-  id: number
-  featuredTest?: (number | null) | Test
+  id: number;
+  featuredTest?: (number | null) | Test;
   mainOfferBanner: {
-    title: string
-    description: string
-    label: string
+    title: string;
+    description: string;
+    label: string;
     options: {
-      text?: string | null
-      id?: string | null
-    }[]
-  }
+      text?: string | null;
+      id?: string | null;
+    }[];
+  };
   aboutProjectBanner: {
-    title: string
-    subtitle: string
-    description: string
-  }
+    title: string;
+    subtitle: string;
+    description: string;
+  };
   diagnosticTestBanner: {
-    title: string
-    subtitle: string
-    label: string
-  }
-  updatedAt?: string | null
-  createdAt?: string | null
+    title: string;
+    subtitle: string;
+    label: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  featuredTest?: T
+  featuredTest?: T;
   mainOfferBanner?:
     | T
     | {
-        title?: T
-        description?: T
-        label?: T
+        title?: T;
+        description?: T;
+        label?: T;
         options?:
           | T
           | {
-              text?: T
-              id?: T
-            }
-      }
+              text?: T;
+              id?: T;
+            };
+      };
   aboutProjectBanner?:
     | T
     | {
-        title?: T
-        subtitle?: T
-        description?: T
-      }
+        title?: T;
+        subtitle?: T;
+        description?: T;
+      };
   diagnosticTestBanner?:
     | T
     | {
-        title?: T
-        subtitle?: T
-        label?: T
-      }
-  updatedAt?: T
-  createdAt?: T
-  globalType?: T
+        title?: T;
+        subtitle?: T;
+        label?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -659,24 +910,25 @@ export interface HomePageSelect<T extends boolean = true> {
  */
 export interface TaskSchedulePublish {
   input: {
-    type?: ('publish' | 'unpublish') | null
-    locale?: string | null
+    type?: ('publish' | 'unpublish') | null;
+    locale?: string | null;
     doc?: {
-      relationTo: 'posts'
-      value: number | Post
-    } | null
-    global?: string | null
-    user?: (number | null) | Admin
-  }
-  output?: unknown
+      relationTo: 'posts';
+      value: number | Post;
+    } | null;
+    global?: string | null;
+    user?: (number | null) | Admin;
+  };
+  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

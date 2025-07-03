@@ -24,7 +24,9 @@ import { Posts } from './shared/collections/posts'
 import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
 
-dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
+// dotenv.config({ path: path.resolve(process.cwd(), '.env') })
+// dotenv.config({ path: path.resolve(process.cwd(), '.env.production') })
+dotenv.config({ path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env' })
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,6 +58,9 @@ export default buildConfig({
     TestResults,
     Admins,
     Recomendations,
+    Exams,
+    Subjects,
+    Posts,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
