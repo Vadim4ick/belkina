@@ -1,0 +1,21 @@
+fragment CourseFragment on Course {
+  id
+  title
+  description
+  banner {
+    ...MediaFragment
+  }
+  exams {
+    ...ExamFragment
+  }
+  subjects {
+    ...SubjectsFragment
+  }
+  tariff {
+    ...TariffFragment
+  }
+
+  kinescopeVideos {
+    ...Kinescope_Video_Fragment
+  }
+}

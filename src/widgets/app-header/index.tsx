@@ -1,6 +1,6 @@
 'use client'
 
-import { getRouteHome } from '@/shared/lib/routes'
+import { getRouteHome, getRouteCourses } from '@/shared/lib/routes'
 import { MainNav } from './ui/main-nav'
 import { MobileNav } from './ui/mobile-nav'
 import { FC, memo, SVGProps } from 'react'
@@ -18,13 +18,13 @@ export interface IHeaderItems {
 
 const headerItems: IHeaderItems[] = [
   {
-    title: 'Тестирование ЕГЭ',
+    title: 'Главная',
     url: getRouteHome(),
     icon: GraduationCapIcon,
   },
   {
     title: 'Курсы',
-    url: '#',
+    url: getRouteCourses(),
     icon: BookOpennCapIcon,
   },
   {
