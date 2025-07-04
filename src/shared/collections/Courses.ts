@@ -4,6 +4,10 @@ const Courses: CollectionConfig = {
   slug: 'courses',
   admin: { useAsTitle: 'title' },
   access: { read: () => true },
+  labels: {
+    singular: 'Курс',
+    plural: 'Курсы',
+  },
   fields: [
     {
       name: 'title',
@@ -39,6 +43,22 @@ const Courses: CollectionConfig = {
       relationTo: 'subjects',
       required: true,
       hasMany: true,
+    },
+    {
+      name: 'price',
+      label: 'Цена (₽)',
+      type: 'number',
+      required: true,
+      defaultValue: 0,
+      min: 0,
+    },
+    {
+      name: 'discount',
+      label: 'Скидка (%)',
+      type: 'number',
+      min: 0,
+      max: 100,
+      defaultValue: 0,
     },
     {
       name: 'tariff',
