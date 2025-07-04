@@ -1,8 +1,8 @@
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { Container } from '@/shared/ui/container'
+import { CourseVideo } from '@/shared/ui/course-video'
 import { Typography } from '@/shared/ui/typography'
 import { notFound } from 'next/navigation'
-import { CourseVideo } from './CourseVideo'
 
 const CourseBySlugPage = async ({ slug }: { slug: string }) => {
   const gql = await getServerGqlClient()
