@@ -1,13 +1,26 @@
 import { CollectionConfig } from 'payload'
+import slugify from 'slugify'
 
 const Courses: CollectionConfig = {
   slug: 'courses',
   admin: { useAsTitle: 'title' },
   access: { read: () => true },
   labels: {
-    singular: 'Курс',
+    singular: 'Курса',
     plural: 'Курсы',
   },
+
+  hooks: {
+    beforeChange: [
+      async ({ data, originalDoc }) => {
+        if (data.title && data.title !== originalDoc?.title) {
+          data.slug = slugify(data.title, { lower: true, strict: true })
+        }
+        return data
+      },
+    ],
+  },
+
   fields: [
     {
       name: 'title',
@@ -60,6 +73,19 @@ const Courses: CollectionConfig = {
       max: 100,
       defaultValue: 0,
     },
+
+    {
+      name: 'slug',
+      label: 'Slug',
+      type: 'text',
+      unique: true,
+      required: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+      },
+    },
+
     {
       name: 'tariff',
       label: 'Тариф',

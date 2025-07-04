@@ -4,6 +4,7 @@ fragment CourseFragment on Course {
   description
   price
   discount
+  slug
   banner {
     ...MediaFragment
   }

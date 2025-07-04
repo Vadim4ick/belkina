@@ -15,8 +15,6 @@ export async function GET() {
       },
     })
 
-    console.log('apiRes', apiRes)
-
     if (!apiRes.ok) {
       return NextResponse.json({ error: 'Kinescope error' }, { status: apiRes.status })
     }

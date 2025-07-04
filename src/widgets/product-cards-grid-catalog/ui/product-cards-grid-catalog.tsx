@@ -5,11 +5,17 @@ interface ProductCardsGridCatalogProps {
   title?: string
   children?: React.ReactNode
   className?: string
+  isNull?: boolean
 }
 
-const ProductCardsGridCatalog = ({ title, children, className }: ProductCardsGridCatalogProps) => {
+const ProductCardsGridCatalog = ({
+  title,
+  children,
+  className,
+  isNull,
+}: ProductCardsGridCatalogProps) => {
   return (
-    <section className={cn('py-8 antialiased md:py-12 dark:bg-gray-900', className)}>
+    <section className={cn('py-8 antialiased md:py-12', className)}>
       <div className="mx-auto flex flex-col gap-4 2xl:px-0">
         <div className="items-end justify-between space-y-4 sm:flex sm:space-y-0">
           <Typography tag="h2" variant="poppins-md-24">
@@ -17,7 +23,14 @@ const ProductCardsGridCatalog = ({ title, children, className }: ProductCardsGri
           </Typography>
         </div>
 
-        <div className="mb-4 grid gap-6 md:mb-8 md:grid-cols-2 xl:grid-cols-3">{children}</div>
+        <div
+          className={cn('mb-4 grid gap-6 md:mb-8', {
+            'grid-cols-1': isNull,
+            'md:grid-cols-2 xl:grid-cols-3': !isNull,
+          })}
+        >
+          {children}
+        </div>
 
         {/* ToDO: Реализовать логику показать еще */}
         {/* <div className="w-full text-center">

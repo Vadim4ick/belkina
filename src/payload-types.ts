@@ -360,6 +360,7 @@ export interface Course {
   subjects: (number | Subject)[];
   price: number;
   discount?: number | null;
+  slug: string;
   tariff: number | Tariff;
   kinescopeVideos: {
     kinescopeId: string;
@@ -644,6 +645,7 @@ export interface CoursesSelect<T extends boolean = true> {
   subjects?: T;
   price?: T;
   discount?: T;
+  slug?: T;
   tariff?: T;
   kinescopeVideos?:
     | T
