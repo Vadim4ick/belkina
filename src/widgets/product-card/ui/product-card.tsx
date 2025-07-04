@@ -12,6 +12,7 @@ import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
 import { MediaFragmentFragment } from '@/shared/graphql/__generated__'
 import { Clock } from '@/shared/ui/clock'
+import Link from 'next/link'
 
 export interface ProductCardProps {
   title: string
@@ -19,6 +20,7 @@ export interface ProductCardProps {
   duration: string
   description: string
   exams: string
+  url: string
   price: number
   discount: number
   image: MediaFragmentFragment
@@ -32,6 +34,7 @@ const ProductCard = ({
   exams,
   price,
   discount,
+  url,
   image,
 }: ProductCardProps) => {
   return (
@@ -87,7 +90,10 @@ const ProductCard = ({
             </Badge>
           ) : null}
         </div>
-        <Button className="w-full">Приобрести</Button>
+
+        <Link href={url} className="w-full">
+          <Button className="w-full">Подробнее</Button>
+        </Link>
       </CardFooter>
     </Card>
   )
