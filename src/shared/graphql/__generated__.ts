@@ -472,9 +472,11 @@ export type Course = {
   readonly banner: Media;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly description: Scalars['String']['output'];
+  readonly discount: Maybe<Scalars['Float']['output']>;
   readonly exams: Exam;
   readonly id: Scalars['Int']['output'];
   readonly kinescopeVideos: ReadonlyArray<Course_KinescopeVideos>;
+  readonly price: Scalars['Float']['output'];
   readonly subjects: ReadonlyArray<Subject>;
   readonly tariff: Tariff;
   readonly title: Scalars['String']['output'];
@@ -539,6 +541,16 @@ export type Course_Description_Operator = {
   readonly not_equals: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Course_Discount_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Course_Exams_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
@@ -597,6 +609,15 @@ export type Course_KinescopeVideos__Title_Operator = {
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Course_Price_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Course_Subjects_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
@@ -640,12 +661,14 @@ export type Course_Where = {
   readonly banner: InputMaybe<Course_Banner_Operator>;
   readonly createdAt: InputMaybe<Course_CreatedAt_Operator>;
   readonly description: InputMaybe<Course_Description_Operator>;
+  readonly discount: InputMaybe<Course_Discount_Operator>;
   readonly exams: InputMaybe<Course_Exams_Operator>;
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly kinescopeVideos__duration: InputMaybe<Course_KinescopeVideos__Duration_Operator>;
   readonly kinescopeVideos__id: InputMaybe<Course_KinescopeVideos__Id_Operator>;
   readonly kinescopeVideos__kinescopeId: InputMaybe<Course_KinescopeVideos__KinescopeId_Operator>;
   readonly kinescopeVideos__title: InputMaybe<Course_KinescopeVideos__Title_Operator>;
+  readonly price: InputMaybe<Course_Price_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly tariff: InputMaybe<Course_Tariff_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
@@ -658,12 +681,14 @@ export type Course_Where_And = {
   readonly banner: InputMaybe<Course_Banner_Operator>;
   readonly createdAt: InputMaybe<Course_CreatedAt_Operator>;
   readonly description: InputMaybe<Course_Description_Operator>;
+  readonly discount: InputMaybe<Course_Discount_Operator>;
   readonly exams: InputMaybe<Course_Exams_Operator>;
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly kinescopeVideos__duration: InputMaybe<Course_KinescopeVideos__Duration_Operator>;
   readonly kinescopeVideos__id: InputMaybe<Course_KinescopeVideos__Id_Operator>;
   readonly kinescopeVideos__kinescopeId: InputMaybe<Course_KinescopeVideos__KinescopeId_Operator>;
   readonly kinescopeVideos__title: InputMaybe<Course_KinescopeVideos__Title_Operator>;
+  readonly price: InputMaybe<Course_Price_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly tariff: InputMaybe<Course_Tariff_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
@@ -676,12 +701,14 @@ export type Course_Where_Or = {
   readonly banner: InputMaybe<Course_Banner_Operator>;
   readonly createdAt: InputMaybe<Course_CreatedAt_Operator>;
   readonly description: InputMaybe<Course_Description_Operator>;
+  readonly discount: InputMaybe<Course_Discount_Operator>;
   readonly exams: InputMaybe<Course_Exams_Operator>;
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly kinescopeVideos__duration: InputMaybe<Course_KinescopeVideos__Duration_Operator>;
   readonly kinescopeVideos__id: InputMaybe<Course_KinescopeVideos__Id_Operator>;
   readonly kinescopeVideos__kinescopeId: InputMaybe<Course_KinescopeVideos__KinescopeId_Operator>;
   readonly kinescopeVideos__title: InputMaybe<Course_KinescopeVideos__Title_Operator>;
+  readonly price: InputMaybe<Course_Price_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly tariff: InputMaybe<Course_Tariff_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
@@ -732,8 +759,10 @@ export type CoursesDocAccessFields = {
   readonly banner: Maybe<CoursesDocAccessFields_Banner>;
   readonly createdAt: Maybe<CoursesDocAccessFields_CreatedAt>;
   readonly description: Maybe<CoursesDocAccessFields_Description>;
+  readonly discount: Maybe<CoursesDocAccessFields_Discount>;
   readonly exams: Maybe<CoursesDocAccessFields_Exams>;
   readonly kinescopeVideos: Maybe<CoursesDocAccessFields_KinescopeVideos>;
+  readonly price: Maybe<CoursesDocAccessFields_Price>;
   readonly subjects: Maybe<CoursesDocAccessFields_Subjects>;
   readonly tariff: Maybe<CoursesDocAccessFields_Tariff>;
   readonly title: Maybe<CoursesDocAccessFields_Title>;
@@ -821,6 +850,34 @@ export type CoursesDocAccessFields_Description_Read = {
 
 export type CoursesDocAccessFields_Description_Update = {
   readonly __typename?: 'CoursesDocAccessFields_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Discount = {
+  readonly __typename?: 'CoursesDocAccessFields_discount';
+  readonly create: Maybe<CoursesDocAccessFields_Discount_Create>;
+  readonly delete: Maybe<CoursesDocAccessFields_Discount_Delete>;
+  readonly read: Maybe<CoursesDocAccessFields_Discount_Read>;
+  readonly update: Maybe<CoursesDocAccessFields_Discount_Update>;
+};
+
+export type CoursesDocAccessFields_Discount_Create = {
+  readonly __typename?: 'CoursesDocAccessFields_discount_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Discount_Delete = {
+  readonly __typename?: 'CoursesDocAccessFields_discount_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Discount_Read = {
+  readonly __typename?: 'CoursesDocAccessFields_discount_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Discount_Update = {
+  readonly __typename?: 'CoursesDocAccessFields_discount_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -1001,6 +1058,34 @@ export type CoursesDocAccessFields_KinescopeVideos_Title_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type CoursesDocAccessFields_Price = {
+  readonly __typename?: 'CoursesDocAccessFields_price';
+  readonly create: Maybe<CoursesDocAccessFields_Price_Create>;
+  readonly delete: Maybe<CoursesDocAccessFields_Price_Delete>;
+  readonly read: Maybe<CoursesDocAccessFields_Price_Read>;
+  readonly update: Maybe<CoursesDocAccessFields_Price_Update>;
+};
+
+export type CoursesDocAccessFields_Price_Create = {
+  readonly __typename?: 'CoursesDocAccessFields_price_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Price_Delete = {
+  readonly __typename?: 'CoursesDocAccessFields_price_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Price_Read = {
+  readonly __typename?: 'CoursesDocAccessFields_price_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_Price_Update = {
+  readonly __typename?: 'CoursesDocAccessFields_price_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type CoursesDocAccessFields_Subjects = {
   readonly __typename?: 'CoursesDocAccessFields_subjects';
   readonly create: Maybe<CoursesDocAccessFields_Subjects_Create>;
@@ -1118,8 +1203,10 @@ export type CoursesFields = {
   readonly banner: Maybe<CoursesFields_Banner>;
   readonly createdAt: Maybe<CoursesFields_CreatedAt>;
   readonly description: Maybe<CoursesFields_Description>;
+  readonly discount: Maybe<CoursesFields_Discount>;
   readonly exams: Maybe<CoursesFields_Exams>;
   readonly kinescopeVideos: Maybe<CoursesFields_KinescopeVideos>;
+  readonly price: Maybe<CoursesFields_Price>;
   readonly subjects: Maybe<CoursesFields_Subjects>;
   readonly tariff: Maybe<CoursesFields_Tariff>;
   readonly title: Maybe<CoursesFields_Title>;
@@ -1207,6 +1294,34 @@ export type CoursesFields_Description_Read = {
 
 export type CoursesFields_Description_Update = {
   readonly __typename?: 'CoursesFields_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Discount = {
+  readonly __typename?: 'CoursesFields_discount';
+  readonly create: Maybe<CoursesFields_Discount_Create>;
+  readonly delete: Maybe<CoursesFields_Discount_Delete>;
+  readonly read: Maybe<CoursesFields_Discount_Read>;
+  readonly update: Maybe<CoursesFields_Discount_Update>;
+};
+
+export type CoursesFields_Discount_Create = {
+  readonly __typename?: 'CoursesFields_discount_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Discount_Delete = {
+  readonly __typename?: 'CoursesFields_discount_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Discount_Read = {
+  readonly __typename?: 'CoursesFields_discount_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Discount_Update = {
+  readonly __typename?: 'CoursesFields_discount_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -1384,6 +1499,34 @@ export type CoursesFields_KinescopeVideos_Title_Read = {
 
 export type CoursesFields_KinescopeVideos_Title_Update = {
   readonly __typename?: 'CoursesFields_kinescopeVideos_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Price = {
+  readonly __typename?: 'CoursesFields_price';
+  readonly create: Maybe<CoursesFields_Price_Create>;
+  readonly delete: Maybe<CoursesFields_Price_Delete>;
+  readonly read: Maybe<CoursesFields_Price_Read>;
+  readonly update: Maybe<CoursesFields_Price_Update>;
+};
+
+export type CoursesFields_Price_Create = {
+  readonly __typename?: 'CoursesFields_price_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Price_Delete = {
+  readonly __typename?: 'CoursesFields_price_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Price_Read = {
+  readonly __typename?: 'CoursesFields_price_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_Price_Update = {
+  readonly __typename?: 'CoursesFields_price_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -11725,8 +11868,10 @@ export type MutationCourseInput = {
   readonly banner: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: Scalars['String']['input'];
+  readonly discount: InputMaybe<Scalars['Float']['input']>;
   readonly exams: InputMaybe<Scalars['Int']['input']>;
   readonly kinescopeVideos: InputMaybe<ReadonlyArray<MutationCourse_KinescopeVideosInput>>;
+  readonly price: Scalars['Float']['input'];
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly title: Scalars['String']['input'];
@@ -11737,8 +11882,10 @@ export type MutationCourseUpdateInput = {
   readonly banner: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly discount: InputMaybe<Scalars['Float']['input']>;
   readonly exams: InputMaybe<Scalars['Int']['input']>;
   readonly kinescopeVideos: InputMaybe<ReadonlyArray<InputMaybe<MutationCourseUpdate_KinescopeVideosInput>>>;
+  readonly price: InputMaybe<Scalars['Float']['input']>;
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
@@ -12227,14 +12374,14 @@ export type UsersDocAccess = {
 export type GetAllCoursesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> }> } };
+export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> }> } };
 
 export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetFaGsQuery = { readonly __typename?: 'Query', readonly Faqs: { readonly __typename?: 'Faqs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Faq', readonly id: number, readonly question: string, readonly answer: string }> } };
 
-export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> };
+export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> };
 
 export type ExamFragmentFragment = { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string };
 
@@ -12398,6 +12545,8 @@ export const CourseFragmentFragmentDoc = gql`
   id
   title
   description
+  price
+  discount
   banner {
     ...MediaFragment
   }

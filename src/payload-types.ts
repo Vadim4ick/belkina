@@ -358,6 +358,8 @@ export interface Course {
   banner: number | Media;
   exams: number | Exam;
   subjects: (number | Subject)[];
+  price: number;
+  discount?: number | null;
   tariff: number | Tariff;
   kinescopeVideos: {
     kinescopeId: string;
@@ -640,6 +642,8 @@ export interface CoursesSelect<T extends boolean = true> {
   banner?: T;
   exams?: T;
   subjects?: T;
+  price?: T;
+  discount?: T;
   tariff?: T;
   kinescopeVideos?:
     | T
