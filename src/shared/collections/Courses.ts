@@ -125,6 +125,13 @@ const Courses: CollectionConfig = {
           required: true,
           admin: { readOnly: true },
         },
+        {
+          name: 'test',
+          label: 'Тест после видео',
+          type: 'relationship',
+          relationTo: 'tests',
+          required: false,
+        },
       ],
     },
   ],

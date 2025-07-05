@@ -1,5 +1,6 @@
 import { getServerGqlClient } from '@/shared/graphql/client'
-import { getRouteCourseBySlug } from '@/shared/lib/routes'
+import { Arrow } from '@/shared/icons/arrow'
+import { getRouteCourseBySlug, getRouteTestById } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
@@ -43,44 +44,76 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
             </Typography>
 
             <div className="max-tablet:grid-cols-1 grid grid-cols-[1.3fr_0.7fr] gap-4">
-              <CourseVideo
-                className="max-tablet:order-1 order-0"
-                videoId={activeVideoId || ''}
-                poster={course.banner.url}
-              />
-              <div className="max-tablet:order-0 order-1 flex flex-col justify-between gap-4">
-                <Typography tag="h1" variant="visuelt-bold-32">
+              <Typography tag="h1" variant="visuelt-bold-32" className="tablet:hidden mb-2">
+                {activeVideo.title}
+              </Typography>
+
+              <CourseVideo videoId={activeVideoId || ''} poster={course.banner.url} />
+
+              <aside className="tablet:p-2 flex h-full flex-col justify-between gap-8">
+                {/* Заголовок урока */}
+                <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
                   {activeVideo.title}
                 </Typography>
 
-                <div className="flex w-full flex-col gap-4">
+                {/* Блок теста */}
+                {activeVideo.test && (
+                  <div className="mb-2 flex flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">
+                    <span className="text-xs font-medium text-gray-500">Тест после урока</span>
+                    <Typography tag="div" variant="poppins-md-16" className="mb-1">
+                      {activeVideo.test.title}
+                    </Typography>
+
+                    <Link
+                      href={getRouteTestById({
+                        id: activeVideo.test.id,
+                      })}
+                      target="_blank"
+                    >
+                      <Button variant="primary" className="rounded-xl px-8 shadow">
+                        Пройти тест
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+
+                {/* Навигация по урокам */}
+                <div className="mt-auto flex w-full flex-col gap-2">
                   {prevVideo && (
                     <Link
-                      className="w-full"
                       href={getRouteCourseBySlug({
                         slug: course.slug,
                         videoId: prevVideo.kinescopeId,
                       })}
+                      className="w-full"
                     >
-                      <Button variant="primary-inverted" className="w-full">
+                      <Button
+                        addonLeft={<Arrow className="rotate-180" />}
+                        variant="primary-inverted"
+                        className="flex w-full items-center justify-center gap-1 rounded-xl"
+                      >
                         Предыдущий урок
                       </Button>
                     </Link>
                   )}
-
                   {nextVideo && (
                     <Link
-                      className="w-full"
                       href={getRouteCourseBySlug({
                         slug: course.slug,
                         videoId: nextVideo.kinescopeId,
                       })}
+                      className="w-full"
                     >
-                      <Button className="w-full">Следующий урок</Button>
+                      <Button
+                        addonRight={<Arrow />}
+                        className="flex w-full items-center justify-center gap-1 rounded-xl"
+                      >
+                        Следующий урок
+                      </Button>
                     </Link>
                   )}
                 </div>
-              </div>
+              </aside>
             </div>
           </div>
         </Container>
