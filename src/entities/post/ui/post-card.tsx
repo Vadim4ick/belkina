@@ -6,6 +6,7 @@ import React, { Fragment } from 'react'
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/widgets/Media'
+import { Typography } from '@/shared/ui/typography'
 
 export type CardPostData = Pick<Post, 'slug' | 'meta' | 'title'>
 
@@ -27,18 +28,19 @@ export const Card: React.FC<{
   const href = `/${relationTo}/${slug}`
 
   return (
-    <article
-      className={cn(
-        'border-border bg-card overflow-hidden rounded-lg border hover:cursor-pointer',
-        className,
-      )}
-    >
-      <div className="relative w-full">
-        {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
-      </div>
-      <div className="p-4">
-        {/* {showCategories && hasCategories && (
+    <Link className="not-prose line-clamp-2" href={href}>
+      <article
+        className={cn(
+          'border-border bg-card flex flex-col overflow-hidden rounded-lg border hover:cursor-pointer',
+          className,
+        )}
+      >
+        <div className="bg-accent-foreground relative h-1/2 w-full overflow-hidden">
+          {!metaImage && <div className="">No image</div>}
+          {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+        </div>
+        <div className="flex h-1/2 flex-col gap-y-5 p-4">
+          {/* {showCategories && hasCategories && (
           <div className="mb-4 text-sm uppercase">
             {showCategories && hasCategories && (
               <div>
@@ -64,17 +66,22 @@ export const Card: React.FC<{
             )}
           </div>
         )} */}
-        {titleToUse && (
-          <div className="prose">
-            <h3>
-              <Link className="not-prose" href={href}>
+          {titleToUse && (
+            <div className="min-h-16">
+              <Typography tag="h3" variant="poppins-md-16">
                 {titleToUse}
-              </Link>
-            </h3>
-          </div>
-        )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
-      </div>
-    </article>
+              </Typography>
+            </div>
+          )}
+          {description && (
+            <div className="line-clamp-5 grow">
+              <Typography tag="p" variant="poppins-md-16">
+                {description}
+              </Typography>
+            </div>
+          )}
+        </div>
+      </article>
+    </Link>
   )
 }
