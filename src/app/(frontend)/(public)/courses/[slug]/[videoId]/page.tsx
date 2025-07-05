@@ -1,8 +1,12 @@
 import { CourseBySlugPage } from '@/views/course-by-slug-page'
 
-export const revalidate = 180
+export const revalidate = 18
 
-export default async function Page({ params }: { params: { slug: string; videoId: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string; videoId: string }>
+}) {
   const { slug, videoId } = await params
 
   return <CourseBySlugPage slug={slug} videoId={videoId} />
