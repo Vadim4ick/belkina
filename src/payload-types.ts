@@ -366,6 +366,7 @@ export interface Course {
     kinescopeId: string;
     title: string;
     duration: number;
+    test?: (number | null) | Test;
     id?: string | null;
   }[];
   updatedAt: string;
@@ -653,6 +654,7 @@ export interface CoursesSelect<T extends boolean = true> {
         kinescopeId?: T;
         title?: T;
         duration?: T;
+        test?: T;
         id?: T;
       };
   updatedAt?: T;
