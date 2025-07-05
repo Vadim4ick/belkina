@@ -15,7 +15,7 @@ const ProductCardsGridCatalog = ({
   isNull,
 }: ProductCardsGridCatalogProps) => {
   return (
-    <section className={cn('py-8 antialiased md:py-12', className)}>
+    <div className={cn('py-8 antialiased md:py-12', className)}>
       <div className="mx-auto flex flex-col gap-4 2xl:px-0">
         <div className="items-end justify-between space-y-4 sm:flex sm:space-y-0">
           <Typography tag="h2" variant="poppins-md-24">
@@ -42,7 +42,7 @@ const ProductCardsGridCatalog = ({
           </button>
         </div> */}
       </div>
-    </section>
+    </div>
   )
 }
 
