@@ -10,7 +10,7 @@ import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId?: string }) => {
+const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
   const gql = await getServerGqlClient()
 
   const courses = await gql.GetCourseBySlug({ slug })
@@ -42,11 +42,14 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId?: str
               {course.title}
             </Typography>
 
-            <div className="grid grid-cols-[1.3fr_0.7fr] gap-4">
-              <CourseVideo videoId={activeVideoId || ''} poster={course.banner.url} />
-
-              <div className="flex flex-col justify-between gap-4">
-                <Typography tag="p" variant="poppins-md-16">
+            <div className="max-tablet:grid-cols-1 grid grid-cols-[1.3fr_0.7fr] gap-4">
+              <CourseVideo
+                className="max-tablet:order-1 order-0"
+                videoId={activeVideoId || ''}
+                poster={course.banner.url}
+              />
+              <div className="max-tablet:order-0 order-1 flex flex-col justify-between gap-4">
+                <Typography tag="h1" variant="visuelt-bold-32">
                   {activeVideo.title}
                 </Typography>
 
@@ -83,7 +86,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId?: str
         </Container>
       </section>
 
-      <section>
+      <section className="mt-6">
         <Container>
           <ProductCardsGridCatalog isNull={videos.length === 0} title="Все уроки из курса">
             {videos?.length > 0 &&
@@ -93,15 +96,18 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId?: str
                   title={product.title}
                   categories={course.subjects.map((subject) => subject.title)}
                   exams={course.exams.title}
-                  duration={summClockTime(course.kinescopeVideos.map((video) => video.duration))}
+                  duration={summClockTime([product.duration])}
                   description={course.description}
                   price={course.price}
                   discount={course.discount}
                   image={course.banner}
                   url={getRouteCourseBySlug({
                     slug: course.slug,
-                    videoId: course.kinescopeVideos[0]?.kinescopeId,
+                    videoId: product.kinescopeId,
                   })}
+                  btnText="Перейти"
+                  btnDisabled={videoId === product.kinescopeId}
+                  showFooter={false}
                 />
               ))}
           </ProductCardsGridCatalog>

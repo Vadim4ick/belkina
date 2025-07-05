@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { PlayIcon } from '@/shared/icons/play-icon'
+import { cn } from '../lib/utils'
 
 type Props = {
   videoId: string
   poster: string
+  className?: string
 }
 
-export const CourseVideo = ({ videoId, poster }: Props) => {
+export const CourseVideo = ({ videoId, poster, className }: Props) => {
   const [showPlayer, setShowPlayer] = useState(false)
   const [loading, setLoading] = useState(false) // true только после клика
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -40,7 +42,12 @@ export const CourseVideo = ({ videoId, poster }: Props) => {
   }, [loading])
 
   return (
-    <div className="relative mx-auto aspect-[18.5/12] w-full max-w-[1250px] overflow-hidden rounded-[16px] bg-black">
+    <div
+      className={cn(
+        'relative mx-auto aspect-[18.5/12] w-full max-w-[1250px] overflow-hidden rounded-[16px] bg-black',
+        className,
+      )}
+    >
       {!showPlayer && (
         <button
           className="group absolute inset-0 flex cursor-pointer items-center justify-center"
