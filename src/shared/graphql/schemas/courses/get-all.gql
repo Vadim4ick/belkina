@@ -1,5 +1,5 @@
-query GetAllCourses {
-  Courses {
+query GetAllCourses($exams: Course_exams_operator, $subject: Course_subjects_operator) {
+  Courses(where: { exams: $exams, subjects: $subject }) {
     docs {
       ...CourseFragment
     }
