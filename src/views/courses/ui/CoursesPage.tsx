@@ -34,6 +34,7 @@ const CoursesPage = async () => {
                   image={product.banner}
                   url={getRouteCourseBySlug({
                     slug: product.slug,
+                    videoId: product.kinescopeVideos[0]?.kinescopeId,
                   })}
                 />
               ))

@@ -9,11 +9,7 @@ import { getSettledValue } from '@/shared/lib/utils'
 const Home = async () => {
   const gql = await getServerGqlClient()
 
-  const [res, faqs] = await Promise.allSettled([
-    gql.GetHomePage(),
-    gql.GetFAGs(),
-    gql.GetTaraffis(),
-  ])
+  const [res, faqs] = await Promise.allSettled([gql.GetHomePage(), gql.GetFAGs()])
 
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)
