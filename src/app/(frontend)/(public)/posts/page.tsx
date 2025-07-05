@@ -6,25 +6,25 @@ import React from 'react'
 import { CollectionArchive } from '@/widgets/collection-archive'
 import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
+import { gql } from '@/shared/graphql/client'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
 
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
+  const limit = 12
 
-  const posts = await payload.find({
-    collection: 'posts',
-    depth: 1,
-    limit: 12,
-    overrideAccess: false,
-    select: {
-      title: true,
-      slug: true,
-      categories: true,
-      meta: true,
-    },
-  })
+  const [res] = await Promise.allSettled([gql.GetPostList({ limit })])
+  const resVal = res.status === 'fulfilled' ? res.value : null
+  if (!resVal) {
+    console.error('Ошибка при получении поста:', res)
+    return <h1>Посты не найдены</h1>
+  }
+
+  const { Posts: posts } = resVal
+
+  console.log('posts ==> ', posts)
 
   return (
     <section className="max-mobile:py-6 py-12">

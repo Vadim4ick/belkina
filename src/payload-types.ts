@@ -378,6 +378,8 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  relatedPosts?: (number | Post)[] | null;
+  categories?: (number | Exam)[] | null;
   meta?: {
     title?: string | null;
     /**
@@ -387,7 +389,6 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (number | User)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -760,6 +761,8 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
+  relatedPosts?: T;
+  categories?: T;
   meta?:
     | T
     | {
@@ -768,7 +771,6 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
-  authors?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;
