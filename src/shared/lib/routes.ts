@@ -5,7 +5,8 @@ export const getRouteProfile = () => '/profile'
 export const getRouteTests = () => '/tests'
 export const getRouteTestById = ({ id }: { id: string | number }) => `${getRouteTests()}/${id}`
 export const getRouteCourses = () => '/courses'
-export const getRouteCourseBySlug = ({ slug }: { slug: string }) => `${getRouteCourses()}/${slug}`
+export const getRouteCourseBySlug = ({ slug, videoId }: { slug: string; videoId?: string }) =>
+  `${getRouteCourses()}/${slug}?video=${videoId}`
 export const getRouteTariffs = () => '/tariffs'
 
 export const authRoutes = [getRouteAuth(), getRouteRegister()]
