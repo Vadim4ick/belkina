@@ -1,3 +1,8 @@
+import {
+  getUniqueExamsByKey,
+  getUniqueSubjectsFromNestedArray,
+  TabCategory,
+} from '@/features/tab-categories'
 import { TariffList } from '@/features/tariff-list'
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
@@ -15,11 +20,46 @@ const CoursesPage = async () => {
   const tarrifsVal = getSettledValue(tarrifs)
   const coursesVal = getSettledValue(courses)
 
+  const exams = getUniqueExamsByKey(
+    coursesVal?.Courses.docs.map((course) => ({
+      title: course.exams.title,
+      code: course.exams.code,
+    })) ?? [],
+    'code',
+  )
+
+  const subjects = getUniqueSubjectsFromNestedArray(
+    coursesVal?.Courses.docs.map((course) =>
+      course.subjects.map((subject) => ({
+        title: subject.title,
+        code: subject.code,
+      })),
+    ) ?? [],
+    'code',
+  )
+
   return (
     <>
+      <section className="mt-12">
+        <Container className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <Typography tag="h2" variant="visuelt-bold-48">
+              Курсы
+            </Typography>
+
+            <TabCategory btns={exams} />
+          </div>
+
+          <TabCategory variant="secondary" btns={subjects} />
+        </Container>
+      </section>
+
       <section>
         <Container>
-          <ProductCardsGridCatalog isNull={coursesVal?.Courses?.docs.length === 0} title="Курсы">
+          <ProductCardsGridCatalog
+            isNull={coursesVal?.Courses?.docs.length === 0}
+            title="Каталог курсов"
+          >
             {coursesVal?.Courses && coursesVal?.Courses?.docs.length > 0 ? (
               coursesVal.Courses.docs.map((product) => (
                 <ProductCard

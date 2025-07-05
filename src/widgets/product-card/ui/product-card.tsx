@@ -46,33 +46,35 @@ const ProductCard = ({
   showFooter = true,
 }: ProductCardProps) => {
   return (
-    <Card className="flex h-full min-w-[290px] flex-col">
-      <CardContent>
+    <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
+      <div className="relative h-[275px] w-full">
         <Image
           src={image.url}
-          alt="Photo by Drew Beamer"
-          objectFit="cover"
-          width={325}
-          height={278}
-          className="relative h-full w-full rounded-lg object-cover dark:brightness-[0.2] dark:grayscale"
+          alt="Banner"
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="h-full w-full rounded-lg object-cover"
         />
-      </CardContent>
-      <CardHeader>
-        <CardTitle>
+      </div>
+
+      <CardHeader className="px-0">
+        <CardTitle className="px-0">
           <Typography variant="poppins-md-16" className="line-clamp-2 uppercase">
             {title}
           </Typography>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-4">
+
+      <CardContent className="flex flex-1 flex-col gap-4 px-0">
         <div className="flex flex-col gap-4">
-          <Badge variant="secondary" className="px-2.5">
+          <Badge variant="secondary">
             <Typography variant="poppins-reg-14">{exams}</Typography>
           </Badge>
 
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {categories.map((category) => (
-              <Badge key={category} variant="secondary" className="px-2.5">
+              <Badge key={category} variant="secondary">
                 <Typography variant="poppins-reg-14">{category}</Typography>
               </Badge>
             ))}
@@ -89,7 +91,8 @@ const ProductCard = ({
           </CardDescription>
         )}
       </CardContent>
-      <CardFooter className="flex-col gap-4">
+
+      <CardFooter className="flex-col gap-4 px-0">
         {showFooter && (
           <div className="flex w-full gap-4">
             <Typography variant="poppins-md-24">
