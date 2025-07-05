@@ -13,6 +13,7 @@ import { Typography } from '@/shared/ui/typography'
 import { MediaFragmentFragment } from '@/shared/graphql/__generated__'
 import { Clock } from '@/shared/ui/clock'
 import Link from 'next/link'
+import { cn } from '@/shared/lib/utils'
 
 export interface ProductCardProps {
   title: string
@@ -24,6 +25,10 @@ export interface ProductCardProps {
   price: number
   discount: number
   image: MediaFragmentFragment
+
+  btnText?: string
+  btnDisabled?: boolean
+  showFooter?: boolean
 }
 
 const ProductCard = ({
@@ -36,6 +41,9 @@ const ProductCard = ({
   discount,
   url,
   image,
+  btnText = 'Подробнее',
+  btnDisabled = false,
+  showFooter = true,
 }: ProductCardProps) => {
   return (
     <Card className="flex h-full min-w-[290px] flex-col">
@@ -73,26 +81,35 @@ const ProductCard = ({
 
         <Clock duration={duration} />
 
-        <CardDescription>
-          <Typography variant="poppins-reg-14" className="line-clamp-2">
-            {description}
-          </Typography>
-        </CardDescription>
+        {showFooter && (
+          <CardDescription>
+            <Typography variant="poppins-reg-14" className="line-clamp-2">
+              {description}
+            </Typography>
+          </CardDescription>
+        )}
       </CardContent>
       <CardFooter className="flex-col gap-4">
-        <div className="flex w-full gap-4">
-          <Typography variant="poppins-md-24">
-            {price > 0 ? `${price.toLocaleString()}₽` : 'Бесплатно'}
-          </Typography>
-          {price > 0 && discount > 0 ? (
-            <Badge variant="destructive" className="px-2.5">
-              <Typography variant="poppins-md-16">-{discount}%</Typography>
-            </Badge>
-          ) : null}
-        </div>
+        {showFooter && (
+          <div className="flex w-full gap-4">
+            <Typography variant="poppins-md-24">
+              {price > 0 ? `${price.toLocaleString()}₽` : 'Бесплатно'}
+            </Typography>
+            {price > 0 && discount > 0 ? (
+              <Badge variant="destructive" className="px-2.5">
+                <Typography variant="poppins-md-16">-{discount}%</Typography>
+              </Badge>
+            ) : null}
+          </div>
+        )}
 
-        <Link href={url} className="w-full">
-          <Button className="w-full">Подробнее</Button>
+        <Link
+          href={btnDisabled ? '#' : url}
+          className={cn('w-full', btnDisabled && 'pointer-events-none')}
+        >
+          <Button disabled={btnDisabled} className="w-full">
+            {btnText}
+          </Button>
         </Link>
       </CardFooter>
     </Card>
