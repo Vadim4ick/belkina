@@ -5,8 +5,9 @@ interface CoursesState {
   filters: {
     exams?: number
     subjects?: number
+    page: number
   }
-  setFilter: (name: 'exams' | 'subjects', value: number) => void
+  setFilter: (name: 'exams' | 'subjects' | 'page', value: number) => void
   resetFilters: () => void
   hasActiveFilters: () => boolean
 
@@ -20,6 +21,7 @@ export const useCoursesStore = create<CoursesState>((set, get) => ({
   filters: {
     exams: undefined,
     subjects: undefined,
+    page: 1,
   },
   setFilter: (name, value) =>
     set((state) => ({
@@ -27,7 +29,7 @@ export const useCoursesStore = create<CoursesState>((set, get) => ({
     })),
   resetFilters: () =>
     set(() => ({
-      filters: { exams: undefined, subjects: undefined },
+      filters: { exams: undefined, subjects: undefined, page: 1 },
     })),
   hasActiveFilters: () => {
     const { filters } = get()

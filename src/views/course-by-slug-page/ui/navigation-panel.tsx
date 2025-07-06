@@ -110,7 +110,7 @@ const NavigationPanel = ({
             className="w-full"
           >
             <Button
-              addonLeft={<Arrow className="rotate-180" />}
+              addonLeft={<Arrow className="text-white" />}
               variant="primary-inverted"
               className="flex w-full items-center justify-center gap-1 rounded-xl"
             >
@@ -127,7 +127,7 @@ const NavigationPanel = ({
             className="w-full"
           >
             <Button
-              addonRight={<Arrow />}
+              addonRight={<Arrow className="rotate-180 text-white" />}
               className="flex w-full items-center justify-center gap-1 rounded-xl"
             >
               Следующий урок

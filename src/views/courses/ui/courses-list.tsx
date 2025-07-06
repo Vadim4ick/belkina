@@ -10,6 +10,7 @@ import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { memo } from 'react'
 import { useGetCoursesPage } from '../model/use-get-courses'
 import { Button } from '@/shared/ui/button'
+import { Pagination, PaginationSkeleton } from '@/shared/ui/pagination'
 
 const CoursesList = memo(() => {
   const {
@@ -102,6 +103,19 @@ const CoursesList = memo(() => {
             {isLoadingCourses &&
               Array.from({ length: 3 }).map((_, i) => <SkeletonProductCard key={i} />)}
           </ProductCardsGridCatalog>
+
+          <div className="flex w-full items-center justify-center">
+            {isLoadingCourses ? (
+              <PaginationSkeleton />
+            ) : (
+              <Pagination
+                page={courses?.Courses?.page ?? 1}
+                totalPages={courses?.Courses?.totalPages ?? 1}
+                onPageChange={(page) => setFilter('page', page)}
+                isLoading={isLoadingCourses}
+              />
+            )}
+          </div>
         </Container>
       </section>
     </>

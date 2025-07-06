@@ -18,6 +18,7 @@ const useGetCoursesPage = () => {
   const { data: courses, isLoading: isLoadingCourses } = useGetAllCourses({
     exam: filters.exams,
     subject: filters.subjects,
+    page: filters.page,
   })
 
   useEffect(() => {

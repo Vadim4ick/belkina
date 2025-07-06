@@ -2,7 +2,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { useGqlClient } from '../hooks/useGqlClient'
 
-export const useGetAllCourses = ({ exam, subject }: { exam?: number; subject?: number }) => {
+export const useGetAllCourses = ({
+  exam,
+  subject,
+  page = 1,
+}: {
+  exam?: number
+  subject?: number
+  page: number
+}) => {
   const gql = useGqlClient()
 
   const where: Record<'exams' | 'subject', any> = {
@@ -19,10 +27,14 @@ export const useGetAllCourses = ({ exam, subject }: { exam?: number; subject?: n
   }
 
   return useQuery({
-    queryKey: ['getAllCourses', exam, subject],
+    queryKey: ['getAllCourses', exam, subject, page],
     queryFn: async () => {
       try {
-        return await gql.GetAllCourses(where)
+        return await gql.GetAllCourses({
+          exams: where.exams,
+          subject: where.subject,
+          page,
+        })
       } catch (err) {
         console.error('getAllCourses', err)
         throw err
