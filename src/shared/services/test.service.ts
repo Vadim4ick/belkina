@@ -101,3 +101,39 @@ export const useUpdateTestResult = () => {
     },
   })
 }
+
+export const useGetAllTests = () => {
+  const gql = useGqlClient()
+
+  return useQuery({
+    queryKey: ['getAllTests'],
+    queryFn: async () => {
+      try {
+        return await gql.GetAllTests()
+      } catch (err) {
+        console.error('getAllTests', err)
+        throw err
+      }
+    },
+  })
+}
+
+export const useUserByIdTestResult = () => {
+  const gql = useGqlClient()
+
+  const session = useAuthStore((state) => state.session)
+
+  return useQuery({
+    queryKey: ['getUserByIdTestResult', session?.user.id],
+    queryFn: async () => {
+      try {
+        return await gql.GetUserByIdTestResult({
+          userId: Number(session?.user?.id),
+        })
+      } catch (err) {
+        console.error('getUserByIdTestResult', err)
+        throw err
+      }
+    },
+  })
+}

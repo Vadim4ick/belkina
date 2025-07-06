@@ -1,14 +1,21 @@
 import { Typography } from '@/shared/ui/typography'
 import TestsListItem from './tests-list-item'
 import { GetAllTestsQuery } from '@/shared/graphql/__generated__'
+import { TestsListSkeleton } from './tests-list.skeleton'
 
 const TestsList = ({
   tests,
   title,
+  isLoading,
 }: {
   tests?: GetAllTestsQuery['Tests']['docs']
   title?: string
+  isLoading?: boolean
 }) => {
+  if (isLoading) {
+    return <TestsListSkeleton />
+  }
+
   return (
     <>
       {tests && tests.length > 0 && (
