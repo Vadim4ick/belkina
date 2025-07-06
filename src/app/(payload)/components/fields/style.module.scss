@@ -1,0 +1,95 @@
+/* style.module.scss */
+
+/* Контейнер поля */
+.kinescopeField {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Таблица */
+.kinescopeTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  max-height: 320px;
+}
+
+.kinescopeTable thead {
+  background: #f6f7f9;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.kinescopeTable th,
+.kinescopeTable td {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.kinescopeTable th {
+  font-weight: 600;
+  color: #303540;
+  border-bottom: 1px solid #ececec;
+}
+
+.kinescopeTable tr {
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.kinescopeTable tr.selected {
+  background: #e6f0ff !important;
+  font-weight: 700;
+}
+
+.kinescopeTable tr:hover:not(.selected) {
+  background: #f0f5ff;
+}
+
+/* Кнопка "Выбрано" */
+.selectedBadge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.searchInput {
+  border: 1px solid #ececec;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 100%;
+  margin-bottom: 8px;
+  outline: none;
+  transition: border 0.15s;
+
+  &:focus {
+    border: 1.5px solid #2563eb;
+  }
+}
+
+.errorMessage {
+  margin-top: 3px;
+  font-size: 13px;
+  color: #dc2626;
+}
+
+.iframePreview {
+  margin-top: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ececec;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  width: fit-content;
+}
