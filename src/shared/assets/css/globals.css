@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 @import 'tw-animate-css';
 
@@ -191,4 +192,11 @@ body {
   pointer-events: none !important;
   cursor: not-allowed !important;
   opacity: 0.5 !important;
+}
+
+.prose {
+  :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
 }

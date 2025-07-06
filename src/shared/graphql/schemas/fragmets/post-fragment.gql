@@ -1,0 +1,18 @@
+fragment PostFragment on Post {
+  title
+  content
+  categories {
+    title
+  }
+  relatedPosts {
+    id
+  }
+  heroImage {
+    url
+  }
+  meta {
+    image {
+      url
+    }
+  }
+}

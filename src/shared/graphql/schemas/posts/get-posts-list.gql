@@ -1,0 +1,33 @@
+query GetPostList($limit: Int!) {
+  Posts(limit: $limit) {
+    docs {
+      title
+      slug
+      categories {
+        title
+      }
+      meta {
+        title
+        description
+        image {
+          id
+          alt
+          height
+          width
+          url
+          createdAt
+          updatedAt
+        }
+      }
+    }
+    hasNextPage
+    hasPrevPage
+    limit
+    nextPage
+    page
+    pagingCounter
+    prevPage
+    totalDocs
+    totalPages
+  }
+}
