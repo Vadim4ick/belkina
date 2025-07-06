@@ -1,15 +1,13 @@
 import { getServerGqlClient } from '@/shared/graphql/client'
-import { Arrow } from '@/shared/icons/arrow'
-import { getRouteCourseBySlug, getRouteTestById } from '@/shared/lib/routes'
+import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
-import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
 import { CourseVideo } from '@/shared/ui/course-video'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { NavigationPanel } from './navigation-panel'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
   const gql = await getServerGqlClient()
@@ -30,9 +28,17 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
   const prevVideo = activeIdx > 0 ? videos[activeIdx - 1] : null
   const nextVideo = activeIdx < videos.length - 1 ? videos[activeIdx + 1] : null
 
+  // const session = await auth()
+  // const testRes = await gql.GetByIdTestResult({
+  //   userId: Number(session?.user?.id),
+  //   testId: Number(activeVideo?.test?.id),
+  // })
+
   if (!activeVideo) {
     return notFound()
   }
+
+  // {activeVideo.test.}
 
   return (
     <>
@@ -50,70 +56,12 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
 
               <CourseVideo videoId={activeVideoId || ''} poster={course.banner.url} />
 
-              <aside className="tablet:p-2 flex h-full flex-col justify-between gap-8">
-                {/* Заголовок урока */}
-                <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
-                  {activeVideo.title}
-                </Typography>
-
-                {/* Блок теста */}
-                {activeVideo.test && (
-                  <div className="mb-2 flex flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">
-                    <span className="text-xs font-medium text-gray-500">Тест после урока</span>
-                    <Typography tag="div" variant="poppins-md-16" className="mb-1">
-                      {activeVideo.test.title}
-                    </Typography>
-
-                    <Link
-                      href={getRouteTestById({
-                        id: activeVideo.test.id,
-                      })}
-                      target="_blank"
-                    >
-                      <Button variant="primary" className="rounded-xl px-8 shadow">
-                        Пройти тест
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-
-                {/* Навигация по урокам */}
-                <div className="mt-auto flex w-full flex-col gap-2">
-                  {prevVideo && (
-                    <Link
-                      href={getRouteCourseBySlug({
-                        slug: course.slug,
-                        videoId: prevVideo.kinescopeId,
-                      })}
-                      className="w-full"
-                    >
-                      <Button
-                        addonLeft={<Arrow className="rotate-180" />}
-                        variant="primary-inverted"
-                        className="flex w-full items-center justify-center gap-1 rounded-xl"
-                      >
-                        Предыдущий урок
-                      </Button>
-                    </Link>
-                  )}
-                  {nextVideo && (
-                    <Link
-                      href={getRouteCourseBySlug({
-                        slug: course.slug,
-                        videoId: nextVideo.kinescopeId,
-                      })}
-                      className="w-full"
-                    >
-                      <Button
-                        addonRight={<Arrow />}
-                        className="flex w-full items-center justify-center gap-1 rounded-xl"
-                      >
-                        Следующий урок
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              </aside>
+              <NavigationPanel
+                activeVideo={activeVideo}
+                prevVideo={prevVideo}
+                nextVideo={nextVideo}
+                course={course}
+              />
             </div>
           </div>
         </Container>
