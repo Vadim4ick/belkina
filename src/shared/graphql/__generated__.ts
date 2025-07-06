@@ -12527,10 +12527,11 @@ export type UsersDocAccess = {
 export type GetAllCoursesQueryVariables = Exact<{
   exams: InputMaybe<Course_Exams_Operator>;
   subject: InputMaybe<Course_Subjects_Operator>;
+  page: Scalars['Int']['input'];
 }>;
 
 
-export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> }> } };
+export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly page: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string, readonly code: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string, readonly code: string }>, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly kinescopeVideos: ReadonlyArray<{ readonly __typename?: 'Course_KinescopeVideos', readonly id: string, readonly kinescopeId: string, readonly title: string, readonly duration: number }> }> } };
 
 export type GetCourseBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
@@ -12777,11 +12778,13 @@ export const TestFragmentFragmentDoc = gql`
     ${TariffFragmentFragmentDoc}
 ${QuestionFragmentFragmentDoc}`;
 export const GetAllCoursesDocument = gql`
-    query GetAllCourses($exams: Course_exams_operator, $subject: Course_subjects_operator) {
-  Courses(where: {exams: $exams, subjects: $subject}) {
+    query GetAllCourses($exams: Course_exams_operator, $subject: Course_subjects_operator, $page: Int!) {
+  Courses(where: {exams: $exams, subjects: $subject}, limit: 6, page: $page) {
     docs {
       ...CourseFragment
     }
+    page
+    totalPages
   }
 }
     ${CourseFragmentFragmentDoc}`;
@@ -13004,7 +13007,7 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    GetAllCourses(variables?: GetAllCoursesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllCoursesQuery> {
+    GetAllCourses(variables: GetAllCoursesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllCoursesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllCoursesQuery>({ document: GetAllCoursesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllCourses', 'query', variables);
     },
     GetCourseBySlug(variables?: GetCourseBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetCourseBySlugQuery> {
