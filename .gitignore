@@ -11,9 +11,9 @@
 
 
 
-./src/payload-types
+/src/payload-types/
+/src/shared/graphql/__generated__/
 
-./shared/graphql/__generated__
 
 .vscode
 
