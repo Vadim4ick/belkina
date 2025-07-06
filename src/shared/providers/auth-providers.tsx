@@ -1,3 +1,5 @@
+'use client'
+
 import { Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { useAuthStore } from '../hooks/use-auth-store'
@@ -18,7 +20,7 @@ const AuthProviders = ({ children }: { children: React.ReactNode }) => {
 
   if (status === 'loading') {
     return (
-      <div className="fixed top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+      <div className="fixed top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white">
         <Loader2 className="size-8 animate-spin" />
       </div>
     )

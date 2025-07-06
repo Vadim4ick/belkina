@@ -37,22 +37,24 @@ export const useCreateTestResult = () => {
   })
 }
 
-export const useGetTestResultById = ({ testId }: { testId?: number }) => {
+export const useGetTestResultById = ({ testId, userId }: { testId?: number; userId?: string }) => {
   const gql = useGqlClient()
 
   const session = useAuthStore((state) => state.session)
 
-  return useQuery({
-    queryKey: ['getTestResultById', session?.user?.id, testId],
-    queryFn: async ({ queryKey }) => {
-      const [, userId, testId] = queryKey
+  const user_id = session?.user?.id || userId
 
-      if (!userId || !testId) throw new Error('Missing testId or userId')
+  return useQuery({
+    queryKey: ['getTestResultById', user_id, testId],
+    queryFn: async ({ queryKey }) => {
+      const [, user_id, testId] = queryKey
+
+      if (!user_id || !testId) throw new Error('Missing testId or userId')
 
       try {
         return await gql.GetByIdTestResult({
           testId: Number(testId),
-          userId: Number(userId),
+          userId: Number(user_id),
         })
       } catch (err) {
         console.error('getTestResultById', err)
