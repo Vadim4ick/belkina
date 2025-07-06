@@ -20,6 +20,7 @@ import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
 
 import dotenv from 'dotenv'
+import { Posts } from './shared/collections/posts'
 import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
 import Courses from './shared/collections/Courses'
@@ -62,8 +63,8 @@ export default buildConfig({
     Recomendations,
     Exams,
     Subjects,
-    Courses,
-    // Videos,
+    Posts,
+    Courses
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
