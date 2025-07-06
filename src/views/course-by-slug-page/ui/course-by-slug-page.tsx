@@ -28,17 +28,9 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
   const prevVideo = activeIdx > 0 ? videos[activeIdx - 1] : null
   const nextVideo = activeIdx < videos.length - 1 ? videos[activeIdx + 1] : null
 
-  // const session = await auth()
-  // const testRes = await gql.GetByIdTestResult({
-  //   userId: Number(session?.user?.id),
-  //   testId: Number(activeVideo?.test?.id),
-  // })
-
   if (!activeVideo) {
     return notFound()
   }
-
-  // {activeVideo.test.}
 
   return (
     <>

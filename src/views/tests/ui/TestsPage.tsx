@@ -4,9 +4,10 @@ import { TabCategory } from '@/features/tab-categories'
 import { useGetAllUserTests } from '@/shared/services/test.service'
 import { Typography } from '@/shared/ui/typography'
 import { TestsList } from '@/widgets/tests-list'
-import { memo, useState } from 'react'
+import { memo } from 'react'
 import { btnsCategoryTests, MAPPING_TEST_CATEGORY } from '../model/const'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
+import { useTestsStore } from '@/entities/test/model/use-tests-store'
 
 const TestsPage = memo(
   ({
@@ -16,14 +17,12 @@ const TestsPage = memo(
     exams?: GetAllExamsQuery['Exams']['docs']
     subjects?: GetAllSubjectsQuery['Subjects']['docs']
   }) => {
-    const [category, setCategory] = useState(0)
-    const [examId, setExamId] = useState<number | undefined>(undefined)
-    const [subjectId, setSubjectId] = useState<number | undefined>(undefined)
+    const { filters, setFilter, setCategoryIdx } = useTestsStore()
 
     const { data: res, isLoading } = useGetAllUserTests({
-      status: MAPPING_TEST_CATEGORY[category],
-      examId: examId,
-      subjectId: subjectId,
+      status: MAPPING_TEST_CATEGORY[filters.categoryIdx],
+      examId: filters.examId && filters.examId !== 1000 ? filters.examId : undefined,
+      subjectId: filters.subjectId && filters.subjectId !== 1000 ? filters.subjectId : undefined,
     })
 
     return (
@@ -36,24 +35,23 @@ const TestsPage = memo(
 
             <TabCategory
               btns={btnsCategoryTests}
-              value={category}
-              onChange={(_, val) => setCategory(val)}
-              name="exams"
+              value={filters.categoryIdx}
+              onChange={(val) => setCategoryIdx(val)}
             />
           </div>
 
           <div className="flex flex-col gap-4">
             <TabCategory
-              btns={exams?.map((el) => el)}
-              value={examId}
-              onChange={(_, val) => setExamId(val)}
-              name="subjects"
+              btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
+              value={filters.examId}
+              onChange={(val) => setFilter('examId', val)}
+              variant="secondary"
             />
             <TabCategory
-              btns={subjects?.map((el) => el)}
-              value={subjectId}
-              onChange={(_, val) => setSubjectId(val)}
-              name="subjects"
+              btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
+              value={filters.subjectId}
+              onChange={(val) => setFilter('subjectId', val)}
+              variant="secondary"
             />
           </div>
         </div>

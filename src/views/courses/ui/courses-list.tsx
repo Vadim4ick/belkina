@@ -8,10 +8,10 @@ import { Typography } from '@/shared/ui/typography'
 import { ProductCard, SkeletonProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { memo } from 'react'
-import { useGetCoursesPage } from '../model/use-get-courses'
-import { Button } from '@/shared/ui/button'
 import { Pagination, PaginationSkeleton } from '@/shared/ui/pagination'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
+import { useGetAllCourses } from '@/shared/services/courses.service'
+import { useCoursesStore } from '@/entities/courses/use-сourses-store'
 
 const CoursesList = memo(
   ({
@@ -21,8 +21,13 @@ const CoursesList = memo(
     exams?: GetAllExamsQuery['Exams']['docs']
     subjects?: GetAllSubjectsQuery['Subjects']['docs']
   }) => {
-    const { filters, resetFilters, hasActiveFilters, setFilter, isLoadingCourses, courses } =
-      useGetCoursesPage()
+    const { filters, setFilter } = useCoursesStore()
+
+    const { data: courses, isLoading: isLoadingCourses } = useGetAllCourses({
+      subject: filters.subjects && filters.subjects !== 1000 ? filters.subjects : undefined,
+      exam: filters.exams && filters.exams !== 1000 ? filters.exams : undefined,
+      page: filters.page,
+    })
 
     return (
       <>
@@ -34,32 +39,21 @@ const CoursesList = memo(
               </Typography>
 
               <TabCategory
-                btns={exams?.map((el) => el)}
-                name="exams"
+                btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
                 value={filters.exams}
                 isLoading={isLoadingCourses}
-                onChange={setFilter}
+                onChange={(val) => setFilter('exams', val)}
               />
             </div>
 
             <div className="flex items-center justify-between gap-4">
               <TabCategory
-                btns={subjects?.map((el) => el)}
-                name="subjects"
+                btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
+                variant="secondary"
                 value={filters.subjects}
                 isLoading={isLoadingCourses}
-                onChange={setFilter}
+                onChange={(val) => setFilter('subjects', val)}
               />
-              {hasActiveFilters() && (
-                <Button
-                  onClick={resetFilters}
-                  className="h-[32px]"
-                  variant="primary-inverted"
-                  size="sm"
-                >
-                  Сбросить фильтры
-                </Button>
-              )}
             </div>
           </Container>
         </section>
