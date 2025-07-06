@@ -9,6 +9,20 @@ import {
 } from '../graphql/__generated__'
 import type { AnswerInput } from '@/features/test-form'
 
+const QUERY_KEYS = {
+  testResult: (userId?: string | number, testId?: number) => ['testResult', userId, testId],
+  allUserTests: (
+    userId?: string | number,
+    params?: { status?: string; examId?: number; subjectId?: number },
+  ) => [
+    'allUserTests',
+    userId,
+    params?.status || null,
+    params?.examId || null,
+    params?.subjectId || null,
+  ],
+}
+
 export const useCreateTestResult = () => {
   const gql = useGqlClient()
   const session = useAuthStore((state) => state.session)
@@ -34,7 +48,11 @@ export const useCreateTestResult = () => {
     onSuccess: (_, { testId }) => {
       if (session?.user?.id && testId) {
         queryClient.invalidateQueries({
-          queryKey: ['getTestResultById', session.user.id, testId],
+          queryKey: QUERY_KEYS.testResult(session.user.id, testId),
+        })
+
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.allUserTests(session.user.id),
         })
       }
     },
@@ -49,7 +67,7 @@ export const useGetTestResultById = ({ testId, userId }: { testId?: number; user
   const user_id = session?.user?.id || userId
 
   return useQuery({
-    queryKey: ['getTestResultById', user_id, testId],
+    queryKey: QUERY_KEYS.testResult(user_id, testId!),
     queryFn: async ({ queryKey }) => {
       const [, user_id, testId] = queryKey
 
@@ -106,42 +124,6 @@ export const useUpdateTestResult = () => {
   })
 }
 
-export const useGetAllTests = () => {
-  const gql = useGqlClient()
-
-  return useQuery({
-    queryKey: ['getAllTests'],
-    queryFn: async () => {
-      try {
-        return await gql.GetAllTests()
-      } catch (err) {
-        console.error('getAllTests', err)
-        throw err
-      }
-    },
-  })
-}
-
-export const useUserByIdTestResult = () => {
-  const gql = useGqlClient()
-
-  const session = useAuthStore((state) => state.session)
-
-  return useQuery({
-    queryKey: ['getUserByIdTestResult', session?.user.id],
-    queryFn: async () => {
-      try {
-        return await gql.GetUserByIdTestResult({
-          userId: Number(session?.user?.id),
-        })
-      } catch (err) {
-        console.error('getUserByIdTestResult', err)
-        throw err
-      }
-    },
-  })
-}
-
 export const useGetAllUserTests = ({
   status,
   examId,
@@ -156,7 +138,7 @@ export const useGetAllUserTests = ({
   const session = useAuthStore((state) => state.session)
 
   return useQuery({
-    queryKey: ['getAllUserTests', session?.user.id, status, examId, subjectId],
+    queryKey: QUERY_KEYS.allUserTests(session?.user.id, { status, examId, subjectId }),
     queryFn: async () => {
       const variables: Record<string, any> = {
         userId: Number(session?.user?.id),
