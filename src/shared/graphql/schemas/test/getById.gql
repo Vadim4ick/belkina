@@ -1,5 +1,0 @@
-query GetByIdTest($id: Int!) {
-  Test(id: $id) {
-    ...TestFragment
-  }
-}

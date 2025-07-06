@@ -1,8 +1,0 @@
-fragment RecomendationFragment on Recomendation {
-  id
-  title
-  tariff {
-    ...TariffFragment
-  }
-  description
-}
