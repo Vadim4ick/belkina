@@ -34,7 +34,7 @@ const headerItems: IHeaderItems[] = [
   },
   {
     title: 'Блог',
-    url: '/blog',
+    url: '/posts',
     icon: Newspaper,
   },
 ]
