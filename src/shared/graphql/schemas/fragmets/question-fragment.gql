@@ -1,0 +1,18 @@
+fragment QuestionFragment on Question {
+  id
+  questionText
+  questionType
+  answers {
+    id
+    label
+    isCorrect
+    value
+  }
+  matchingPairs {
+    id
+    left
+    right
+  }
+  textAnswer
+  createdAt
+}
