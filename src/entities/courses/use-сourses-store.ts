@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { BtnCategory } from './types'
 
 interface CoursesState {
   filters: {
@@ -8,32 +7,16 @@ interface CoursesState {
     page: number
   }
   setFilter: (name: 'exams' | 'subjects' | 'page', value: number) => void
-  resetFilters: () => void
-  hasActiveFilters: () => boolean
-
-  exams: BtnCategory[]
-  subjects: BtnCategory[]
 }
 
-export const useCoursesStore = create<CoursesState>((set, get) => ({
+export const useCoursesStore = create<CoursesState>((set) => ({
   filters: {
-    exams: undefined,
-    subjects: undefined,
+    exams: 1000,
+    subjects: 1000,
     page: 1,
   },
   setFilter: (name, value) =>
     set((state) => ({
       filters: { ...state.filters, [name]: value },
     })),
-  resetFilters: () =>
-    set(() => ({
-      filters: { exams: undefined, subjects: undefined, page: 1 },
-    })),
-  hasActiveFilters: () => {
-    const { filters } = get()
-    return filters.exams !== undefined || filters.subjects !== undefined
-  },
-
-  exams: [],
-  subjects: [],
 }))

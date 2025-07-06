@@ -10,16 +10,16 @@ interface Props {
   classNames?: string
   btns?: BtnCategory[]
   isLoading?: boolean
+  variant?: 'default' | 'secondary'
   value?: number
-  name: 'exams' | 'subjects'
-  onChange: (name: 'exams' | 'subjects', value: number) => void
+  onChange: (value: number) => void
 }
 
 const TabCategory = memo((props: Props) => {
-  const { classNames, btns, isLoading, value, name, onChange } = props
+  const { classNames, btns, isLoading, value, variant = 'default', onChange } = props
 
   if (isLoading) {
-    return <SkeletonTabCategory count={3} name={name} />
+    return <SkeletonTabCategory count={3} variant={variant} />
   }
 
   if (!btns || btns.length === 0) return null
@@ -28,7 +28,7 @@ const TabCategory = memo((props: Props) => {
     <div
       className={cn(
         'flex w-fit flex-wrap items-center gap-[10px] rounded-[16px]',
-        name === 'exams' && 'bg-light-grey max-mobile:w-full p-[10px]',
+        variant === 'default' && 'bg-light-grey max-mobile:w-full p-[10px]',
         classNames,
       )}
     >
@@ -36,20 +36,17 @@ const TabCategory = memo((props: Props) => {
         <button
           key={btn.id}
           className={cn(
-            name === 'exams'
+            variant === 'default'
               ? 'max-mobile:w-full h-[40px] w-[130px] cursor-pointer rounded-[4px] bg-white'
               : 'bg-light-grey cursor-pointer rounded-[8px] px-[20px] py-1.5',
-            value === btn.id && (name === 'exams' ? 'bg-black' : 'bg-blue text-white'),
+            value === btn.id && (variant === 'default' ? 'bg-black' : 'bg-blue text-white'),
           )}
-          onClick={() => onChange(name, btn.id)}
+          onClick={() => onChange(btn.id)}
         >
           <Typography
-            className={cn(
-              'text-black',
-              value === btn.id && (name === 'exams' || name === 'subjects' ? 'text-white' : ''),
-            )}
+            className={cn('text-black', value === btn.id && 'text-white')}
             tag="p"
-            variant={name === 'exams' ? 'poppins-md-16' : 'poppins-reg-14'}
+            variant={variant === 'default' ? 'poppins-md-16' : 'poppins-reg-14'}
           >
             {btn.title}
           </Typography>
