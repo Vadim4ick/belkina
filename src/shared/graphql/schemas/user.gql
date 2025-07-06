@@ -1,0 +1,30 @@
+mutation CreateUser(
+  $email: String!
+  $password: String!
+  $role: User_role_MutationInput!
+  $signupMethod: User_signupMethod_MutationInput!
+) {
+  createUser(
+    data: { email: $email, password: $password, role: $role, signupMethod: $signupMethod }
+  ) {
+    id
+    email
+  }
+}
+
+query GetUserByEmail($email: EmailAddress!) {
+  Users(where: { email: { equals: $email } }) {
+    docs {
+      id
+      email
+      password
+      signupMethod
+      role
+
+      tariff {
+        id
+      }
+    }
+    totalDocs
+  }
+}

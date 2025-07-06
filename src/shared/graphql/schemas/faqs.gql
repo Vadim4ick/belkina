@@ -1,0 +1,9 @@
+query GetFAGs {
+  Faqs {
+    docs {
+      id
+      question
+      answer
+    }
+  }
+}
