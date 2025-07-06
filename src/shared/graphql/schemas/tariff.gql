@@ -1,7 +1,0 @@
-query GetTaraffis {
-  Tariffs {
-    docs {
-      ...TariffFragment
-    }
-  }
-}

@@ -1,5 +1,0 @@
-fragment MediaFragment on Media {
-  id
-  url
-  alt
-}
