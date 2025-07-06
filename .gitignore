@@ -9,7 +9,11 @@
 /.idea/*
 !/.idea/runConfigurations
 
-payload-types.ts
+
+
+./src/payload-types
+
+./shared/graphql/__generated__
 
 .vscode
 
