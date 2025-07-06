@@ -14,7 +14,6 @@ import Link from 'next/link'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 const NavigationPanel = ({
   activeVideo,
@@ -28,7 +27,6 @@ const NavigationPanel = ({
   course: CourseFragmentFragment
 }) => {
   const { status, data: session } = useSession()
-  const router = useRouter()
 
   const userId = session?.user?.id
 
@@ -43,6 +41,7 @@ const NavigationPanel = ({
     if (status !== 'authenticated') return
 
     refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
 
   const loading = isLoading || isFetching || status === 'loading'

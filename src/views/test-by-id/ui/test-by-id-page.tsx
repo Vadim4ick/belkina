@@ -1,7 +1,6 @@
 import { TestForm } from '@/features/test-form'
 import { getServerGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
-import { TestsList } from '@/widgets/tests-list'
 import { notFound } from 'next/navigation'
 
 const TestByIdPage = async ({ id }: { id: string }) => {
@@ -24,8 +23,6 @@ const TestByIdPage = async ({ id }: { id: string }) => {
         </Typography>
 
         <TestForm test={test} />
-
-        <TestsList title="Так же рекомендуем" />
       </section>
     )
   } catch {

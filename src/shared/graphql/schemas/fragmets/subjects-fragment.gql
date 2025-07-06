@@ -1,5 +1,4 @@
 fragment SubjectsFragment on Subject {
   id
   title
-  code
 }

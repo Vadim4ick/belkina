@@ -1,7 +1,5 @@
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
-import { getUniqueExamsByKey, getUniqueSubjectsFromNestedArray } from '@/features/tab-categories'
 import { useGetAllCourses } from '@/shared/services/courses.service'
-import { useEffect } from 'react'
 
 const useGetCoursesPage = () => {
   const {
@@ -9,10 +7,8 @@ const useGetCoursesPage = () => {
     setFilter,
     exams: staticExams,
     subjects: staticSubjects,
-    setExams,
     resetFilters,
     hasActiveFilters,
-    setSubjects,
   } = useCoursesStore()
 
   const { data: courses, isLoading: isLoadingCourses } = useGetAllCourses({
@@ -20,37 +16,6 @@ const useGetCoursesPage = () => {
     subject: filters.subjects,
     page: filters.page,
   })
-
-  useEffect(() => {
-    if (
-      !isLoadingCourses &&
-      staticExams.length === 0 &&
-      courses &&
-      courses?.Courses?.docs.length > 0
-    ) {
-      setExams(
-        getUniqueExamsByKey(
-          courses.Courses.docs.map((course) => ({
-            title: course.exams.title,
-            id: course.exams.id,
-          })),
-          'id',
-        ),
-      )
-
-      setSubjects(
-        getUniqueSubjectsFromNestedArray(
-          courses.Courses.docs.map((course) =>
-            course.subjects.map((subject) => ({
-              title: subject.title,
-              id: subject.id,
-            })),
-          ),
-          'id',
-        ),
-      )
-    }
-  }, [courses, isLoadingCourses, staticExams.length, setExams, setSubjects])
 
   return {
     isLoadingCourses,

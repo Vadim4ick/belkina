@@ -211,6 +211,8 @@ export interface Test {
   tariff: number | Tariff;
   description?: string | null;
   questions?: (number | Question)[] | null;
+  exam?: (number | null) | Exam;
+  subjects?: (number | Subject)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -273,6 +275,34 @@ export interface Recomendation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: number;
+  title: string;
+  /**
+   * Например: oge, ege
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: number;
+  title: string;
+  /**
+   * Например: russian, math, social, physics
+   */
+  code: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testResults".
  */
 export interface TestResult {
@@ -318,34 +348,6 @@ export interface Admin {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exams".
- */
-export interface Exam {
-  id: number;
-  title: string;
-  /**
-   * Например: oge, ege
-   */
-  code: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subjects".
- */
-export interface Subject {
-  id: number;
-  title: string;
-  /**
-   * Например: russian, math, social, physics
-   */
-  code: string;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -538,6 +540,8 @@ export interface TestsSelect<T extends boolean = true> {
   tariff?: T;
   description?: T;
   questions?: T;
+  exam?: T;
+  subjects?: T;
   updatedAt?: T;
   createdAt?: T;
 }
