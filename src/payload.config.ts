@@ -23,6 +23,8 @@ import dotenv from 'dotenv'
 import { Posts } from './shared/collections/posts'
 import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
+import Courses from './shared/collections/Courses'
+import { GetUserTestsResolver } from './shared/graphql/resolvers/GetUserTestsResolver'
 
 dotenv.config({
   path:
@@ -62,6 +64,7 @@ export default buildConfig({
     Exams,
     Subjects,
     Posts,
+    Courses
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
@@ -77,4 +80,52 @@ export default buildConfig({
 
   sharp,
   plugins: [payloadCloudPlugin()],
+
+  graphQL: {
+    queries: (GraphQL) => {
+      const TestWithStatusType = new GraphQL.GraphQLObjectType({
+        name: 'TestWithStatus',
+        fields: {
+          id: { type: GraphQL.GraphQLID },
+          title: { type: GraphQL.GraphQLString },
+          description: { type: GraphQL.GraphQLString },
+          status: { type: GraphQL.GraphQLString },
+        },
+      })
+
+      const PaginatedTestsWithStatusType = new GraphQL.GraphQLObjectType({
+        name: 'PaginatedTestsWithStatus',
+        fields: {
+          docs: { type: new GraphQL.GraphQLList(TestWithStatusType) },
+          page: { type: GraphQL.GraphQLInt },
+          totalPages: { type: GraphQL.GraphQLInt },
+          totalDocs: { type: GraphQL.GraphQLInt },
+        },
+      })
+
+      const TestResultStatusEnum = new GraphQL.GraphQLEnumType({
+        name: 'TestResult_Status_ALL',
+        values: {
+          completed: { value: 'completed' },
+          in_progress: { value: 'in_progress' },
+          not_started: { value: 'not_started' },
+        },
+      })
+
+      return {
+        GetUserTests: {
+          type: PaginatedTestsWithStatusType,
+          args: {
+            userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
+            page: { type: GraphQL.GraphQLInt },
+            limit: { type: GraphQL.GraphQLInt },
+            status: { type: TestResultStatusEnum },
+            examId: { type: GraphQL.GraphQLInt },
+            subjectId: { type: GraphQL.GraphQLInt }, // множественный, опциональный
+          },
+          resolve: GetUserTestsResolver.resolve,
+        },
+      }
+    },
+  },
 })

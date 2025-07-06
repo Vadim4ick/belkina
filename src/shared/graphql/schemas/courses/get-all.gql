@@ -1,0 +1,14 @@
+query GetAllCourses(
+  $exams: Course_exams_operator
+  $subject: Course_subjects_operator
+  $page: Int!
+) {
+  Courses(where: { exams: $exams, subjects: $subject }, limit: 6, page: $page) {
+    docs {
+      ...CourseFragment
+    }
+
+    page
+    totalPages
+  }
+}

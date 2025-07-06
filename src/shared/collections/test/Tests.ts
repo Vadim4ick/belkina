@@ -48,5 +48,27 @@ export const Tests: CollectionConfig = {
       relationTo: 'questions',
       hasMany: true,
     },
+
+    // 🔷 новое поле exams
+    {
+      name: 'exam',
+      label: 'Экзамен',
+      type: 'relationship',
+      relationTo: 'exams',
+      required: false,
+      hasMany: false,
+      admin: { position: 'sidebar' },
+    },
+
+    // 🔷 новое поле subjects
+    {
+      name: 'subjects',
+      label: 'Предметы',
+      type: 'relationship',
+      relationTo: 'subjects',
+      required: false,
+      hasMany: true,
+      admin: { position: 'sidebar' },
+    },
   ],
 }

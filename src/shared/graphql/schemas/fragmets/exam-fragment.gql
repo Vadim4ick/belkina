@@ -1,0 +1,4 @@
+fragment ExamFragment on Exam {
+  id
+  title
+}
