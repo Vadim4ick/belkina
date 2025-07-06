@@ -2,11 +2,11 @@ import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { TestFragmentFragment } from '@/shared/graphql/__generated__'
+import { GetAllUserTestsQuery } from '@/shared/graphql/__generated__'
 import { getRouteTestById } from '@/shared/lib/routes'
 
 interface TestsListItemProps {
-  test: TestFragmentFragment
+  test: GetAllUserTestsQuery['GetUserTests']['docs'][0]
   className?: string
 }
 

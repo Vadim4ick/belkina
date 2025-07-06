@@ -6,22 +6,28 @@ import { CalendarIcon } from '@/shared/icons/calendar-icon'
 import { MessagesIcon } from '@/shared/icons/messages-icon'
 import { TariffsIcon } from '@/shared/icons/tariffs-icon'
 import {
-  getRouteCatalog,
-  getRouteMyCourses,
+  getRouteHome,
+  getRouteCourses,
   getRouteProfile,
   getRouteTariffs,
   getRouteTests,
 } from '@/shared/lib/routes'
+import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
 
 export const PrivateMenuItems: IsideBarItems[] = [
+  {
+    title: 'Главная',
+    url: getRouteHome(),
+    icon: GraduationCapIcon,
+  },
   {
     title: 'Профиль',
     url: getRouteProfile(),
     icon: UserIcon,
   },
   {
-    title: 'Каталог',
-    url: getRouteCatalog(),
+    title: 'Курсы',
+    url: getRouteCourses(),
     icon: CartIcon,
   },
   {
@@ -31,7 +37,7 @@ export const PrivateMenuItems: IsideBarItems[] = [
   },
   {
     title: 'Мои курсы',
-    url: getRouteMyCourses(),
+    url: '#',
     icon: TagIcon,
   },
   {

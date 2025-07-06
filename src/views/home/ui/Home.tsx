@@ -1,4 +1,3 @@
-import { TariffList } from '@/features/tariff-list'
 import { MainBanner } from './home-banners/main-banner'
 import { TestsBanner } from './home-banners/tests-banner'
 import { AboutBanner } from './home-banners/about-banner'
@@ -10,20 +9,14 @@ import { getSettledValue } from '@/shared/lib/utils'
 const Home = async () => {
   const gql = await getServerGqlClient()
 
-  const [res, faqs, tarrifs] = await Promise.allSettled([
-    gql.GetHomePage(),
-    gql.GetFAGs(),
-    gql.GetTaraffis(),
-  ])
+  const [res, faqs] = await Promise.allSettled([gql.GetHomePage(), gql.GetFAGs()])
 
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)
-  const tarrifsVal = getSettledValue(tarrifs)
 
   return (
     <>
       <MainBanner content={resVal?.HomePage.mainOfferBanner} />
-      <TariffList tarrifs={tarrifsVal?.Tariffs.docs} />
       <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
       <TestCardQuestions test={resVal?.HomePage.featuredTest} />
       <AskedQuestions faqs={faqsVal?.Faqs.docs} />
