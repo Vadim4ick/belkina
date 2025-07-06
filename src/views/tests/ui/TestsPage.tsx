@@ -1,74 +1,67 @@
 'use client'
 
-import { TestResult_Status } from '@/shared/graphql/client'
-import { useGetAllTests, useUserByIdTestResult } from '@/shared/services/test.service'
+import { TabCategory } from '@/features/tab-categories'
+import { useGetAllUserTests } from '@/shared/services/test.service'
 import { Typography } from '@/shared/ui/typography'
 import { TestsList } from '@/widgets/tests-list'
-import { memo } from 'react'
+import { memo, useState } from 'react'
+import { btnsCategoryTests, MAPPING_TEST_CATEGORY } from '../model/const'
+import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
 
-const TestsPage = memo(() => {
-  const { data: res, isLoading } = useGetAllTests()
-  const { data: resultsRes, isLoading: resultsLoading } = useUserByIdTestResult()
+const TestsPage = memo(
+  ({
+    exams,
+    subjects,
+  }: {
+    exams?: GetAllExamsQuery['Exams']['docs']
+    subjects?: GetAllSubjectsQuery['Subjects']['docs']
+  }) => {
+    const [category, setCategory] = useState(0)
+    const [examId, setExamId] = useState<number | undefined>(undefined)
+    const [subjectId, setSubjectId] = useState<number | undefined>(undefined)
 
-  const resultsMap = new Map<number, TestResult_Status>()
+    const { data: res, isLoading } = useGetAllUserTests({
+      status: MAPPING_TEST_CATEGORY[category],
+      examId: examId,
+      subjectId: subjectId,
+    })
 
-  resultsRes?.TestResults.docs.forEach((res) => {
-    resultsMap.set(res.test.id, res.status)
-  })
+    return (
+      <section className="max-mobile:py-6 py-12">
+        <div>
+          <div className="max-tablet:flex-col max-tablet:items-start mb-6 flex items-center justify-between gap-2">
+            <Typography tag="h1" variant="visuelt-bold-48">
+              Тесты
+            </Typography>
 
-  const completedTests = res?.Tests.docs.filter((test) => resultsMap.get(test.id) === 'completed')
-  const inProgressTests = res?.Tests.docs.filter(
-    (test) => resultsMap.get(test.id) === 'in_progress',
-  )
-  const notStartedTests = res?.Tests.docs.filter((test) => !resultsMap.has(test.id))
+            <TabCategory
+              btns={btnsCategoryTests}
+              value={category}
+              onChange={(_, val) => setCategory(val)}
+              name="exams"
+            />
+          </div>
 
-  return (
-    <section className="max-mobile:py-6 py-12">
-      <div className="mb-6 flex items-center justify-between gap-2">
-        <Typography tag="h1" variant="visuelt-bold-48">
-          Тесты
-        </Typography>
+          <div className="flex flex-col gap-4">
+            <TabCategory
+              btns={exams?.map((el) => el)}
+              value={examId}
+              onChange={(_, val) => setExamId(val)}
+              name="subjects"
+            />
+            <TabCategory
+              btns={subjects?.map((el) => el)}
+              value={subjectId}
+              onChange={(_, val) => setSubjectId(val)}
+              name="subjects"
+            />
+          </div>
+        </div>
 
-        {/* <TabCategory
-          btns={[
-            {
-              id: 0,
-              title: 'Все',
-            },
-            {
-              id: 1,
-              title: 'Начатые',
-            },
-            {
-              id: 2,
-              title: 'Пройденные',
-            },
-            {
-              id: 3,
-              title: 'В процессе',
-            },
-          ]}
-          name="exams"
-        /> */}
-      </div>
-
-      <TestsList
-        title="Не начатые"
-        tests={notStartedTests}
-        isLoading={isLoading || resultsLoading}
-      />
-      <TestsList
-        title="В процессе"
-        tests={inProgressTests}
-        isLoading={isLoading || resultsLoading}
-      />
-      <TestsList
-        title="Пройденные"
-        tests={completedTests}
-        isLoading={isLoading || resultsLoading}
-      />
-    </section>
-  )
-})
+        <TestsList tests={res?.GetUserTests.docs || []} isLoading={isLoading} />
+      </section>
+    )
+  },
+)
 
 export { TestsPage }

@@ -13,8 +13,6 @@ interface CoursesState {
 
   exams: BtnCategory[]
   subjects: BtnCategory[]
-  setExams: (exams: BtnCategory[]) => void
-  setSubjects: (subjects: BtnCategory[]) => void
 }
 
 export const useCoursesStore = create<CoursesState>((set, get) => ({
@@ -38,6 +36,4 @@ export const useCoursesStore = create<CoursesState>((set, get) => ({
 
   exams: [],
   subjects: [],
-  setExams: (exams) => set({ exams }),
-  setSubjects: (subjects) => set({ subjects }),
 }))
