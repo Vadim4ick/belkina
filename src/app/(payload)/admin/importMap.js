@@ -37,7 +37,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#FixedToolbarFeatureClient": FixedToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#UnorderedListFeatureClient": UnorderedListFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HeadingFeatureClient": HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/app/(payload)/components/fields/KinescopeVideoSelect#default": default_1ca3e7932c9575e5beb2cc460d4b6a0d
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
@@ -61,5 +60,6 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#MetaImageComponent": MetaImageComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#MetaDescriptionComponent": MetaDescriptionComponent_a8a977ebc872c5d5ea7ee689724c0860,
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860,
-  "@/shared/fields/slug/SlugComponent#SlugComponent": SlugComponent_70bfb12dc62fb5c4b4f1cc58a8ecfbed
+  "@/shared/fields/slug/SlugComponent#SlugComponent": SlugComponent_70bfb12dc62fb5c4b4f1cc58a8ecfbed,
+  "@/app/(payload)/components/fields/KinescopeVideoSelect#default": default_1ca3e7932c9575e5beb2cc460d4b6a0d
 }
