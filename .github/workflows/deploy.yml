@@ -64,14 +64,14 @@ jobs:
           cp ~/secrets/env .env.production
 
           echo "📦 Устанавливаем зависимости"
-          npm ci --frozen-lockfile
+          npm install
 
           # echo "⚙️ Билдим проект"
           # NODE_OPTIONS=--no-deprecation npm run build --debug
 
           echo "⚙️ Билдим проект"
           # Установка на ограничение потребляемой памяти
-          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
+          NODE_OPTIONS="--max-old-space-size=2048 --no-deprecation" npm run build
 
           echo "🚀 Запускаем через PM2"
           if pm2 list | grep -q belkina-app; then

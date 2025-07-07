@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request'
-import { getSdk } from './__generated__'
+import * as generated from './__generated__'
 import { auth } from '@/entities/user/auth'
 
 export const PAYLOAD_URL: string = (() => {
@@ -9,7 +9,9 @@ export const PAYLOAD_URL: string = (() => {
 })()
 
 export const createGqlClient = (token?: string | null) => {
-  return getSdk(
+  if (Object.keys(generated).length === 0) return
+
+  return generated.getSdk(
     new GraphQLClient(PAYLOAD_URL, {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     }),

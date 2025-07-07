@@ -10,7 +10,6 @@
 !/.idea/runConfigurations
 
 src/payload-types.ts
-src/shared/graphql/__generated__.ts
 package-lock.json
 
 .vscode
