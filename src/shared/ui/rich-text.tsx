@@ -1,6 +1,5 @@
 import {
   DefaultNodeTypes,
-  SerializedBlockNode,
   SerializedLinkNode,
   type DefaultTypedEditorState,
 } from '@payloadcms/richtext-lexical'
