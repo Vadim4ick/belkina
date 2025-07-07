@@ -1,7 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
 import {
-  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
@@ -20,7 +19,6 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/shared/fields/slug'
-import { Sidebar } from 'lucide-react'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
