@@ -9,7 +9,6 @@
 /.idea/*
 !/.idea/runConfigurations
 
-src/payload-types.ts
 package-lock.json
 
 .vscode
