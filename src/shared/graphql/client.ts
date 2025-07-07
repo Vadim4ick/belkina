@@ -9,7 +9,8 @@ export const PAYLOAD_URL: string = (() => {
 })()
 
 export const createGqlClient = (token?: string | null) => {
-  if (Object.keys(generated).length === 0) return
+  // Проверка на случай пустого файла './__generated__'
+  // if (Object.keys(generated).length === 0) return
 
   return generated.getSdk(
     new GraphQLClient(PAYLOAD_URL, {
