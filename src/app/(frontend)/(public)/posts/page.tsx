@@ -11,6 +11,8 @@ import { gql } from '@/shared/graphql/client'
 export const dynamic = 'force-dynamic'
 export const revalidate = 60
 
+export const tags = ['posts-list']
+
 export default async function Page() {
   const res = await gql.GetPostList({ limit: 2, page: 1 })
 
