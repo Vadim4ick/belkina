@@ -108,6 +108,7 @@ const CoursesList = memo(
                     totalPages={courses?.Courses?.totalPages ?? 1}
                     onPageChange={(page) => setFilter('page', page)}
                     isLoading={isLoadingCourses}
+                    variant="client"
                   />
                 )}
               </div>

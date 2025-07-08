@@ -1,3 +1,6 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { Arrow } from '../icons/arrow'
 import { Skeleton } from './skeleton'
 
@@ -11,19 +14,43 @@ export const PaginationSkeleton = () => {
   )
 }
 
-const Pagination = ({
+type ServerVariant = {
+  variant: 'server'
+  onPageChange?: never
+}
+
+type ClientVariant = {
+  variant: 'client'
+  onPageChange: (page: number) => void
+}
+
+type PaginationProps = {
+  page: number
+  totalPages: number
+  isLoading?: boolean
+} & (ServerVariant | ClientVariant)
+
+const Pagination: React.FC<PaginationProps> = ({
   page,
   totalPages,
   onPageChange,
   isLoading,
+  variant,
 }: {
   page: number
   totalPages: number
-  onPageChange: (page: number) => void
+  onPageChange?: (page: number) => void
   isLoading?: boolean
+  variant: 'client' | 'server'
 }) => {
+  const router = useRouter()
+
   const handlePageClick = (pageNum: number) => {
-    if (pageNum >= 1 && pageNum <= totalPages && pageNum !== page) {
+    if (isLoading || pageNum === page || pageNum < 1 || pageNum > totalPages) return
+
+    if (variant === 'server') {
+      router.push(`/posts/page/${pageNum}`)
+    } else if (variant === 'client' && onPageChange) {
       onPageChange(pageNum)
     }
   }

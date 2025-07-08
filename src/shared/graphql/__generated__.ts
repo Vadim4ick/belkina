@@ -16309,6 +16309,7 @@ export type GetPostBySlugQuery = { readonly __typename?: 'Query', readonly Posts
 
 export type GetPostListQueryVariables = Exact<{
   limit: Scalars['Int']['input'];
+  page: Scalars['Int']['input'];
 }>;
 
 
@@ -16651,8 +16652,8 @@ export const GetPostBySlugDocument = gql`
 }
     ${PostFragmentFragmentDoc}`;
 export const GetPostListDocument = gql`
-    query GetPostList($limit: Int!) {
-  Posts(limit: $limit) {
+    query GetPostList($limit: Int!, $page: Int!) {
+  Posts(limit: $limit, page: $page) {
     docs {
       title
       slug
