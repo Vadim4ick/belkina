@@ -10,10 +10,16 @@ import { Pagination } from '@/shared/ui/pagination'
 export const dynamic = 'force-static'
 export const revalidate = 60
 
-export default async function Page() {
+type Args = {
+  params: Promise<{
+    pageNumber: string
+  }>
+}
+export default async function Page({ params: paramsPromise }: Args) {
+  const { pageNumber } = await paramsPromise
   const limit = 2
 
-  const res = await gql.GetPostList({ limit, page: 1 })
+  const res = await gql.GetPostList({ limit, page: +pageNumber })
 
   if (!res) {
     return <h1>Посты не найдены</h1>
