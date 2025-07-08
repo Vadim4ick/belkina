@@ -12,13 +12,13 @@ export const revalidate = 600
 export default async function Page() {
   const limit = 12
 
-  const [res] = await Promise.allSettled([gql.GetPostList({ limit })])
-  const resVal = res.status === 'fulfilled' ? res.value : null
-  if (!resVal) {
+  const res = await gql.GetPostList({ limit })
+
+  if (!res) {
     return <h1>Посты не найдены</h1>
   }
 
-  const { Posts: posts } = resVal
+  const { Posts: posts } = res
 
   return (
     <section className="max-mobile:py-6 py-12">
