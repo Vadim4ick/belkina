@@ -17,9 +17,8 @@ type Args = {
 }
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
-  const limit = 2
 
-  const res = await gql.GetPostList({ limit, page: +pageNumber })
+  const res = await gql.GetPostList({ limit: 2, page: +pageNumber })
 
   if (!res) {
     return <h1>Посты не найдены</h1>
