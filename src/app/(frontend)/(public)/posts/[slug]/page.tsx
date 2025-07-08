@@ -1,7 +1,3 @@
-// import type { Metadata } from 'next'
-
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import React from 'react'
 
 import type { Post } from '@/payload-types'
@@ -9,18 +5,6 @@ import { gql } from '@/shared/graphql/client'
 import RichText from '@/shared/ui/rich-text'
 import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
-
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: configPromise })
-    const posts = await payload.find({ collection: 'posts', limit: 1000 })
-
-    return posts.docs.map(({ slug }) => ({ slug }))
-  } catch (e) {
-    console.error('Ошибка при генерации параметров:', e)
-    return []
-  }
-}
 
 type Args = {
   params: Promise<{
