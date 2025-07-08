@@ -8,12 +8,11 @@ import { Pagination } from '@/shared/ui/pagination'
 import { notFound } from 'next/navigation'
 import { gql } from '@/shared/graphql/client'
 
+export const dynamic = 'force-dynamic'
 export const revalidate = 60
 
-const limit = 2
-
 export default async function Page() {
-  const res = await gql.GetPostList({ limit, page: 1 })
+  const res = await gql.GetPostList({ limit: 2, page: 1 })
 
   if (!res) {
     return notFound()
@@ -40,6 +39,7 @@ export default async function Page() {
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: 'Блог Belkina.online',
+    description: 'Последние статьи и новости',
   }
 }
