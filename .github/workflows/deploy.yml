@@ -61,7 +61,7 @@ jobs:
           cd ~/belkina-app
 
           echo "📦 Копируем .env"
-          cp ~/secrets/env .env.production
+          cp ~/secrets/env .env
 
           echo "📦 Устанавливаем зависимости"
           npm install
