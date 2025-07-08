@@ -158,7 +158,7 @@ export interface User {
   email: string;
   password: string;
   role: 'admin' | 'user';
-  signupMethod: 'email' | 'yandex';
+  signupMethod: 'email' | 'yandex' | 'google';
   tariff?: (number | null) | Tariff;
   updatedAt: string;
   createdAt: string;
