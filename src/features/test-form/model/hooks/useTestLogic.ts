@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import { useTestEvaluation } from '@/entities/test/model/useTestEvaluation'
 import {
+  QUERY_KEYS,
   useCreateTestResult,
   useGetTestResultById,
   useUpdateTestResult,
@@ -175,7 +176,7 @@ export const useTestLogic = ({
             setStep((prev) => (isNotLast ? prev + 1 : prev))
             if (!isNotLast) {
               queryClient.invalidateQueries({
-                queryKey: ['getTestResultById', session?.user?.id, test?.id],
+                queryKey: QUERY_KEYS.testResult(session?.user?.id, test?.id),
               })
             }
           },
@@ -231,7 +232,7 @@ export const useTestLogic = ({
             },
           )
           queryClient.invalidateQueries({
-            queryKey: ['getTestResultById', session?.user?.id, test?.id],
+            queryKey: QUERY_KEYS.testResult(session?.user?.id, test?.id),
           })
         },
       },
