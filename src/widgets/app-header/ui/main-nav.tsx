@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { IHeaderItems } from '..'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/shared/ui/logo'
 import { UserProfile } from './user-profile'
@@ -11,13 +10,13 @@ import { cn } from '@/shared/lib/utils'
 import { memo, useEffect, useState } from 'react'
 import { Button } from '@/shared/ui/button'
 import { useSession } from 'next-auth/react'
+import { headerItems } from '@/shared/const'
 
 interface MainNavProps {
-  headerItems: IHeaderItems[]
   className?: string
 }
 
-const MainNav = memo(({ headerItems, className }: MainNavProps) => {
+const MainNav = memo(({ className }: MainNavProps) => {
   const { data: session, status } = useSession()
   const pathname = usePathname()
   const [visible, setVisible] = useState(true)

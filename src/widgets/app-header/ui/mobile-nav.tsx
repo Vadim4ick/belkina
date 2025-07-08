@@ -10,19 +10,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/shared/ui/sheet'
-import { ButtonProps } from '@/shared/ui/button'
-import { IHeaderItems } from '..'
 import { MenuIcon } from '@/shared/icons/menu-icon'
 import { XIcon } from '@/shared/icons/x-icon'
 import { Logo } from '@/shared/ui/logo'
 import { MobileNavButtonSheet as MobileNavButton } from './mobile-nav-button'
 import { usePathname } from 'next/navigation'
+import { headerItems } from '@/shared/const'
 
-interface MobileNavProps extends ButtonProps {
-  headerItems: IHeaderItems[]
-}
-
-const MobileNav = ({ headerItems }: MobileNavProps) => {
+const MobileNav = () => {
   const pathname = usePathname()
 
   return (

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import './../shared/assets/css/globals.css'
+import './../../shared/assets/css/globals.css'
 
 const NotFoundPage = () => {
   return (
