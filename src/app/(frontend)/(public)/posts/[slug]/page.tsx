@@ -15,13 +15,12 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
 
-  const [res] = await Promise.allSettled([gql.GetPostBySlug({ slug })])
-  const resVal = res.status === 'fulfilled' ? res.value : null
-  if (!resVal) {
+  const res = await gql.GetPostBySlug({ slug })
+
+  if (!res) {
     return <h1>Пост не найден</h1>
   }
-  const { Posts } = resVal
-  const post = Posts.docs[0]
+  const post = res.Posts.docs[0]
 
   return (
     <article className="max-mobile:py-6 py-12">
