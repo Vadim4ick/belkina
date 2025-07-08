@@ -8,12 +8,24 @@ export const PAYLOAD_URL: string = (() => {
   return url
 })()
 
-export const createGqlClient = (token?: string | null) => {
+export const nextFetchWithTags = (tags: string[]) => {
+  const nextFetch = (input: RequestInfo, init?: RequestInit) => {
+    return fetch(input, {
+      ...init,
+      next: { tags },
+    } as any)
+  }
+
+  return nextFetch as unknown as typeof globalThis.fetch
+}
+
+export const createGqlClient = (token?: string | null, tags?: string[]) => {
   // Проверка на случай пустого файла './__generated__'
   // if (Object.keys(generated).length === 0) return
 
   return generated.getSdk(
     new GraphQLClient(PAYLOAD_URL, {
+      fetch: tags && nextFetchWithTags(tags || []),
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     }),
   )
