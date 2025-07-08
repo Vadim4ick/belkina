@@ -9,7 +9,7 @@ import {
 } from '../graphql/__generated__'
 import type { AnswerInput } from '@/features/test-form'
 
-const QUERY_KEYS = {
+export const QUERY_KEYS = {
   testResult: (userId?: string | number, testId?: number) => ['testResult', userId, testId],
   allUserTests: (
     userId?: string | number,
