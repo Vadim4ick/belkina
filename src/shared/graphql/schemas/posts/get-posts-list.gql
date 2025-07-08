@@ -1,5 +1,5 @@
-query GetPostList($limit: Int!) {
-  Posts(limit: $limit) {
+query GetPostList($limit: Int!, $page: Int!) {
+  Posts(limit: $limit, page: $page) {
     docs {
       title
       slug
