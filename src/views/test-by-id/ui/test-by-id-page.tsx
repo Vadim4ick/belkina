@@ -1,10 +1,10 @@
 import { TestForm } from '@/features/test-form'
-import { getServerGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { notFound } from 'next/navigation'
 
 const TestByIdPage = async ({ id }: { id: string }) => {
-  const gql = await getServerGqlClient()
+  const gql = await getServerAuthGqlClient({})
 
   try {
     const res = await gql.GetByIdTest({ id: Number(id) })

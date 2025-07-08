@@ -24,7 +24,7 @@ export const QUERY_KEYS = {
 }
 
 export const useCreateTestResult = () => {
-  const gql = useGqlClient()
+  const gql = useGqlClient({})
   const session = useAuthStore((state) => state.session)
 
   const queryClient = useQueryClient()
@@ -60,7 +60,7 @@ export const useCreateTestResult = () => {
 }
 
 export const useGetTestResultById = ({ testId, userId }: { testId?: number; userId?: string }) => {
-  const gql = useGqlClient()
+  const gql = useGqlClient({})
 
   const session = useAuthStore((state) => state.session)
 
@@ -88,7 +88,7 @@ export const useGetTestResultById = ({ testId, userId }: { testId?: number; user
 }
 
 export const useUpdateTestResult = () => {
-  const gql = useGqlClient()
+  const gql = useGqlClient({})
   const session = useAuthStore((state) => state.session)
 
   return useMutation({
@@ -133,7 +133,7 @@ export const useGetAllUserTests = ({
   examId?: number
   subjectId?: number
 }) => {
-  const gql = useGqlClient()
+  const gql = useGqlClient({})
 
   const session = useAuthStore((state) => state.session)
 
