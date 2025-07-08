@@ -16,6 +16,7 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
 
   const res = await gql.GetPostBySlug({ slug })
+
   if (!res) {
     return <h1>Пост не найден</h1>
   }
