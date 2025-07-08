@@ -2,10 +2,6 @@ import { GraphQLClient } from 'graphql-request'
 import * as generated from './__generated__'
 import { auth } from '@/entities/user/auth'
 
-import dotenv from 'dotenv'
-
-dotenv.config()
-
 export const PAYLOAD_URL: string = (() => {
   const url = process.env.NEXT_PUBLIC_PAYLOAD_GRAPHQL
   if (!url) throw new Error('Environment variable NEXT_PUBLIC_PAYLOAD_GRAPHQL is not set')

@@ -26,10 +26,7 @@ import { Subjects } from './shared/collections/categories/Subjects'
 import Courses from './shared/collections/Courses'
 import { GetUserTestsResolver } from './shared/graphql/resolvers/GetUserTestsResolver'
 
-dotenv.config({
-  path:
-    process.env.NODE_ENV === 'production' ? path.resolve(process.cwd(), '.env.production') : '.env',
-})
+dotenv.config()
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -64,7 +61,7 @@ export default buildConfig({
     Exams,
     Subjects,
     Posts,
-    Courses
+    Courses,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
