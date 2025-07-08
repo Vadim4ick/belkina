@@ -6,6 +6,7 @@ import Yandex from 'next-auth/providers/yandex'
 import { gql } from '@/shared/graphql/client'
 import bcrypt from 'bcryptjs'
 import { JwtService } from '@/shared/services/jwt-service'
+import Google from 'next-auth/providers/google'
 
 export const authOptions: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -52,11 +53,17 @@ export const authOptions: NextAuthConfig = {
       clientId: process.env.YANDEX_CLIENT_ID!,
       clientSecret: process.env.YANDEX_CLIENT_SECRET!,
     }),
+
+    /** --- 3. OAuth Google --- */
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
 
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === 'yandex') {
+      if (account?.provider === 'yandex' || account?.provider === 'google') {
         const exists = await gql.GetUserByEmail({ email: user.email })
 
         if (exists.Users.totalDocs <= 0) {
@@ -64,7 +71,7 @@ export const authOptions: NextAuthConfig = {
             email: user.email!,
             password: Math.random().toString(36).slice(-10),
             role: 'user',
-            signupMethod: 'yandex',
+            signupMethod: account.provider, // 'yandex' или 'google'
           })
         }
       }

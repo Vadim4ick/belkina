@@ -6,6 +6,7 @@ import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
 import { gql } from '@/shared/graphql/client'
 import { Pagination } from '@/shared/ui/pagination'
+import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-static'
 export const revalidate = 60
@@ -21,7 +22,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   const res = await gql.GetPostList({ limit: 2, page: +pageNumber })
 
   if (!res) {
-    return <h1>Посты не найдены</h1>
+    return notFound()
   }
 
   const { Posts: posts } = res

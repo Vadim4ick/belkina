@@ -14406,6 +14406,7 @@ export type UserUpdate_Role_MutationInput =
 
 export type UserUpdate_SignupMethod_MutationInput =
   | 'email'
+  | 'google'
   | 'yandex';
 
 export type User_CreatedAt_Operator = {
@@ -14471,6 +14472,7 @@ export type User_Role_Operator = {
 
 export type User_SignupMethod =
   | 'email'
+  | 'google'
   | 'yandex';
 
 export type User_SignupMethod_Input =
@@ -14479,6 +14481,7 @@ export type User_SignupMethod_Input =
 
 export type User_SignupMethod_MutationInput =
   | 'email'
+  | 'google'
   | 'yandex';
 
 export type User_SignupMethod_Operator = {
