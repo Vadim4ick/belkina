@@ -19,7 +19,7 @@ export const nextFetchWithTags = (tags: string[]) => {
   return nextFetch as unknown as typeof globalThis.fetch
 }
 
-export const createGqlClient = (token?: string | null, tags?: string[]) => {
+export const createGqlClient = ({ token, tags }: { token?: string; tags?: string[] } = {}) => {
   // Проверка на случай пустого файла './__generated__'
   // if (Object.keys(generated).length === 0) return
 
@@ -31,12 +31,12 @@ export const createGqlClient = (token?: string | null, tags?: string[]) => {
   )
 }
 
-export const getServerGqlClient = async () => {
+export const getServerAuthGqlClient = async ({ tags }: { tags?: string[] }) => {
   const session = await auth()
   const token = session?.tokens?.accessToken
-  return createGqlClient(token)
+  return createGqlClient({ token, tags })
 }
 
-export const gql = createGqlClient()
+export const gql = createGqlClient({})
 
 export * from './__generated__'

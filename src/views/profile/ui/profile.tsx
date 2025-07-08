@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getServerGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/graphql/client'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
@@ -89,7 +89,7 @@ const mockProducts = [
 ]
 
 async function loadRecommendations(userId?: string) {
-  const gql = await getServerGqlClient()
+  const gql = await getServerAuthGqlClient({})
 
   if (!userId) return []
 
@@ -118,7 +118,7 @@ async function loadRecommendations(userId?: string) {
 }
 
 export async function Profile() {
-  const gql = await getServerGqlClient()
+  const gql = await getServerAuthGqlClient({})
 
   const session = await auth()
   const userId = session?.user?.id
