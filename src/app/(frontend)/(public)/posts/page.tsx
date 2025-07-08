@@ -4,22 +4,20 @@ import React from 'react'
 import { CollectionArchive } from '@/widgets/collection-archive'
 import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
-import { gql } from '@/shared/graphql/client'
 import { Pagination } from '@/shared/ui/pagination'
+import { notFound } from 'next/navigation'
+import { gql } from '@/shared/graphql/client'
 
-export const dynamic = 'force-static'
 export const revalidate = 60
 
-export default async function Page() {
-  const limit = 2
+const limit = 2
 
+export default async function Page() {
   const res = await gql.GetPostList({ limit, page: 1 })
 
   if (!res) {
-    return <h1>Посты не найдены</h1>
+    return notFound()
   }
-
-  const { Posts: posts } = res
 
   return (
     <section className="max-mobile:py-6 py-12">
@@ -28,11 +26,11 @@ export default async function Page() {
           Блог Belkina.online
         </Typography>
 
-        <CollectionArchive posts={posts.docs} />
+        <CollectionArchive posts={res.Posts.docs} />
 
         <div className="w-full py-8">
-          {posts.totalPages > 1 && posts.page && (
-            <Pagination page={posts.page} totalPages={posts.totalPages} variant="server" />
+          {res.Posts.totalPages > 1 && res.Posts.page && (
+            <Pagination page={res.Posts.page} totalPages={res.Posts.totalPages} variant="server" />
           )}
         </div>
       </Container>

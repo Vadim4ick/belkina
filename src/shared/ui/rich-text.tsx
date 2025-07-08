@@ -9,6 +9,7 @@ import {
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
 import { cn } from '../lib/utils'
+import { getRoutePostsBySlug } from '../lib/routes'
 
 type NodeTypes = DefaultNodeTypes
 
@@ -18,7 +19,7 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
     throw new Error('Expected value to be an object')
   }
   const slug = value.slug
-  return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
+  return relationTo === 'posts' ? getRoutePostsBySlug(slug as string) : `/${slug}`
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({

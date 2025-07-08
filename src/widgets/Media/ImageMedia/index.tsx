@@ -7,9 +7,9 @@ import React from 'react'
 
 import type { Props as MediaProps } from '../types'
 
-import { cssVariables } from '@/cssVariables'
 import { getMediaUrl } from '@/shared/lib/getMediaUrl'
 import { cn } from '@/shared/lib/utils'
+import { cssVariables } from '@/shared/const/cssVariables'
 
 const { breakpoints } = cssVariables
 

@@ -9,5 +9,9 @@ export const getRouteCourseBySlug = ({ slug, videoId }: { slug: string; videoId:
   `${getRouteCourses()}/${slug}/${videoId}`
 export const getRouteTariffs = () => '/tariffs'
 
+export const getRoutePosts = () => '/posts'
+export const getRoutePostsPaginated = (pageNum: number) => `${getRoutePosts()}/page/${pageNum}`
+export const getRoutePostsBySlug = (slug: string) => `${getRoutePosts()}/${slug}`
+
 export const authRoutes = [getRouteAuth(), getRouteRegister()]
 export const privateRoutes = [getRouteProfile()]

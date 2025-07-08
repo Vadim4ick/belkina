@@ -1,6 +1,6 @@
 'use client'
 
-import { getRouteHome, getRouteCourses } from '@/shared/lib/routes'
+import { getRouteHome, getRouteCourses, getRoutePosts } from '@/shared/lib/routes'
 import { MainNav } from './ui/main-nav'
 import { MobileNav } from './ui/mobile-nav'
 import { FC, memo, SVGProps } from 'react'
@@ -34,7 +34,7 @@ const headerItems: IHeaderItems[] = [
   },
   {
     title: 'Блог',
-    url: '/posts',
+    url: getRoutePosts(),
     icon: Newspaper,
   },
 ]
