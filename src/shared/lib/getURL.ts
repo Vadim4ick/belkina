@@ -1,5 +1,8 @@
-import canUseDOM from './canUseDOM'
-
+const canUseDOM = !!(
+  typeof window !== 'undefined' &&
+  window.document &&
+  window.document.createElement
+)
 export const getServerSideURL = () => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL
 

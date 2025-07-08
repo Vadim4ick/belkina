@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { Arrow } from '../icons/arrow'
 import { Skeleton } from './skeleton'
+import { getRoutePostsPaginated } from '../lib/routes'
 
 export const PaginationSkeleton = () => {
   return (
@@ -49,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({
     if (isLoading || pageNum === page || pageNum < 1 || pageNum > totalPages) return
 
     if (variant === 'server') {
-      router.push(`/posts/page/${pageNum}`)
+      router.push(getRoutePostsPaginated(pageNum))
     } else if (variant === 'client' && onPageChange) {
       onPageChange(pageNum)
     }
