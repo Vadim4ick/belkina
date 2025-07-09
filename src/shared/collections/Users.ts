@@ -73,6 +73,7 @@ export const Users: CollectionConfig = {
       options: [
         { label: 'Email / Password', value: 'email' },
         { label: 'Yandex OAuth', value: 'yandex' },
+        { label: 'Google OAuth', value: 'google' },
       ],
       /* менять поле может только админ; читать — кто угодно */
       access: {

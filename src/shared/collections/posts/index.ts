@@ -9,7 +9,12 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
-import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
+import {
+  revalidateDelete,
+  revalidatePost,
+  revalidatePostsList,
+  revalidatePostsListDelete,
+} from './hooks/revalidatePost'
 
 import {
   MetaDescriptionField,
@@ -176,8 +181,8 @@ export const Posts: CollectionConfig<'posts'> = {
     ...slugField(),
   ],
   hooks: {
-    afterChange: [revalidatePost],
-    afterDelete: [revalidateDelete],
+    afterChange: [revalidatePost, revalidatePostsList],
+    afterDelete: [revalidateDelete, revalidatePostsListDelete],
   },
   versions: {
     drafts: {

@@ -11,7 +11,7 @@ export const useGetAllCourses = ({
   subject?: number
   page: number
 }) => {
-  const gql = useGqlClient()
+  const gql = useGqlClient({})
 
   const where: Record<'exams' | 'subject', any> = {
     exams: undefined,

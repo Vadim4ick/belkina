@@ -8,23 +8,35 @@ export const PAYLOAD_URL: string = (() => {
   return url
 })()
 
-export const createGqlClient = (token?: string | null) => {
+export const nextFetchWithTags = (tags: string[]) => {
+  const nextFetch = (input: RequestInfo, init?: RequestInit) => {
+    return fetch(input, {
+      ...init,
+      next: { tags },
+    } as any)
+  }
+
+  return nextFetch as unknown as typeof globalThis.fetch
+}
+
+export const createGqlClient = ({ token, tags }: { token?: string; tags?: string[] } = {}) => {
   // Проверка на случай пустого файла './__generated__'
   // if (Object.keys(generated).length === 0) return
 
   return generated.getSdk(
     new GraphQLClient(PAYLOAD_URL, {
+      fetch: tags && nextFetchWithTags(tags || []),
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     }),
   )
 }
 
-export const getServerGqlClient = async () => {
+export const getServerAuthGqlClient = async ({ tags }: { tags?: string[] }) => {
   const session = await auth()
   const token = session?.tokens?.accessToken
-  return createGqlClient(token)
+  return createGqlClient({ token, tags })
 }
 
-export const gql = createGqlClient()
+export const gql = createGqlClient({})
 
 export * from './__generated__'

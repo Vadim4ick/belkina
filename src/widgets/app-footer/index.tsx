@@ -1,6 +1,6 @@
 'use client'
+import { headerItems } from '@/shared/const'
 import { TelegramIcon } from '@/shared/icons/telegram-icon'
-import { getRouteHome, getRouteCourses } from '@/shared/lib/routes'
 import { Logo } from '@/shared/ui/logo'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
@@ -10,25 +10,6 @@ export interface IFooterNavItems {
   title: string
   url: string
 }
-
-const footerNavItems = [
-  {
-    title: 'Главная',
-    url: getRouteHome(),
-  },
-  {
-    title: 'Курсы',
-    url: getRouteCourses(),
-  },
-  {
-    title: 'FAQ',
-    url: '#',
-  },
-  {
-    title: 'Блог',
-    url: '#',
-  },
-]
 
 const AppFooter = () => {
   const pathname = usePathname()
@@ -45,7 +26,7 @@ const AppFooter = () => {
         <div className="container mx-auto">
           <div className="flex flex-col justify-around gap-y-20 px-[26px] pt-12 pb-9 md:flex-row md:items-center">
             <div className="flex flex-col items-start gap-7">
-              {footerNavItems.map((item, idx) => (
+              {headerItems.map((item, idx) => (
                 <Link
                   key={idx}
                   className={` ${pathname === item.url ? 'text-blue' : 'text-white'} hover:text-blue-hover font-medium transition-colors`}
