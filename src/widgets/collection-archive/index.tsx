@@ -4,6 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import { GetPostListQuery } from '@/shared/graphql/__generated__'
 import { ProductCard } from '../product-card'
 import { ProductCardsGridCatalog } from '../product-cards-grid-catalog'
+import { getRoutePosts } from '@/shared/lib/routes'
 
 export type Props = {
   posts: GetPostListQuery['Posts']['docs']
@@ -22,7 +23,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
               title={product.title}
               description={product.meta.description}
               image={product.meta.image}
-              url={`posts/${product.slug}`}
+              url={`${getRoutePosts()}/${product.slug}`}
               showFooter={false}
             />
           ))}
