@@ -1,4 +1,4 @@
-import { getServerGqlClient } from '@/shared/graphql/client'
+import { gql } from '@/shared/graphql/client'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
@@ -10,8 +10,6 @@ import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
-  const gql = await getServerGqlClient()
-
   const courses = await gql.GetCourseBySlug({ slug })
 
   if (!courses || !courses.Courses || !courses.Courses.docs.length) {

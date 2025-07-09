@@ -6,12 +6,16 @@ import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
 import { Pagination } from '@/shared/ui/pagination'
 import { notFound } from 'next/navigation'
-import { gql } from '@/shared/graphql/client'
+import { createGqlClient } from '@/shared/graphql/client'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 60
 
 export default async function Page() {
+  const gql = createGqlClient({
+    tags: ['posts-list'],
+  })
+
   const res = await gql.GetPostList({ limit: 2, page: 1 })
 
   if (!res) {

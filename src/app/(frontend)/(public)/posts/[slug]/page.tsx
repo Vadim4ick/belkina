@@ -5,22 +5,23 @@ import { gql } from '@/shared/graphql/client'
 import RichText from '@/shared/ui/rich-text'
 import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
+import { notFound } from 'next/navigation'
 
-type Args = {
+export default async function Post({
+  params: paramsPromise,
+}: {
   params: Promise<{
     slug?: string
   }>
-}
-
-export default async function Post({ params: paramsPromise }: Args) {
+}) {
   const { slug = '' } = await paramsPromise
 
   const res = await gql.GetPostBySlug({ slug })
 
   if (!res) {
-    return <h1>Пост не найден</h1>
+    return notFound()
   }
-  const post = res.Posts.docs[0]
+  const post = res.Posts.docs?.[0]
 
   return (
     <article className="max-mobile:py-6 py-12">
