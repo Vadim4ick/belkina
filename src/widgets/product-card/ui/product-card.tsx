@@ -17,13 +17,13 @@ import { cn } from '@/shared/lib/utils'
 
 export interface ProductCardProps {
   title: string
-  categories: string[]
-  duration: string
+  categories?: string[]
+  duration?: string
   description: string
-  exams: string
+  exams?: string
   url: string
-  price: number
-  discount: number
+  price?: number
+  discount?: number
   image: MediaFragmentFragment
 
   btnText?: string
@@ -48,14 +48,17 @@ const ProductCard = ({
   return (
     <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
       <div className="relative h-[275px] w-full">
-        <Image
-          src={image.url}
-          alt="Banner"
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="h-full w-full rounded-lg object-cover"
-        />
+        {!image && <div className="">Предусмотреть загрушку если нет фото</div>}
+        {image && (
+          <Image
+            src={image.url}
+            alt="Banner"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="h-full w-full rounded-lg object-cover"
+          />
+        )}
       </div>
 
       <CardHeader className="px-0">
@@ -68,20 +71,23 @@ const ProductCard = ({
 
       <CardContent className="flex flex-1 flex-col gap-4 px-0">
         <div className="flex flex-col gap-4">
-          <Badge variant="secondary">
-            <Typography variant="poppins-reg-14">{exams}</Typography>
-          </Badge>
+          {exams && (
+            <Badge variant="secondary">
+              <Typography variant="poppins-reg-14">{exams}</Typography>
+            </Badge>
+          )}
 
           <div className="flex flex-wrap gap-x-4 gap-y-2">
-            {categories.map((category) => (
-              <Badge key={category} variant="secondary">
-                <Typography variant="poppins-reg-14">{category}</Typography>
-              </Badge>
-            ))}
+            {categories &&
+              categories.map((category) => (
+                <Badge key={category} variant="secondary">
+                  <Typography variant="poppins-reg-14">{category}</Typography>
+                </Badge>
+              ))}
           </div>
         </div>
 
-        <Clock duration={duration} />
+        {duration && <Clock duration={duration} />}
 
         {showFooter && (
           <CardDescription>
@@ -96,9 +102,9 @@ const ProductCard = ({
         {showFooter && (
           <div className="flex w-full gap-4">
             <Typography variant="poppins-md-24">
-              {price > 0 ? `${price.toLocaleString()}₽` : 'Бесплатно'}
+              {price && price > 0 ? `${price.toLocaleString()}₽` : 'Бесплатно'}
             </Typography>
-            {price > 0 && discount > 0 ? (
+            {price && discount && price > 0 && discount > 0 ? (
               <Badge variant="destructive" className="px-2.5">
                 <Typography variant="poppins-md-16">-{discount}%</Typography>
               </Badge>
