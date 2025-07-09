@@ -38,14 +38,18 @@ export const UserProfile = memo(({ className, session, status }: UserProfileProp
 
   if (status !== 'authenticated') {
     return (
-      <Button onClick={() => router.push(getRouteAuth())} variant="ghostWhite">
+      <Button
+        className={cn('', className)}
+        onClick={() => router.push(getRouteAuth())}
+        variant="ghost"
+      >
         Войти
       </Button>
     )
   }
 
   return (
-    <div className={cn('flex items-center justify-end gap-4', className)}>
+    <div className="flex flex-row-reverse items-center justify-end gap-4 md:flex-row">
       <Typography variant="poppins-md-16">{session?.user && session.user?.name}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
