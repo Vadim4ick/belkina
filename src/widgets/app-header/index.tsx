@@ -79,7 +79,7 @@ export const AppHeader = ({ route }: AppHeaderProps) => {
         isScrolled ? 'py-2 shadow-sm' : 'py-4',
       )}
     >
-      <Container>
+      <Container className="px-0">
         <div className="mx-auto flex items-center justify-between">
           <div className="flex items-center gap-x-8">
             {/* Мобильное меню (бургер) */}
