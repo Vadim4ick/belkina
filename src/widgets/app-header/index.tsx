@@ -147,7 +147,12 @@ export const AppHeader = ({ route }: AppHeaderProps) => {
                   Записаться на урок
                 </Button>
               )}
-              <UserProfile session={session} status={status} className="h-12 w-full" />
+              <UserProfile
+                session={session}
+                status={status}
+                reverse={true}
+                className="h-12 w-full"
+              />
             </div>
           </div>
         </div>
