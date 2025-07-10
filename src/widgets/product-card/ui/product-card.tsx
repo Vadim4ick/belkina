@@ -19,7 +19,7 @@ export interface ProductCardProps {
   title: string
   categories?: string[]
   duration?: string
-  description: string
+  description?: string
   exams?: string
   url: string
   price?: number
@@ -52,7 +52,7 @@ const ProductCard = ({
         {image && (
           <Image
             src={image.url}
-            alt="Banner"
+            alt={image.alt}
             fill
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -92,7 +92,7 @@ const ProductCard = ({
         {showFooter && (
           <CardDescription>
             <Typography variant="poppins-reg-14" className="line-clamp-2">
-              {description}
+              {description && description}
             </Typography>
           </CardDescription>
         )}
