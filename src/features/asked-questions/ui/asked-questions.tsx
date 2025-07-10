@@ -10,10 +10,8 @@ const AskedQuestions = ({
   faqs,
 }: {
   className?: string
-  faqs?: GetFaGsQuery['Faqs']['docs']
+  faqs: GetFaGsQuery['Faqs']['docs']
 }) => {
-  if (!faqs) return null
-
   return (
     <section className={cn('max-mobile:py-6 py-12', className)}>
       <Container>

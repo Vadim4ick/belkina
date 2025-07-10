@@ -55,7 +55,6 @@ export const AppHeader = () => {
             {/* Логотип */}
             <Logo className="hidden sm:flex" />
           </div>
-
           {/* Десктопное меню */}
           <nav className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => (
@@ -83,7 +82,6 @@ export const AppHeader = () => {
             )}
             <UserProfile session={session} status={status} />
           </div>
-
           {/* Мобильное меню (контент) */}
           <div
             className={cn(

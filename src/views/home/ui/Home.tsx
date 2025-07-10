@@ -20,12 +20,27 @@ const Home = async () => {
 
   return (
     <>
-      <MainBanner content={resVal?.HomePage.mainOfferBanner} />
-      <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
-      <TestCardQuestions test={resVal?.HomePage.featuredTest} />
-      <AskedQuestions faqs={faqsVal?.Faqs.docs} />
-      <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
-      {postssVal && <SliderWrapper posts={postssVal?.Posts} />}
+      {resVal && resVal?.HomePage.mainOfferBanner.title && (
+        <MainBanner content={resVal?.HomePage.mainOfferBanner} />
+      )}
+
+      {resVal && resVal?.HomePage.aboutProjectBanner.title && (
+        <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
+      )}
+
+      {resVal && resVal?.HomePage.featuredTest && (
+        <TestCardQuestions test={resVal?.HomePage.featuredTest} />
+      )}
+
+      {faqsVal && faqsVal?.Faqs?.docs?.length > 0 && <AskedQuestions faqs={faqsVal?.Faqs.docs} />}
+
+      {resVal && resVal?.HomePage.diagnosticTestBanner.title && (
+        <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
+      )}
+
+      {postssVal && postssVal?.Posts?.docs?.length > 0 && (
+        <SliderWrapper posts={postssVal?.Posts} />
+      )}
     </>
   )
 }

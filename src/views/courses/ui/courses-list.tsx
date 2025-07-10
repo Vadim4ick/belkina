@@ -33,7 +33,7 @@ const CoursesList = memo(
       <>
         <section className="mt-12">
           <Container className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
+            <div className="max-tablet:flex-col max-tablet:items-start mb-6 flex items-center justify-between gap-2">
               <Typography tag="h2" variant="visuelt-bold-48">
                 Курсы
               </Typography>

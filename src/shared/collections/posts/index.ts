@@ -23,6 +23,10 @@ export const Posts: CollectionConfig<'posts'> = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
   },
+  labels: {
+    singular: 'Пост',
+    plural: 'Посты',
+  },
   access: {
     read: () => true,
   },
