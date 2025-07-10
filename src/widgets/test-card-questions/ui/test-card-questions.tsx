@@ -3,9 +3,7 @@ import { TestFragmentFragment } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 
-const TestCardQuestions = ({ test }: { test?: TestFragmentFragment }) => {
-  if (!test) return null
-
+const TestCardQuestions = ({ test }: { test: TestFragmentFragment }) => {
   return (
     <section className="max-mobile:py-12 bg-[#F6F6F6] py-20">
       <Container className="max-mobile:gap-6 flex flex-col gap-20">

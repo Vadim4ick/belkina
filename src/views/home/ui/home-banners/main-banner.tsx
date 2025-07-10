@@ -3,9 +3,7 @@ import { GetHomePageQuery } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 
-const MainBanner = ({ content }: { content?: GetHomePageQuery['HomePage']['mainOfferBanner'] }) => {
-  if (!content) return null
-
+const MainBanner = ({ content }: { content: GetHomePageQuery['HomePage']['mainOfferBanner'] }) => {
   return (
     <section className="bg-light-grey max-tablet:h-full max-mobile:pb-6 h-fit py-6 lg:py-12">
       <Container className="flex items-center justify-center">
