@@ -12,6 +12,7 @@ export type Props = {
 
 export const CollectionArchive: React.FC<Props> = (props) => {
   const { posts } = props
+  console.log('posts ==> ', posts)
 
   return (
     <div className={cn('container')}>
@@ -19,10 +20,9 @@ export const CollectionArchive: React.FC<Props> = (props) => {
         {posts &&
           posts?.map((product) => (
             <ProductCard
-              key={product.slug}
+              key={product.id}
               title={product.title}
-              description={product.meta.description}
-              image={product.meta.image}
+              image={product.image}
               url={`${getRoutePosts()}/${product.slug}`}
               showFooter={false}
             />

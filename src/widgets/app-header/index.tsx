@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, memo } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSession } from 'next-auth/react'
@@ -8,51 +8,13 @@ import { cn } from '@/shared/lib/utils'
 import { Logo } from '@/shared/ui/logo'
 import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
-// import { MenuIcon, XIcon } from '@/shared/icons'
-import { getRouteHome, getRouteCourses, getRoutePosts } from '@/shared/lib/routes'
-import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
-import { BookOpennCapIcon } from '@/shared/icons/book-open-text'
-import { FAQIcon } from '@/shared/icons/file-question-mark'
-import { Newspaper } from '@/shared/icons/newspaper'
 import { MenuIcon, XIcon } from 'lucide-react'
 import { UserProfile } from './ui/user-profile'
 import { MobileNavButton } from './ui/mobile-nav-button'
 import { Container } from '@/shared/ui/container'
+import { navItems } from '@/shared/const'
 
-interface NavItem {
-  title: string
-  url: string
-  icon?: React.FC<React.SVGProps<SVGSVGElement>>
-}
-
-const navItems: NavItem[] = [
-  {
-    title: 'Главная',
-    url: getRouteHome(),
-    icon: GraduationCapIcon,
-  },
-  {
-    title: 'Курсы',
-    url: getRouteCourses(),
-    icon: BookOpennCapIcon,
-  },
-  {
-    title: 'FAQ',
-    url: '#',
-    icon: FAQIcon,
-  },
-  {
-    title: 'Блог',
-    url: getRoutePosts(),
-    icon: Newspaper,
-  },
-]
-
-interface AppHeaderProps {
-  route: 'PUBLIC' | 'PRIVATE'
-}
-
-export const AppHeader = ({ route }: AppHeaderProps) => {
+export const AppHeader = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()

@@ -1,5 +1,12 @@
 fragment PostFragment on Post {
+  id
+  slug
   title
+  description
+  image {
+    url
+    alt
+  }
   content
   categories {
     title
@@ -7,12 +14,5 @@ fragment PostFragment on Post {
   relatedPosts {
     id
   }
-  heroImage {
-    url
-  }
-  meta {
-    image {
-      url
-    }
-  }
+  publishedAt
 }

@@ -30,7 +30,6 @@ export type Access = {
   readonly faqs: Maybe<FaqsAccess>;
   readonly homePage: Maybe<HomePageAccess>;
   readonly media: Maybe<MediaAccess>;
-  readonly payload_jobs: Maybe<Payload_JobsAccess>;
   readonly payload_locked_documents: Maybe<Payload_Locked_DocumentsAccess>;
   readonly payload_preferences: Maybe<Payload_PreferencesAccess>;
   readonly posts: Maybe<PostsAccess>;
@@ -4737,7 +4736,6 @@ export type Mutation = {
   readonly createExam: Maybe<Exam>;
   readonly createFaq: Maybe<Faq>;
   readonly createMedia: Maybe<Media>;
-  readonly createPayloadJob: Maybe<PayloadJob>;
   readonly createPayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly createPayloadPreference: Maybe<PayloadPreference>;
   readonly createPost: Maybe<Post>;
@@ -4753,7 +4751,6 @@ export type Mutation = {
   readonly deleteExam: Maybe<Exam>;
   readonly deleteFaq: Maybe<Faq>;
   readonly deleteMedia: Maybe<Media>;
-  readonly deletePayloadJob: Maybe<PayloadJob>;
   readonly deletePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly deletePayloadPreference: Maybe<PayloadPreference>;
   readonly deletePost: Maybe<Post>;
@@ -4768,7 +4765,6 @@ export type Mutation = {
   readonly duplicateExam: Maybe<Exam>;
   readonly duplicateFaq: Maybe<Faq>;
   readonly duplicateMedia: Maybe<Media>;
-  readonly duplicatePayloadJob: Maybe<PayloadJob>;
   readonly duplicatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly duplicatePayloadPreference: Maybe<PayloadPreference>;
   readonly duplicatePost: Maybe<Post>;
@@ -4792,7 +4788,6 @@ export type Mutation = {
   readonly updateFaq: Maybe<Faq>;
   readonly updateHomePage: Maybe<HomePage>;
   readonly updateMedia: Maybe<Media>;
-  readonly updatePayloadJob: Maybe<PayloadJob>;
   readonly updatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly updatePayloadPreference: Maybe<PayloadPreference>;
   readonly updatePost: Maybe<Post>;
@@ -4837,13 +4832,6 @@ export type MutationCreateFaqArgs = {
 
 export type MutationCreateMediaArgs = {
   data: MutationMediaInput;
-  draft: InputMaybe<Scalars['Boolean']['input']>;
-  locale: InputMaybe<LocaleInputType>;
-};
-
-
-export type MutationCreatePayloadJobArgs = {
-  data: MutationPayloadJobInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
 };
@@ -4944,11 +4932,6 @@ export type MutationDeleteMediaArgs = {
 };
 
 
-export type MutationDeletePayloadJobArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
 export type MutationDeletePayloadLockedDocumentArgs = {
   id: Scalars['Int']['input'];
 };
@@ -5019,12 +5002,6 @@ export type MutationDuplicateFaqArgs = {
 
 export type MutationDuplicateMediaArgs = {
   data: MutationMediaInput;
-  id: Scalars['Int']['input'];
-};
-
-
-export type MutationDuplicatePayloadJobArgs = {
-  data: MutationPayloadJobInput;
   id: Scalars['Int']['input'];
 };
 
@@ -5171,15 +5148,6 @@ export type MutationUpdateMediaArgs = {
 };
 
 
-export type MutationUpdatePayloadJobArgs = {
-  autosave: InputMaybe<Scalars['Boolean']['input']>;
-  data: MutationPayloadJobUpdateInput;
-  draft: InputMaybe<Scalars['Boolean']['input']>;
-  id: Scalars['Int']['input'];
-  locale: InputMaybe<LocaleInputType>;
-};
-
-
 export type MutationUpdatePayloadLockedDocumentArgs = {
   autosave: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationPayloadLockedDocumentUpdateInput;
@@ -5282,1726 +5250,6 @@ export type PaginatedTestsWithStatus = {
   readonly totalPages: Maybe<Scalars['Int']['output']>;
 };
 
-export type PayloadJob = {
-  readonly __typename?: 'PayloadJob';
-  readonly completedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly error: Maybe<Scalars['JSON']['output']>;
-  readonly hasError: Maybe<Scalars['Boolean']['output']>;
-  readonly id: Scalars['Int']['output'];
-  readonly input: Maybe<Scalars['JSON']['output']>;
-  readonly log: Maybe<ReadonlyArray<PayloadJob_Log>>;
-  readonly processing: Maybe<Scalars['Boolean']['output']>;
-  readonly queue: Maybe<Scalars['String']['output']>;
-  readonly taskSlug: Maybe<PayloadJob_TaskSlug>;
-  readonly taskStatus: Maybe<Scalars['JSON']['output']>;
-  readonly totalTried: Maybe<Scalars['Float']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly waitUntil: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type PayloadJobUpdate_Log_TaskSlug_MutationInput =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJobUpdate_TaskSlug_MutationInput =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_Log = {
-  readonly __typename?: 'PayloadJob_Log';
-  readonly completedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly error: Maybe<Scalars['JSON']['output']>;
-  readonly executedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly id: Maybe<Scalars['String']['output']>;
-  readonly input: Maybe<Scalars['JSON']['output']>;
-  readonly output: Maybe<Scalars['JSON']['output']>;
-  readonly state: Maybe<PayloadJob_Log_State>;
-  readonly taskID: Maybe<Scalars['String']['output']>;
-  readonly taskSlug: Maybe<PayloadJob_Log_TaskSlug>;
-};
-
-export type PayloadJob_Log_State =
-  | 'failed'
-  | 'succeeded';
-
-export type PayloadJob_Log_TaskSlug =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_Log_TaskSlug_MutationInput =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_CompletedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_CreatedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_Error_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_HasError_Operator = {
-  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type PayloadJob_Id_Operator = {
-  readonly equals: InputMaybe<Scalars['Int']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
-  readonly less_than: InputMaybe<Scalars['Int']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type PayloadJob_Input_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_Log__CompletedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_Log__Error_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_Log__ExecutedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_Log__Id_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type PayloadJob_Log__Input_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_Log__Output_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_Log__State_Input =
-  | 'failed'
-  | 'succeeded';
-
-export type PayloadJob_Log__State_Operator = {
-  readonly contains: InputMaybe<PayloadJob_Log__State_Input>;
-  readonly equals: InputMaybe<PayloadJob_Log__State_Input>;
-  readonly like: InputMaybe<PayloadJob_Log__State_Input>;
-  readonly not_equals: InputMaybe<PayloadJob_Log__State_Input>;
-};
-
-export type PayloadJob_Log__TaskId_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type PayloadJob_Log__TaskSlug_Input =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_Log__TaskSlug_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Log__TaskSlug_Input>>>;
-  readonly equals: InputMaybe<PayloadJob_Log__TaskSlug_Input>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Log__TaskSlug_Input>>>;
-  readonly not_equals: InputMaybe<PayloadJob_Log__TaskSlug_Input>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Log__TaskSlug_Input>>>;
-};
-
-export type PayloadJob_Processing_Operator = {
-  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type PayloadJob_Queue_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type PayloadJob_TaskSlug =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_TaskSlug_Input =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_TaskSlug_MutationInput =
-  | 'inline'
-  | 'schedulePublish';
-
-export type PayloadJob_TaskSlug_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_TaskSlug_Input>>>;
-  readonly equals: InputMaybe<PayloadJob_TaskSlug_Input>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_TaskSlug_Input>>>;
-  readonly not_equals: InputMaybe<PayloadJob_TaskSlug_Input>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_TaskSlug_Input>>>;
-};
-
-export type PayloadJob_TaskStatus_Operator = {
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly intersects: InputMaybe<Scalars['JSON']['input']>;
-  readonly like: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly within: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type PayloadJob_TotalTried_Operator = {
-  readonly equals: InputMaybe<Scalars['Float']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
-  readonly less_than: InputMaybe<Scalars['Float']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
-};
-
-export type PayloadJob_UpdatedAt_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_WaitUntil_Operator = {
-  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
-  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
-  readonly like: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type PayloadJob_Where = {
-  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_And>>>;
-  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_Or>>>;
-  readonly completedAt: InputMaybe<PayloadJob_CompletedAt_Operator>;
-  readonly createdAt: InputMaybe<PayloadJob_CreatedAt_Operator>;
-  readonly error: InputMaybe<PayloadJob_Error_Operator>;
-  readonly hasError: InputMaybe<PayloadJob_HasError_Operator>;
-  readonly id: InputMaybe<PayloadJob_Id_Operator>;
-  readonly input: InputMaybe<PayloadJob_Input_Operator>;
-  readonly log__completedAt: InputMaybe<PayloadJob_Log__CompletedAt_Operator>;
-  readonly log__error: InputMaybe<PayloadJob_Log__Error_Operator>;
-  readonly log__executedAt: InputMaybe<PayloadJob_Log__ExecutedAt_Operator>;
-  readonly log__id: InputMaybe<PayloadJob_Log__Id_Operator>;
-  readonly log__input: InputMaybe<PayloadJob_Log__Input_Operator>;
-  readonly log__output: InputMaybe<PayloadJob_Log__Output_Operator>;
-  readonly log__state: InputMaybe<PayloadJob_Log__State_Operator>;
-  readonly log__taskID: InputMaybe<PayloadJob_Log__TaskId_Operator>;
-  readonly log__taskSlug: InputMaybe<PayloadJob_Log__TaskSlug_Operator>;
-  readonly processing: InputMaybe<PayloadJob_Processing_Operator>;
-  readonly queue: InputMaybe<PayloadJob_Queue_Operator>;
-  readonly taskSlug: InputMaybe<PayloadJob_TaskSlug_Operator>;
-  readonly taskStatus: InputMaybe<PayloadJob_TaskStatus_Operator>;
-  readonly totalTried: InputMaybe<PayloadJob_TotalTried_Operator>;
-  readonly updatedAt: InputMaybe<PayloadJob_UpdatedAt_Operator>;
-  readonly waitUntil: InputMaybe<PayloadJob_WaitUntil_Operator>;
-};
-
-export type PayloadJob_Where_And = {
-  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_And>>>;
-  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_Or>>>;
-  readonly completedAt: InputMaybe<PayloadJob_CompletedAt_Operator>;
-  readonly createdAt: InputMaybe<PayloadJob_CreatedAt_Operator>;
-  readonly error: InputMaybe<PayloadJob_Error_Operator>;
-  readonly hasError: InputMaybe<PayloadJob_HasError_Operator>;
-  readonly id: InputMaybe<PayloadJob_Id_Operator>;
-  readonly input: InputMaybe<PayloadJob_Input_Operator>;
-  readonly log__completedAt: InputMaybe<PayloadJob_Log__CompletedAt_Operator>;
-  readonly log__error: InputMaybe<PayloadJob_Log__Error_Operator>;
-  readonly log__executedAt: InputMaybe<PayloadJob_Log__ExecutedAt_Operator>;
-  readonly log__id: InputMaybe<PayloadJob_Log__Id_Operator>;
-  readonly log__input: InputMaybe<PayloadJob_Log__Input_Operator>;
-  readonly log__output: InputMaybe<PayloadJob_Log__Output_Operator>;
-  readonly log__state: InputMaybe<PayloadJob_Log__State_Operator>;
-  readonly log__taskID: InputMaybe<PayloadJob_Log__TaskId_Operator>;
-  readonly log__taskSlug: InputMaybe<PayloadJob_Log__TaskSlug_Operator>;
-  readonly processing: InputMaybe<PayloadJob_Processing_Operator>;
-  readonly queue: InputMaybe<PayloadJob_Queue_Operator>;
-  readonly taskSlug: InputMaybe<PayloadJob_TaskSlug_Operator>;
-  readonly taskStatus: InputMaybe<PayloadJob_TaskStatus_Operator>;
-  readonly totalTried: InputMaybe<PayloadJob_TotalTried_Operator>;
-  readonly updatedAt: InputMaybe<PayloadJob_UpdatedAt_Operator>;
-  readonly waitUntil: InputMaybe<PayloadJob_WaitUntil_Operator>;
-};
-
-export type PayloadJob_Where_Or = {
-  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_And>>>;
-  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<PayloadJob_Where_Or>>>;
-  readonly completedAt: InputMaybe<PayloadJob_CompletedAt_Operator>;
-  readonly createdAt: InputMaybe<PayloadJob_CreatedAt_Operator>;
-  readonly error: InputMaybe<PayloadJob_Error_Operator>;
-  readonly hasError: InputMaybe<PayloadJob_HasError_Operator>;
-  readonly id: InputMaybe<PayloadJob_Id_Operator>;
-  readonly input: InputMaybe<PayloadJob_Input_Operator>;
-  readonly log__completedAt: InputMaybe<PayloadJob_Log__CompletedAt_Operator>;
-  readonly log__error: InputMaybe<PayloadJob_Log__Error_Operator>;
-  readonly log__executedAt: InputMaybe<PayloadJob_Log__ExecutedAt_Operator>;
-  readonly log__id: InputMaybe<PayloadJob_Log__Id_Operator>;
-  readonly log__input: InputMaybe<PayloadJob_Log__Input_Operator>;
-  readonly log__output: InputMaybe<PayloadJob_Log__Output_Operator>;
-  readonly log__state: InputMaybe<PayloadJob_Log__State_Operator>;
-  readonly log__taskID: InputMaybe<PayloadJob_Log__TaskId_Operator>;
-  readonly log__taskSlug: InputMaybe<PayloadJob_Log__TaskSlug_Operator>;
-  readonly processing: InputMaybe<PayloadJob_Processing_Operator>;
-  readonly queue: InputMaybe<PayloadJob_Queue_Operator>;
-  readonly taskSlug: InputMaybe<PayloadJob_TaskSlug_Operator>;
-  readonly taskStatus: InputMaybe<PayloadJob_TaskStatus_Operator>;
-  readonly totalTried: InputMaybe<PayloadJob_TotalTried_Operator>;
-  readonly updatedAt: InputMaybe<PayloadJob_UpdatedAt_Operator>;
-  readonly waitUntil: InputMaybe<PayloadJob_WaitUntil_Operator>;
-};
-
-export type PayloadJobs = {
-  readonly __typename?: 'PayloadJobs';
-  readonly docs: ReadonlyArray<PayloadJob>;
-  readonly hasNextPage: Scalars['Boolean']['output'];
-  readonly hasPrevPage: Scalars['Boolean']['output'];
-  readonly limit: Scalars['Int']['output'];
-  readonly nextPage: Maybe<Scalars['Int']['output']>;
-  readonly offset: Maybe<Scalars['Int']['output']>;
-  readonly page: Scalars['Int']['output'];
-  readonly pagingCounter: Scalars['Int']['output'];
-  readonly prevPage: Maybe<Scalars['Int']['output']>;
-  readonly totalDocs: Scalars['Int']['output'];
-  readonly totalPages: Scalars['Int']['output'];
-};
-
-export type PayloadJobsCreateAccess = {
-  readonly __typename?: 'PayloadJobsCreateAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsCreateDocAccess = {
-  readonly __typename?: 'PayloadJobsCreateDocAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsDeleteAccess = {
-  readonly __typename?: 'PayloadJobsDeleteAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsDeleteDocAccess = {
-  readonly __typename?: 'PayloadJobsDeleteDocAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsDocAccessFields = {
-  readonly __typename?: 'PayloadJobsDocAccessFields';
-  readonly completedAt: Maybe<PayloadJobsDocAccessFields_CompletedAt>;
-  readonly createdAt: Maybe<PayloadJobsDocAccessFields_CreatedAt>;
-  readonly error: Maybe<PayloadJobsDocAccessFields_Error>;
-  readonly hasError: Maybe<PayloadJobsDocAccessFields_HasError>;
-  readonly input: Maybe<PayloadJobsDocAccessFields_Input>;
-  readonly log: Maybe<PayloadJobsDocAccessFields_Log>;
-  readonly processing: Maybe<PayloadJobsDocAccessFields_Processing>;
-  readonly queue: Maybe<PayloadJobsDocAccessFields_Queue>;
-  readonly taskSlug: Maybe<PayloadJobsDocAccessFields_TaskSlug>;
-  readonly taskStatus: Maybe<PayloadJobsDocAccessFields_TaskStatus>;
-  readonly totalTried: Maybe<PayloadJobsDocAccessFields_TotalTried>;
-  readonly updatedAt: Maybe<PayloadJobsDocAccessFields_UpdatedAt>;
-  readonly waitUntil: Maybe<PayloadJobsDocAccessFields_WaitUntil>;
-};
-
-export type PayloadJobsDocAccessFields_CompletedAt = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_completedAt';
-  readonly create: Maybe<PayloadJobsDocAccessFields_CompletedAt_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_CompletedAt_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_CompletedAt_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_CompletedAt_Update>;
-};
-
-export type PayloadJobsDocAccessFields_CompletedAt_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CompletedAt_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CompletedAt_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CompletedAt_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CreatedAt = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_createdAt';
-  readonly create: Maybe<PayloadJobsDocAccessFields_CreatedAt_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_CreatedAt_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_CreatedAt_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_CreatedAt_Update>;
-};
-
-export type PayloadJobsDocAccessFields_CreatedAt_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_createdAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CreatedAt_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_createdAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CreatedAt_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_createdAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_CreatedAt_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_createdAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Error = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_error';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Error_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Error_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Error_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Error_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Error_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_error_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Error_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_error_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Error_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_error_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Error_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_error_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_HasError = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_hasError';
-  readonly create: Maybe<PayloadJobsDocAccessFields_HasError_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_HasError_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_HasError_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_HasError_Update>;
-};
-
-export type PayloadJobsDocAccessFields_HasError_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_hasError_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_HasError_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_hasError_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_HasError_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_hasError_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_HasError_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_hasError_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Input = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_input';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Input_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Input_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Input_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Input_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Input_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_input_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Input_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_input_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Input_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_input_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Input_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_input_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_Delete>;
-  readonly fields: Maybe<PayloadJobsDocAccessFields_Log_Fields>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Fields = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_Fields';
-  readonly completedAt: Maybe<PayloadJobsDocAccessFields_Log_CompletedAt>;
-  readonly error: Maybe<PayloadJobsDocAccessFields_Log_Error>;
-  readonly executedAt: Maybe<PayloadJobsDocAccessFields_Log_ExecutedAt>;
-  readonly id: Maybe<PayloadJobsDocAccessFields_Log_Id>;
-  readonly input: Maybe<PayloadJobsDocAccessFields_Log_Input>;
-  readonly output: Maybe<PayloadJobsDocAccessFields_Log_Output>;
-  readonly state: Maybe<PayloadJobsDocAccessFields_Log_State>;
-  readonly taskID: Maybe<PayloadJobsDocAccessFields_Log_TaskId>;
-  readonly taskSlug: Maybe<PayloadJobsDocAccessFields_Log_TaskSlug>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_CompletedAt = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_completedAt';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_CompletedAt_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_CompletedAt_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_CompletedAt_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_CompletedAt_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_CompletedAt_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_CompletedAt_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_CompletedAt_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_CompletedAt_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Error = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_error';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_Error_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_Error_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_Error_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_Error_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Error_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_error_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Error_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_error_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Error_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_error_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Error_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_error_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_ExecutedAt = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_executedAt';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_ExecutedAt_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_ExecutedAt_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_ExecutedAt_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_ExecutedAt_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_ExecutedAt_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_executedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_ExecutedAt_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_executedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_ExecutedAt_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_executedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_ExecutedAt_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_executedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Id = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_id';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_Id_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_Id_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_Id_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_Id_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Id_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_id_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Id_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_id_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Id_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_id_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Id_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_id_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Input = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_input';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_Input_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_Input_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_Input_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_Input_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Input_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_input_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Input_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_input_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Input_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_input_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Input_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_input_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Output = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_output';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_Output_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_Output_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_Output_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_Output_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_Output_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_output_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Output_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_output_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Output_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_output_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_Output_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_output_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_State = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_state';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_State_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_State_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_State_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_State_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_State_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_state_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_State_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_state_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_State_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_state_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_State_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_state_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskId = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskID';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_TaskId_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_TaskId_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_TaskId_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_TaskId_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskId_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskID_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskId_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskID_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskId_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskID_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskId_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskID_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskSlug = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskSlug';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Log_TaskSlug_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Log_TaskSlug_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Log_TaskSlug_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Log_TaskSlug_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskSlug_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskSlug_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskSlug_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskSlug_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskSlug_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskSlug_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Log_TaskSlug_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_log_taskSlug_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Processing = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_processing';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Processing_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Processing_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Processing_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Processing_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Processing_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_processing_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Processing_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_processing_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Processing_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_processing_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Processing_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_processing_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Queue = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_queue';
-  readonly create: Maybe<PayloadJobsDocAccessFields_Queue_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_Queue_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_Queue_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_Queue_Update>;
-};
-
-export type PayloadJobsDocAccessFields_Queue_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_queue_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Queue_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_queue_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Queue_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_queue_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_Queue_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_queue_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskSlug = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskSlug';
-  readonly create: Maybe<PayloadJobsDocAccessFields_TaskSlug_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_TaskSlug_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_TaskSlug_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_TaskSlug_Update>;
-};
-
-export type PayloadJobsDocAccessFields_TaskSlug_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskSlug_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskSlug_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskSlug_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskSlug_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskSlug_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskSlug_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskSlug_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskStatus = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskStatus';
-  readonly create: Maybe<PayloadJobsDocAccessFields_TaskStatus_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_TaskStatus_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_TaskStatus_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_TaskStatus_Update>;
-};
-
-export type PayloadJobsDocAccessFields_TaskStatus_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskStatus_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskStatus_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskStatus_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskStatus_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskStatus_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TaskStatus_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_taskStatus_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TotalTried = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_totalTried';
-  readonly create: Maybe<PayloadJobsDocAccessFields_TotalTried_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_TotalTried_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_TotalTried_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_TotalTried_Update>;
-};
-
-export type PayloadJobsDocAccessFields_TotalTried_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_totalTried_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TotalTried_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_totalTried_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TotalTried_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_totalTried_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_TotalTried_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_totalTried_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_UpdatedAt = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_updatedAt';
-  readonly create: Maybe<PayloadJobsDocAccessFields_UpdatedAt_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_UpdatedAt_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_UpdatedAt_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_UpdatedAt_Update>;
-};
-
-export type PayloadJobsDocAccessFields_UpdatedAt_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_updatedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_UpdatedAt_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_updatedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_UpdatedAt_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_updatedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_UpdatedAt_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_updatedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_WaitUntil = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_waitUntil';
-  readonly create: Maybe<PayloadJobsDocAccessFields_WaitUntil_Create>;
-  readonly delete: Maybe<PayloadJobsDocAccessFields_WaitUntil_Delete>;
-  readonly read: Maybe<PayloadJobsDocAccessFields_WaitUntil_Read>;
-  readonly update: Maybe<PayloadJobsDocAccessFields_WaitUntil_Update>;
-};
-
-export type PayloadJobsDocAccessFields_WaitUntil_Create = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_waitUntil_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_WaitUntil_Delete = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_waitUntil_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_WaitUntil_Read = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_waitUntil_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsDocAccessFields_WaitUntil_Update = {
-  readonly __typename?: 'PayloadJobsDocAccessFields_waitUntil_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields = {
-  readonly __typename?: 'PayloadJobsFields';
-  readonly completedAt: Maybe<PayloadJobsFields_CompletedAt>;
-  readonly createdAt: Maybe<PayloadJobsFields_CreatedAt>;
-  readonly error: Maybe<PayloadJobsFields_Error>;
-  readonly hasError: Maybe<PayloadJobsFields_HasError>;
-  readonly input: Maybe<PayloadJobsFields_Input>;
-  readonly log: Maybe<PayloadJobsFields_Log>;
-  readonly processing: Maybe<PayloadJobsFields_Processing>;
-  readonly queue: Maybe<PayloadJobsFields_Queue>;
-  readonly taskSlug: Maybe<PayloadJobsFields_TaskSlug>;
-  readonly taskStatus: Maybe<PayloadJobsFields_TaskStatus>;
-  readonly totalTried: Maybe<PayloadJobsFields_TotalTried>;
-  readonly updatedAt: Maybe<PayloadJobsFields_UpdatedAt>;
-  readonly waitUntil: Maybe<PayloadJobsFields_WaitUntil>;
-};
-
-export type PayloadJobsFields_CompletedAt = {
-  readonly __typename?: 'PayloadJobsFields_completedAt';
-  readonly create: Maybe<PayloadJobsFields_CompletedAt_Create>;
-  readonly delete: Maybe<PayloadJobsFields_CompletedAt_Delete>;
-  readonly read: Maybe<PayloadJobsFields_CompletedAt_Read>;
-  readonly update: Maybe<PayloadJobsFields_CompletedAt_Update>;
-};
-
-export type PayloadJobsFields_CompletedAt_Create = {
-  readonly __typename?: 'PayloadJobsFields_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CompletedAt_Delete = {
-  readonly __typename?: 'PayloadJobsFields_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CompletedAt_Read = {
-  readonly __typename?: 'PayloadJobsFields_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CompletedAt_Update = {
-  readonly __typename?: 'PayloadJobsFields_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CreatedAt = {
-  readonly __typename?: 'PayloadJobsFields_createdAt';
-  readonly create: Maybe<PayloadJobsFields_CreatedAt_Create>;
-  readonly delete: Maybe<PayloadJobsFields_CreatedAt_Delete>;
-  readonly read: Maybe<PayloadJobsFields_CreatedAt_Read>;
-  readonly update: Maybe<PayloadJobsFields_CreatedAt_Update>;
-};
-
-export type PayloadJobsFields_CreatedAt_Create = {
-  readonly __typename?: 'PayloadJobsFields_createdAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CreatedAt_Delete = {
-  readonly __typename?: 'PayloadJobsFields_createdAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CreatedAt_Read = {
-  readonly __typename?: 'PayloadJobsFields_createdAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_CreatedAt_Update = {
-  readonly __typename?: 'PayloadJobsFields_createdAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Error = {
-  readonly __typename?: 'PayloadJobsFields_error';
-  readonly create: Maybe<PayloadJobsFields_Error_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Error_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Error_Read>;
-  readonly update: Maybe<PayloadJobsFields_Error_Update>;
-};
-
-export type PayloadJobsFields_Error_Create = {
-  readonly __typename?: 'PayloadJobsFields_error_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Error_Delete = {
-  readonly __typename?: 'PayloadJobsFields_error_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Error_Read = {
-  readonly __typename?: 'PayloadJobsFields_error_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Error_Update = {
-  readonly __typename?: 'PayloadJobsFields_error_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_HasError = {
-  readonly __typename?: 'PayloadJobsFields_hasError';
-  readonly create: Maybe<PayloadJobsFields_HasError_Create>;
-  readonly delete: Maybe<PayloadJobsFields_HasError_Delete>;
-  readonly read: Maybe<PayloadJobsFields_HasError_Read>;
-  readonly update: Maybe<PayloadJobsFields_HasError_Update>;
-};
-
-export type PayloadJobsFields_HasError_Create = {
-  readonly __typename?: 'PayloadJobsFields_hasError_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_HasError_Delete = {
-  readonly __typename?: 'PayloadJobsFields_hasError_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_HasError_Read = {
-  readonly __typename?: 'PayloadJobsFields_hasError_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_HasError_Update = {
-  readonly __typename?: 'PayloadJobsFields_hasError_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Input = {
-  readonly __typename?: 'PayloadJobsFields_input';
-  readonly create: Maybe<PayloadJobsFields_Input_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Input_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Input_Read>;
-  readonly update: Maybe<PayloadJobsFields_Input_Update>;
-};
-
-export type PayloadJobsFields_Input_Create = {
-  readonly __typename?: 'PayloadJobsFields_input_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Input_Delete = {
-  readonly __typename?: 'PayloadJobsFields_input_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Input_Read = {
-  readonly __typename?: 'PayloadJobsFields_input_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Input_Update = {
-  readonly __typename?: 'PayloadJobsFields_input_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log = {
-  readonly __typename?: 'PayloadJobsFields_log';
-  readonly create: Maybe<PayloadJobsFields_Log_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_Delete>;
-  readonly fields: Maybe<PayloadJobsFields_Log_Fields>;
-  readonly read: Maybe<PayloadJobsFields_Log_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_Update>;
-};
-
-export type PayloadJobsFields_Log_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Fields = {
-  readonly __typename?: 'PayloadJobsFields_log_Fields';
-  readonly completedAt: Maybe<PayloadJobsFields_Log_CompletedAt>;
-  readonly error: Maybe<PayloadJobsFields_Log_Error>;
-  readonly executedAt: Maybe<PayloadJobsFields_Log_ExecutedAt>;
-  readonly id: Maybe<PayloadJobsFields_Log_Id>;
-  readonly input: Maybe<PayloadJobsFields_Log_Input>;
-  readonly output: Maybe<PayloadJobsFields_Log_Output>;
-  readonly state: Maybe<PayloadJobsFields_Log_State>;
-  readonly taskID: Maybe<PayloadJobsFields_Log_TaskId>;
-  readonly taskSlug: Maybe<PayloadJobsFields_Log_TaskSlug>;
-};
-
-export type PayloadJobsFields_Log_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_CompletedAt = {
-  readonly __typename?: 'PayloadJobsFields_log_completedAt';
-  readonly create: Maybe<PayloadJobsFields_Log_CompletedAt_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_CompletedAt_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_CompletedAt_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_CompletedAt_Update>;
-};
-
-export type PayloadJobsFields_Log_CompletedAt_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_completedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_CompletedAt_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_completedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_CompletedAt_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_completedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_CompletedAt_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_completedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Error = {
-  readonly __typename?: 'PayloadJobsFields_log_error';
-  readonly create: Maybe<PayloadJobsFields_Log_Error_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_Error_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_Error_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_Error_Update>;
-};
-
-export type PayloadJobsFields_Log_Error_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_error_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Error_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_error_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Error_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_error_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Error_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_error_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_ExecutedAt = {
-  readonly __typename?: 'PayloadJobsFields_log_executedAt';
-  readonly create: Maybe<PayloadJobsFields_Log_ExecutedAt_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_ExecutedAt_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_ExecutedAt_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_ExecutedAt_Update>;
-};
-
-export type PayloadJobsFields_Log_ExecutedAt_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_executedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_ExecutedAt_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_executedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_ExecutedAt_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_executedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_ExecutedAt_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_executedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Id = {
-  readonly __typename?: 'PayloadJobsFields_log_id';
-  readonly create: Maybe<PayloadJobsFields_Log_Id_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_Id_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_Id_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_Id_Update>;
-};
-
-export type PayloadJobsFields_Log_Id_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_id_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Id_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_id_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Id_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_id_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Id_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_id_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Input = {
-  readonly __typename?: 'PayloadJobsFields_log_input';
-  readonly create: Maybe<PayloadJobsFields_Log_Input_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_Input_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_Input_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_Input_Update>;
-};
-
-export type PayloadJobsFields_Log_Input_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_input_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Input_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_input_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Input_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_input_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Input_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_input_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Output = {
-  readonly __typename?: 'PayloadJobsFields_log_output';
-  readonly create: Maybe<PayloadJobsFields_Log_Output_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_Output_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_Output_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_Output_Update>;
-};
-
-export type PayloadJobsFields_Log_Output_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_output_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Output_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_output_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Output_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_output_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_Output_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_output_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_State = {
-  readonly __typename?: 'PayloadJobsFields_log_state';
-  readonly create: Maybe<PayloadJobsFields_Log_State_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_State_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_State_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_State_Update>;
-};
-
-export type PayloadJobsFields_Log_State_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_state_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_State_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_state_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_State_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_state_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_State_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_state_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskId = {
-  readonly __typename?: 'PayloadJobsFields_log_taskID';
-  readonly create: Maybe<PayloadJobsFields_Log_TaskId_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_TaskId_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_TaskId_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_TaskId_Update>;
-};
-
-export type PayloadJobsFields_Log_TaskId_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_taskID_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskId_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_taskID_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskId_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_taskID_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskId_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_taskID_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskSlug = {
-  readonly __typename?: 'PayloadJobsFields_log_taskSlug';
-  readonly create: Maybe<PayloadJobsFields_Log_TaskSlug_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Log_TaskSlug_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Log_TaskSlug_Read>;
-  readonly update: Maybe<PayloadJobsFields_Log_TaskSlug_Update>;
-};
-
-export type PayloadJobsFields_Log_TaskSlug_Create = {
-  readonly __typename?: 'PayloadJobsFields_log_taskSlug_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskSlug_Delete = {
-  readonly __typename?: 'PayloadJobsFields_log_taskSlug_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskSlug_Read = {
-  readonly __typename?: 'PayloadJobsFields_log_taskSlug_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Log_TaskSlug_Update = {
-  readonly __typename?: 'PayloadJobsFields_log_taskSlug_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Processing = {
-  readonly __typename?: 'PayloadJobsFields_processing';
-  readonly create: Maybe<PayloadJobsFields_Processing_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Processing_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Processing_Read>;
-  readonly update: Maybe<PayloadJobsFields_Processing_Update>;
-};
-
-export type PayloadJobsFields_Processing_Create = {
-  readonly __typename?: 'PayloadJobsFields_processing_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Processing_Delete = {
-  readonly __typename?: 'PayloadJobsFields_processing_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Processing_Read = {
-  readonly __typename?: 'PayloadJobsFields_processing_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Processing_Update = {
-  readonly __typename?: 'PayloadJobsFields_processing_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Queue = {
-  readonly __typename?: 'PayloadJobsFields_queue';
-  readonly create: Maybe<PayloadJobsFields_Queue_Create>;
-  readonly delete: Maybe<PayloadJobsFields_Queue_Delete>;
-  readonly read: Maybe<PayloadJobsFields_Queue_Read>;
-  readonly update: Maybe<PayloadJobsFields_Queue_Update>;
-};
-
-export type PayloadJobsFields_Queue_Create = {
-  readonly __typename?: 'PayloadJobsFields_queue_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Queue_Delete = {
-  readonly __typename?: 'PayloadJobsFields_queue_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Queue_Read = {
-  readonly __typename?: 'PayloadJobsFields_queue_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_Queue_Update = {
-  readonly __typename?: 'PayloadJobsFields_queue_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskSlug = {
-  readonly __typename?: 'PayloadJobsFields_taskSlug';
-  readonly create: Maybe<PayloadJobsFields_TaskSlug_Create>;
-  readonly delete: Maybe<PayloadJobsFields_TaskSlug_Delete>;
-  readonly read: Maybe<PayloadJobsFields_TaskSlug_Read>;
-  readonly update: Maybe<PayloadJobsFields_TaskSlug_Update>;
-};
-
-export type PayloadJobsFields_TaskSlug_Create = {
-  readonly __typename?: 'PayloadJobsFields_taskSlug_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskSlug_Delete = {
-  readonly __typename?: 'PayloadJobsFields_taskSlug_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskSlug_Read = {
-  readonly __typename?: 'PayloadJobsFields_taskSlug_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskSlug_Update = {
-  readonly __typename?: 'PayloadJobsFields_taskSlug_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskStatus = {
-  readonly __typename?: 'PayloadJobsFields_taskStatus';
-  readonly create: Maybe<PayloadJobsFields_TaskStatus_Create>;
-  readonly delete: Maybe<PayloadJobsFields_TaskStatus_Delete>;
-  readonly read: Maybe<PayloadJobsFields_TaskStatus_Read>;
-  readonly update: Maybe<PayloadJobsFields_TaskStatus_Update>;
-};
-
-export type PayloadJobsFields_TaskStatus_Create = {
-  readonly __typename?: 'PayloadJobsFields_taskStatus_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskStatus_Delete = {
-  readonly __typename?: 'PayloadJobsFields_taskStatus_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskStatus_Read = {
-  readonly __typename?: 'PayloadJobsFields_taskStatus_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TaskStatus_Update = {
-  readonly __typename?: 'PayloadJobsFields_taskStatus_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TotalTried = {
-  readonly __typename?: 'PayloadJobsFields_totalTried';
-  readonly create: Maybe<PayloadJobsFields_TotalTried_Create>;
-  readonly delete: Maybe<PayloadJobsFields_TotalTried_Delete>;
-  readonly read: Maybe<PayloadJobsFields_TotalTried_Read>;
-  readonly update: Maybe<PayloadJobsFields_TotalTried_Update>;
-};
-
-export type PayloadJobsFields_TotalTried_Create = {
-  readonly __typename?: 'PayloadJobsFields_totalTried_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TotalTried_Delete = {
-  readonly __typename?: 'PayloadJobsFields_totalTried_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TotalTried_Read = {
-  readonly __typename?: 'PayloadJobsFields_totalTried_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_TotalTried_Update = {
-  readonly __typename?: 'PayloadJobsFields_totalTried_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_UpdatedAt = {
-  readonly __typename?: 'PayloadJobsFields_updatedAt';
-  readonly create: Maybe<PayloadJobsFields_UpdatedAt_Create>;
-  readonly delete: Maybe<PayloadJobsFields_UpdatedAt_Delete>;
-  readonly read: Maybe<PayloadJobsFields_UpdatedAt_Read>;
-  readonly update: Maybe<PayloadJobsFields_UpdatedAt_Update>;
-};
-
-export type PayloadJobsFields_UpdatedAt_Create = {
-  readonly __typename?: 'PayloadJobsFields_updatedAt_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_UpdatedAt_Delete = {
-  readonly __typename?: 'PayloadJobsFields_updatedAt_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_UpdatedAt_Read = {
-  readonly __typename?: 'PayloadJobsFields_updatedAt_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_UpdatedAt_Update = {
-  readonly __typename?: 'PayloadJobsFields_updatedAt_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_WaitUntil = {
-  readonly __typename?: 'PayloadJobsFields_waitUntil';
-  readonly create: Maybe<PayloadJobsFields_WaitUntil_Create>;
-  readonly delete: Maybe<PayloadJobsFields_WaitUntil_Delete>;
-  readonly read: Maybe<PayloadJobsFields_WaitUntil_Read>;
-  readonly update: Maybe<PayloadJobsFields_WaitUntil_Update>;
-};
-
-export type PayloadJobsFields_WaitUntil_Create = {
-  readonly __typename?: 'PayloadJobsFields_waitUntil_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_WaitUntil_Delete = {
-  readonly __typename?: 'PayloadJobsFields_waitUntil_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_WaitUntil_Read = {
-  readonly __typename?: 'PayloadJobsFields_waitUntil_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsFields_WaitUntil_Update = {
-  readonly __typename?: 'PayloadJobsFields_waitUntil_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PayloadJobsReadAccess = {
-  readonly __typename?: 'PayloadJobsReadAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsReadDocAccess = {
-  readonly __typename?: 'PayloadJobsReadDocAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsUpdateAccess = {
-  readonly __typename?: 'PayloadJobsUpdateAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
-export type PayloadJobsUpdateDocAccess = {
-  readonly __typename?: 'PayloadJobsUpdateDocAccess';
-  readonly permission: Scalars['Boolean']['output'];
-  readonly where: Maybe<Scalars['JSONObject']['output']>;
-};
-
 export type PayloadLockedDocument = {
   readonly __typename?: 'PayloadLockedDocument';
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
@@ -7036,7 +5284,6 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo =
   | 'exams'
   | 'faqs'
   | 'media'
-  | 'payload_jobs'
   | 'posts'
   | 'questions'
   | 'recomendations'
@@ -7054,7 +5301,7 @@ export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
 export type PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo =
   | 'admins';
 
-export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | PayloadJob | Post | Question | Recomendation | Subject | Tariff | Test | TestResult | User;
+export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | Post | Question | Recomendation | Subject | Tariff | Test | TestResult | User;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -7067,7 +5314,6 @@ export type PayloadLockedDocument_DocumentRelationshipInputRelationTo =
   | 'exams'
   | 'faqs'
   | 'media'
-  | 'payload_jobs'
   | 'posts'
   | 'questions'
   | 'recomendations'
@@ -7083,7 +5329,6 @@ export type PayloadLockedDocument_Document_RelationTo =
   | 'exams'
   | 'faqs'
   | 'media'
-  | 'payload_jobs'
   | 'posts'
   | 'questions'
   | 'recomendations'
@@ -7140,7 +5385,6 @@ export type PayloadLockedDocument_Document_Relation_RelationTo =
   | 'exams'
   | 'faqs'
   | 'media'
-  | 'payload_jobs'
   | 'posts'
   | 'questions'
   | 'recomendations'
@@ -8088,9 +6332,9 @@ export type Post = {
   readonly categories: Maybe<ReadonlyArray<Exam>>;
   readonly content: Maybe<Scalars['JSON']['output']>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly heroImage: Maybe<Media>;
+  readonly description: Maybe<Scalars['String']['output']>;
   readonly id: Scalars['Int']['output'];
-  readonly meta: Maybe<Post_Meta>;
+  readonly image: Maybe<Media>;
   readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
   readonly relatedPosts: Maybe<ReadonlyArray<Post>>;
   readonly slug: Maybe<Scalars['String']['output']>;
@@ -8111,7 +6355,7 @@ export type PostContentArgs = {
 };
 
 
-export type PostHeroImageArgs = {
+export type PostImageArgs = {
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   locale: InputMaybe<LocaleInputType>;
 };
@@ -8129,7 +6373,6 @@ export type PostUpdate__Status_MutationInput =
 
 export type PostVersion = {
   readonly __typename?: 'PostVersion';
-  readonly autosave: Maybe<Scalars['Boolean']['output']>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly id: Maybe<Scalars['Int']['output']>;
   readonly latest: Maybe<Scalars['Boolean']['output']>;
@@ -8153,8 +6396,8 @@ export type PostVersion_Version = {
   readonly categories: Maybe<ReadonlyArray<Exam>>;
   readonly content: Maybe<Scalars['JSON']['output']>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly heroImage: Maybe<Media>;
-  readonly meta: Maybe<PostVersion_Version_Meta>;
+  readonly description: Maybe<Scalars['String']['output']>;
+  readonly image: Maybe<Media>;
   readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
   readonly relatedPosts: Maybe<ReadonlyArray<Post>>;
   readonly slug: Maybe<Scalars['String']['output']>;
@@ -8175,7 +6418,7 @@ export type PostVersion_VersionContentArgs = {
 };
 
 
-export type PostVersion_VersionHeroImageArgs = {
+export type PostVersion_VersionImageArgs = {
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   locale: InputMaybe<LocaleInputType>;
 };
@@ -8187,19 +6430,6 @@ export type PostVersion_VersionRelatedPostsArgs = {
   locale: InputMaybe<LocaleInputType>;
 };
 
-export type PostVersion_Version_Meta = {
-  readonly __typename?: 'PostVersion_Version_Meta';
-  readonly description: Maybe<Scalars['String']['output']>;
-  readonly image: Maybe<Media>;
-  readonly title: Maybe<Scalars['String']['output']>;
-};
-
-
-export type PostVersion_Version_MetaImageArgs = {
-  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
-  locale: InputMaybe<LocaleInputType>;
-};
-
 export type PostVersion_Version__Status =
   | 'draft'
   | 'published';
@@ -8207,19 +6437,6 @@ export type PostVersion_Version__Status =
 export type PostVersion_PublishedLocale =
   | 'en'
   | 'ru';
-
-export type Post_Meta = {
-  readonly __typename?: 'Post_Meta';
-  readonly description: Maybe<Scalars['String']['output']>;
-  readonly image: Maybe<Media>;
-  readonly title: Maybe<Scalars['String']['output']>;
-};
-
-
-export type Post_MetaImageArgs = {
-  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
-  locale: InputMaybe<LocaleInputType>;
-};
 
 export type Post__Status =
   | 'draft'
@@ -8269,13 +6486,14 @@ export type Post_CreatedAt_Operator = {
   readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type Post_HeroImage_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+export type Post_Description_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Post_Id_Operator = {
@@ -8288,32 +6506,13 @@ export type Post_Id_Operator = {
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Post_Meta__Description_Operator = {
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Post_Meta__Image_Operator = {
+export type Post_Image_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-};
-
-export type Post_Meta__Title_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Post_PublishedAt_Operator = {
@@ -8381,11 +6580,9 @@ export type Post_Where = {
   readonly categories: InputMaybe<Post_Categories_Operator>;
   readonly content: InputMaybe<Post_Content_Operator>;
   readonly createdAt: InputMaybe<Post_CreatedAt_Operator>;
-  readonly heroImage: InputMaybe<Post_HeroImage_Operator>;
+  readonly description: InputMaybe<Post_Description_Operator>;
   readonly id: InputMaybe<Post_Id_Operator>;
-  readonly meta__description: InputMaybe<Post_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<Post_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<Post_Meta__Title_Operator>;
+  readonly image: InputMaybe<Post_Image_Operator>;
   readonly publishedAt: InputMaybe<Post_PublishedAt_Operator>;
   readonly relatedPosts: InputMaybe<Post_RelatedPosts_Operator>;
   readonly slug: InputMaybe<Post_Slug_Operator>;
@@ -8401,11 +6598,9 @@ export type Post_Where_And = {
   readonly categories: InputMaybe<Post_Categories_Operator>;
   readonly content: InputMaybe<Post_Content_Operator>;
   readonly createdAt: InputMaybe<Post_CreatedAt_Operator>;
-  readonly heroImage: InputMaybe<Post_HeroImage_Operator>;
+  readonly description: InputMaybe<Post_Description_Operator>;
   readonly id: InputMaybe<Post_Id_Operator>;
-  readonly meta__description: InputMaybe<Post_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<Post_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<Post_Meta__Title_Operator>;
+  readonly image: InputMaybe<Post_Image_Operator>;
   readonly publishedAt: InputMaybe<Post_PublishedAt_Operator>;
   readonly relatedPosts: InputMaybe<Post_RelatedPosts_Operator>;
   readonly slug: InputMaybe<Post_Slug_Operator>;
@@ -8421,11 +6616,9 @@ export type Post_Where_Or = {
   readonly categories: InputMaybe<Post_Categories_Operator>;
   readonly content: InputMaybe<Post_Content_Operator>;
   readonly createdAt: InputMaybe<Post_CreatedAt_Operator>;
-  readonly heroImage: InputMaybe<Post_HeroImage_Operator>;
+  readonly description: InputMaybe<Post_Description_Operator>;
   readonly id: InputMaybe<Post_Id_Operator>;
-  readonly meta__description: InputMaybe<Post_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<Post_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<Post_Meta__Title_Operator>;
+  readonly image: InputMaybe<Post_Image_Operator>;
   readonly publishedAt: InputMaybe<Post_PublishedAt_Operator>;
   readonly relatedPosts: InputMaybe<Post_RelatedPosts_Operator>;
   readonly slug: InputMaybe<Post_Slug_Operator>;
@@ -8480,7 +6673,6 @@ export type PostsDocAccessFields = {
   readonly content: Maybe<PostsDocAccessFields_Content>;
   readonly createdAt: Maybe<PostsDocAccessFields_CreatedAt>;
   readonly description: Maybe<PostsDocAccessFields_Description>;
-  readonly heroImage: Maybe<PostsDocAccessFields_HeroImage>;
   readonly image: Maybe<PostsDocAccessFields_Image>;
   readonly publishedAt: Maybe<PostsDocAccessFields_PublishedAt>;
   readonly relatedPosts: Maybe<PostsDocAccessFields_RelatedPosts>;
@@ -8627,34 +6819,6 @@ export type PostsDocAccessFields_Description_Read = {
 
 export type PostsDocAccessFields_Description_Update = {
   readonly __typename?: 'PostsDocAccessFields_description_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsDocAccessFields_HeroImage = {
-  readonly __typename?: 'PostsDocAccessFields_heroImage';
-  readonly create: Maybe<PostsDocAccessFields_HeroImage_Create>;
-  readonly delete: Maybe<PostsDocAccessFields_HeroImage_Delete>;
-  readonly read: Maybe<PostsDocAccessFields_HeroImage_Read>;
-  readonly update: Maybe<PostsDocAccessFields_HeroImage_Update>;
-};
-
-export type PostsDocAccessFields_HeroImage_Create = {
-  readonly __typename?: 'PostsDocAccessFields_heroImage_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsDocAccessFields_HeroImage_Delete = {
-  readonly __typename?: 'PostsDocAccessFields_heroImage_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsDocAccessFields_HeroImage_Read = {
-  readonly __typename?: 'PostsDocAccessFields_heroImage_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsDocAccessFields_HeroImage_Update = {
-  readonly __typename?: 'PostsDocAccessFields_heroImage_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -8861,7 +7025,6 @@ export type PostsFields = {
   readonly content: Maybe<PostsFields_Content>;
   readonly createdAt: Maybe<PostsFields_CreatedAt>;
   readonly description: Maybe<PostsFields_Description>;
-  readonly heroImage: Maybe<PostsFields_HeroImage>;
   readonly image: Maybe<PostsFields_Image>;
   readonly publishedAt: Maybe<PostsFields_PublishedAt>;
   readonly relatedPosts: Maybe<PostsFields_RelatedPosts>;
@@ -9008,34 +7171,6 @@ export type PostsFields_Description_Read = {
 
 export type PostsFields_Description_Update = {
   readonly __typename?: 'PostsFields_description_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsFields_HeroImage = {
-  readonly __typename?: 'PostsFields_heroImage';
-  readonly create: Maybe<PostsFields_HeroImage_Create>;
-  readonly delete: Maybe<PostsFields_HeroImage_Delete>;
-  readonly read: Maybe<PostsFields_HeroImage_Read>;
-  readonly update: Maybe<PostsFields_HeroImage_Update>;
-};
-
-export type PostsFields_HeroImage_Create = {
-  readonly __typename?: 'PostsFields_heroImage_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsFields_HeroImage_Delete = {
-  readonly __typename?: 'PostsFields_heroImage_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsFields_HeroImage_Read = {
-  readonly __typename?: 'PostsFields_heroImage_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type PostsFields_HeroImage_Update = {
-  readonly __typename?: 'PostsFields_heroImage_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -9285,8 +7420,6 @@ export type Query = {
   readonly GetUserTests: Maybe<PaginatedTestsWithStatus>;
   readonly HomePage: Maybe<HomePage>;
   readonly Media: Maybe<Media>;
-  readonly PayloadJob: Maybe<PayloadJob>;
-  readonly PayloadJobs: Maybe<PayloadJobs>;
   readonly PayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly PayloadLockedDocuments: Maybe<PayloadLockedDocuments>;
   readonly PayloadPreference: Maybe<PayloadPreference>;
@@ -9312,7 +7445,6 @@ export type Query = {
   readonly countCourses: Maybe<CountCourses>;
   readonly countExams: Maybe<CountExams>;
   readonly countFaqs: Maybe<CountFaqs>;
-  readonly countPayloadJobs: Maybe<CountPayloadJobs>;
   readonly countPayloadLockedDocuments: Maybe<CountPayloadLockedDocuments>;
   readonly countPayloadPreferences: Maybe<CountPayloadPreferences>;
   readonly countPosts: Maybe<CountPosts>;
@@ -9330,7 +7462,6 @@ export type Query = {
   readonly docAccessFaq: Maybe<FaqsDocAccess>;
   readonly docAccessHomePage: Maybe<HomePageDocAccess>;
   readonly docAccessMedia: Maybe<MediaDocAccess>;
-  readonly docAccessPayloadJob: Maybe<Payload_JobsDocAccess>;
   readonly docAccessPayloadLockedDocument: Maybe<Payload_Locked_DocumentsDocAccess>;
   readonly docAccessPayloadPreference: Maybe<Payload_PreferencesDocAccess>;
   readonly docAccessPost: Maybe<PostsDocAccess>;
@@ -9450,26 +7581,6 @@ export type QueryMediaArgs = {
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   id: Scalars['Int']['input'];
   locale: InputMaybe<LocaleInputType>;
-};
-
-
-export type QueryPayloadJobArgs = {
-  draft: InputMaybe<Scalars['Boolean']['input']>;
-  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
-  id: Scalars['Int']['input'];
-  locale: InputMaybe<LocaleInputType>;
-};
-
-
-export type QueryPayloadJobsArgs = {
-  draft: InputMaybe<Scalars['Boolean']['input']>;
-  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
-  limit: InputMaybe<Scalars['Int']['input']>;
-  locale: InputMaybe<LocaleInputType>;
-  page: InputMaybe<Scalars['Int']['input']>;
-  pagination: InputMaybe<Scalars['Boolean']['input']>;
-  sort: InputMaybe<Scalars['String']['input']>;
-  where: InputMaybe<PayloadJob_Where>;
 };
 
 
@@ -9713,13 +7824,6 @@ export type QueryCountFaqsArgs = {
 };
 
 
-export type QueryCountPayloadJobsArgs = {
-  draft: InputMaybe<Scalars['Boolean']['input']>;
-  locale: InputMaybe<LocaleInputType>;
-  where: InputMaybe<PayloadJob_Where>;
-};
-
-
 export type QueryCountPayloadLockedDocumentsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
@@ -9818,11 +7922,6 @@ export type QueryDocAccessFaqArgs = {
 
 
 export type QueryDocAccessMediaArgs = {
-  id: Scalars['Int']['input'];
-};
-
-
-export type QueryDocAccessPayloadJobArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -14477,6 +12576,7 @@ export type User_SignupMethod =
 
 export type User_SignupMethod_Input =
   | 'email'
+  | 'google'
   | 'yandex';
 
 export type User_SignupMethod_MutationInput =
@@ -15119,11 +13219,6 @@ export type CountFaqs = {
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
 };
 
-export type CountPayloadJobs = {
-  readonly __typename?: 'countPayloadJobs';
-  readonly totalDocs: Maybe<Scalars['Int']['output']>;
-};
-
 export type CountPayloadLockedDocuments = {
   readonly __typename?: 'countPayloadLockedDocuments';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
@@ -15430,62 +13525,6 @@ export type MutationMediaUpdateInput = {
   readonly width: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type MutationPayloadJobInput = {
-  readonly completedAt: InputMaybe<Scalars['String']['input']>;
-  readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly error: InputMaybe<Scalars['JSON']['input']>;
-  readonly hasError: InputMaybe<Scalars['Boolean']['input']>;
-  readonly input: InputMaybe<Scalars['JSON']['input']>;
-  readonly log: InputMaybe<ReadonlyArray<InputMaybe<MutationPayloadJob_LogInput>>>;
-  readonly processing: InputMaybe<Scalars['Boolean']['input']>;
-  readonly queue: InputMaybe<Scalars['String']['input']>;
-  readonly taskSlug: InputMaybe<PayloadJob_TaskSlug_MutationInput>;
-  readonly taskStatus: InputMaybe<Scalars['JSON']['input']>;
-  readonly totalTried: InputMaybe<Scalars['Float']['input']>;
-  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
-  readonly waitUntil: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationPayloadJobUpdateInput = {
-  readonly completedAt: InputMaybe<Scalars['String']['input']>;
-  readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly error: InputMaybe<Scalars['JSON']['input']>;
-  readonly hasError: InputMaybe<Scalars['Boolean']['input']>;
-  readonly input: InputMaybe<Scalars['JSON']['input']>;
-  readonly log: InputMaybe<ReadonlyArray<InputMaybe<MutationPayloadJobUpdate_LogInput>>>;
-  readonly processing: InputMaybe<Scalars['Boolean']['input']>;
-  readonly queue: InputMaybe<Scalars['String']['input']>;
-  readonly taskSlug: InputMaybe<PayloadJobUpdate_TaskSlug_MutationInput>;
-  readonly taskStatus: InputMaybe<Scalars['JSON']['input']>;
-  readonly totalTried: InputMaybe<Scalars['Float']['input']>;
-  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
-  readonly waitUntil: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationPayloadJobUpdate_LogInput = {
-  readonly completedAt: Scalars['String']['input'];
-  readonly error: InputMaybe<Scalars['JSON']['input']>;
-  readonly executedAt: Scalars['String']['input'];
-  readonly id: InputMaybe<Scalars['String']['input']>;
-  readonly input: InputMaybe<Scalars['JSON']['input']>;
-  readonly output: InputMaybe<Scalars['JSON']['input']>;
-  readonly state: Scalars['String']['input'];
-  readonly taskID: Scalars['String']['input'];
-  readonly taskSlug: PayloadJobUpdate_Log_TaskSlug_MutationInput;
-};
-
-export type MutationPayloadJob_LogInput = {
-  readonly completedAt: Scalars['String']['input'];
-  readonly error: InputMaybe<Scalars['JSON']['input']>;
-  readonly executedAt: Scalars['String']['input'];
-  readonly id: InputMaybe<Scalars['String']['input']>;
-  readonly input: InputMaybe<Scalars['JSON']['input']>;
-  readonly output: InputMaybe<Scalars['JSON']['input']>;
-  readonly state: Scalars['String']['input'];
-  readonly taskID: Scalars['String']['input'];
-  readonly taskSlug: PayloadJob_Log_TaskSlug_MutationInput;
-};
-
 export type MutationPayloadLockedDocumentInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly document: InputMaybe<PayloadLockedDocument_DocumentRelationshipInput>;
@@ -15523,8 +13562,8 @@ export type MutationPostInput = {
   readonly categories: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly content: Scalars['JSON']['input'];
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly heroImage: InputMaybe<Scalars['Int']['input']>;
-  readonly meta: InputMaybe<MutationPost_MetaInput>;
+  readonly description: Scalars['String']['input'];
+  readonly image: InputMaybe<Scalars['Int']['input']>;
   readonly publishedAt: InputMaybe<Scalars['String']['input']>;
   readonly relatedPosts: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly slug: InputMaybe<Scalars['String']['input']>;
@@ -15538,26 +13577,14 @@ export type MutationPostUpdateInput = {
   readonly categories: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly content: InputMaybe<Scalars['JSON']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly heroImage: InputMaybe<Scalars['Int']['input']>;
-  readonly meta: InputMaybe<MutationPostUpdate_MetaInput>;
+  readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly image: InputMaybe<Scalars['Int']['input']>;
   readonly publishedAt: InputMaybe<Scalars['String']['input']>;
   readonly relatedPosts: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly slug: InputMaybe<Scalars['String']['input']>;
   readonly slugLock: InputMaybe<Scalars['Boolean']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationPostUpdate_MetaInput = {
-  readonly description: InputMaybe<Scalars['String']['input']>;
-  readonly image: InputMaybe<Scalars['Int']['input']>;
-  readonly title: InputMaybe<Scalars['String']['input']>;
-};
-
-export type MutationPost_MetaInput = {
-  readonly description: InputMaybe<Scalars['String']['input']>;
-  readonly image: InputMaybe<Scalars['Int']['input']>;
-  readonly title: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationQuestionInput = {
@@ -15744,24 +13771,6 @@ export type MutationUserUpdateInput = {
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Payload_JobsAccess = {
-  readonly __typename?: 'payload_jobsAccess';
-  readonly create: Maybe<PayloadJobsCreateAccess>;
-  readonly delete: Maybe<PayloadJobsDeleteAccess>;
-  readonly fields: Maybe<PayloadJobsFields>;
-  readonly read: Maybe<PayloadJobsReadAccess>;
-  readonly update: Maybe<PayloadJobsUpdateAccess>;
-};
-
-export type Payload_JobsDocAccess = {
-  readonly __typename?: 'payload_jobsDocAccess';
-  readonly create: Maybe<PayloadJobsCreateDocAccess>;
-  readonly delete: Maybe<PayloadJobsDeleteDocAccess>;
-  readonly fields: Maybe<PayloadJobsDocAccessFields>;
-  readonly read: Maybe<PayloadJobsReadDocAccess>;
-  readonly update: Maybe<PayloadJobsUpdateDocAccess>;
-};
-
 export type Payload_Locked_DocumentsAccess = {
   readonly __typename?: 'payload_locked_documentsAccess';
   readonly create: Maybe<PayloadLockedDocumentsCreateAccess>;
@@ -15944,12 +13953,6 @@ export type UsersDocAccess = {
   readonly update: Maybe<UsersUpdateDocAccess>;
 };
 
-export type VersionsPost_Autosave_Operator = {
-  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type VersionsPost_CreatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
@@ -15975,34 +13978,6 @@ export type VersionsPost_Latest_Operator = {
   readonly equals: InputMaybe<Scalars['Boolean']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type VersionsPost_Meta__Description_Operator = {
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-};
-
-export type VersionsPost_Meta__Image_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-};
-
-export type VersionsPost_Meta__Title_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type VersionsPost_Parent_Operator = {
@@ -16084,7 +14059,17 @@ export type VersionsPost_Version__CreatedAt_Operator = {
   readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type VersionsPost_Version__HeroImage_Operator = {
+export type VersionsPost_Version__Description_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type VersionsPost_Version__Image_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
@@ -16154,13 +14139,9 @@ export type VersionsPost_Version__UpdatedAt_Operator = {
 export type VersionsPost_Where = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_Or>>>;
-  readonly autosave: InputMaybe<VersionsPost_Autosave_Operator>;
   readonly createdAt: InputMaybe<VersionsPost_CreatedAt_Operator>;
   readonly id: InputMaybe<VersionsPost_Id_Operator>;
   readonly latest: InputMaybe<VersionsPost_Latest_Operator>;
-  readonly meta__description: InputMaybe<VersionsPost_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<VersionsPost_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<VersionsPost_Meta__Title_Operator>;
   readonly parent: InputMaybe<VersionsPost_Parent_Operator>;
   readonly publishedLocale: InputMaybe<VersionsPost_PublishedLocale_Operator>;
   readonly snapshot: InputMaybe<VersionsPost_Snapshot_Operator>;
@@ -16169,7 +14150,8 @@ export type VersionsPost_Where = {
   readonly version__categories: InputMaybe<VersionsPost_Version__Categories_Operator>;
   readonly version__content: InputMaybe<VersionsPost_Version__Content_Operator>;
   readonly version__createdAt: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
-  readonly version__heroImage: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  readonly version__description: InputMaybe<VersionsPost_Version__Description_Operator>;
+  readonly version__image: InputMaybe<VersionsPost_Version__Image_Operator>;
   readonly version__publishedAt: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   readonly version__relatedPosts: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
   readonly version__slug: InputMaybe<VersionsPost_Version__Slug_Operator>;
@@ -16181,13 +14163,9 @@ export type VersionsPost_Where = {
 export type VersionsPost_Where_And = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_Or>>>;
-  readonly autosave: InputMaybe<VersionsPost_Autosave_Operator>;
   readonly createdAt: InputMaybe<VersionsPost_CreatedAt_Operator>;
   readonly id: InputMaybe<VersionsPost_Id_Operator>;
   readonly latest: InputMaybe<VersionsPost_Latest_Operator>;
-  readonly meta__description: InputMaybe<VersionsPost_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<VersionsPost_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<VersionsPost_Meta__Title_Operator>;
   readonly parent: InputMaybe<VersionsPost_Parent_Operator>;
   readonly publishedLocale: InputMaybe<VersionsPost_PublishedLocale_Operator>;
   readonly snapshot: InputMaybe<VersionsPost_Snapshot_Operator>;
@@ -16196,7 +14174,8 @@ export type VersionsPost_Where_And = {
   readonly version__categories: InputMaybe<VersionsPost_Version__Categories_Operator>;
   readonly version__content: InputMaybe<VersionsPost_Version__Content_Operator>;
   readonly version__createdAt: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
-  readonly version__heroImage: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  readonly version__description: InputMaybe<VersionsPost_Version__Description_Operator>;
+  readonly version__image: InputMaybe<VersionsPost_Version__Image_Operator>;
   readonly version__publishedAt: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   readonly version__relatedPosts: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
   readonly version__slug: InputMaybe<VersionsPost_Version__Slug_Operator>;
@@ -16208,13 +14187,9 @@ export type VersionsPost_Where_And = {
 export type VersionsPost_Where_Or = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<VersionsPost_Where_Or>>>;
-  readonly autosave: InputMaybe<VersionsPost_Autosave_Operator>;
   readonly createdAt: InputMaybe<VersionsPost_CreatedAt_Operator>;
   readonly id: InputMaybe<VersionsPost_Id_Operator>;
   readonly latest: InputMaybe<VersionsPost_Latest_Operator>;
-  readonly meta__description: InputMaybe<VersionsPost_Meta__Description_Operator>;
-  readonly meta__image: InputMaybe<VersionsPost_Meta__Image_Operator>;
-  readonly meta__title: InputMaybe<VersionsPost_Meta__Title_Operator>;
   readonly parent: InputMaybe<VersionsPost_Parent_Operator>;
   readonly publishedLocale: InputMaybe<VersionsPost_PublishedLocale_Operator>;
   readonly snapshot: InputMaybe<VersionsPost_Snapshot_Operator>;
@@ -16223,7 +14198,8 @@ export type VersionsPost_Where_Or = {
   readonly version__categories: InputMaybe<VersionsPost_Version__Categories_Operator>;
   readonly version__content: InputMaybe<VersionsPost_Version__Content_Operator>;
   readonly version__createdAt: InputMaybe<VersionsPost_Version__CreatedAt_Operator>;
-  readonly version__heroImage: InputMaybe<VersionsPost_Version__HeroImage_Operator>;
+  readonly version__description: InputMaybe<VersionsPost_Version__Description_Operator>;
+  readonly version__image: InputMaybe<VersionsPost_Version__Image_Operator>;
   readonly version__publishedAt: InputMaybe<VersionsPost_Version__PublishedAt_Operator>;
   readonly version__relatedPosts: InputMaybe<VersionsPost_Version__RelatedPosts_Operator>;
   readonly version__slug: InputMaybe<VersionsPost_Version__Slug_Operator>;
@@ -16286,7 +14262,7 @@ export type Kinescope_Video_FragmentFragment = { readonly __typename?: 'Course_K
 
 export type MediaFragmentFragment = { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string };
 
-export type PostFragmentFragment = { readonly __typename?: 'Post', readonly title: string, readonly content: any, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly relatedPosts: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number }>, readonly heroImage: { readonly __typename?: 'Media', readonly url: string }, readonly meta: { readonly __typename?: 'Post_Meta', readonly image: { readonly __typename?: 'Media', readonly url: string } } };
+export type PostFragmentFragment = { readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly content: any, readonly publishedAt: any, readonly image: { readonly __typename?: 'Media', readonly url: string, readonly alt: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly relatedPosts: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number }> };
 
 export type QuestionFragmentFragment = { readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> };
 
@@ -16308,7 +14284,7 @@ export type GetPostBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetPostBySlugQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly content: any, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly relatedPosts: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number }>, readonly heroImage: { readonly __typename?: 'Media', readonly url: string }, readonly meta: { readonly __typename?: 'Post_Meta', readonly image: { readonly __typename?: 'Media', readonly url: string } } }> } };
+export type GetPostBySlugQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly content: any, readonly publishedAt: any, readonly image: { readonly __typename?: 'Media', readonly url: string, readonly alt: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly relatedPosts: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number }> }> } };
 
 export type GetPostListQueryVariables = Exact<{
   limit: Scalars['Int']['input'];
@@ -16316,7 +14292,7 @@ export type GetPostListQueryVariables = Exact<{
 }>;
 
 
-export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly slug: string, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly meta: { readonly __typename?: 'Post_Meta', readonly title: string, readonly description: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly alt: string, readonly height: number, readonly width: number, readonly url: string, readonly createdAt: any, readonly updatedAt: any } } }> } };
+export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly alt: string, readonly url: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }> }> } };
 
 export type GetRecomendationByIdsQueryVariables = Exact<{
   whereOR: InputMaybe<ReadonlyArray<InputMaybe<Recomendation_Where_Or>> | InputMaybe<Recomendation_Where_Or>>;
@@ -16498,7 +14474,14 @@ ${TariffFragmentFragmentDoc}
 ${Kinescope_Video_FragmentFragmentDoc}`;
 export const PostFragmentFragmentDoc = gql`
     fragment PostFragment on Post {
+  id
+  slug
   title
+  description
+  image {
+    url
+    alt
+  }
   content
   categories {
     title
@@ -16506,14 +14489,7 @@ export const PostFragmentFragmentDoc = gql`
   relatedPosts {
     id
   }
-  heroImage {
-    url
-  }
-  meta {
-    image {
-      url
-    }
-  }
+  publishedAt
 }
     `;
 export const RecomendationFragmentFragmentDoc = gql`
@@ -16658,23 +14634,16 @@ export const GetPostListDocument = gql`
     query GetPostList($limit: Int!, $page: Int!) {
   Posts(limit: $limit, page: $page) {
     docs {
-      title
+      id
       slug
+      title
+      image {
+        id
+        alt
+        url
+      }
       categories {
         title
-      }
-      meta {
-        title
-        description
-        image {
-          id
-          alt
-          height
-          width
-          url
-          createdAt
-          updatedAt
-        }
       }
     }
     hasNextPage
