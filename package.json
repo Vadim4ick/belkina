@@ -14,7 +14,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "generate": "npx graphql-codegen --config src/shared/graphql/codegen.ts",
-    "seed": "tsx seed/scripts/index.ts"
+    "seed": "tsx seed/scripts/index.ts",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",

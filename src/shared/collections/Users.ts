@@ -90,10 +90,10 @@ export const Users: CollectionConfig = {
       defaultValue: async ({ req }) => {
         const { docs } = await req.payload.find({
           collection: 'tariffs',
-          limit: 1,
           sort: 'createdAt',
         })
-        return docs.find((doc) => doc.type === 'basic')?.id // первый созданный тариф по умолчанию
+
+        return docs.find((doc) => doc.isFree)?.id
       },
       admin: {
         position: 'sidebar',
