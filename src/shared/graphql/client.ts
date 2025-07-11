@@ -4,7 +4,9 @@ import { auth } from '@/entities/user/auth'
 
 // import dotenv from 'dotenv'
 
-// dotenv.config()
+// dotenv.config({
+//   path: '.env',
+// })
 
 export const PAYLOAD_URL: string = (() => {
   const url = process.env.NEXT_PUBLIC_PAYLOAD_GRAPHQL

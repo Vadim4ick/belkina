@@ -36,6 +36,7 @@ export type Access = {
   readonly questions: Maybe<QuestionsAccess>;
   readonly recomendations: Maybe<RecomendationsAccess>;
   readonly subjects: Maybe<SubjectsAccess>;
+  readonly tariff_types: Maybe<Tariff_TypesAccess>;
   readonly tariffs: Maybe<TariffsAccess>;
   readonly testResults: Maybe<TestResultsAccess>;
   readonly tests: Maybe<TestsAccess>;
@@ -4743,6 +4744,7 @@ export type Mutation = {
   readonly createRecomendation: Maybe<Recomendation>;
   readonly createSubject: Maybe<Subject>;
   readonly createTariff: Maybe<Tariff>;
+  readonly createTariffType: Maybe<TariffType>;
   readonly createTest: Maybe<Test>;
   readonly createTestResult: Maybe<TestResult>;
   readonly createUser: Maybe<User>;
@@ -4758,6 +4760,7 @@ export type Mutation = {
   readonly deleteRecomendation: Maybe<Recomendation>;
   readonly deleteSubject: Maybe<Subject>;
   readonly deleteTariff: Maybe<Tariff>;
+  readonly deleteTariffType: Maybe<TariffType>;
   readonly deleteTest: Maybe<Test>;
   readonly deleteTestResult: Maybe<TestResult>;
   readonly deleteUser: Maybe<User>;
@@ -4772,6 +4775,7 @@ export type Mutation = {
   readonly duplicateRecomendation: Maybe<Recomendation>;
   readonly duplicateSubject: Maybe<Subject>;
   readonly duplicateTariff: Maybe<Tariff>;
+  readonly duplicateTariffType: Maybe<TariffType>;
   readonly duplicateTest: Maybe<Test>;
   readonly duplicateTestResult: Maybe<TestResult>;
   readonly duplicateUser: Maybe<User>;
@@ -4795,6 +4799,7 @@ export type Mutation = {
   readonly updateRecomendation: Maybe<Recomendation>;
   readonly updateSubject: Maybe<Subject>;
   readonly updateTariff: Maybe<Tariff>;
+  readonly updateTariffType: Maybe<TariffType>;
   readonly updateTest: Maybe<Test>;
   readonly updateTestResult: Maybe<TestResult>;
   readonly updateUser: Maybe<User>;
@@ -4886,6 +4891,13 @@ export type MutationCreateTariffArgs = {
 };
 
 
+export type MutationCreateTariffTypeArgs = {
+  data: MutationTariffTypeInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationCreateTestArgs = {
   data: MutationTestInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
@@ -4967,6 +4979,11 @@ export type MutationDeleteTariffArgs = {
 };
 
 
+export type MutationDeleteTariffTypeArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationDeleteTestArgs = {
   id: Scalars['Int']['input'];
 };
@@ -5044,6 +5061,12 @@ export type MutationDuplicateSubjectArgs = {
 
 export type MutationDuplicateTariffArgs = {
   data: MutationTariffInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateTariffTypeArgs = {
+  data: MutationTariffTypeInput;
   id: Scalars['Int']['input'];
 };
 
@@ -5211,6 +5234,15 @@ export type MutationUpdateTariffArgs = {
 };
 
 
+export type MutationUpdateTariffTypeArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationTariffTypeUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationUpdateTestArgs = {
   autosave: InputMaybe<Scalars['Boolean']['input']>;
   data: MutationTestUpdateInput;
@@ -5288,6 +5320,7 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo =
   | 'questions'
   | 'recomendations'
   | 'subjects'
+  | 'tariff_types'
   | 'tariffs'
   | 'testResults'
   | 'tests'
@@ -5301,7 +5334,7 @@ export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
 export type PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo =
   | 'admins';
 
-export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | Post | Question | Recomendation | Subject | Tariff | Test | TestResult | User;
+export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | Post | Question | Recomendation | Subject | Tariff | TariffType | Test | TestResult | User;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -5318,6 +5351,7 @@ export type PayloadLockedDocument_DocumentRelationshipInputRelationTo =
   | 'questions'
   | 'recomendations'
   | 'subjects'
+  | 'tariff_types'
   | 'tariffs'
   | 'testResults'
   | 'tests'
@@ -5333,6 +5367,7 @@ export type PayloadLockedDocument_Document_RelationTo =
   | 'questions'
   | 'recomendations'
   | 'subjects'
+  | 'tariff_types'
   | 'tariffs'
   | 'testResults'
   | 'tests'
@@ -5389,6 +5424,7 @@ export type PayloadLockedDocument_Document_Relation_RelationTo =
   | 'questions'
   | 'recomendations'
   | 'subjects'
+  | 'tariff_types'
   | 'tariffs'
   | 'testResults'
   | 'tests'
@@ -7433,6 +7469,8 @@ export type Query = {
   readonly Subject: Maybe<Subject>;
   readonly Subjects: Maybe<Subjects>;
   readonly Tariff: Maybe<Tariff>;
+  readonly TariffType: Maybe<TariffType>;
+  readonly TariffTypes: Maybe<TariffTypes>;
   readonly Tariffs: Maybe<Tariffs>;
   readonly Test: Maybe<Test>;
   readonly TestResult: Maybe<TestResult>;
@@ -7451,6 +7489,7 @@ export type Query = {
   readonly countQuestions: Maybe<CountQuestions>;
   readonly countRecomendations: Maybe<CountRecomendations>;
   readonly countSubjects: Maybe<CountSubjects>;
+  readonly countTariffTypes: Maybe<CountTariffTypes>;
   readonly countTariffs: Maybe<CountTariffs>;
   readonly countTestResults: Maybe<CountTestResults>;
   readonly countTests: Maybe<CountTests>;
@@ -7469,6 +7508,7 @@ export type Query = {
   readonly docAccessRecomendation: Maybe<RecomendationsDocAccess>;
   readonly docAccessSubject: Maybe<SubjectsDocAccess>;
   readonly docAccessTariff: Maybe<TariffsDocAccess>;
+  readonly docAccessTariffType: Maybe<Tariff_TypesDocAccess>;
   readonly docAccessTest: Maybe<TestsDocAccess>;
   readonly docAccessTestResult: Maybe<TestResultsDocAccess>;
   readonly docAccessUser: Maybe<UsersDocAccess>;
@@ -7712,6 +7752,26 @@ export type QueryTariffArgs = {
 };
 
 
+export type QueryTariffTypeArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryTariffTypesArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<TariffType_Where>;
+};
+
+
 export type QueryTariffsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
@@ -7866,6 +7926,13 @@ export type QueryCountSubjectsArgs = {
 };
 
 
+export type QueryCountTariffTypesArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<TariffType_Where>;
+};
+
+
 export type QueryCountTariffsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
@@ -7957,6 +8024,11 @@ export type QueryDocAccessSubjectArgs = {
 
 
 export type QueryDocAccessTariffArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDocAccessTariffTypeArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -10087,14 +10159,409 @@ export type Tariff = {
   readonly price: Scalars['Float']['output'];
   readonly subtitle: Scalars['String']['output'];
   readonly title: Scalars['String']['output'];
-  readonly type: Tariff_Type;
+  readonly type: TariffType;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
-export type TariffUpdate_Type_MutationInput =
-  | 'basic'
-  | 'corporate'
-  | 'pro';
+
+export type TariffTypeArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type TariffType = {
+  readonly __typename?: 'TariffType';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly label: Scalars['String']['output'];
+  readonly slug: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type TariffType_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type TariffType_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TariffType_Label_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TariffType_Slug_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type TariffType_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type TariffType_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_Or>>>;
+  readonly createdAt: InputMaybe<TariffType_CreatedAt_Operator>;
+  readonly id: InputMaybe<TariffType_Id_Operator>;
+  readonly label: InputMaybe<TariffType_Label_Operator>;
+  readonly slug: InputMaybe<TariffType_Slug_Operator>;
+  readonly updatedAt: InputMaybe<TariffType_UpdatedAt_Operator>;
+};
+
+export type TariffType_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_Or>>>;
+  readonly createdAt: InputMaybe<TariffType_CreatedAt_Operator>;
+  readonly id: InputMaybe<TariffType_Id_Operator>;
+  readonly label: InputMaybe<TariffType_Label_Operator>;
+  readonly slug: InputMaybe<TariffType_Slug_Operator>;
+  readonly updatedAt: InputMaybe<TariffType_UpdatedAt_Operator>;
+};
+
+export type TariffType_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<TariffType_Where_Or>>>;
+  readonly createdAt: InputMaybe<TariffType_CreatedAt_Operator>;
+  readonly id: InputMaybe<TariffType_Id_Operator>;
+  readonly label: InputMaybe<TariffType_Label_Operator>;
+  readonly slug: InputMaybe<TariffType_Slug_Operator>;
+  readonly updatedAt: InputMaybe<TariffType_UpdatedAt_Operator>;
+};
+
+export type TariffTypes = {
+  readonly __typename?: 'TariffTypes';
+  readonly docs: ReadonlyArray<TariffType>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type TariffTypesCreateAccess = {
+  readonly __typename?: 'TariffTypesCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesCreateDocAccess = {
+  readonly __typename?: 'TariffTypesCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesDeleteAccess = {
+  readonly __typename?: 'TariffTypesDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesDeleteDocAccess = {
+  readonly __typename?: 'TariffTypesDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesDocAccessFields = {
+  readonly __typename?: 'TariffTypesDocAccessFields';
+  readonly createdAt: Maybe<TariffTypesDocAccessFields_CreatedAt>;
+  readonly label: Maybe<TariffTypesDocAccessFields_Label>;
+  readonly slug: Maybe<TariffTypesDocAccessFields_Slug>;
+  readonly updatedAt: Maybe<TariffTypesDocAccessFields_UpdatedAt>;
+};
+
+export type TariffTypesDocAccessFields_CreatedAt = {
+  readonly __typename?: 'TariffTypesDocAccessFields_createdAt';
+  readonly create: Maybe<TariffTypesDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<TariffTypesDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<TariffTypesDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<TariffTypesDocAccessFields_CreatedAt_Update>;
+};
+
+export type TariffTypesDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'TariffTypesDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'TariffTypesDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'TariffTypesDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'TariffTypesDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Label = {
+  readonly __typename?: 'TariffTypesDocAccessFields_label';
+  readonly create: Maybe<TariffTypesDocAccessFields_Label_Create>;
+  readonly delete: Maybe<TariffTypesDocAccessFields_Label_Delete>;
+  readonly read: Maybe<TariffTypesDocAccessFields_Label_Read>;
+  readonly update: Maybe<TariffTypesDocAccessFields_Label_Update>;
+};
+
+export type TariffTypesDocAccessFields_Label_Create = {
+  readonly __typename?: 'TariffTypesDocAccessFields_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Label_Delete = {
+  readonly __typename?: 'TariffTypesDocAccessFields_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Label_Read = {
+  readonly __typename?: 'TariffTypesDocAccessFields_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Label_Update = {
+  readonly __typename?: 'TariffTypesDocAccessFields_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Slug = {
+  readonly __typename?: 'TariffTypesDocAccessFields_slug';
+  readonly create: Maybe<TariffTypesDocAccessFields_Slug_Create>;
+  readonly delete: Maybe<TariffTypesDocAccessFields_Slug_Delete>;
+  readonly read: Maybe<TariffTypesDocAccessFields_Slug_Read>;
+  readonly update: Maybe<TariffTypesDocAccessFields_Slug_Update>;
+};
+
+export type TariffTypesDocAccessFields_Slug_Create = {
+  readonly __typename?: 'TariffTypesDocAccessFields_slug_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Slug_Delete = {
+  readonly __typename?: 'TariffTypesDocAccessFields_slug_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Slug_Read = {
+  readonly __typename?: 'TariffTypesDocAccessFields_slug_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_Slug_Update = {
+  readonly __typename?: 'TariffTypesDocAccessFields_slug_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'TariffTypesDocAccessFields_updatedAt';
+  readonly create: Maybe<TariffTypesDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TariffTypesDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TariffTypesDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<TariffTypesDocAccessFields_UpdatedAt_Update>;
+};
+
+export type TariffTypesDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'TariffTypesDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TariffTypesDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'TariffTypesDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'TariffTypesDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields = {
+  readonly __typename?: 'TariffTypesFields';
+  readonly createdAt: Maybe<TariffTypesFields_CreatedAt>;
+  readonly label: Maybe<TariffTypesFields_Label>;
+  readonly slug: Maybe<TariffTypesFields_Slug>;
+  readonly updatedAt: Maybe<TariffTypesFields_UpdatedAt>;
+};
+
+export type TariffTypesFields_CreatedAt = {
+  readonly __typename?: 'TariffTypesFields_createdAt';
+  readonly create: Maybe<TariffTypesFields_CreatedAt_Create>;
+  readonly delete: Maybe<TariffTypesFields_CreatedAt_Delete>;
+  readonly read: Maybe<TariffTypesFields_CreatedAt_Read>;
+  readonly update: Maybe<TariffTypesFields_CreatedAt_Update>;
+};
+
+export type TariffTypesFields_CreatedAt_Create = {
+  readonly __typename?: 'TariffTypesFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_CreatedAt_Delete = {
+  readonly __typename?: 'TariffTypesFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_CreatedAt_Read = {
+  readonly __typename?: 'TariffTypesFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_CreatedAt_Update = {
+  readonly __typename?: 'TariffTypesFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Label = {
+  readonly __typename?: 'TariffTypesFields_label';
+  readonly create: Maybe<TariffTypesFields_Label_Create>;
+  readonly delete: Maybe<TariffTypesFields_Label_Delete>;
+  readonly read: Maybe<TariffTypesFields_Label_Read>;
+  readonly update: Maybe<TariffTypesFields_Label_Update>;
+};
+
+export type TariffTypesFields_Label_Create = {
+  readonly __typename?: 'TariffTypesFields_label_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Label_Delete = {
+  readonly __typename?: 'TariffTypesFields_label_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Label_Read = {
+  readonly __typename?: 'TariffTypesFields_label_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Label_Update = {
+  readonly __typename?: 'TariffTypesFields_label_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Slug = {
+  readonly __typename?: 'TariffTypesFields_slug';
+  readonly create: Maybe<TariffTypesFields_Slug_Create>;
+  readonly delete: Maybe<TariffTypesFields_Slug_Delete>;
+  readonly read: Maybe<TariffTypesFields_Slug_Read>;
+  readonly update: Maybe<TariffTypesFields_Slug_Update>;
+};
+
+export type TariffTypesFields_Slug_Create = {
+  readonly __typename?: 'TariffTypesFields_slug_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Slug_Delete = {
+  readonly __typename?: 'TariffTypesFields_slug_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Slug_Read = {
+  readonly __typename?: 'TariffTypesFields_slug_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_Slug_Update = {
+  readonly __typename?: 'TariffTypesFields_slug_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_UpdatedAt = {
+  readonly __typename?: 'TariffTypesFields_updatedAt';
+  readonly create: Maybe<TariffTypesFields_UpdatedAt_Create>;
+  readonly delete: Maybe<TariffTypesFields_UpdatedAt_Delete>;
+  readonly read: Maybe<TariffTypesFields_UpdatedAt_Read>;
+  readonly update: Maybe<TariffTypesFields_UpdatedAt_Update>;
+};
+
+export type TariffTypesFields_UpdatedAt_Create = {
+  readonly __typename?: 'TariffTypesFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_UpdatedAt_Delete = {
+  readonly __typename?: 'TariffTypesFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_UpdatedAt_Read = {
+  readonly __typename?: 'TariffTypesFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesFields_UpdatedAt_Update = {
+  readonly __typename?: 'TariffTypesFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type TariffTypesReadAccess = {
+  readonly __typename?: 'TariffTypesReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesReadDocAccess = {
+  readonly __typename?: 'TariffTypesReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesUpdateAccess = {
+  readonly __typename?: 'TariffTypesUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type TariffTypesUpdateDocAccess = {
+  readonly __typename?: 'TariffTypesUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
 
 export type Tariff_Benefits = {
   readonly __typename?: 'Tariff_Benefits';
@@ -10180,27 +10647,12 @@ export type Tariff_Title_Operator = {
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type Tariff_Type =
-  | 'basic'
-  | 'corporate'
-  | 'pro';
-
-export type Tariff_Type_Input =
-  | 'basic'
-  | 'corporate'
-  | 'pro';
-
-export type Tariff_Type_MutationInput =
-  | 'basic'
-  | 'corporate'
-  | 'pro';
-
 export type Tariff_Type_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Tariff_Type_Input>>>;
-  readonly equals: InputMaybe<Tariff_Type_Input>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Tariff_Type_Input>>>;
-  readonly not_equals: InputMaybe<Tariff_Type_Input>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Tariff_Type_Input>>>;
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
 };
 
 export type Tariff_UpdatedAt_Operator = {
@@ -13249,6 +13701,11 @@ export type CountSubjects = {
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountTariffTypes = {
+  readonly __typename?: 'countTariffTypes';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountTariffs = {
   readonly __typename?: 'countTariffs';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
@@ -13672,7 +14129,21 @@ export type MutationTariffInput = {
   readonly price: Scalars['Float']['input'];
   readonly subtitle: Scalars['String']['input'];
   readonly title: Scalars['String']['input'];
-  readonly type: Tariff_Type_MutationInput;
+  readonly type: InputMaybe<Scalars['Int']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTariffTypeInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly label: Scalars['String']['input'];
+  readonly slug: Scalars['String']['input'];
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationTariffTypeUpdateInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly label: InputMaybe<Scalars['String']['input']>;
+  readonly slug: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13683,7 +14154,7 @@ export type MutationTariffUpdateInput = {
   readonly price: InputMaybe<Scalars['Float']['input']>;
   readonly subtitle: InputMaybe<Scalars['String']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
-  readonly type: InputMaybe<TariffUpdate_Type_MutationInput>;
+  readonly type: InputMaybe<Scalars['Int']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13879,6 +14350,24 @@ export type SubjectsDocAccess = {
   readonly fields: Maybe<SubjectsDocAccessFields>;
   readonly read: Maybe<SubjectsReadDocAccess>;
   readonly update: Maybe<SubjectsUpdateDocAccess>;
+};
+
+export type Tariff_TypesAccess = {
+  readonly __typename?: 'tariff_typesAccess';
+  readonly create: Maybe<TariffTypesCreateAccess>;
+  readonly delete: Maybe<TariffTypesDeleteAccess>;
+  readonly fields: Maybe<TariffTypesFields>;
+  readonly read: Maybe<TariffTypesReadAccess>;
+  readonly update: Maybe<TariffTypesUpdateAccess>;
+};
+
+export type Tariff_TypesDocAccess = {
+  readonly __typename?: 'tariff_typesDocAccess';
+  readonly create: Maybe<TariffTypesCreateDocAccess>;
+  readonly delete: Maybe<TariffTypesDeleteDocAccess>;
+  readonly fields: Maybe<TariffTypesDocAccessFields>;
+  readonly read: Maybe<TariffTypesReadDocAccess>;
+  readonly update: Maybe<TariffTypesUpdateDocAccess>;
 };
 
 export type TariffsAccess = {
