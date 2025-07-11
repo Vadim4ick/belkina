@@ -8,9 +8,12 @@ import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
+import { auth } from '@/entities/user/auth'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
   const courses = await gql.GetCourseBySlug({ slug })
+
+  const session = await auth()
 
   if (!courses || !courses.Courses || !courses.Courses.docs.length) {
     return notFound()
@@ -79,6 +82,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                   btnText="Перейти"
                   btnDisabled={videoId === product.kinescopeId}
                   showFooter={false}
+                  showButton={session?.user.tariffId === course.tariff.id}
                 />
               ))}
           </ProductCardsGridCatalog>

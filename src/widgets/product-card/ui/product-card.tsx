@@ -29,6 +29,7 @@ export interface ProductCardProps {
   btnText?: string
   btnDisabled?: boolean
   showFooter?: boolean
+  showButton?: boolean
 }
 
 const ProductCard = ({
@@ -44,6 +45,7 @@ const ProductCard = ({
   btnText = 'Подробнее',
   btnDisabled = false,
   showFooter = true,
+  showButton = true,
 }: ProductCardProps) => {
   return (
     <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
@@ -112,14 +114,16 @@ const ProductCard = ({
           </div>
         )}
 
-        <Link
-          href={btnDisabled ? '#' : url}
-          className={cn('w-full', btnDisabled && 'pointer-events-none')}
-        >
-          <Button disabled={btnDisabled} className="w-full">
-            {btnText}
-          </Button>
-        </Link>
+        {showButton && (
+          <Link
+            href={btnDisabled ? '#' : url}
+            className={cn('w-full', btnDisabled && 'pointer-events-none')}
+          >
+            <Button disabled={btnDisabled} className="w-full">
+              {btnText}
+            </Button>
+          </Link>
+        )}
       </CardFooter>
     </Card>
   )
