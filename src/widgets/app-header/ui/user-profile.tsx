@@ -27,9 +27,14 @@ interface UserProfileProps {
   session: Session | null
   className?: string
   status: 'authenticated' | 'loading' | 'unauthenticated'
+  reverse?: boolean
 }
 
-export const UserProfile = memo(({ className, session, status }: UserProfileProps) => {
+/**
+ * @reverse меняет местами аватар и имя
+ * @status принимает состояние loading' и пока true, отображает Skeleton
+ */
+export const UserProfile = memo(({ className, session, status, reverse }: UserProfileProps) => {
   const router = useRouter()
 
   if (status === 'loading') {
@@ -38,14 +43,18 @@ export const UserProfile = memo(({ className, session, status }: UserProfileProp
 
   if (status !== 'authenticated') {
     return (
-      <Button onClick={() => router.push(getRouteAuth())} variant="ghostWhite">
+      <Button
+        className={cn('', className)}
+        onClick={() => router.push(getRouteAuth())}
+        variant="ghost"
+      >
         Войти
       </Button>
     )
   }
 
   return (
-    <div className={cn('flex items-center justify-end gap-4', className)}>
+    <div className={`flex items-center justify-end gap-4 ${reverse ? 'flex-row-reverse' : ''}`}>
       <Typography variant="poppins-md-16">{session?.user && session.user?.name}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

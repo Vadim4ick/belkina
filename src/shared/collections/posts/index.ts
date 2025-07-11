@@ -8,7 +8,6 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { generatePreviewPath } from '@/shared/lib/generatePreviewPath'
 import {
   revalidateDelete,
   revalidatePost,
@@ -16,45 +15,17 @@ import {
   revalidatePostsListDelete,
 } from './hooks/revalidatePost'
 
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/shared/fields/slug'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
-  defaultPopulate: {
-    title: true,
-    slug: true,
-    meta: {
-      image: true,
-      description: true,
-    },
-  },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
-    livePreview: {
-      url: ({ data, req }) => {
-        const path = generatePreviewPath({
-          slug: typeof data?.slug === 'string' ? data.slug : '',
-          collection: 'posts',
-          req,
-        })
-
-        return path
-      },
-    },
-    preview: (data, { req }) =>
-      generatePreviewPath({
-        slug: typeof data?.slug === 'string' ? data.slug : '',
-        collection: 'posts',
-        req,
-      }),
     useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'updatedAt'],
+  },
+  labels: {
+    singular: 'Пост',
+    plural: 'Посты',
   },
   access: {
     read: () => true,
@@ -67,104 +38,65 @@ export const Posts: CollectionConfig<'posts'> = {
       required: true,
     },
     {
-      type: 'tabs',
-      tabs: [
-        {
-          label: 'Content',
-          fields: [
-            {
-              name: 'heroImage',
-              type: 'upload',
-              relationTo: 'media',
-            },
-            {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
-              required: true,
-            },
-          ],
-        },
-        {
-          label: 'Meta',
-          fields: [
-            {
-              name: 'relatedPosts',
-              label: 'Похожие публикации',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              filterOptions: ({ id }) => {
-                return {
-                  id: {
-                    not_in: [id],
-                  },
-                }
-              },
-              hasMany: true,
-              relationTo: 'posts',
-            },
-            {
-              name: 'categories',
-              label: 'Категории',
-              type: 'relationship',
-              admin: {
-                position: 'sidebar',
-              },
-              hasMany: true,
-              relationTo: 'exams',
-            },
-          ],
-        },
-        {
-          name: 'meta',
-          label: 'SEO',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
-
-            MetaDescriptionField({}),
-            PreviewField({
-              // if the `generateUrl` function is configured
-              hasGenerateFn: true,
-
-              // field paths to match the target field for data
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
-          ],
-        },
-      ],
+      name: 'description',
+      label: 'Описание для метатега description',
+      type: 'text',
+      required: true,
+      maxLength: 160,
+      admin: {
+        description: 'Рекомендуемая длина — 120–160 символов.',
+      },
     },
     {
+      name: 'image',
+      label: 'Изображение',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'content',
+      type: 'richText',
+      label: 'Содержание',
+      required: true,
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+          HorizontalRuleFeature(),
+        ],
+      }),
+    },
+    ...slugField(),
+    {
       name: 'publishedAt',
-      label: 'Опубликовано',
       type: 'date',
+      label: 'Дата публикации',
       admin: {
+        position: 'sidebar',
         date: {
           pickerAppearance: 'dayAndTime',
         },
+      },
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      label: 'Категории',
+      relationTo: 'exams',
+      hasMany: true,
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'relatedPosts',
+      type: 'relationship',
+      label: 'Связанные посты',
+      relationTo: 'posts',
+      hasMany: true,
+      admin: {
         position: 'sidebar',
       },
       hooks: {
@@ -178,19 +110,13 @@ export const Posts: CollectionConfig<'posts'> = {
         ],
       },
     },
-    ...slugField(),
   ],
   hooks: {
     afterChange: [revalidatePost, revalidatePostsList],
     afterDelete: [revalidateDelete, revalidatePostsListDelete],
   },
   versions: {
-    drafts: {
-      autosave: {
-        interval: 100, // We set this interval for optimal live preview
-      },
-      schedulePublish: true,
-    },
-    maxPerDoc: 50,
+    drafts: true,
+    maxPerDoc: 5,
   },
 }

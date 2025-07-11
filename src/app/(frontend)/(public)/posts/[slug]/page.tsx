@@ -6,6 +6,7 @@ import RichText from '@/shared/ui/rich-text'
 import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 export default async function Post({
   params: paramsPromise,
@@ -35,4 +36,47 @@ export default async function Post({
       </Container>
     </article>
   )
+}
+
+export async function generateMetadata({
+  params: paramsPromise,
+}: {
+  params: Promise<{ slug?: string }>
+}): Promise<Metadata> {
+  const { slug = '' } = await paramsPromise
+  const res = await gql.GetPostBySlug({ slug })
+
+  if (!res || !res.Posts.docs?.[0]) {
+    return {
+      title: 'Пост не найден',
+      description: 'Запрошенный пост не существует',
+    }
+  }
+
+  const post = res.Posts.docs[0]
+  const imageUrl = post.image?.url || '/default-og-image.jpg'
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+    title: post.title,
+    description: post.description || 'Интересная статья от Belkina.online',
+    alternates: {
+      canonical: `/posts/${post.slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description || 'Интересная статья от Belkina.online',
+      url: `/posts/${post.slug}`,
+      type: 'article',
+      publishedTime: post.publishedAt,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.image?.alt || post.title,
+        },
+      ],
+    },
+  }
 }

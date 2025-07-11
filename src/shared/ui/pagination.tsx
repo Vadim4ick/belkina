@@ -5,25 +5,16 @@ import { Arrow } from '../icons/arrow'
 import { Skeleton } from './skeleton'
 import { getRoutePostsPaginated } from '../lib/routes'
 
-export const PaginationSkeleton = () => {
-  return (
-    <div className="mt-6 flex w-fit items-center gap-1 rounded-[4px] border border-gray-300 px-3 py-1.5">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Skeleton key={i} className="h-[32px] w-[32px] rounded-[4px] border border-gray-200" />
-      ))}
-    </div>
-  )
-}
+export const PaginationSkeleton = () => (
+  <div className="mt-6 flex w-fit items-center gap-1 rounded-[4px] border border-gray-300 px-3 py-1.5">
+    {Array.from({ length: 5 }).map((_, i) => (
+      <Skeleton key={i} className="h-[32px] w-[32px] rounded-[4px] border border-gray-200" />
+    ))}
+  </div>
+)
 
-type ServerVariant = {
-  variant: 'server'
-  onPageChange?: never
-}
-
-type ClientVariant = {
-  variant: 'client'
-  onPageChange: (page: number) => void
-}
+type ServerVariant = { variant: 'server'; onPageChange?: never }
+type ClientVariant = { variant: 'client'; onPageChange: (page: number) => void }
 
 type PaginationProps = {
   page: number
@@ -31,18 +22,12 @@ type PaginationProps = {
   isLoading?: boolean
 } & (ServerVariant | ClientVariant)
 
-const Pagination: React.FC<PaginationProps> = ({
+export const Pagination: React.FC<PaginationProps> = ({
   page,
   totalPages,
   onPageChange,
   isLoading,
   variant,
-}: {
-  page: number
-  totalPages: number
-  onPageChange?: (page: number) => void
-  isLoading?: boolean
-  variant: 'client' | 'server'
 }) => {
   const router = useRouter()
 
@@ -51,15 +36,32 @@ const Pagination: React.FC<PaginationProps> = ({
 
     if (variant === 'server') {
       router.push(getRoutePostsPaginated(pageNum))
-    } else if (variant === 'client' && onPageChange) {
-      onPageChange(pageNum)
+    } else {
+      onPageChange?.(pageNum)
     }
   }
 
-  const pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1).slice(
-    Math.max(0, page - 2),
-    page + 1,
-  )
+  const getPagesToShow = (): (number | string)[] => {
+    if (totalPages <= 3) return Array.from({ length: totalPages }, (_, i) => i + 1)
+
+    const pages: (number | string)[] = [1]
+
+    if (page > 3) pages.push('...')
+
+    const middlePages = [Math.max(2, page - 1), page, Math.min(totalPages - 1, page + 1)].filter(
+      (p, i, arr) => arr.indexOf(p) === i && p > 1 && p < totalPages,
+    )
+
+    pages.push(...middlePages)
+
+    if (page < totalPages - 2) pages.push('...')
+
+    pages.push(totalPages)
+
+    return pages
+  }
+
+  const pagesToShow = getPagesToShow()
 
   return (
     <div className="flex w-fit items-center rounded-[4px] border border-gray-300">
@@ -71,35 +73,26 @@ const Pagination: React.FC<PaginationProps> = ({
         <Arrow className="text-dark-grey" />
       </button>
 
-      {pagesToShow.map((p) => (
-        <button
-          disabled={isLoading}
-          key={p}
-          className={`${
-            p === page ? 'bg-black text-white' : 'text-dark-grey'
-          } cursor-pointer border-x border-gray-300 px-3 py-1.5 text-[14px] leading-[150%] font-medium`}
-          onClick={() => handlePageClick(p)}
-        >
-          {p}
-        </button>
-      ))}
-
-      {totalPages > pagesToShow[pagesToShow.length - 1] && (
-        <>
-          <button
-            disabled={true}
+      {pagesToShow.map((p, idx) =>
+        p === '...' ? (
+          <span
+            key={`ellipsis-${idx}`}
             className="text-dark-grey cursor-default border-x border-gray-300 px-3 py-1.5 text-[14px]"
           >
             ...
-          </button>
+          </span>
+        ) : (
           <button
+            key={p}
             disabled={isLoading}
-            className="text-dark-grey cursor-pointer border-x border-gray-300 px-3 py-1.5 text-[14px]"
-            onClick={() => handlePageClick(totalPages)}
+            className={`${
+              p === page ? 'bg-black text-white' : 'text-dark-grey'
+            } cursor-pointer border-x border-gray-300 px-3 py-1.5 text-[14px] leading-[150%] font-medium`}
+            onClick={() => handlePageClick(p as number)}
           >
-            {totalPages}
+            {p}
           </button>
-        </>
+        ),
       )}
 
       <button
@@ -112,5 +105,3 @@ const Pagination: React.FC<PaginationProps> = ({
     </div>
   )
 }
-
-export { Pagination }

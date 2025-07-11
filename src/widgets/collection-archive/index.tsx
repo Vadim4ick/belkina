@@ -1,8 +1,10 @@
 import React from 'react'
 
 import { cn } from '@/shared/lib/utils'
-import { Card } from '@/entities/post/ui/post-card'
 import { GetPostListQuery } from '@/shared/graphql/__generated__'
+import { ProductCard } from '../product-card'
+import { ProductCardsGridCatalog } from '../product-cards-grid-catalog'
+import { getRoutePosts } from '@/shared/lib/routes'
 
 export type Props = {
   posts: GetPostListQuery['Posts']['docs']
@@ -10,23 +12,22 @@ export type Props = {
 
 export const CollectionArchive: React.FC<Props> = (props) => {
   const { posts } = props
+  console.log('posts ==> ', posts)
 
   return (
     <div className={cn('container')}>
-      <div>
-        <div className="grid grid-cols-4 gap-x-4 gap-y-4 sm:grid-cols-8 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-8 xl:gap-x-8">
-          {posts?.map((result, index) => {
-            if (typeof result === 'object' && result !== null) {
-              return (
-                <div className="col-span-4" key={index}>
-                  {result.slug && <Card className="h-[400px]" doc={result} relationTo="posts" />}
-                </div>
-              )
-            }
-            return null
-          })}
-        </div>
-      </div>
+      <ProductCardsGridCatalog isNull={posts.length === 0} title="Архив статей">
+        {posts &&
+          posts?.map((product) => (
+            <ProductCard
+              key={product.id}
+              title={product.title}
+              image={product.image}
+              url={`${getRoutePosts()}/${product.slug}`}
+              showFooter={false}
+            />
+          ))}
+      </ProductCardsGridCatalog>
     </div>
   )
 }

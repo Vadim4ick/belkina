@@ -6,5 +6,7 @@ export async function GET() {
   })
   const data = await res.json()
 
+  // console.log('res', res)
+
   return Response.json({ items: data.data })
 }

@@ -1,23 +1,16 @@
 query GetPostList($limit: Int!, $page: Int!) {
   Posts(limit: $limit, page: $page) {
     docs {
-      title
+      id
       slug
+      title
+      image {
+        id
+        alt
+        url
+      }
       categories {
         title
-      }
-      meta {
-        title
-        description
-        image {
-          id
-          alt
-          height
-          width
-          url
-          createdAt
-          updatedAt
-        }
       }
     }
     hasNextPage

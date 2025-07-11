@@ -3,7 +3,6 @@ import { BookOpennCapIcon } from '@/shared/icons/book-open-text'
 import { FAQIcon } from '@/shared/icons/file-question-mark'
 import { Newspaper } from '@/shared/icons/newspaper'
 import { getRouteHome, getRouteCourses, getRoutePosts } from '@/shared/lib/routes'
-import { IHeaderItems } from '@/widgets/app-header'
 
 export const RUS_LETTERS = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('')
 
@@ -20,7 +19,13 @@ export function getSymbolLabel(count: number): string {
   }
 }
 
-export const headerItems: IHeaderItems[] = [
+export interface NavItemsProps {
+  title: string
+  url: string
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>
+}
+
+export const navItems: NavItemsProps[] = [
   {
     title: 'Главная',
     url: getRouteHome(),
