@@ -82,7 +82,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                   btnText="Перейти"
                   btnDisabled={videoId === product.kinescopeId}
                   showFooter={false}
-                  showButton={session?.user.tariffId === course.tariff.id}
+                  showButton={session?.user.tariffId === course.tariff.id || course.tariff.isFree}
                 />
               ))}
           </ProductCardsGridCatalog>

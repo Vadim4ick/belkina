@@ -64,7 +64,7 @@ const NavigationPanel = ({
         {activeVideo.title}
       </Typography>
 
-      {session?.user.tariffId === course.tariff.id ? (
+      {session?.user.tariffId === course.tariff.id || course.tariff.isFree ? (
         <>
           {activeVideo.test && (
             <div className="mb-2 flex min-h-[120px] flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">
