@@ -51,12 +51,14 @@ export const authOptions: NextAuthConfig = {
     Yandex({
       clientId: process.env.YANDEX_CLIENT_ID!,
       clientSecret: process.env.YANDEX_CLIENT_SECRET!,
+      checks: ['state'],
     }),
 
     /** --- 3. OAuth Google --- */
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      checks: ['state'],
     }),
   ],
 
