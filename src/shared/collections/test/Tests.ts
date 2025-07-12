@@ -34,6 +34,7 @@ export const Tests: CollectionConfig = {
       },
     ],
   },
+
   access: {
     read: async () => {
       // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
