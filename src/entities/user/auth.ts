@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import NextAuth, { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
@@ -83,48 +82,34 @@ export const authOptions: NextAuthConfig = {
         token.id = user.id
         token.email = user.email
 
-        // Если авторизация через Credentials
         if ('role' in user && 'tariffId' in user) {
           token.role = user.role
           token.tariffId = user.tariffId
-        } else {
-          // Если через Yandex — достаём из БД
-          const existing = await gql.GetUserByEmail({ email: (user as any).email })
-          const found = existing.Users?.docs?.[0]
-
-          if (found) {
-            token.id = found.id
-            token.role = found.role
-            token.tariffId = found.tariff?.id ?? null
-          }
-        }
-
-        token.accessToken = await JwtService.signAccessToken({
-          id: token.id as string,
-          email: token.email,
-        })
-        token.refreshToken = await JwtService.signRefreshToken({
-          id: token.id as string,
-          email: token.email,
-        })
-        token.accessTokenExpires = Date.now() + 15 * 60 * 1000
-      }
-
-      // Обновление accessToken
-      if (Date.now() > (token.accessTokenExpires as number)) {
-        try {
-          const decoded = await JwtService.verifyToken(token.refreshToken as string)
-          const newAccessToken = await JwtService.signAccessToken({
-            id: decoded.id,
-            email: decoded.email,
-          })
-          token.accessToken = newAccessToken
-          token.accessTokenExpires = Date.now() + 15 * 60 * 1000
-        } catch (err) {
-          console.error('❌ Refresh token invalid:', err)
-          return {}
         }
       }
+
+      // Проверка актуальности пользователя
+      const existing = await gql.GetUserByEmail({ email: token.email as string })
+      const found = existing.Users?.docs?.[0]
+
+      if (!found || !token.email) {
+        console.warn(`❌ Пользователь ${token.email} больше не существует`)
+        return {} // сброс токена
+      }
+
+      token.id = found.id
+      token.role = found.role
+      token.tariffId = found.tariff?.id ?? null
+
+      token.accessToken = await JwtService.signAccessToken({
+        id: token.id as string,
+        email: token.email,
+      })
+      token.refreshToken = await JwtService.signRefreshToken({
+        id: token.id as string,
+        email: token.email,
+      })
+      token.accessTokenExpires = Date.now() + 15 * 60 * 1000
 
       return token
     },
