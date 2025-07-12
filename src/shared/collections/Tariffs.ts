@@ -62,6 +62,30 @@ export const Tariffs: CollectionConfig = {
         return data
       },
     ],
+
+    beforeDelete: [
+      async ({ id, req }) => {
+        const { payload } = req
+
+        console.log(`Удаляем recomendations и courses для тарифа ${id}`)
+
+        // удалить все recomendations одним запросом
+        await payload.delete({
+          collection: 'recomendations',
+          where: {
+            tariff: { equals: id },
+          },
+        })
+
+        // удалить все courses одним запросом
+        await payload.delete({
+          collection: 'courses',
+          where: {
+            tariff: { equals: id },
+          },
+        })
+      },
+    ],
   },
 
   access: {
