@@ -13,6 +13,7 @@ export const TestResults: CollectionConfig = {
     read: () => true,
     create: () => true,
     update: () => true,
+    delete: () => true,
   },
   fields: [
     {
