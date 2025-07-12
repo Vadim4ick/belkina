@@ -10,6 +10,30 @@ export const Tests: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Тестирование',
   },
+
+  hooks: {
+    beforeDelete: [
+      async ({ id, req }) => {
+        const { payload } = req
+
+        console.log(`Удаляем testResults для теста ${id}`)
+
+        const { docs } = await payload.find({
+          collection: 'testResults',
+          where: {
+            test: { equals: id },
+          },
+        })
+
+        for (const result of docs) {
+          await payload.delete({
+            collection: 'testResults',
+            id: result.id,
+          })
+        }
+      },
+    ],
+  },
   access: {
     read: async () => {
       // 1. Если админ или API-токен — разрешить (переиспользуем checkAccessToken)
