@@ -15,26 +15,47 @@ export const Tariffs: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      async ({ data, req, operation, originalDoc }) => {
+      async ({ data, req, originalDoc }) => {
         if (data.isFree) {
-          const { docs } = await req.payload.find({
+          const { payload } = req
+
+          // Найдём текущие тарифы с isFree: true
+          const { docs: freeTariffs } = await payload.find({
             collection: 'tariffs',
             where: {
-              isFree: {
-                equals: true,
-              },
+              isFree: { equals: true },
             },
             depth: 0,
           })
 
-          for (const doc of docs) {
-            if (operation === 'update' && doc.id === originalDoc?.id) continue
+          const newFreeTariffId = originalDoc?.id
 
-            await req.payload.update({
+          for (const doc of freeTariffs) {
+            if (doc.id === newFreeTariffId) continue
+
+            // Сбросим isFree у старого
+            await payload.update({
               collection: 'tariffs',
               id: doc.id,
               data: { isFree: false },
             })
+
+            // Переносим пользователей со старого на новый
+            const { docs: usersOnOldFree } = await payload.find({
+              collection: 'users',
+              where: {
+                tariff: { equals: doc.id },
+              },
+              depth: 1,
+            })
+
+            for (const user of usersOnOldFree) {
+              await payload.update({
+                collection: 'users',
+                id: user.id,
+                data: { tariff: newFreeTariffId },
+              })
+            }
           }
         }
 
