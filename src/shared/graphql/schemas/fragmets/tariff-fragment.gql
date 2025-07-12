@@ -4,6 +4,7 @@ fragment TariffFragment on Tariff {
   price
   subtitle
   description
+  isFree
   benefits {
     id
     value
