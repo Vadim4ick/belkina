@@ -20,6 +20,8 @@ export const AppHeader = () => {
   const pathname = usePathname()
   const { data: session, status } = useSession()
 
+  console.log(session?.tokens)
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
