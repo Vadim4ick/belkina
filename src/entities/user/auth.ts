@@ -10,6 +10,7 @@ import Google from 'next-auth/providers/google'
 export const authOptions: NextAuthConfig = {
   secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
+  trustHost: true,
   providers: [
     /** --- 1. e-mail/пароль --- */
     Credentials({
@@ -51,14 +52,12 @@ export const authOptions: NextAuthConfig = {
     Yandex({
       clientId: process.env.YANDEX_CLIENT_ID!,
       clientSecret: process.env.YANDEX_CLIENT_SECRET!,
-      checks: ['state'],
     }),
 
     /** --- 3. OAuth Google --- */
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      checks: ['state'],
     }),
   ],
 
