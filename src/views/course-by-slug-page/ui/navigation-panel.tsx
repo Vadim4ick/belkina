@@ -52,14 +52,14 @@ const NavigationPanel = ({
   return (
     <aside
       className={cn('tablet:p-2 flex h-full flex-col gap-8', {
-        'justify-between': profile?.tariff.id === course.tariff.id,
+        'justify-between': profile?.tariff?.id === course.tariff.id,
       })}
     >
       <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
         {activeVideo.title}
       </Typography>
 
-      {profile?.tariff.id === course.tariff.id || course.tariff.isFree ? (
+      {profile?.tariff?.id === course.tariff?.id || course.tariff.isFree ? (
         <>
           {activeVideo.test && (
             <div className="mb-2 flex min-h-[120px] flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">

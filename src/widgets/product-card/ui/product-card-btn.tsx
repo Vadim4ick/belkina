@@ -21,7 +21,7 @@ const ProductCardBtn = ({
 }) => {
   const { profile } = useProfileStore()
 
-  const showButton = profile?.tariff.id === courseTariffId || courseFree
+  const showButton = profile?.tariff?.id === courseTariffId || courseFree
 
   if (!showButton) {
     return null

@@ -46,15 +46,15 @@ const Courses: CollectionConfig = {
       label: 'Экзамены',
       type: 'relationship',
       relationTo: 'exams',
+      required: false,
       hasMany: false,
-      required: true,
     },
     {
       name: 'subjects',
       label: 'Предметы',
       type: 'relationship',
       relationTo: 'subjects',
-      required: true,
+      required: false,
       hasMany: true,
     },
     {

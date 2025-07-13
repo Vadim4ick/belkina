@@ -2,6 +2,35 @@ import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+
+  hooks: {
+    beforeDelete: [
+      async ({ req, id }) => {
+        const payload = req.payload
+
+        // Найдём все testResults этого пользователя
+        const { docs: results } = await payload.find({
+          collection: 'testResults',
+          where: {
+            user: { equals: id },
+          },
+          depth: 0,
+        })
+
+        if (results.length) {
+          // Удалим все найденные testResults
+          for (const result of results) {
+            await payload.delete({
+              collection: 'testResults',
+              id: result.id,
+            })
+          }
+        }
+
+        return
+      },
+    ],
+  },
   admin: {
     useAsTitle: 'email',
 
