@@ -3,10 +3,12 @@
 import { useField } from '@payloadcms/ui'
 import React, { useEffect, useState } from 'react'
 import styles from './style.module.scss'
-import { gql } from '@/shared/graphql/client'
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
+import { useGqlClient } from '@/shared/hooks/useGqlClient'
 
 const KinescopeProjectSelect: React.FC<{ path: string }> = ({ path }) => {
+  const gql = useGqlClient({})
+
   const { value = [], setValue } = useField<KinescopeVideoItem[]>({ path })
 
   const [projects, setProjects] = useState<Record<string, string>>({})

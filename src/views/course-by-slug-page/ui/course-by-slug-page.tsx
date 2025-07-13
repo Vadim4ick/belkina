@@ -1,4 +1,3 @@
-import { gql } from '@/shared/graphql/client'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
@@ -10,8 +9,11 @@ import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
 
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
+  const gql = await getServerAuthGqlClient({})
+
   const courses = await gql.GetCourseBySlug({ slug })
 
   if (!courses || !courses.Courses || !courses.Courses.docs.length) {

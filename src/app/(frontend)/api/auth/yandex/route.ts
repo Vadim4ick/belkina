@@ -88,7 +88,6 @@ export async function GET(req: Request) {
 
     ;(await cookies()).set('accessToken', accessToken, {
       path: '/',
-      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
     })
     ;(await cookies()).set('refreshToken', refreshToken, {

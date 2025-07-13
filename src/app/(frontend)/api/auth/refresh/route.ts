@@ -21,11 +21,10 @@ export async function POST() {
 
     ;(await cookies()).set('accessToken', newAccessToken, {
       path: '/',
-      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
     })
 
-    return NextResponse.json({ message: 'Access token обновлён' })
+    return NextResponse.json({ message: 'Access token обновлён', accessToken: newAccessToken })
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: 'Неверный refresh токен' }, { status: 401 })
