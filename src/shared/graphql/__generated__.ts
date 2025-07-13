@@ -12094,14 +12094,22 @@ export type TestsUpdateDocAccess = {
 
 export type User = {
   readonly __typename?: 'User';
+  readonly avatar: Maybe<Media>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly email: Scalars['EmailAddress']['output'];
   readonly id: Scalars['Int']['output'];
+  readonly name: Maybe<Scalars['String']['output']>;
   readonly password: Scalars['String']['output'];
   readonly role: User_Role;
   readonly signupMethod: User_SignupMethod;
   readonly tariff: Maybe<Tariff>;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type UserAvatarArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 
@@ -12118,6 +12126,15 @@ export type UserUpdate_SignupMethod_MutationInput =
   | 'email'
   | 'google'
   | 'yandex';
+
+export type User_Avatar_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
 
 export type User_CreatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
@@ -12148,6 +12165,17 @@ export type User_Id_Operator = {
   readonly less_than: InputMaybe<Scalars['Int']['input']>;
   readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type User_Name_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type User_Password_Operator = {
@@ -12226,9 +12254,11 @@ export type User_UpdatedAt_Operator = {
 export type User_Where = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<User_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<User_Where_Or>>>;
+  readonly avatar: InputMaybe<User_Avatar_Operator>;
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
@@ -12239,9 +12269,11 @@ export type User_Where = {
 export type User_Where_And = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<User_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<User_Where_Or>>>;
+  readonly avatar: InputMaybe<User_Avatar_Operator>;
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
@@ -12252,9 +12284,11 @@ export type User_Where_And = {
 export type User_Where_Or = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<User_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<User_Where_Or>>>;
+  readonly avatar: InputMaybe<User_Avatar_Operator>;
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
   readonly signupMethod: InputMaybe<User_SignupMethod_Operator>;
@@ -12303,13 +12337,43 @@ export type UsersDeleteDocAccess = {
 
 export type UsersDocAccessFields = {
   readonly __typename?: 'UsersDocAccessFields';
+  readonly avatar: Maybe<UsersDocAccessFields_Avatar>;
   readonly createdAt: Maybe<UsersDocAccessFields_CreatedAt>;
   readonly email: Maybe<UsersDocAccessFields_Email>;
+  readonly name: Maybe<UsersDocAccessFields_Name>;
   readonly password: Maybe<UsersDocAccessFields_Password>;
   readonly role: Maybe<UsersDocAccessFields_Role>;
   readonly signupMethod: Maybe<UsersDocAccessFields_SignupMethod>;
   readonly tariff: Maybe<UsersDocAccessFields_Tariff>;
   readonly updatedAt: Maybe<UsersDocAccessFields_UpdatedAt>;
+};
+
+export type UsersDocAccessFields_Avatar = {
+  readonly __typename?: 'UsersDocAccessFields_avatar';
+  readonly create: Maybe<UsersDocAccessFields_Avatar_Create>;
+  readonly delete: Maybe<UsersDocAccessFields_Avatar_Delete>;
+  readonly read: Maybe<UsersDocAccessFields_Avatar_Read>;
+  readonly update: Maybe<UsersDocAccessFields_Avatar_Update>;
+};
+
+export type UsersDocAccessFields_Avatar_Create = {
+  readonly __typename?: 'UsersDocAccessFields_avatar_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Avatar_Delete = {
+  readonly __typename?: 'UsersDocAccessFields_avatar_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Avatar_Read = {
+  readonly __typename?: 'UsersDocAccessFields_avatar_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Avatar_Update = {
+  readonly __typename?: 'UsersDocAccessFields_avatar_Update';
+  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type UsersDocAccessFields_CreatedAt = {
@@ -12365,6 +12429,34 @@ export type UsersDocAccessFields_Email_Read = {
 
 export type UsersDocAccessFields_Email_Update = {
   readonly __typename?: 'UsersDocAccessFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Name = {
+  readonly __typename?: 'UsersDocAccessFields_name';
+  readonly create: Maybe<UsersDocAccessFields_Name_Create>;
+  readonly delete: Maybe<UsersDocAccessFields_Name_Delete>;
+  readonly read: Maybe<UsersDocAccessFields_Name_Read>;
+  readonly update: Maybe<UsersDocAccessFields_Name_Update>;
+};
+
+export type UsersDocAccessFields_Name_Create = {
+  readonly __typename?: 'UsersDocAccessFields_name_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Name_Delete = {
+  readonly __typename?: 'UsersDocAccessFields_name_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Name_Read = {
+  readonly __typename?: 'UsersDocAccessFields_name_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_Name_Update = {
+  readonly __typename?: 'UsersDocAccessFields_name_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -12510,13 +12602,43 @@ export type UsersDocAccessFields_UpdatedAt_Update = {
 
 export type UsersFields = {
   readonly __typename?: 'UsersFields';
+  readonly avatar: Maybe<UsersFields_Avatar>;
   readonly createdAt: Maybe<UsersFields_CreatedAt>;
   readonly email: Maybe<UsersFields_Email>;
+  readonly name: Maybe<UsersFields_Name>;
   readonly password: Maybe<UsersFields_Password>;
   readonly role: Maybe<UsersFields_Role>;
   readonly signupMethod: Maybe<UsersFields_SignupMethod>;
   readonly tariff: Maybe<UsersFields_Tariff>;
   readonly updatedAt: Maybe<UsersFields_UpdatedAt>;
+};
+
+export type UsersFields_Avatar = {
+  readonly __typename?: 'UsersFields_avatar';
+  readonly create: Maybe<UsersFields_Avatar_Create>;
+  readonly delete: Maybe<UsersFields_Avatar_Delete>;
+  readonly read: Maybe<UsersFields_Avatar_Read>;
+  readonly update: Maybe<UsersFields_Avatar_Update>;
+};
+
+export type UsersFields_Avatar_Create = {
+  readonly __typename?: 'UsersFields_avatar_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Avatar_Delete = {
+  readonly __typename?: 'UsersFields_avatar_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Avatar_Read = {
+  readonly __typename?: 'UsersFields_avatar_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Avatar_Update = {
+  readonly __typename?: 'UsersFields_avatar_Update';
+  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type UsersFields_CreatedAt = {
@@ -12572,6 +12694,34 @@ export type UsersFields_Email_Read = {
 
 export type UsersFields_Email_Update = {
   readonly __typename?: 'UsersFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Name = {
+  readonly __typename?: 'UsersFields_name';
+  readonly create: Maybe<UsersFields_Name_Create>;
+  readonly delete: Maybe<UsersFields_Name_Delete>;
+  readonly read: Maybe<UsersFields_Name_Read>;
+  readonly update: Maybe<UsersFields_Name_Update>;
+};
+
+export type UsersFields_Name_Create = {
+  readonly __typename?: 'UsersFields_name_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Name_Delete = {
+  readonly __typename?: 'UsersFields_name_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Name_Read = {
+  readonly __typename?: 'UsersFields_name_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_Name_Update = {
+  readonly __typename?: 'UsersFields_name_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -13347,8 +13497,10 @@ export type MutationTestUpdateInput = {
 };
 
 export type MutationUserInput = {
+  readonly avatar: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: Scalars['String']['input'];
+  readonly name: InputMaybe<Scalars['String']['input']>;
   readonly password: Scalars['String']['input'];
   readonly role: User_Role_MutationInput;
   readonly signupMethod: User_SignupMethod_MutationInput;
@@ -13357,8 +13509,10 @@ export type MutationUserInput = {
 };
 
 export type MutationUserUpdateInput = {
+  readonly avatar: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: InputMaybe<Scalars['String']['input']>;
+  readonly name: InputMaybe<Scalars['String']['input']>;
   readonly password: InputMaybe<Scalars['String']['input']>;
   readonly role: InputMaybe<UserUpdate_Role_MutationInput>;
   readonly signupMethod: InputMaybe<UserUpdate_SignupMethod_MutationInput>;
@@ -13994,7 +14148,7 @@ export type GetUserByEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number } }> } };
+export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number } }> } };
 
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
@@ -14408,6 +14562,10 @@ export const GetUserByEmailDocument = gql`
       password
       signupMethod
       role
+      name
+      avatar {
+        ...MediaFragment
+      }
       tariff {
         id
       }
@@ -14415,7 +14573,7 @@ export const GetUserByEmailDocument = gql`
     totalDocs
   }
 }
-    `;
+    ${MediaFragmentFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 

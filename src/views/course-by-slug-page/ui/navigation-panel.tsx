@@ -13,10 +13,10 @@ import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
 import { Skeleton } from '@/shared/ui/skeleton'
-import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 
 const NavigationPanel = ({
   activeVideo,
@@ -29,23 +29,21 @@ const NavigationPanel = ({
   nextVideo: KinescopeVideoItem | null
   course: CourseFragmentFragment
 }) => {
-  const { status, data: session } = useSession()
-
-  const userId = session?.user?.id
+  const { profile } = useProfileStore()
 
   const {
     data: testResult,
     isLoading,
     isFetching,
     refetch,
-  } = useGetTestResultById({ testId: activeVideo.test?.id, userId })
+  } = useGetTestResultById({ testId: activeVideo.test?.id, userId: profile?.id })
 
   useEffect(() => {
-    if (status !== 'authenticated') return
+    if (!profile?.id) return
 
     refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status])
+  }, [profile])
 
   const loading = isLoading || isFetching || status === 'loading'
 
@@ -54,14 +52,14 @@ const NavigationPanel = ({
   return (
     <aside
       className={cn('tablet:p-2 flex h-full flex-col gap-8', {
-        'justify-between': session?.user.tariffId === course.tariff.id,
+        'justify-between': profile?.tariff.id === course.tariff.id,
       })}
     >
       <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
         {activeVideo.title}
       </Typography>
 
-      {session?.user.tariffId === course.tariff.id || course.tariff.isFree ? (
+      {profile?.tariff.id === course.tariff.id || course.tariff.isFree ? (
         <>
           {activeVideo.test && (
             <div className="mb-2 flex min-h-[120px] flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">

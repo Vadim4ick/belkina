@@ -21,6 +21,11 @@ query GetUserByEmail($email: EmailAddress!) {
       signupMethod
       role
 
+      name
+      avatar {
+        ...MediaFragment
+      }
+
       tariff {
         id
       }

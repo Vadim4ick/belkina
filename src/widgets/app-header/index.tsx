@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { cn } from '@/shared/lib/utils'
 import { Logo } from '@/shared/ui/logo'
 import { Typography } from '@/shared/ui/typography'
@@ -13,12 +12,14 @@ import { UserProfile } from './ui/user-profile'
 import { MobileNavButton } from './ui/mobile-nav-button'
 import { Container } from '@/shared/ui/container'
 import { navItems } from '@/shared/const'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 
 export const AppHeader = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-  const { data: session, status } = useSession()
+
+  const { profile } = useProfileStore()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,12 +76,12 @@ export const AppHeader = () => {
 
           {/* Кнопки авторизации/профиля */}
           <div className="flex items-center gap-4">
-            {!session && (
+            {!profile?.id && (
               <Button variant="secondary" onClick={() => console.log('Записаться')}>
                 Записаться на урок
               </Button>
             )}
-            <UserProfile session={session} status={status} />
+            <UserProfile />
           </div>
           {/* Мобильное меню (контент) */}
           <div
@@ -104,17 +105,12 @@ export const AppHeader = () => {
               ))}
 
               <div className="space-y-5 border-t pt-4">
-                {!session && (
+                {!profile?.id && (
                   <Button className="h-12 w-full" onClick={() => console.log('Записаться')}>
                     Записаться на урок
                   </Button>
                 )}
-                <UserProfile
-                  session={session}
-                  status={status}
-                  reverse={true}
-                  className="h-12 w-full"
-                />
+                <UserProfile reverse={true} className="h-12 w-full" />
               </div>
             </div>
           </div>

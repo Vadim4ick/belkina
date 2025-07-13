@@ -48,6 +48,27 @@ export const Users: CollectionConfig = {
     },
 
     {
+      name: 'name',
+      label: {
+        ru: 'Имя',
+        en: 'Name',
+      },
+      type: 'text',
+      required: false,
+    },
+
+    {
+      name: 'avatar',
+      label: {
+        ru: 'Аватар',
+        en: 'Avatar',
+      },
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+
+    {
       name: 'role',
       type: 'select',
       required: true,

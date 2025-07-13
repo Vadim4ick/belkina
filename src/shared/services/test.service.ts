@@ -59,7 +59,7 @@ export const useCreateTestResult = () => {
   })
 }
 
-export const useGetTestResultById = ({ testId, userId }: { testId?: number; userId?: string }) => {
+export const useGetTestResultById = ({ testId, userId }: { testId?: number; userId?: number }) => {
   const gql = useGqlClient({})
 
   const session = useAuthStore((state) => state.session)

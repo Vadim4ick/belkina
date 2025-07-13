@@ -149,30 +149,11 @@ export interface User {
   id: number;
   email: string;
   password: string;
+  name?: string | null;
+  avatar?: (number | null) | Media;
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex' | 'google';
   tariff?: (number | null) | Tariff;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tariffs".
- */
-export interface Tariff {
-  id: number;
-  title: string;
-  price: number;
-  /**
-   * Если включено — этот тариф будет бесплатным. Разрешён только один.
-   */
-  isFree?: boolean | null;
-  subtitle: string;
-  description: string;
-  benefits: {
-    value: string;
-    id?: string | null;
-  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -194,6 +175,27 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tariffs".
+ */
+export interface Tariff {
+  id: number;
+  title: string;
+  price: number;
+  /**
+   * Если включено — этот тариф будет бесплатным. Разрешён только один.
+   */
+  isFree?: boolean | null;
+  subtitle: string;
+  description: string;
+  benefits: {
+    value: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -525,6 +527,8 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   email?: T;
   password?: T;
+  name?: T;
+  avatar?: T;
   role?: T;
   signupMethod?: T;
   tariff?: T;
