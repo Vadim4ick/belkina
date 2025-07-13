@@ -45,7 +45,7 @@ const NavigationPanel = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile])
 
-  const loading = isLoading || isFetching || status === 'loading'
+  const loading = isLoading || isFetching
 
   const isCompleted = testResult?.TestResults?.docs?.[0]?.status === 'completed'
 

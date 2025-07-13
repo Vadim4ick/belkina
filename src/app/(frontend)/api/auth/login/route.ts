@@ -12,28 +12,26 @@ export async function POST(req: Request) {
   }
 
   const userRes = await gql.GetUserByEmail({ email })
-  if (userRes.Users.totalDocs > 0) {
-    return NextResponse.json({ error: 'Пользователь уже существует' }, { status: 409 })
+  if (userRes.Users.totalDocs <= 0) {
+    return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 })
   }
 
-  const hashedPassword = await bcrypt.hash(password, 10)
+  const user = userRes.Users.docs[0]
 
-  const newUser = await gql.CreateUser({
-    email,
-    password: hashedPassword,
-    role: 'user',
-    signupMethod: 'email',
-    name: email,
-  })
+  const isPasswordValid = await bcrypt.compare(password, user.password)
+  if (!isPasswordValid) {
+    return NextResponse.json({ error: 'Неверный пароль' }, { status: 401 })
+  }
 
+  console.log('✅ ')
   const accessToken = await JwtService.signAccessToken({
-    id: String(newUser.createUser.id),
-    email: newUser.createUser.email,
+    id: String(user.id),
+    email: user.email,
   })
 
   const refreshToken = await JwtService.signRefreshToken({
-    id: String(newUser.createUser.id),
-    email: newUser.createUser.email,
+    id: String(user.id),
+    email: user.email,
   })
 
   ;(await cookies()).set('accessToken', accessToken, {
@@ -46,5 +44,5 @@ export async function POST(req: Request) {
     secure: process.env.NODE_ENV === 'production',
   })
 
-  return NextResponse.json({ message: 'Пользователь зарегистрирован' })
+  return NextResponse.json({ message: 'Успешно' })
 }

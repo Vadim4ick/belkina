@@ -4,7 +4,6 @@ import { NavMain } from './_ui/nav-main'
 import { Logo } from '@/shared/ui/logo'
 import { FC, SVGProps } from 'react'
 import { NavUser } from './_ui/nav-user'
-import { useAuthStore } from '@/shared/hooks/use-auth-store'
 
 export interface IsideBarItems {
   title: string
@@ -13,8 +12,6 @@ export interface IsideBarItems {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const session = useAuthStore((state) => state.session)
-
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       {/* <SidebarHeader></SidebarHeader> */}
@@ -22,7 +19,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <Logo />
         <NavMain items={PrivateMenuItems} />
       </SidebarContent>
-      <SidebarFooter>{session?.user && <NavUser user={session.user} />}</SidebarFooter>
+
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
     </Sidebar>
   )
 }

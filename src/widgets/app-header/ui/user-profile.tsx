@@ -15,12 +15,14 @@ import { UserIcon } from '@/shared/icons/user-icon'
 import { LogOutIcon } from '@/shared/icons/log-out-icon'
 import { ProfileAvatar } from '@/shared/ui/profile-avatar'
 import { Typography } from '@/shared/ui/typography'
-import { signOut, useSession } from 'next-auth/react'
+
 import { useRouter } from 'next/navigation'
 import { memo } from 'react'
 import { cn } from '@/shared/lib/utils'
-import { getRouteAuth, getRouteHome } from '@/shared/lib/routes'
+import { getRouteAuth } from '@/shared/lib/routes'
 import { useProfileStore } from '@/entities/user/use-profile-store'
+
+import { useLogout, useProfile } from '@/shared/hooks/use-profile'
 import { Skeleton } from '@/shared/ui/skeleton'
 
 interface UserProfileProps {
@@ -37,9 +39,11 @@ export const UserProfile = memo(({ className, reverse }: UserProfileProps) => {
 
   const { profile } = useProfileStore()
 
-  const { status } = useSession()
+  const { isLoading } = useProfile()
 
-  if (status === 'loading') {
+  const { mutate: logout } = useLogout()
+
+  if (isLoading) {
     return <Skeleton className="h-[48px] w-[100px]" />
   }
 
@@ -57,7 +61,7 @@ export const UserProfile = memo(({ className, reverse }: UserProfileProps) => {
 
   return (
     <div className={`flex items-center justify-end gap-4 ${reverse ? 'flex-row-reverse' : ''}`}>
-      <Typography variant="poppins-md-16">{profile?.name ?? profile.email}</Typography>
+      <Typography variant="poppins-md-16">{profile?.name}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-12 w-12 self-center rounded-full p-px">
@@ -84,11 +88,7 @@ export const UserProfile = memo(({ className, reverse }: UserProfileProps) => {
               <Button
                 className="h-[32px] w-full cursor-pointer justify-start"
                 variant="ghostWhite"
-                onClick={() =>
-                  signOut({
-                    callbackUrl: getRouteHome(),
-                  })
-                }
+                onClick={() => logout()}
               >
                 <LogOutIcon className="mr-2 h-4 w-4" />
                 Выйти

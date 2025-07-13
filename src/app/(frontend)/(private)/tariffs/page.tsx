@@ -1,4 +1,4 @@
-import { getServerAuthGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { TariffsPage } from '@/views/tariffs'
 
 export const revalidate = 180

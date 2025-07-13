@@ -1,3 +1,5 @@
+'use client'
+
 import { Typography } from '@/shared/ui/typography'
 import { cn } from '@/shared/lib/utils'
 import { TariffFragmentFragment } from '@/shared/graphql/__generated__'
@@ -58,7 +60,7 @@ const TariffCard = ({
           От {item.price} рублей
         </Typography>
 
-        <TariffButton isCurrentTariff={currentTariffId == item.id} />
+        <TariffButton id={item.id} />
       </div>
     </div>
   )

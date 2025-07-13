@@ -1,29 +1,30 @@
 import { useProfileStore } from '@/entities/user/use-profile-store'
-import { useQuery } from '@tanstack/react-query'
-import { useGqlClient } from './useGqlClient'
-import { useSession } from 'next-auth/react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { authService } from '../services/auth.service'
 
 export const useProfile = () => {
   const { setProfile, profile } = useProfileStore()
 
-  const session = useSession()
-
-  const gql = useGqlClient({})
-
   const query = useQuery({
     queryKey: ['me'],
-    enabled: !!session.data?.user.email,
     queryFn: async () => {
-      const res = await gql.GetUserByEmail({
-        email: session.data?.user.email,
-      })
-
-      const user = res.Users?.docs?.[0] || null
-      setProfile(user)
-
-      return user
+      const res = await authService.getMe()
+      setProfile(res.user)
+      return res.user
     },
   })
 
   return { ...query, profile }
+}
+
+export const useLogout = () => {
+  const { setProfile } = useProfileStore()
+
+  return useMutation({
+    mutationKey: ['logout'],
+    mutationFn: async () => {
+      await authService.logout()
+      setProfile(undefined)
+    },
+  })
 }
