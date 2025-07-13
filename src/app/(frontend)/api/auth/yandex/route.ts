@@ -4,12 +4,20 @@ import axios from 'axios'
 import { gql } from '@/shared/graphql/client'
 import { JwtService } from '@/shared/services/jwt-service'
 
+// тут глобально, чтобы `Set` жил между запросами
+const usedCodes = new Set<string>()
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const code = searchParams.get('code')
 
   if (!code) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 })
+  }
+
+  // 👮‍♂️ Проверка на повторное использование
+  if (usedCodes.has(code)) {
+    return NextResponse.json({ error: 'Code already used' }, { status: 400 })
   }
 
   try {
@@ -32,6 +40,8 @@ export async function GET(req: Request) {
       }),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     )
+
+    usedCodes.add(code)
 
     const { access_token } = tokenRes.data
     if (!access_token) throw new Error('No access_token')
@@ -91,6 +101,21 @@ export async function GET(req: Request) {
   } catch (err: any) {
     console.error('Yandex token error', err.response?.data || err.message)
 
-    return NextResponse.json({ error: err.message || 'Authentication failed' }, { status: 500 })
+    const errorDescription =
+      err.response?.data?.error_description || err.message || 'Authentication failed'
+
+    let userMessage = 'Произошла ошибка при авторизации. Пожалуйста, попробуйте снова.'
+
+    if (errorDescription.includes('expired') || errorDescription.includes('invalid_grant')) {
+      userMessage = 'Код авторизации устарел. Пожалуйста, попробуйте войди снова.'
+    }
+
+    return NextResponse.json(
+      {
+        error: errorDescription,
+        message: userMessage,
+      },
+      { status: 400 },
+    )
   }
 }
