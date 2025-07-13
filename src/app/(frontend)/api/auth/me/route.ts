@@ -1,13 +1,10 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { JwtService } from '@/shared/services/jwt-service'
 import { gql } from '@/shared/graphql/client'
+import { CookiesService } from '@/shared/services/cookies-service'
 
 export async function GET() {
-  const cookie = await cookies()
-
-  const accessToken = cookie.get('accessToken')?.value
-  const refreshToken = cookie.get('refreshToken')?.value
+  const { accessToken, refreshToken } = await CookiesService.getTokens()
 
   let payload: { id: string; email: string } | null = null
 
@@ -34,21 +31,16 @@ export async function GET() {
           email: refreshPayload.email,
         })
 
-        cookie.set('accessToken', newAccessToken, {
-          path: '/',
-          secure: process.env.NODE_ENV === 'production',
-        })
+        await CookiesService.setAccessToken(newAccessToken)
 
         payload = refreshPayload
       } catch (refreshErr) {
         console.error('Refresh token invalid or expired', refreshErr)
-        cookie.delete('accessToken')
-        cookie.delete('refreshToken')
+        await CookiesService.clearAuthCookies()
         return NextResponse.json({ user: null })
       }
     } else {
-      cookie.delete('accessToken')
-      cookie.delete('refreshToken')
+      await CookiesService.clearAuthCookies()
       return NextResponse.json({ user: null })
     }
   }
@@ -62,8 +54,7 @@ export async function GET() {
     const user = res.Users?.docs?.[0] || null
 
     if (!user) {
-      cookie.delete('accessToken')
-      cookie.delete('refreshToken')
+      await CookiesService.clearAuthCookies()
       return NextResponse.json({ user: null })
     }
 

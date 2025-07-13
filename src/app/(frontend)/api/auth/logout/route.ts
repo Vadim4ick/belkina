@@ -1,11 +1,8 @@
-import { cookies } from 'next/headers'
+import { CookiesService } from '@/shared/services/cookies-service'
 import { NextResponse } from 'next/server'
 
 export async function POST() {
-  const COOKIE = await cookies()
-
-  COOKIE.delete('accessToken')
-  COOKIE.delete('refreshToken')
+  await CookiesService.clearAuthCookies()
 
   return NextResponse.json({ message: 'Вы вышли из системы' })
 }

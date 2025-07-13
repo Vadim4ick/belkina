@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import axios from 'axios'
 import { gql } from '@/shared/graphql/client'
 import { JwtService } from '@/shared/services/jwt-service'
+import { CookiesService } from '@/shared/services/cookies-service'
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -68,15 +68,7 @@ export async function GET(req: Request) {
 
     const response = NextResponse.redirect(new URL('/', req.url))
 
-    ;(await cookies()).set('accessToken', accessToken, {
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-    })
-    ;(await cookies()).set('refreshToken', refreshToken, {
-      path: '/',
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-    })
+    await CookiesService.setAuthCookies({ accessToken, refreshToken })
 
     return response
   } catch (err: any) {
