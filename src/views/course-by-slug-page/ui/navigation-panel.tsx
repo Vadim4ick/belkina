@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  CourseFragmentFragment,
-  GetCourseBySlugQuery,
-  Kinescope_Video_FragmentFragment,
-} from '@/shared/graphql/__generated__'
+import { CourseFragmentFragment } from '@/shared/graphql/__generated__'
 import { Arrow } from '@/shared/icons/arrow'
 import {
   getRouteAuth,
@@ -20,6 +16,7 @@ import { Skeleton } from '@/shared/ui/skeleton'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { cn } from '@/shared/lib/utils'
+import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 
 const NavigationPanel = ({
   activeVideo,
@@ -27,9 +24,9 @@ const NavigationPanel = ({
   nextVideo,
   course,
 }: {
-  activeVideo: GetCourseBySlugQuery['Courses']['docs'][0]['kinescopeVideos'][0]
-  prevVideo: Kinescope_Video_FragmentFragment | null
-  nextVideo: Kinescope_Video_FragmentFragment | null
+  activeVideo: KinescopeVideoItem
+  prevVideo: KinescopeVideoItem | null
+  nextVideo: KinescopeVideoItem | null
   course: CourseFragmentFragment
 }) => {
   const { status, data: session } = useSession()

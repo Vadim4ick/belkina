@@ -93,46 +93,58 @@ const Courses: CollectionConfig = {
       relationTo: 'tariffs',
       required: true,
     },
+    // {
+    //   name: 'kinescopeVideos',
+    //   label: 'Видео из Kinescope',
+    //   type: 'array',
+    //   required: true,
+    //   minRows: 1,
+    //   fields: [
+    //     {
+    //       name: 'kinescopeId',
+    //       label: 'ID видео',
+    //       type: 'text',
+    //       required: true,
+    //       admin: {
+    //         components: {
+    //           Field: '@/app/(payload)/components/fields/KinescopeVideoSelect',
+    //         },
+    //       },
+    //     },
+    //     {
+    //       name: 'title',
+    //       label: 'Название видео',
+    //       type: 'text',
+    //       required: true,
+    //       admin: { readOnly: true }, // Не даём ручками менять, только через компонент
+    //     },
+    //     {
+    //       name: 'duration',
+    //       label: 'Длительность (сек)',
+    //       type: 'number',
+    //       required: true,
+    //       admin: { readOnly: true },
+    //     },
+    //     {
+    //       name: 'test',
+    //       label: 'Тест после видео',
+    //       type: 'relationship',
+    //       relationTo: 'tests',
+    //       required: false,
+    //     },
+    //   ],
+    // },
+
     {
       name: 'kinescopeVideos',
       label: 'Видео из Kinescope',
-      type: 'array',
+      type: 'json',
       required: true,
-      minRows: 1,
-      fields: [
-        {
-          name: 'kinescopeId',
-          label: 'ID видео',
-          type: 'text',
-          required: true,
-          admin: {
-            components: {
-              Field: '@/app/(payload)/components/fields/KinescopeVideoSelect',
-            },
-          },
+      admin: {
+        components: {
+          Field: '@/app/(payload)/components/fields/KinescopeVideoSelect',
         },
-        {
-          name: 'title',
-          label: 'Название видео',
-          type: 'text',
-          required: true,
-          admin: { readOnly: true }, // Не даём ручками менять, только через компонент
-        },
-        {
-          name: 'duration',
-          label: 'Длительность (сек)',
-          type: 'number',
-          required: true,
-          admin: { readOnly: true },
-        },
-        {
-          name: 'test',
-          label: 'Тест после видео',
-          type: 'relationship',
-          relationTo: 'tests',
-          required: false,
-        },
-      ],
+      },
     },
   ],
 }

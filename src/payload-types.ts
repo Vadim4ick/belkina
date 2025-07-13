@@ -405,13 +405,15 @@ export interface Course {
   discount?: number | null;
   slug: string;
   tariff: number | Tariff;
-  kinescopeVideos: {
-    kinescopeId: string;
-    title: string;
-    duration: number;
-    test?: (number | null) | Test;
-    id?: string | null;
-  }[];
+  kinescopeVideos:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -715,15 +717,7 @@ export interface CoursesSelect<T extends boolean = true> {
   discount?: T;
   slug?: T;
   tariff?: T;
-  kinescopeVideos?:
-    | T
-    | {
-        kinescopeId?: T;
-        title?: T;
-        duration?: T;
-        test?: T;
-        id?: T;
-      };
+  kinescopeVideos?: T;
   updatedAt?: T;
   createdAt?: T;
 }

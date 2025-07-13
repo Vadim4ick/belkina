@@ -9,6 +9,7 @@ import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
 import { auth } from '@/entities/user/auth'
+import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
   const courses = await gql.GetCourseBySlug({ slug })
@@ -20,7 +21,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
   }
 
   const course = courses.Courses.docs[0]
-  const videos = course.kinescopeVideos || []
+  const videos = (course.kinescopeVideos as KinescopeVideoItem[]) || []
 
   const activeVideoId = videoId
   const activeVideo = videos.find((v) => v.kinescopeId === activeVideoId)
@@ -64,9 +65,9 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
         <Container>
           <ProductCardsGridCatalog isNull={videos.length === 0} title="Все уроки из курса">
             {videos?.length > 0 &&
-              videos.map((product) => (
+              videos.map((product, idx) => (
                 <ProductCard
-                  key={product.id}
+                  key={idx}
                   title={product.title}
                   categories={course.subjects.map((subject) => subject.title)}
                   exams={course.exams.title}
