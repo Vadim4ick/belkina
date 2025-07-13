@@ -8,7 +8,7 @@ import { SiteBarHeader } from '@/widgets/app-sidebar/_ui/site-bar-header'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProviders>
+    <AuthProviders loading={true}>
       <SidebarProvider
         style={
           {
