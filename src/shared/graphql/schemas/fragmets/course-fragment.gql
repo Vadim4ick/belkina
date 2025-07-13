@@ -18,7 +18,5 @@ fragment CourseFragment on Course {
     ...TariffFragment
   }
 
-  kinescopeVideos {
-    ...Kinescope_Video_Fragment
-  }
+  kinescopeVideos
 }

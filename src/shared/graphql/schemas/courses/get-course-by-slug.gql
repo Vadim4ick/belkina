@@ -3,13 +3,7 @@ query GetCourseBySlug($slug: String) {
     docs {
       ...CourseFragment
 
-      kinescopeVideos {
-        ...Kinescope_Video_Fragment
-        test {
-          id
-          title
-        }
-      }
+      kinescopeVideos
     }
   }
 }

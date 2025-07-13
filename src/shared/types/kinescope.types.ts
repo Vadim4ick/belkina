@@ -69,3 +69,15 @@ export interface KinescopeVideosResponse {
   meta: KinescopeMeta
   data: KinescopeVideo[]
 }
+
+export interface KinescopeVideoItem {
+  kinescopeId: string
+  title: string
+  duration: number
+  projectTitle?: string
+  projectId: string
+  test?: {
+    id: number
+    title: string
+  }
+}

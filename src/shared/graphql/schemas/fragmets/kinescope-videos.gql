@@ -1,6 +1,0 @@
-fragment Kinescope_Video_Fragment on Course_KinescopeVideos {
-  id
-  kinescopeId
-  title
-  duration
-}

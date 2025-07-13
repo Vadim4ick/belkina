@@ -12,6 +12,7 @@ import { Pagination, PaginationSkeleton } from '@/shared/ui/pagination'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
 import { useGetAllCourses } from '@/shared/services/courses.service'
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
+import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 
 const CoursesList = memo(
   ({
@@ -74,7 +75,9 @@ const CoursesList = memo(
                         categories={product.subjects.map((subject) => subject.title)}
                         exams={product.exams.title}
                         duration={summClockTime(
-                          product.kinescopeVideos.map((video) => video.duration),
+                          product.kinescopeVideos.map(
+                            (video: KinescopeVideoItem) => video.duration,
+                          ),
                         )}
                         description={product.description}
                         price={product.price}
