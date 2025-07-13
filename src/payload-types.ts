@@ -401,8 +401,8 @@ export interface Course {
   title: string;
   description: string;
   banner: number | Media;
-  exams: number | Exam;
-  subjects: (number | Subject)[];
+  exams?: (number | null) | Exam;
+  subjects?: (number | Subject)[] | null;
   price: number;
   discount?: number | null;
   slug: string;

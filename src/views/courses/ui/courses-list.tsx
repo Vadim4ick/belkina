@@ -72,8 +72,8 @@ const CoursesList = memo(
                       <ProductCard
                         key={product.id}
                         title={product.title}
-                        categories={product.subjects.map((subject) => subject.title)}
-                        exams={product.exams.title}
+                        categories={product?.subjects?.map((subject) => subject.title) ?? []}
+                        exams={product?.exams?.title}
                         duration={summClockTime(
                           product.kinescopeVideos.map(
                             (video: KinescopeVideoItem) => video.duration,

@@ -474,12 +474,12 @@ export type Course = {
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly description: Scalars['String']['output'];
   readonly discount: Maybe<Scalars['Float']['output']>;
-  readonly exams: Exam;
+  readonly exams: Maybe<Exam>;
   readonly id: Scalars['Int']['output'];
   readonly kinescopeVideos: Scalars['JSON']['output'];
   readonly price: Scalars['Float']['output'];
   readonly slug: Scalars['String']['output'];
-  readonly subjects: ReadonlyArray<Subject>;
+  readonly subjects: Maybe<ReadonlyArray<Subject>>;
   readonly tariff: Tariff;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
@@ -548,6 +548,7 @@ export type Course_Discount_Operator = {
 export type Course_Exams_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
@@ -594,6 +595,7 @@ export type Course_Slug_Operator = {
 export type Course_Subjects_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;

@@ -64,7 +64,7 @@ const ProductCard = ({
         )}
       </div>
 
-      <CardHeader className="px-0">
+      <CardHeader className="block px-0">
         <CardTitle className="px-0">
           <Typography variant="poppins-md-16" className="line-clamp-2 uppercase">
             {title}
@@ -80,14 +80,15 @@ const ProductCard = ({
             </Badge>
           )}
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2">
-            {categories &&
-              categories.map((category) => (
+          {categories && categories.length > 0 && (
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {categories.map((category) => (
                 <Badge key={category} variant="secondary">
                   <Typography variant="poppins-reg-14">{category}</Typography>
                 </Badge>
               ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {duration && <Clock duration={duration} />}
