@@ -1,21 +1,23 @@
 'use client'
 
-import { getRouteHome, getRouteProfile } from '@/shared/lib/routes'
+import { getRouteHome } from '@/shared/lib/routes'
+import { authService } from '@/shared/services/auth.service'
 import { AuthForm } from '@/widgets/auth-form'
-import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [code, setCode] = useState('') // если потребуется e-mail-код
+  const [code, setCode] = useState('')
   const [agreed, setAgreed] = useState(false)
 
   const [pending, setPending] = useState(false)
   const [error, setError] = useState('')
 
-  /** шаг 1: создаём пользователя в Payload */
-  async function register() {
+  const router = useRouter()
+
+  const register = async () => {
     setPending(true)
     setError('')
 
@@ -26,31 +28,16 @@ export default function RegisterPage() {
     }
 
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
+      const res = await authService.register(email, password)
 
-      if (!res.ok) {
-        const { error } = await res.json()
-        throw new Error(error ?? 'Ошибка регистрации')
+      if (res) {
+        await authService.login(email, password)
+
+        router.push(getRouteHome())
       }
-
-      /** шаг 2: автологинимся */
-      const signInRes = await signIn('credentials', {
-        email,
-        password,
-        callbackUrl: getRouteHome(),
-        redirect: false, // <— чтобы ловить ошибки логина
-      })
-
-      if (signInRes?.error) throw new Error(signInRes.error)
-
-      // redirect вручную, чтобы Next 13 не руга­лся на «wrapped fetch»
-      window.location.assign(getRouteProfile())
-    } catch (e) {
-      setError((e as Error).message ?? 'Неизвестная ошибка')
+    } catch (error) {
+      console.error(error)
+      setError((error as Error).message ?? 'Неизвестная ошибка')
     } finally {
       setPending(false)
     }

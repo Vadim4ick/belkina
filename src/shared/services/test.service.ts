@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useGqlClient } from '../hooks/useGqlClient'
-import { useAuthStore } from '../hooks/use-auth-store'
+
 import {
   TestResult_Status_All,
   TestResultUpdate_Status_MutationInput,
 } from '../graphql/__generated__'
 import type { AnswerInput } from '@/features/test-form'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 
 export const QUERY_KEYS = {
   testResult: (userId?: string | number, testId?: number) => ['testResult', userId, testId],
@@ -25,18 +26,18 @@ export const QUERY_KEYS = {
 
 export const useCreateTestResult = () => {
   const gql = useGqlClient({})
-  const session = useAuthStore((state) => state.session)
 
+  const profile = useProfileStore()
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: ['createTestResult', session?.user?.id],
+    mutationKey: ['createTestResult', profile.profile?.id],
 
     mutationFn: async ({ testId }: { testId: number }) => {
       try {
         await gql.CreateTestResult({
           testId: testId,
-          userId: Number(session?.user?.id),
+          userId: Number(profile.profile?.id),
         })
       } catch (err) {
         console.error('createTestResult', err)
@@ -46,13 +47,13 @@ export const useCreateTestResult = () => {
     },
 
     onSuccess: (_, { testId }) => {
-      if (session?.user?.id && testId) {
+      if (profile.profile?.id && testId) {
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.testResult(session.user.id, testId),
+          queryKey: QUERY_KEYS.testResult(profile.profile.id, testId),
         })
 
         queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.allUserTests(session.user.id),
+          queryKey: QUERY_KEYS.allUserTests(profile.profile.id),
         })
       }
     },
@@ -62,9 +63,9 @@ export const useCreateTestResult = () => {
 export const useGetTestResultById = ({ testId, userId }: { testId?: number; userId?: number }) => {
   const gql = useGqlClient({})
 
-  const session = useAuthStore((state) => state.session)
+  const profile = useProfileStore()
 
-  const user_id = session?.user?.id || userId
+  const user_id = profile.profile?.id || userId
 
   return useQuery({
     queryKey: QUERY_KEYS.testResult(user_id, testId!),
@@ -83,16 +84,17 @@ export const useGetTestResultById = ({ testId, userId }: { testId?: number; user
         throw err
       }
     },
-    enabled: !!session?.user?.id && !!testId,
+    enabled: !!profile.profile?.id && !!testId,
   })
 }
 
 export const useUpdateTestResult = () => {
   const gql = useGqlClient({})
-  const session = useAuthStore((state) => state.session)
+
+  const profile = useProfileStore()
 
   return useMutation({
-    mutationKey: ['updateTestResult', session?.user?.id],
+    mutationKey: ['updateTestResult', profile.profile?.id],
 
     mutationFn: async ({
       testResId,
@@ -135,13 +137,13 @@ export const useGetAllUserTests = ({
 }) => {
   const gql = useGqlClient({})
 
-  const session = useAuthStore((state) => state.session)
+  const profile = useProfileStore()
 
   return useQuery({
-    queryKey: QUERY_KEYS.allUserTests(session?.user.id, { status, examId, subjectId }),
+    queryKey: QUERY_KEYS.allUserTests(profile.profile?.id, { status, examId, subjectId }),
     queryFn: async () => {
       const variables: Record<string, any> = {
-        userId: Number(session?.user?.id),
+        userId: Number(profile.profile?.id),
       }
 
       if (status) {
@@ -165,6 +167,6 @@ export const useGetAllUserTests = ({
       }
     },
 
-    enabled: !!session?.user?.id,
+    enabled: !!profile.profile?.id,
   })
 }

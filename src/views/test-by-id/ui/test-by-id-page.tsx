@@ -1,5 +1,5 @@
 import { TestForm } from '@/features/test-form'
-import { getServerAuthGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { Typography } from '@/shared/ui/typography'
 import { notFound } from 'next/navigation'
 

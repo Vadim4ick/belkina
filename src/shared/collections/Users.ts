@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import bcrypt from 'bcryptjs'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -121,15 +120,4 @@ export const Users: CollectionConfig = {
       },
     },
   ],
-
-  hooks: {
-    beforeChange: [
-      async ({ data, operation }) => {
-        if ((operation === 'create' || operation === 'update') && data.password) {
-          data.password = await bcrypt.hash(data.password, 10)
-        }
-        return data
-      },
-    ],
-  },
 }

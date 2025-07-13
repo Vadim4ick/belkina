@@ -14138,6 +14138,7 @@ export type CreateUserMutationVariables = Exact<{
   password: Scalars['String']['input'];
   role: User_Role_MutationInput;
   signupMethod: User_SignupMethod_MutationInput;
+  name: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -14544,9 +14545,9 @@ export const UpdateTestResultDocument = gql`
 }
     `;
 export const CreateUserDocument = gql`
-    mutation CreateUser($email: String!, $password: String!, $role: User_role_MutationInput!, $signupMethod: User_signupMethod_MutationInput!) {
+    mutation CreateUser($email: String!, $password: String!, $role: User_role_MutationInput!, $signupMethod: User_signupMethod_MutationInput!, $name: String) {
   createUser(
-    data: {email: $email, password: $password, role: $role, signupMethod: $signupMethod}
+    data: {email: $email, password: $password, role: $role, signupMethod: $signupMethod, name: $name}
   ) {
     id
     email

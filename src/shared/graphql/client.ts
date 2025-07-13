@@ -1,6 +1,5 @@
 import { GraphQLClient } from 'graphql-request'
 import * as generated from './__generated__'
-import { auth } from '@/entities/user/auth'
 
 export const nextFetchWithTags = (tags: string[]) => {
   const nextFetch = (input: RequestInfo, init?: RequestInit) => {
@@ -23,12 +22,6 @@ export const createGqlClient = ({ token, tags }: { token?: string; tags?: string
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     }),
   )
-}
-
-export const getServerAuthGqlClient = async ({ tags }: { tags?: string[] }) => {
-  const session = await auth()
-  const token = session?.tokens?.accessToken
-  return createGqlClient({ token, tags })
 }
 
 export const gql = createGqlClient({})
