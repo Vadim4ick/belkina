@@ -1,11 +1,9 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { JwtService } from '@/shared/services/jwt-service'
+import { CookiesService } from '@/shared/services/cookies-service'
 
 export async function POST() {
-  const cookieStore = await cookies()
-
-  const refreshToken = cookieStore.get('refreshToken')?.value
+  const { refreshToken } = await CookiesService.getTokens()
 
   if (!refreshToken) {
     return NextResponse.json({ error: 'Нет refresh токена' }, { status: 401 })
@@ -19,10 +17,7 @@ export async function POST() {
       email: payload.email,
     })
 
-    ;(await cookies()).set('accessToken', newAccessToken, {
-      path: '/',
-      secure: process.env.NODE_ENV === 'production',
-    })
+    await CookiesService.setAccessToken(newAccessToken)
 
     return NextResponse.json({ message: 'Access token обновлён', accessToken: newAccessToken })
   } catch (err) {

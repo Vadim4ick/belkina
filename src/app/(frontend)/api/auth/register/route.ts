@@ -1,8 +1,8 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { gql } from '@/shared/graphql/client'
 import { JwtService } from '@/shared/services/jwt-service'
 import bcrypt from 'bcryptjs'
+import { CookiesService } from '@/shared/services/cookies-service'
 
 export async function POST(req: Request) {
   const { email, password } = await req.json()
@@ -36,15 +36,7 @@ export async function POST(req: Request) {
     email: newUser.createUser.email,
   })
 
-  ;(await cookies()).set('accessToken', accessToken, {
-    path: '/',
-    secure: process.env.NODE_ENV === 'production',
-  })
-  ;(await cookies()).set('refreshToken', refreshToken, {
-    path: '/',
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-  })
+  await CookiesService.setAuthCookies({ accessToken, refreshToken })
 
   return NextResponse.json({ message: 'Пользователь зарегистрирован' })
 }
