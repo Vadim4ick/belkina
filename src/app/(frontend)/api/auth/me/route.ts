@@ -36,7 +36,6 @@ export async function GET() {
 
         cookie.set('accessToken', newAccessToken, {
           path: '/',
-          httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
         })
 
