@@ -14362,7 +14362,7 @@ export const GetPostBySlugDocument = gql`
     ${PostFragmentFragmentDoc}`;
 export const GetPostListDocument = gql`
     query GetPostList($limit: Int!, $page: Int!) {
-  Posts(limit: $limit, page: $page) {
+  Posts(limit: $limit, page: $page, where: {_status: {equals: published}}) {
     docs {
       id
       slug

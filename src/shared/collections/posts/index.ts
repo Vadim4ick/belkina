@@ -79,6 +79,16 @@ export const Posts: CollectionConfig<'posts'> = {
           pickerAppearance: 'dayAndTime',
         },
       },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
     },
     {
       name: 'categories',
@@ -98,16 +108,6 @@ export const Posts: CollectionConfig<'posts'> = {
       hasMany: true,
       admin: {
         position: 'sidebar',
-      },
-      hooks: {
-        beforeChange: [
-          ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
-              return new Date()
-            }
-            return value
-          },
-        ],
       },
     },
   ],
