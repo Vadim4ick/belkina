@@ -1,4 +1,4 @@
-import { getServerAuthGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { getSettledValue } from '@/shared/lib/utils'
 import { TestsPage } from '@/views/tests'
 

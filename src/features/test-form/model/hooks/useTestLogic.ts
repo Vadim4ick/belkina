@@ -16,8 +16,9 @@ import {
   MutationTestResultUpdate_AnswersInput,
   TestFragmentFragment,
 } from '@/shared/graphql/__generated__'
-import { useAuthStore } from '@/shared/hooks/use-auth-store'
+
 import { formatUserAnswer } from '../const'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 
 export type AnswerInput = Omit<MutationTestResultUpdate_AnswersInput, 'id'>
 
@@ -50,7 +51,8 @@ export const useTestLogic = ({
 
   const [start, setStart] = useState(false)
   const queryClient = useQueryClient()
-  const session = useAuthStore((s) => s.session)
+
+  const { profile } = useProfileStore()
 
   /* ----------------------- текущий вопрос --------------------------- */
 
@@ -176,7 +178,7 @@ export const useTestLogic = ({
             setStep((prev) => (isNotLast ? prev + 1 : prev))
             if (!isNotLast) {
               queryClient.invalidateQueries({
-                queryKey: QUERY_KEYS.testResult(session?.user?.id, test?.id),
+                queryKey: QUERY_KEYS.testResult(profile?.id, test?.id),
               })
             }
           },
@@ -232,7 +234,7 @@ export const useTestLogic = ({
             },
           )
           queryClient.invalidateQueries({
-            queryKey: QUERY_KEYS.testResult(session?.user?.id, test?.id),
+            queryKey: QUERY_KEYS.testResult(profile?.id, test?.id),
           })
         },
       },

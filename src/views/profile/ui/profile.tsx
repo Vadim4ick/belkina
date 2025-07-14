@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getServerAuthGqlClient } from '@/shared/graphql/client'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { TestsHistory } from '@/widgets/tests-history'
 import { Topic } from './topic'
-import { auth } from '@/entities/user/auth'
+import { cookies } from 'next/headers'
+import { JwtService } from '@/shared/services/jwt-service'
 
 const mockProducts = [
   {
@@ -120,12 +121,14 @@ async function loadRecommendations(userId?: string) {
 export async function Profile() {
   const gql = await getServerAuthGqlClient({})
 
-  const session = await auth()
-  const userId = session?.user?.id
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('accessToken')?.value
 
-  const testHistory = await gql.GetTestResHistory({ userId: userId })
+  const payload = await JwtService.verifyToken(accessToken)
 
-  const recommendations = await loadRecommendations(userId)
+  const testHistory = await gql.GetTestResHistory({ userId: payload.id })
+
+  const recommendations = await loadRecommendations(String(payload.id))
 
   return (
     <section className="max-mobile:py-6 py-12">
