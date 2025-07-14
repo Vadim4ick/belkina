@@ -24,7 +24,9 @@ export class JwtService {
       .sign(this.secret)
   }
 
-  static async verifyToken(token: string): Promise<{ id: string; email: string }> {
+  static async verifyToken(token?: string): Promise<{ id: string; email: string }> {
+    if (!token) return { id: '', email: '' }
+
     const { payload } = await jwtVerify(token, this.secret)
 
     return {

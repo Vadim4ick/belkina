@@ -1,12 +1,11 @@
 'use client'
 
 import { createGqlClient } from '../graphql/client'
-import { useAuthStore } from './use-auth-store'
+import Cookies from 'js-cookie'
 
 export const useGqlClient = ({ tags }: { tags?: string[] }) => {
-  const session = useAuthStore((state) => state.session)
+  const token = Cookies.get('accessToken')
 
-  const token = session?.tokens?.accessToken
   return createGqlClient({
     token,
     tags,

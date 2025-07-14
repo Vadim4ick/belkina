@@ -1,9 +1,11 @@
 import { TariffList } from '@/features/tariff-list'
-import { gql } from '@/shared/graphql/client'
 import { CoursesList } from './courses-list'
 import { getSettledValue } from '@/shared/lib/utils'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 
 const CoursesPage = async () => {
+  const gql = await getServerAuthGqlClient({})
+
   const [exams, subjects, tarrifs] = await Promise.allSettled([
     gql.GetAllExams(),
     gql.GetAllSubjects(),

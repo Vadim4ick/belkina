@@ -1,4 +1,3 @@
-import { gql } from '@/shared/graphql/client'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
@@ -8,13 +7,14 @@ import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
-import { auth } from '@/entities/user/auth'
+
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
-  const courses = await gql.GetCourseBySlug({ slug })
+  const gql = await getServerAuthGqlClient({})
 
-  const session = await auth()
+  const courses = await gql.GetCourseBySlug({ slug })
 
   if (!courses || !courses.Courses || !courses.Courses.docs.length) {
     return notFound()
@@ -83,7 +83,8 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                   btnText="Перейти"
                   btnDisabled={videoId === product.kinescopeId}
                   showFooter={false}
-                  showButton={session?.user.tariffId === course.tariff.id || course.tariff.isFree}
+                  courseTariffId={course.tariff.id}
+                  courseFree={course.tariff.isFree}
                 />
               ))}
           </ProductCardsGridCatalog>

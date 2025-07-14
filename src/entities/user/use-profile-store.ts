@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 type State = {
   profile: GetUserByEmailQuery['Users']['docs'][0] | null
-  setProfile: (profile: GetUserByEmailQuery['Users']['docs'][0]) => void
+  setProfile: (profile?: GetUserByEmailQuery['Users']['docs'][0]) => void
 }
 
 export const useProfileStore = create<State>((set) => ({

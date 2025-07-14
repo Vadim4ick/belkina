@@ -1,40 +1,62 @@
-import { auth } from '@/entities/user/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { authRoutes, getRouteAuth, getRouteProfile, privateRoutes } from './shared/lib/routes'
+import { JwtService } from './shared/services/jwt-service'
 
-export default auth(async (req: NextRequest) => {
+export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
-  const session = await auth()
+  const res = NextResponse.next()
 
-  const isAuth = !!session
+  let user = null
+
+  const accessToken = req.cookies.get('accessToken')?.value
+  const refreshToken = req.cookies.get('refreshToken')?.value
+
+  if (accessToken) {
+    try {
+      user = await JwtService.verifyToken(accessToken)
+    } catch {
+      user = null
+    }
+  }
+
+  if (!user && refreshToken) {
+    try {
+      const payload = await JwtService.verifyToken(refreshToken)
+
+      // ✅ генерируем новый accessToken
+      const newAccessToken = await JwtService.signAccessToken({
+        id: payload.id,
+        email: payload.email,
+      })
+
+      // устанавливаем новый accessToken
+      res.cookies.set('accessToken', newAccessToken, {
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      })
+
+      user = payload
+    } catch {
+      user = null
+    }
+  }
+
+  const isAuth = !!user
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route))
   const isPrivateRoute = privateRoutes.some((route) => pathname.startsWith(route))
 
-  // 🔒 Защищённый маршрут без авторизации — редирект на login
   if (isPrivateRoute && !isAuth) {
     const loginUrl = new URL(getRouteAuth(), req.url)
     return NextResponse.redirect(loginUrl)
   }
 
-  // 🔐 Авторизован и пытается зайти на login/register — редирект на домашнюю страницу
   if (isAuth && isAuthRoute) {
     return NextResponse.redirect(new URL(getRouteProfile(), req.url))
   }
 
-  // ✅ Всё в порядке — пропускаем
-  return NextResponse.next()
-})
+  return res
+}
 
-/*
- * Запускаем middleware
- * — на всех страницах приложения,
- * — кроме:
- *   1) /_next/*  (статические файлы)
- *   2) /favicon.ico, /robots.txt и прочего из public
- *   3) /api/*     (включая /api/auth/*)
- *   4) /img/*     (статические файлы)
- *   5) /fonts/*   (статические файлы)
- */
 export const config = {
   matcher: ['/((?!api/.*|_next/.*|favicon.ico|robots.txt|img/.*|fonts/.*).*)'],
 }

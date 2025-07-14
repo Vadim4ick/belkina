@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { gql, TestResult_Status_All } from '../client'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { TestResult_Status_All } from '../client'
 
 export const GetUserTestsResolver = {
   resolve: async (
@@ -17,6 +18,8 @@ export const GetUserTestsResolver = {
       subjectId: number
     },
   ) => {
+    const gql = await getServerAuthGqlClient({})
+
     // 1. Получаем все тесты
     // @ts-ignore
     const allTests = await gql.GetAllTests({

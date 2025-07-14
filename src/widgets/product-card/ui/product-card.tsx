@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { Button } from '@/shared/ui/button'
 import {
   Card,
   CardContent,
@@ -12,8 +11,7 @@ import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
 import { MediaFragmentFragment } from '@/shared/graphql/__generated__'
 import { Clock } from '@/shared/ui/clock'
-import Link from 'next/link'
-import { cn } from '@/shared/lib/utils'
+import { ProductCardBtn } from './product-card-btn'
 
 export interface ProductCardProps {
   title: string
@@ -29,7 +27,9 @@ export interface ProductCardProps {
   btnText?: string
   btnDisabled?: boolean
   showFooter?: boolean
-  showButton?: boolean
+
+  courseTariffId?: number
+  courseFree?: boolean
 }
 
 const ProductCard = ({
@@ -45,7 +45,8 @@ const ProductCard = ({
   btnText = 'Подробнее',
   btnDisabled = false,
   showFooter = true,
-  showButton = true,
+  courseFree = true,
+  courseTariffId,
 }: ProductCardProps) => {
   return (
     <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
@@ -63,7 +64,7 @@ const ProductCard = ({
         )}
       </div>
 
-      <CardHeader className="px-0">
+      <CardHeader className="block px-0">
         <CardTitle className="px-0">
           <Typography variant="poppins-md-16" className="line-clamp-2 uppercase">
             {title}
@@ -79,14 +80,15 @@ const ProductCard = ({
             </Badge>
           )}
 
-          <div className="flex flex-wrap gap-x-4 gap-y-2">
-            {categories &&
-              categories.map((category) => (
+          {categories && categories.length > 0 && (
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {categories.map((category) => (
                 <Badge key={category} variant="secondary">
                   <Typography variant="poppins-reg-14">{category}</Typography>
                 </Badge>
               ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {duration && <Clock duration={duration} />}
@@ -114,16 +116,13 @@ const ProductCard = ({
           </div>
         )}
 
-        {showButton && (
-          <Link
-            href={btnDisabled ? '#' : url}
-            className={cn('w-full', btnDisabled && 'pointer-events-none')}
-          >
-            <Button disabled={btnDisabled} className="w-full">
-              {btnText}
-            </Button>
-          </Link>
-        )}
+        <ProductCardBtn
+          btnText={btnText}
+          btnDisabled={btnDisabled}
+          url={url}
+          courseFree={courseFree}
+          courseTariffId={courseTariffId}
+        />
       </CardFooter>
     </Card>
   )
