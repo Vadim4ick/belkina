@@ -1,6 +1,6 @@
 'use client'
 
-import { CourseFragmentFragment } from '@/shared/graphql/__generated__'
+import { CourseFragmentFragment, GetPurchaseByIdQuery } from '@/shared/graphql/__generated__'
 import { Arrow } from '@/shared/icons/arrow'
 import {
   getRouteAuth,
@@ -23,11 +23,13 @@ const NavigationPanel = ({
   prevVideo,
   nextVideo,
   course,
+  courseTariff,
 }: {
   activeVideo: KinescopeVideoItem
   prevVideo: KinescopeVideoItem | null
   nextVideo: KinescopeVideoItem | null
   course: CourseFragmentFragment
+  courseTariff?: GetPurchaseByIdQuery['Purchases']['docs'][0]['tariff']
 }) => {
   const { profile } = useProfileStore()
 
@@ -52,14 +54,14 @@ const NavigationPanel = ({
   return (
     <aside
       className={cn('tablet:p-2 flex h-full flex-col gap-8', {
-        'justify-between': profile?.tariff?.id === course.tariff.id,
+        'justify-between': !!courseTariff?.id,
       })}
     >
       <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
         {activeVideo.title}
       </Typography>
 
-      {profile?.tariff?.id === course.tariff?.id || course.tariff.isFree ? (
+      {!!courseTariff?.id || course.isFree ? (
         <>
           {activeVideo.test && (
             <div className="mb-2 flex min-h-[120px] flex-col items-start gap-3 rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 shadow-sm">
@@ -145,8 +147,7 @@ const NavigationPanel = ({
       ) : (
         <div className="w-full rounded-2xl border border-violet-100 bg-white/80 px-6 py-5 text-center shadow-sm">
           <Typography tag="p" variant="poppins-md-16" className="mb-2">
-            Для доступа к этому курсу необходим тариф&nbsp;
-            <span className="font-semibold">{course.tariff.title}</span>.
+            Для доступа к этому курсу необходимо приобрести платный тариф
           </Typography>
           <Typography tag="p" variant="poppins-reg-14" className="mb-4 text-gray-600">
             Выберите подходящий тариф и откройте все уроки и материалы курса.

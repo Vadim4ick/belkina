@@ -18,6 +18,7 @@ import { TestQuestions } from './shared/collections/test/questions'
 import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
+import Purchases from './shared/collections/Purchases'
 
 import dotenv from 'dotenv'
 import { Posts } from './shared/collections/posts'
@@ -60,6 +61,7 @@ export default buildConfig({
     Recomendations,
     Exams,
     Subjects,
+    Purchases,
     Posts,
     Courses,
   ],

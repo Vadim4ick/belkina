@@ -130,23 +130,23 @@ export const Users: CollectionConfig = {
       },
     },
 
-    {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: false,
-      defaultValue: async ({ req }) => {
-        const { docs } = await req.payload.find({
-          collection: 'tariffs',
-          sort: 'createdAt',
-        })
+    // {
+    //   name: 'tariff',
+    //   label: 'Тариф',
+    //   type: 'relationship',
+    //   relationTo: 'tariffs',
+    //   required: false,
+    //   defaultValue: async ({ req }) => {
+    //     const { docs } = await req.payload.find({
+    //       collection: 'tariffs',
+    //       sort: 'createdAt',
+    //     })
 
-        return docs.find((doc) => doc.isFree)?.id
-      },
-      admin: {
-        position: 'sidebar',
-      },
-    },
+    //     return docs.find((doc) => doc.isFree)?.id
+    //   },
+    //   admin: {
+    //     position: 'sidebar',
+    //   },
+    // },
   ],
 }

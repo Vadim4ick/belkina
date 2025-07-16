@@ -5,7 +5,6 @@ import { Button } from '@/shared/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
-import Image from 'next/image'
 import Link from 'next/link'
 
 interface EmptyDataMessageProps {

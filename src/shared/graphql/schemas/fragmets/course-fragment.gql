@@ -14,9 +14,8 @@ fragment CourseFragment on Course {
   subjects {
     ...SubjectsFragment
   }
-  tariff {
-    ...TariffFragment
-  }
+
+  isFree
 
   kinescopeVideos
 }

@@ -37,38 +37,11 @@ export const tariffsHooks: CollectionConfig['hooks'] = {
   afterChange: [
     async ({ doc, req }) => {
       if (doc.isFree) {
-        const { payload } = req
-
         const newFreeTariffId = doc.id
         const oldFreeTariffId = (req as PayloadRequest & { oldFreeTariffId?: string })
           .oldFreeTariffId
 
         console.log('newFreeTariffId', newFreeTariffId, 'oldFreeTariffId', oldFreeTariffId)
-
-        setTimeout(async () => {
-          const where = oldFreeTariffId
-            ? {
-                or: [{ tariff: { equals: null } }, { tariff: { equals: oldFreeTariffId } }],
-              }
-            : {
-                tariff: { equals: null },
-              }
-
-          const { docs: usersToUpdate } = await payload.find({
-            collection: 'users',
-            // @ts-ignore
-            where,
-            depth: 1,
-          })
-
-          for (const user of usersToUpdate) {
-            await payload.update({
-              collection: 'users',
-              id: user.id,
-              data: { tariff: newFreeTariffId },
-            })
-          }
-        }, 100)
       }
     },
   ],
