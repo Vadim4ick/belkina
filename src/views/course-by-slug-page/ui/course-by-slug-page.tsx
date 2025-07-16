@@ -69,8 +69,8 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                 <ProductCard
                   key={idx}
                   title={product.title}
-                  categories={course.subjects.map((subject) => subject.title)}
-                  exams={course.exams.title}
+                  categories={course?.subjects?.map((subject) => subject.title)}
+                  exams={course?.exams?.title}
                   duration={summClockTime([product.duration])}
                   description={course.description}
                   price={course.price}

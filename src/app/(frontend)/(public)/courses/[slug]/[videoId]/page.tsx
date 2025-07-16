@@ -1,6 +1,6 @@
 import { CourseBySlugPage } from '@/views/course-by-slug-page'
 
-export const revalidate = 18
+export const revalidate = 180
 
 export default async function Page({
   params,
