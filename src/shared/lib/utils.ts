@@ -23,9 +23,9 @@ export const summClockTime = (arrDuration: number[]): string => {
 }
 export async function checkAccessToken({ req }: { req: PayloadRequest }): Promise<boolean> {
   // 1. Разрешить доступ администраторам из системной users collection
-  // if (req.user?.role === 'admin') {
-  //   return true
-  // }
+  if (req.user?.role === 'admin') {
+    return true
+  }
 
   const authHeader = req.headers.get('authorization')
   const token = authHeader?.replace(/^Bearer\s/, '')
