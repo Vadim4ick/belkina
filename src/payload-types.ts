@@ -78,6 +78,7 @@ export interface Config {
     recomendations: Recomendation;
     exams: Exam;
     subjects: Subject;
+    purchases: Purchase;
     posts: Post;
     courses: Course;
     'payload-locked-documents': PayloadLockedDocument;
@@ -97,6 +98,7 @@ export interface Config {
     recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
     subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    purchases: PurchasesSelect<false> | PurchasesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -153,7 +155,6 @@ export interface User {
   avatar?: (number | null) | Media;
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex' | 'google';
-  tariff?: (number | null) | Tariff;
   updatedAt: string;
   createdAt: string;
 }
@@ -358,6 +359,47 @@ export interface Admin {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "purchases".
+ */
+export interface Purchase {
+  id: number;
+  user: number | User;
+  course: number | Course;
+  tariff: number | Tariff;
+  pricePaid: number;
+  purchasedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  description: string;
+  banner: number | Media;
+  exams?: (number | null) | Exam;
+  subjects?: (number | Subject)[] | null;
+  price: number;
+  discount?: number | null;
+  slug: string;
+  isFree?: boolean | null;
+  kinescopeVideos:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -391,33 +433,6 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: number;
-  title: string;
-  description: string;
-  banner: number | Media;
-  exams?: (number | null) | Exam;
-  subjects?: (number | Subject)[] | null;
-  price: number;
-  discount?: number | null;
-  slug: string;
-  tariff: number | Tariff;
-  kinescopeVideos:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -469,6 +484,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subjects';
         value: number | Subject;
+      } | null)
+    | ({
+        relationTo: 'purchases';
+        value: number | Purchase;
       } | null)
     | ({
         relationTo: 'posts';
@@ -531,7 +550,6 @@ export interface UsersSelect<T extends boolean = true> {
   avatar?: T;
   role?: T;
   signupMethod?: T;
-  tariff?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -691,6 +709,19 @@ export interface SubjectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "purchases_select".
+ */
+export interface PurchasesSelect<T extends boolean = true> {
+  user?: T;
+  course?: T;
+  tariff?: T;
+  pricePaid?: T;
+  purchasedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -720,7 +751,7 @@ export interface CoursesSelect<T extends boolean = true> {
   price?: T;
   discount?: T;
   slug?: T;
-  tariff?: T;
+  isFree?: T;
   kinescopeVideos?: T;
   updatedAt?: T;
   createdAt?: T;

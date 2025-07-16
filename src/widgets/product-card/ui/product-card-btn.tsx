@@ -1,6 +1,5 @@
 'use client'
 
-import { useProfileStore } from '@/entities/user/use-profile-store'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import Link from 'next/link'
@@ -19,9 +18,7 @@ const ProductCardBtn = ({
   courseTariffId?: number
   courseFree?: boolean
 }) => {
-  const { profile } = useProfileStore()
-
-  const showButton = profile?.tariff?.id === courseTariffId || courseFree
+  const showButton = !!courseTariffId || courseFree
 
   if (!showButton) {
     return null

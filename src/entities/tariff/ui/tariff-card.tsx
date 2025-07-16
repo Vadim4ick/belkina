@@ -5,15 +5,7 @@ import { cn } from '@/shared/lib/utils'
 import { TariffFragmentFragment } from '@/shared/graphql/__generated__'
 import { TariffButton } from './tariff-button'
 
-const TariffCard = ({
-  item,
-  className,
-  currentTariffId,
-}: {
-  item: TariffFragmentFragment
-  className?: string
-  currentTariffId?: number
-}) => {
+const TariffCard = ({ item, className }: { item: TariffFragmentFragment; className?: string }) => {
   return (
     <div
       className={cn(
@@ -60,7 +52,7 @@ const TariffCard = ({
           От {item.price} рублей
         </Typography>
 
-        <TariffButton id={item.id} />
+        <TariffButton />
       </div>
     </div>
   )

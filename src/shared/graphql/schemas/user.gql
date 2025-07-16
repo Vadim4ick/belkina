@@ -32,10 +32,6 @@ query GetUserByEmail($email: EmailAddress!) {
       avatar {
         ...MediaFragment
       }
-
-      tariff {
-        id
-      }
     }
     totalDocs
   }

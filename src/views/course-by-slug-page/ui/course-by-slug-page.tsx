@@ -10,6 +10,8 @@ import { NavigationPanel } from './navigation-panel'
 
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { cookies } from 'next/headers'
+import { JwtService } from '@/shared/services/jwt-service'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
   const gql = await getServerAuthGqlClient({})
@@ -19,6 +21,16 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
   if (!courses || !courses.Courses || !courses.Courses.docs.length) {
     return notFound()
   }
+
+  const cookieStore = await cookies()
+  const accessToken = cookieStore.get('accessToken')?.value
+
+  const payload = await JwtService.verifyToken(accessToken)
+
+  const purchase = await gql.GetPurchaseById({
+    courseId: courses.Courses.docs[0].id,
+    userId: payload?.id || null,
+  })
 
   const course = courses.Courses.docs[0]
   const videos = (course.kinescopeVideos as KinescopeVideoItem[]) || []
@@ -55,6 +67,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                 prevVideo={prevVideo}
                 nextVideo={nextVideo}
                 course={course}
+                courseTariff={purchase.Purchases.docs?.[0]?.tariff}
               />
             </div>
           </div>
@@ -83,8 +96,8 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                   btnText="Перейти"
                   btnDisabled={videoId === product.kinescopeId}
                   showFooter={false}
-                  courseTariffId={course.tariff.id}
-                  courseFree={course.tariff.isFree}
+                  courseFree={course.isFree}
+                  courseTariffId={purchase.Purchases.docs?.[0]?.tariff?.id}
                 />
               ))}
           </ProductCardsGridCatalog>

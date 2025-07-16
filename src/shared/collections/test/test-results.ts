@@ -4,7 +4,11 @@ export const TestResults: CollectionConfig = {
   slug: 'testResults',
   admin: {
     useAsTitle: 'id',
-    group: 'Тестирование',
+    group: 'Результаты',
+  },
+  labels: {
+    singular: 'Резултат теста',
+    plural: 'Результаты тестов',
   },
   access: {
     // read: checkAccessToken,

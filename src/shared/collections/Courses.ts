@@ -85,55 +85,12 @@ const Courses: CollectionConfig = {
         readOnly: true,
       },
     },
-
     {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: true,
+      name: 'isFree',
+      label: 'Бесплатный материал',
+      type: 'checkbox',
+      defaultValue: false,
     },
-    // {
-    //   name: 'kinescopeVideos',
-    //   label: 'Видео из Kinescope',
-    //   type: 'array',
-    //   required: true,
-    //   minRows: 1,
-    //   fields: [
-    //     {
-    //       name: 'kinescopeId',
-    //       label: 'ID видео',
-    //       type: 'text',
-    //       required: true,
-    //       admin: {
-    //         components: {
-    //           Field: '@/app/(payload)/components/fields/KinescopeVideoSelect',
-    //         },
-    //       },
-    //     },
-    //     {
-    //       name: 'title',
-    //       label: 'Название видео',
-    //       type: 'text',
-    //       required: true,
-    //       admin: { readOnly: true }, // Не даём ручками менять, только через компонент
-    //     },
-    //     {
-    //       name: 'duration',
-    //       label: 'Длительность (сек)',
-    //       type: 'number',
-    //       required: true,
-    //       admin: { readOnly: true },
-    //     },
-    //     {
-    //       name: 'test',
-    //       label: 'Тест после видео',
-    //       type: 'relationship',
-    //       relationTo: 'tests',
-    //       required: false,
-    //     },
-    //   ],
-    // },
 
     {
       name: 'kinescopeVideos',
