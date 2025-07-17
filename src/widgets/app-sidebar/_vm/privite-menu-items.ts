@@ -4,14 +4,7 @@ import { CartIcon } from '@/shared/icons/cart-icon'
 import { TagIcon } from '@/shared/icons/tag-icon'
 import { CalendarIcon } from '@/shared/icons/calendar-icon'
 import { MessagesIcon } from '@/shared/icons/messages-icon'
-import { TariffsIcon } from '@/shared/icons/tariffs-icon'
-import {
-  getRouteHome,
-  getRouteCourses,
-  getRouteProfile,
-  getRouteTariffs,
-  getRouteTests,
-} from '@/shared/lib/routes'
+import { getRouteHome, getRouteCourses, getRouteProfile, getRouteTests } from '@/shared/lib/routes'
 import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
 
 export const PrivateMenuItems: IsideBarItems[] = [
@@ -44,10 +37,5 @@ export const PrivateMenuItems: IsideBarItems[] = [
     title: 'Онлайн чат',
     url: '#',
     icon: MessagesIcon,
-  },
-  {
-    title: 'Тарифы',
-    url: getRouteTariffs(),
-    icon: TariffsIcon,
   },
 ]

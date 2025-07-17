@@ -185,11 +185,6 @@ export interface Tariff {
   id: number;
   title: string;
   price: number;
-  /**
-   * Если включено — этот тариф будет бесплатным. Разрешён только один.
-   */
-  isFree?: boolean | null;
-  subtitle: string;
   description: string;
   benefits: {
     value: string;
@@ -578,8 +573,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TariffsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
-  isFree?: T;
-  subtitle?: T;
   description?: T;
   benefits?:
     | T

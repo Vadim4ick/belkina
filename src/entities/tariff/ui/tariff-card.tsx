@@ -9,24 +9,12 @@ const TariffCard = ({ item, className }: { item: TariffFragmentFragment; classNa
   return (
     <div
       className={cn(
-        'border-light-grey flex flex-col gap-6 rounded-[16px] border bg-white px-4 py-[34px]',
+        'border-light-grey flex flex-col gap-4 rounded-[16px] border bg-white p-4 shadow-lg',
         className,
       )}
     >
       <Typography tag="p" variant="poppins-md-16">
         {item.title}
-      </Typography>
-
-      <Typography
-        tag="div"
-        className="bg-light-grey rounded-[6px] px-[10px] py-3 text-[#6B7280]"
-        variant="poppins-reg-14"
-      >
-        {item.subtitle}
-      </Typography>
-
-      <Typography tag="p" variant="poppins-reg-14">
-        Включает в себя
       </Typography>
 
       <div className="flex h-full max-h-[356px] flex-col gap-2 overflow-y-auto">
@@ -43,7 +31,7 @@ const TariffCard = ({ item, className }: { item: TariffFragmentFragment; classNa
         ))}
       </div>
 
-      <Typography className="py-3 text-[#6B7280]" tag="p" variant="poppins-reg-14">
+      <Typography className="text-[#6B7280]" tag="p" variant="poppins-reg-14">
         {item.description}
       </Typography>
 

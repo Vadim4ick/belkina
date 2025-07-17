@@ -41,29 +41,31 @@ const FilterTests = ({
       </DialogTrigger>
 
       <DialogContent aria-describedby="" className="max-w-[650px!important]">
-        <DialogHeader>
-          <DialogTitle>Фильтры</DialogTitle>
-        </DialogHeader>
+        <div className="max-mobile:px-4 flex flex-col gap-6 overflow-auto rounded-[6px] bg-white p-6">
+          <DialogHeader>
+            <DialogTitle>Фильтры</DialogTitle>
+          </DialogHeader>
 
-        <TabCategory
-          btns={btnsCategoryTests}
-          value={filters.categoryIdx}
-          onChange={(val) => setCategoryIdx(val)}
-        />
+          <TabCategory
+            btns={btnsCategoryTests}
+            value={filters.categoryIdx}
+            onChange={(val) => setCategoryIdx(val)}
+          />
 
-        <div className="flex flex-col gap-4">
-          <TabCategory
-            btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
-            value={filters.examId}
-            onChange={(val) => setFilter('examId', val)}
-            variant="secondary"
-          />
-          <TabCategory
-            btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
-            value={filters.subjectId}
-            onChange={(val) => setFilter('subjectId', val)}
-            variant="secondary"
-          />
+          <div className="flex flex-col gap-4">
+            <TabCategory
+              btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
+              value={filters.examId}
+              onChange={(val) => setFilter('examId', val)}
+              variant="secondary"
+            />
+            <TabCategory
+              btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
+              value={filters.subjectId}
+              onChange={(val) => setFilter('subjectId', val)}
+              variant="secondary"
+            />
+          </div>
         </div>
       </DialogContent>
     </Dialog>

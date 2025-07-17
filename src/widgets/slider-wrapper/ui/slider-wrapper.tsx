@@ -1,5 +1,4 @@
 import { GetPostListQuery } from '@/shared/graphql/__generated__'
-import { getRoutePosts } from '@/shared/lib/routes'
 import {
   Carousel,
   CarouselContent,
@@ -29,12 +28,7 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
               posts.docs?.map((product) => (
                 <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
                   <div className="p-3">
-                    <ProductCard
-                      title={product.title}
-                      image={product.image}
-                      url={`${getRoutePosts()}/${product.slug}`}
-                      showFooter={false}
-                    />
+                    <ProductCard title={product.title} image={product.image} showFooter={false} />
                   </div>
                 </CarouselItem>
               ))}

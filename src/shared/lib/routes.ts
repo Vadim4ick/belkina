@@ -7,7 +7,6 @@ export const getRouteTestById = ({ id }: { id: string | number }) => `${getRoute
 export const getRouteCourses = () => '/courses'
 export const getRouteCourseBySlug = ({ slug, videoId }: { slug: string; videoId: string }) =>
   `${getRouteCourses()}/${slug}/${videoId}`
-export const getRouteTariffs = () => '/tariffs'
 
 export const getRoutePosts = () => '/posts'
 export const getRoutePostsPaginated = (pageNum: number) => `${getRoutePosts()}/page/${pageNum}`

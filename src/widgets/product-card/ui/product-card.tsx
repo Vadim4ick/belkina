@@ -11,7 +11,6 @@ import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
 import { MediaFragmentFragment } from '@/shared/graphql/__generated__'
 import { Clock } from '@/shared/ui/clock'
-import { ProductCardBtn } from './product-card-btn'
 
 export interface ProductCardProps {
   title: string
@@ -19,17 +18,11 @@ export interface ProductCardProps {
   duration?: string
   description?: string
   exams?: string
-  url: string
   price?: number
   discount?: number
-  image: MediaFragmentFragment
+  image?: MediaFragmentFragment
 
-  btnText?: string
-  btnDisabled?: boolean
   showFooter?: boolean
-
-  courseTariffId?: number
-  courseFree?: boolean
 }
 
 const ProductCard = ({
@@ -40,19 +33,13 @@ const ProductCard = ({
   exams,
   price,
   discount,
-  url,
   image,
-  btnText = 'Подробнее',
-  btnDisabled = false,
   showFooter = true,
-  courseFree = true,
-  courseTariffId,
 }: ProductCardProps) => {
   return (
     <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
-      <div className="relative h-[275px] w-full">
-        {!image && <div className="">Предусмотреть загрушку если нет фото</div>}
-        {image && (
+      {image && (
+        <div className="relative h-[275px] w-full">
           <Image
             src={image.url}
             alt={image.alt}
@@ -61,8 +48,8 @@ const ProductCard = ({
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="h-full w-full rounded-lg object-cover"
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <CardHeader className="block px-0">
         <CardTitle className="px-0">
@@ -115,14 +102,6 @@ const ProductCard = ({
             ) : null}
           </div>
         )}
-
-        <ProductCardBtn
-          btnText={btnText}
-          btnDisabled={btnDisabled}
-          url={url}
-          courseFree={courseFree}
-          courseTariffId={courseTariffId}
-        />
       </CardFooter>
     </Card>
   )
