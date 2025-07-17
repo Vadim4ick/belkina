@@ -1,6 +1,5 @@
 import { seedHomePage } from './data/homePage'
 import { seedFaqs } from './data/faqs'
-import { seedTariffs } from './data/tariffs'
 import { clearSeeds } from './data/_clear'
 import { createTests } from './data/tests'
 import { seedRecommendations } from './data/recomendations'
@@ -11,14 +10,13 @@ export const seed = async () => {
 
   await clearSeeds()
 
-  const tariffs = await seedTariffs()
   await seedFaqs()
   await seedHomePage()
 
   await seedExams()
   await seedSubjects()
 
-  const recommendation = await seedRecommendations(tariffs)
+  const recommendation = await seedRecommendations()
   await createTests(recommendation.id)
 
   console.log('✅ Сидеры завершены.')

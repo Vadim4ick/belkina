@@ -9537,7 +9537,6 @@ export type Recomendation = {
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly description: Scalars['JSON']['output'];
   readonly id: Scalars['Int']['output'];
-  readonly tariff: Maybe<Tariff>;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
@@ -9545,12 +9544,6 @@ export type Recomendation = {
 
 export type RecomendationDescriptionArgs = {
   depth: InputMaybe<Scalars['Int']['input']>;
-};
-
-
-export type RecomendationTariffArgs = {
-  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
-  locale: InputMaybe<LocaleInputType>;
 };
 
 export type Recomendation_CreatedAt_Operator = {
@@ -9581,15 +9574,6 @@ export type Recomendation_Id_Operator = {
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Recomendation_Tariff_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-};
-
 export type Recomendation_Title_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   readonly contains: InputMaybe<Scalars['String']['input']>;
@@ -9617,7 +9601,6 @@ export type Recomendation_Where = {
   readonly createdAt: InputMaybe<Recomendation_CreatedAt_Operator>;
   readonly description: InputMaybe<Recomendation_Description_Operator>;
   readonly id: InputMaybe<Recomendation_Id_Operator>;
-  readonly tariff: InputMaybe<Recomendation_Tariff_Operator>;
   readonly title: InputMaybe<Recomendation_Title_Operator>;
   readonly updatedAt: InputMaybe<Recomendation_UpdatedAt_Operator>;
 };
@@ -9628,7 +9611,6 @@ export type Recomendation_Where_And = {
   readonly createdAt: InputMaybe<Recomendation_CreatedAt_Operator>;
   readonly description: InputMaybe<Recomendation_Description_Operator>;
   readonly id: InputMaybe<Recomendation_Id_Operator>;
-  readonly tariff: InputMaybe<Recomendation_Tariff_Operator>;
   readonly title: InputMaybe<Recomendation_Title_Operator>;
   readonly updatedAt: InputMaybe<Recomendation_UpdatedAt_Operator>;
 };
@@ -9639,7 +9621,6 @@ export type Recomendation_Where_Or = {
   readonly createdAt: InputMaybe<Recomendation_CreatedAt_Operator>;
   readonly description: InputMaybe<Recomendation_Description_Operator>;
   readonly id: InputMaybe<Recomendation_Id_Operator>;
-  readonly tariff: InputMaybe<Recomendation_Tariff_Operator>;
   readonly title: InputMaybe<Recomendation_Title_Operator>;
   readonly updatedAt: InputMaybe<Recomendation_UpdatedAt_Operator>;
 };
@@ -9687,7 +9668,6 @@ export type RecomendationsDocAccessFields = {
   readonly __typename?: 'RecomendationsDocAccessFields';
   readonly createdAt: Maybe<RecomendationsDocAccessFields_CreatedAt>;
   readonly description: Maybe<RecomendationsDocAccessFields_Description>;
-  readonly tariff: Maybe<RecomendationsDocAccessFields_Tariff>;
   readonly title: Maybe<RecomendationsDocAccessFields_Title>;
   readonly updatedAt: Maybe<RecomendationsDocAccessFields_UpdatedAt>;
 };
@@ -9745,34 +9725,6 @@ export type RecomendationsDocAccessFields_Description_Read = {
 
 export type RecomendationsDocAccessFields_Description_Update = {
   readonly __typename?: 'RecomendationsDocAccessFields_description_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsDocAccessFields_Tariff = {
-  readonly __typename?: 'RecomendationsDocAccessFields_tariff';
-  readonly create: Maybe<RecomendationsDocAccessFields_Tariff_Create>;
-  readonly delete: Maybe<RecomendationsDocAccessFields_Tariff_Delete>;
-  readonly read: Maybe<RecomendationsDocAccessFields_Tariff_Read>;
-  readonly update: Maybe<RecomendationsDocAccessFields_Tariff_Update>;
-};
-
-export type RecomendationsDocAccessFields_Tariff_Create = {
-  readonly __typename?: 'RecomendationsDocAccessFields_tariff_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsDocAccessFields_Tariff_Delete = {
-  readonly __typename?: 'RecomendationsDocAccessFields_tariff_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsDocAccessFields_Tariff_Read = {
-  readonly __typename?: 'RecomendationsDocAccessFields_tariff_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsDocAccessFields_Tariff_Update = {
-  readonly __typename?: 'RecomendationsDocAccessFields_tariff_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -9836,7 +9788,6 @@ export type RecomendationsFields = {
   readonly __typename?: 'RecomendationsFields';
   readonly createdAt: Maybe<RecomendationsFields_CreatedAt>;
   readonly description: Maybe<RecomendationsFields_Description>;
-  readonly tariff: Maybe<RecomendationsFields_Tariff>;
   readonly title: Maybe<RecomendationsFields_Title>;
   readonly updatedAt: Maybe<RecomendationsFields_UpdatedAt>;
 };
@@ -9894,34 +9845,6 @@ export type RecomendationsFields_Description_Read = {
 
 export type RecomendationsFields_Description_Update = {
   readonly __typename?: 'RecomendationsFields_description_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsFields_Tariff = {
-  readonly __typename?: 'RecomendationsFields_tariff';
-  readonly create: Maybe<RecomendationsFields_Tariff_Create>;
-  readonly delete: Maybe<RecomendationsFields_Tariff_Delete>;
-  readonly read: Maybe<RecomendationsFields_Tariff_Read>;
-  readonly update: Maybe<RecomendationsFields_Tariff_Update>;
-};
-
-export type RecomendationsFields_Tariff_Create = {
-  readonly __typename?: 'RecomendationsFields_tariff_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsFields_Tariff_Delete = {
-  readonly __typename?: 'RecomendationsFields_tariff_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsFields_Tariff_Read = {
-  readonly __typename?: 'RecomendationsFields_tariff_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type RecomendationsFields_Tariff_Update = {
-  readonly __typename?: 'RecomendationsFields_tariff_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -13803,7 +13726,6 @@ export type MutationQuestion_MatchingPairsInput = {
 export type MutationRecomendationInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: Scalars['JSON']['input'];
-  readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly title: Scalars['String']['input'];
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
@@ -13811,7 +13733,6 @@ export type MutationRecomendationInput = {
 export type MutationRecomendationUpdateInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: InputMaybe<Scalars['JSON']['input']>;
-  readonly tariff: InputMaybe<Scalars['Int']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
@@ -14443,7 +14364,7 @@ export type PostFragmentFragment = { readonly __typename?: 'Post', readonly id: 
 
 export type QuestionFragmentFragment = { readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> };
 
-export type RecomendationFragmentFragment = { readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> } };
+export type RecomendationFragmentFragment = { readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any };
 
 export type SubjectsFragmentFragment = { readonly __typename?: 'Subject', readonly id: number, readonly title: string };
 
@@ -14526,7 +14447,7 @@ export type GetRecommendationsByIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetRecommendationsByIdsQuery = { readonly __typename?: 'Query', readonly Recomendations: { readonly __typename?: 'Recomendations', readonly docs: ReadonlyArray<{ readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any, readonly tariff: { readonly __typename?: 'Tariff', readonly title: string, readonly price: number } }> } };
+export type GetRecommendationsByIdsQuery = { readonly __typename?: 'Query', readonly Recomendations: { readonly __typename?: 'Recomendations', readonly docs: ReadonlyArray<{ readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any }> } };
 
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -14651,6 +14572,13 @@ export const PostFragmentFragmentDoc = gql`
   publishedAt
 }
     `;
+export const RecomendationFragmentFragmentDoc = gql`
+    fragment RecomendationFragment on Recomendation {
+  id
+  title
+  description
+}
+    `;
 export const TariffFragmentFragmentDoc = gql`
     fragment TariffFragment on Tariff {
   id
@@ -14663,16 +14591,6 @@ export const TariffFragmentFragmentDoc = gql`
   }
 }
     `;
-export const RecomendationFragmentFragmentDoc = gql`
-    fragment RecomendationFragment on Recomendation {
-  id
-  title
-  tariff {
-    ...TariffFragment
-  }
-  description
-}
-    ${TariffFragmentFragmentDoc}`;
 export const QuestionFragmentFragmentDoc = gql`
     fragment QuestionFragment on Question {
   id
@@ -14920,10 +14838,6 @@ export const GetRecommendationsByIdsDocument = gql`
       id
       title
       description
-      tariff {
-        title
-        price
-      }
     }
   }
 }

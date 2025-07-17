@@ -253,7 +253,6 @@ export interface Question {
 export interface Recomendation {
   id: number;
   title: string;
-  tariff?: (number | null) | Tariff;
   /**
    * Можно использовать заголовки и нумерованные списки
    */
@@ -673,7 +672,6 @@ export interface AdminsSelect<T extends boolean = true> {
  */
 export interface RecomendationsSelect<T extends boolean = true> {
   title?: T;
-  tariff?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
