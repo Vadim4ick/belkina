@@ -14,7 +14,7 @@ import { Container } from '@/shared/ui/container'
 import { navItems } from '@/shared/const'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 
-export const AppHeader = () => {
+export const AppHeader = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
@@ -40,6 +40,7 @@ export const AppHeader = () => {
       className={cn(
         'fixed top-0 z-50 w-full bg-white/95 px-4 backdrop-blur transition-all duration-300',
         isScrolled ? 'py-2 shadow-sm' : 'py-4',
+        className,
       )}
     >
       <Container className="px-0">

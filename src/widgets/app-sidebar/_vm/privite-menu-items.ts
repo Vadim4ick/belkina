@@ -1,28 +1,17 @@
 import { UserIcon } from '@/shared/icons/user-icon'
 import { IsideBarItems } from '../_model/ISideBarItems'
-import { CartIcon } from '@/shared/icons/cart-icon'
 import { TagIcon } from '@/shared/icons/tag-icon'
 import { CalendarIcon } from '@/shared/icons/calendar-icon'
 import { MessagesIcon } from '@/shared/icons/messages-icon'
-import { getRouteHome, getRouteCourses, getRouteProfile, getRouteTests } from '@/shared/lib/routes'
-import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
+import { getRouteProfile, getRouteTests } from '@/shared/lib/routes'
 
 export const PrivateMenuItems: IsideBarItems[] = [
-  {
-    title: 'Главная',
-    url: getRouteHome(),
-    icon: GraduationCapIcon,
-  },
   {
     title: 'Профиль',
     url: getRouteProfile(),
     icon: UserIcon,
   },
-  {
-    title: 'Курсы',
-    url: getRouteCourses(),
-    icon: CartIcon,
-  },
+
   {
     title: 'Тесты',
     url: getRouteTests(),

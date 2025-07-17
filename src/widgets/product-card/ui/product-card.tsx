@@ -108,7 +108,7 @@ const ProductCard = ({
         )}
       </CardFooter>
 
-      {showFooter && url && (
+      {url && (
         <Link href={url} className={cn('w-full')}>
           <Button className="w-full">Перейти</Button>
         </Link>
