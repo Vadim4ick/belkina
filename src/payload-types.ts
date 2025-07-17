@@ -211,7 +211,6 @@ export interface Faq {
 export interface Test {
   id: number;
   title: string;
-  tariff: number | Tariff;
   description?: string | null;
   questions?: (number | Question)[] | null;
   exam?: (number | null) | Exam;
@@ -599,7 +598,6 @@ export interface FaqsSelect<T extends boolean = true> {
  */
 export interface TestsSelect<T extends boolean = true> {
   title?: T;
-  tariff?: T;
   description?: T;
   questions?: T;
   exam?: T;

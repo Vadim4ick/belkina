@@ -11,6 +11,9 @@ import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
 import { MediaFragmentFragment } from '@/shared/graphql/__generated__'
 import { Clock } from '@/shared/ui/clock'
+import Link from 'next/link'
+import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/ui/button'
 
 export interface ProductCardProps {
   title: string
@@ -21,7 +24,7 @@ export interface ProductCardProps {
   price?: number
   discount?: number
   image?: MediaFragmentFragment
-
+  url?: string
   showFooter?: boolean
 }
 
@@ -35,6 +38,7 @@ const ProductCard = ({
   discount,
   image,
   showFooter = true,
+  url,
 }: ProductCardProps) => {
   return (
     <Card className="flex h-full min-w-[290px] flex-col px-[20px]">
@@ -103,6 +107,12 @@ const ProductCard = ({
           </div>
         )}
       </CardFooter>
+
+      {showFooter && url && (
+        <Link href={url} className={cn('w-full')}>
+          <Button className="w-full">Перейти</Button>
+        </Link>
+      )}
     </Card>
   )
 }

@@ -19,7 +19,7 @@ export const seed = async () => {
   await seedSubjects()
 
   const recommendation = await seedRecommendations(tariffs)
-  await createTests(recommendation.id, tariffs[0].id)
+  await createTests(recommendation.id)
 
   console.log('✅ Сидеры завершены.')
 }
