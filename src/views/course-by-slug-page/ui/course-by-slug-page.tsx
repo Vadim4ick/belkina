@@ -8,16 +8,8 @@ import { NavigationPanel } from './navigation-panel'
 import { getCourseBySlugPage } from '../model/getCourseBySlugPage'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
-  const {
-    course,
-    videos,
-    activeVideo,
-    activeVideoId,
-    prevVideo,
-    nextVideo,
-    purchase,
-    hasAccessNavigation,
-  } = await getCourseBySlugPage(slug, videoId)
+  const { course, videos, activeVideo, activeVideoId, prevVideo, nextVideo } =
+    await getCourseBySlugPage(slug, videoId)
 
   return (
     <>
@@ -40,8 +32,6 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                 prevVideo={prevVideo}
                 nextVideo={nextVideo}
                 course={course}
-                courseTariff={purchase.Purchases.docs?.[0]?.tariff}
-                hasAccessNavigation={hasAccessNavigation}
               />
             </div>
           </div>
