@@ -1,6 +1,5 @@
 'use client'
 
-import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
@@ -68,10 +67,6 @@ const CoursesList = memo(
                         price={product.price}
                         discount={product.discount}
                         image={product.banner}
-                        url={getRouteCourseBySlug({
-                          slug: product.slug,
-                          videoId: product.kinescopeVideos[0]?.kinescopeId,
-                        })}
                       />
                     ))
                   ) : (

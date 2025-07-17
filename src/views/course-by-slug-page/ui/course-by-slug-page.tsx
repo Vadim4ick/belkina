@@ -1,4 +1,3 @@
-import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
 import { CourseVideo } from '@/shared/ui/course-video'
@@ -76,7 +75,12 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
 
       <section className="mt-6">
         <Container>
-          <ProductCardsGridCatalog isNull={videos.length === 0} title="Все уроки из курса">
+          <ProductCardsGridCatalog
+            isNull={videos.length === 0}
+            title={`Все уроки из курса (${videos.length} видео. Общая длительность ${summClockTime(
+              videos.map((video) => video.duration),
+            )})`}
+          >
             {videos?.length > 0 &&
               videos.map((product, idx) => (
                 <ProductCard
@@ -88,16 +92,8 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                   description={course.description}
                   price={course.price}
                   discount={course.discount}
-                  image={course.banner}
-                  url={getRouteCourseBySlug({
-                    slug: course.slug,
-                    videoId: product.kinescopeId,
-                  })}
-                  btnText="Перейти"
-                  btnDisabled={videoId === product.kinescopeId}
+                  // image={course.banner}
                   showFooter={false}
-                  courseFree={course.isFree}
-                  courseTariffId={purchase.Purchases.docs?.[0]?.tariff?.id}
                 />
               ))}
           </ProductCardsGridCatalog>

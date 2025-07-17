@@ -10405,9 +10405,7 @@ export type Tariff = {
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly description: Scalars['String']['output'];
   readonly id: Scalars['Int']['output'];
-  readonly isFree: Maybe<Scalars['Boolean']['output']>;
   readonly price: Scalars['Float']['output'];
-  readonly subtitle: Scalars['String']['output'];
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
@@ -10467,12 +10465,6 @@ export type Tariff_Id_Operator = {
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Tariff_IsFree_Operator = {
-  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type Tariff_Price_Operator = {
   readonly equals: InputMaybe<Scalars['Float']['input']>;
   readonly greater_than: InputMaybe<Scalars['Float']['input']>;
@@ -10480,16 +10472,6 @@ export type Tariff_Price_Operator = {
   readonly less_than: InputMaybe<Scalars['Float']['input']>;
   readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
   readonly not_equals: InputMaybe<Scalars['Float']['input']>;
-};
-
-export type Tariff_Subtitle_Operator = {
-  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
-  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type Tariff_Title_Operator = {
@@ -10521,9 +10503,7 @@ export type Tariff_Where = {
   readonly createdAt: InputMaybe<Tariff_CreatedAt_Operator>;
   readonly description: InputMaybe<Tariff_Description_Operator>;
   readonly id: InputMaybe<Tariff_Id_Operator>;
-  readonly isFree: InputMaybe<Tariff_IsFree_Operator>;
   readonly price: InputMaybe<Tariff_Price_Operator>;
-  readonly subtitle: InputMaybe<Tariff_Subtitle_Operator>;
   readonly title: InputMaybe<Tariff_Title_Operator>;
   readonly updatedAt: InputMaybe<Tariff_UpdatedAt_Operator>;
 };
@@ -10536,9 +10516,7 @@ export type Tariff_Where_And = {
   readonly createdAt: InputMaybe<Tariff_CreatedAt_Operator>;
   readonly description: InputMaybe<Tariff_Description_Operator>;
   readonly id: InputMaybe<Tariff_Id_Operator>;
-  readonly isFree: InputMaybe<Tariff_IsFree_Operator>;
   readonly price: InputMaybe<Tariff_Price_Operator>;
-  readonly subtitle: InputMaybe<Tariff_Subtitle_Operator>;
   readonly title: InputMaybe<Tariff_Title_Operator>;
   readonly updatedAt: InputMaybe<Tariff_UpdatedAt_Operator>;
 };
@@ -10551,9 +10529,7 @@ export type Tariff_Where_Or = {
   readonly createdAt: InputMaybe<Tariff_CreatedAt_Operator>;
   readonly description: InputMaybe<Tariff_Description_Operator>;
   readonly id: InputMaybe<Tariff_Id_Operator>;
-  readonly isFree: InputMaybe<Tariff_IsFree_Operator>;
   readonly price: InputMaybe<Tariff_Price_Operator>;
-  readonly subtitle: InputMaybe<Tariff_Subtitle_Operator>;
   readonly title: InputMaybe<Tariff_Title_Operator>;
   readonly updatedAt: InputMaybe<Tariff_UpdatedAt_Operator>;
 };
@@ -10602,9 +10578,7 @@ export type TariffsDocAccessFields = {
   readonly benefits: Maybe<TariffsDocAccessFields_Benefits>;
   readonly createdAt: Maybe<TariffsDocAccessFields_CreatedAt>;
   readonly description: Maybe<TariffsDocAccessFields_Description>;
-  readonly isFree: Maybe<TariffsDocAccessFields_IsFree>;
   readonly price: Maybe<TariffsDocAccessFields_Price>;
-  readonly subtitle: Maybe<TariffsDocAccessFields_Subtitle>;
   readonly title: Maybe<TariffsDocAccessFields_Title>;
   readonly updatedAt: Maybe<TariffsDocAccessFields_UpdatedAt>;
 };
@@ -10756,34 +10730,6 @@ export type TariffsDocAccessFields_Description_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type TariffsDocAccessFields_IsFree = {
-  readonly __typename?: 'TariffsDocAccessFields_isFree';
-  readonly create: Maybe<TariffsDocAccessFields_IsFree_Create>;
-  readonly delete: Maybe<TariffsDocAccessFields_IsFree_Delete>;
-  readonly read: Maybe<TariffsDocAccessFields_IsFree_Read>;
-  readonly update: Maybe<TariffsDocAccessFields_IsFree_Update>;
-};
-
-export type TariffsDocAccessFields_IsFree_Create = {
-  readonly __typename?: 'TariffsDocAccessFields_isFree_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_IsFree_Delete = {
-  readonly __typename?: 'TariffsDocAccessFields_isFree_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_IsFree_Read = {
-  readonly __typename?: 'TariffsDocAccessFields_isFree_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_IsFree_Update = {
-  readonly __typename?: 'TariffsDocAccessFields_isFree_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
 export type TariffsDocAccessFields_Price = {
   readonly __typename?: 'TariffsDocAccessFields_price';
   readonly create: Maybe<TariffsDocAccessFields_Price_Create>;
@@ -10809,34 +10755,6 @@ export type TariffsDocAccessFields_Price_Read = {
 
 export type TariffsDocAccessFields_Price_Update = {
   readonly __typename?: 'TariffsDocAccessFields_price_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_Subtitle = {
-  readonly __typename?: 'TariffsDocAccessFields_subtitle';
-  readonly create: Maybe<TariffsDocAccessFields_Subtitle_Create>;
-  readonly delete: Maybe<TariffsDocAccessFields_Subtitle_Delete>;
-  readonly read: Maybe<TariffsDocAccessFields_Subtitle_Read>;
-  readonly update: Maybe<TariffsDocAccessFields_Subtitle_Update>;
-};
-
-export type TariffsDocAccessFields_Subtitle_Create = {
-  readonly __typename?: 'TariffsDocAccessFields_subtitle_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_Subtitle_Delete = {
-  readonly __typename?: 'TariffsDocAccessFields_subtitle_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_Subtitle_Read = {
-  readonly __typename?: 'TariffsDocAccessFields_subtitle_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsDocAccessFields_Subtitle_Update = {
-  readonly __typename?: 'TariffsDocAccessFields_subtitle_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -10901,9 +10819,7 @@ export type TariffsFields = {
   readonly benefits: Maybe<TariffsFields_Benefits>;
   readonly createdAt: Maybe<TariffsFields_CreatedAt>;
   readonly description: Maybe<TariffsFields_Description>;
-  readonly isFree: Maybe<TariffsFields_IsFree>;
   readonly price: Maybe<TariffsFields_Price>;
-  readonly subtitle: Maybe<TariffsFields_Subtitle>;
   readonly title: Maybe<TariffsFields_Title>;
   readonly updatedAt: Maybe<TariffsFields_UpdatedAt>;
 };
@@ -11055,34 +10971,6 @@ export type TariffsFields_Description_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type TariffsFields_IsFree = {
-  readonly __typename?: 'TariffsFields_isFree';
-  readonly create: Maybe<TariffsFields_IsFree_Create>;
-  readonly delete: Maybe<TariffsFields_IsFree_Delete>;
-  readonly read: Maybe<TariffsFields_IsFree_Read>;
-  readonly update: Maybe<TariffsFields_IsFree_Update>;
-};
-
-export type TariffsFields_IsFree_Create = {
-  readonly __typename?: 'TariffsFields_isFree_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_IsFree_Delete = {
-  readonly __typename?: 'TariffsFields_isFree_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_IsFree_Read = {
-  readonly __typename?: 'TariffsFields_isFree_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_IsFree_Update = {
-  readonly __typename?: 'TariffsFields_isFree_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
 export type TariffsFields_Price = {
   readonly __typename?: 'TariffsFields_price';
   readonly create: Maybe<TariffsFields_Price_Create>;
@@ -11108,34 +10996,6 @@ export type TariffsFields_Price_Read = {
 
 export type TariffsFields_Price_Update = {
   readonly __typename?: 'TariffsFields_price_Update';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_Subtitle = {
-  readonly __typename?: 'TariffsFields_subtitle';
-  readonly create: Maybe<TariffsFields_Subtitle_Create>;
-  readonly delete: Maybe<TariffsFields_Subtitle_Delete>;
-  readonly read: Maybe<TariffsFields_Subtitle_Read>;
-  readonly update: Maybe<TariffsFields_Subtitle_Update>;
-};
-
-export type TariffsFields_Subtitle_Create = {
-  readonly __typename?: 'TariffsFields_subtitle_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_Subtitle_Delete = {
-  readonly __typename?: 'TariffsFields_subtitle_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_Subtitle_Read = {
-  readonly __typename?: 'TariffsFields_subtitle_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type TariffsFields_Subtitle_Update = {
-  readonly __typename?: 'TariffsFields_subtitle_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -14050,9 +13910,7 @@ export type MutationTariffInput = {
   readonly benefits: InputMaybe<ReadonlyArray<MutationTariff_BenefitsInput>>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: Scalars['String']['input'];
-  readonly isFree: InputMaybe<Scalars['Boolean']['input']>;
   readonly price: Scalars['Float']['input'];
-  readonly subtitle: Scalars['String']['input'];
   readonly title: Scalars['String']['input'];
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
@@ -14061,9 +13919,7 @@ export type MutationTariffUpdateInput = {
   readonly benefits: InputMaybe<ReadonlyArray<InputMaybe<MutationTariffUpdate_BenefitsInput>>>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: InputMaybe<Scalars['String']['input']>;
-  readonly isFree: InputMaybe<Scalars['Boolean']['input']>;
   readonly price: InputMaybe<Scalars['Float']['input']>;
-  readonly subtitle: InputMaybe<Scalars['String']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
@@ -14665,18 +14521,18 @@ export type PostFragmentFragment = { readonly __typename?: 'Post', readonly id: 
 
 export type QuestionFragmentFragment = { readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> };
 
-export type RecomendationFragmentFragment = { readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> } };
+export type RecomendationFragmentFragment = { readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> } };
 
 export type SubjectsFragmentFragment = { readonly __typename?: 'Subject', readonly id: number, readonly title: string };
 
-export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
+export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
 
-export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
+export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -14711,7 +14567,7 @@ export type GetRecomendationByIdsQuery = { readonly __typename?: 'Query', readon
 export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetTaraffisQuery = { readonly __typename?: 'Query', readonly Tariffs: { readonly __typename?: 'Tariffs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }> } };
+export type GetTaraffisQuery = { readonly __typename?: 'Query', readonly Tariffs: { readonly __typename?: 'Tariffs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }> } };
 
 export type CreateTestResultMutationVariables = Exact<{
   userId: InputMaybe<Scalars['Int']['input']>;
@@ -14765,7 +14621,7 @@ export type GetAllTestsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllTestsQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly page: number, readonly totalPages: number, readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> }> } };
+export type GetAllTestsQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly page: number, readonly totalPages: number, readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> }> } };
 
 export type GetAllUserTestsQueryVariables = Exact<{
   userId: Scalars['Int']['input'];
@@ -14782,7 +14638,7 @@ export type GetByIdTestQueryVariables = Exact<{
 }>;
 
 
-export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly subtitle: string, readonly description: string, readonly isFree: boolean, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } };
+export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly tariff: { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> }, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } };
 
 export type UpdateTestResultMutationVariables = Exact<{
   testResId: Scalars['Int']['input'];
@@ -14878,9 +14734,7 @@ export const TariffFragmentFragmentDoc = gql`
   id
   title
   price
-  subtitle
   description
-  isFree
   benefits {
     id
     value

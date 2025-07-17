@@ -142,12 +142,12 @@ export async function Profile() {
 
       <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (
-          <ProductCard url="" key={product.id} {...product} />
+          <ProductCard key={product.id} {...product} />
         ))}
       </ProductCardsGridCatalog>
       <ProductCardsGridCatalog title="Каталог">
         {mockProducts.map((product) => (
-          <ProductCard url="" key={product.id} {...product} />
+          <ProductCard key={product.id} {...product} />
         ))}
       </ProductCardsGridCatalog>
     </section>

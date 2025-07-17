@@ -39,25 +39,27 @@ const FilterCategory = ({
       </DialogTrigger>
 
       <DialogContent aria-describedby="" className="max-w-[650px!important]">
-        <DialogHeader>
-          <DialogTitle>Фильтры</DialogTitle>
-        </DialogHeader>
+        <div className="max-mobile:px-4 flex flex-col gap-6 overflow-auto rounded-[6px] bg-white p-6">
+          <DialogHeader>
+            <DialogTitle>Фильтры</DialogTitle>
+          </DialogHeader>
 
-        <TabCategory
-          btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
-          value={filters.exams}
-          isLoading={isLoading}
-          onChange={(val) => setFilter('exams', val)}
-        />
-
-        <div className="flex items-center justify-between gap-4">
           <TabCategory
-            btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
-            variant="secondary"
-            value={filters.subjects}
+            btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
+            value={filters.exams}
             isLoading={isLoading}
-            onChange={(val) => setFilter('subjects', val)}
+            onChange={(val) => setFilter('exams', val)}
           />
+
+          <div className="flex items-center justify-between gap-4">
+            <TabCategory
+              btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
+              variant="secondary"
+              value={filters.subjects}
+              isLoading={isLoading}
+              onChange={(val) => setFilter('subjects', val)}
+            />
+          </div>
         </div>
       </DialogContent>
     </Dialog>
