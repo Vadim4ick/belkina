@@ -1,9 +1,7 @@
 fragment TestFragment on Test {
   id
   title
-  tariff {
-    ...TariffFragment
-  }
+
   description
   questions {
     ...QuestionFragment

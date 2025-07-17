@@ -12,6 +12,7 @@ import { useGetAllCourses } from '@/shared/services/courses.service'
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 import { FilterCategory } from '@/widgets/filter-category'
+import { getRouteCourseBySlug } from '@/shared/lib/routes'
 
 const CoursesList = memo(
   ({
@@ -67,6 +68,10 @@ const CoursesList = memo(
                         price={product.price}
                         discount={product.discount}
                         image={product.banner}
+                        url={getRouteCourseBySlug({
+                          slug: product.slug,
+                          videoId: product.kinescopeVideos[0].kinescopeId,
+                        })}
                       />
                     ))
                   ) : (

@@ -53,15 +53,6 @@ export const Tests: CollectionConfig = {
     },
 
     {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: true,
-      admin: { position: 'sidebar' },
-    },
-
-    {
       name: 'description',
       label: 'Описание',
       type: 'textarea',
