@@ -1,6 +1,6 @@
 'use client'
 
-import { CourseFragmentFragment, GetPurchaseByIdQuery } from '@/shared/graphql/__generated__'
+import { CourseFragmentFragment } from '@/shared/graphql/__generated__'
 import { Arrow } from '@/shared/icons/arrow'
 import { getRouteCourseBySlug, getRouteTestById } from '@/shared/lib/routes'
 import { useGetTestResultById } from '@/shared/services/test.service'
@@ -19,15 +19,11 @@ const NavigationPanel = ({
   prevVideo,
   nextVideo,
   course,
-  courseTariff,
-  hasAccessNavigation,
 }: {
   activeVideo: KinescopeVideoItem
   prevVideo: KinescopeVideoItem | null
   nextVideo: KinescopeVideoItem | null
   course: CourseFragmentFragment
-  courseTariff?: GetPurchaseByIdQuery['Purchases']['docs'][0]['tariff']
-  hasAccessNavigation?: boolean
 }) => {
   const { profile } = useProfileStore()
 
@@ -52,11 +48,7 @@ const NavigationPanel = ({
   const isCompleted = testResult?.TestResults?.docs?.[0]?.status === 'completed'
 
   return (
-    <aside
-      className={cn('tablet:p-2 flex h-full flex-col gap-8', {
-        'justify-between': !!courseTariff?.id,
-      })}
-    >
+    <aside className={cn('tablet:p-2 flex h-full flex-col gap-8')}>
       <Typography tag="h1" variant="visuelt-bold-32" className="max-tablet:hidden mb-2">
         {activeVideo.title}
       </Typography>
@@ -101,7 +93,7 @@ const NavigationPanel = ({
         )}
 
         <div className="mt-auto flex w-full flex-col gap-2">
-          {prevVideo && hasAccessNavigation && prevVideo.kinescopeId && (
+          {prevVideo && prevVideo.kinescopeId && (
             <Link
               href={getRouteCourseBySlug({
                 slug: course.slug,
@@ -121,7 +113,7 @@ const NavigationPanel = ({
 
           {nextVideo && (
             <>
-              {hasAccessNavigation && nextVideo.kinescopeId ? (
+              {nextVideo.kinescopeId ? (
                 <Link
                   href={getRouteCourseBySlug({
                     slug: course.slug,
