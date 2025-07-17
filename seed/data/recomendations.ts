@@ -1,7 +1,6 @@
-import { Tariff } from '@/payload-types'
 import payload from 'payload'
 
-export const seedRecommendations = async (tariffs: Tariff[]) => {
+export const seedRecommendations = async () => {
   console.log('🌱 Сидим рекомендации...')
 
   const recommendation = await payload.create({
@@ -88,7 +87,6 @@ export const seedRecommendations = async (tariffs: Tariff[]) => {
           ],
         },
       },
-      tariff: tariffs[0].id,
     },
   })
 

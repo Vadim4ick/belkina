@@ -37,15 +37,6 @@ export const Recomendations: CollectionConfig = {
     },
 
     {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: false,
-      admin: { position: 'sidebar' },
-    },
-
-    {
       name: 'description',
       label: 'Описание',
       type: 'richText',
