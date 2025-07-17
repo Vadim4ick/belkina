@@ -1,6 +1,5 @@
 'use client'
 
-import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard, SkeletonProductCard } from '@/widgets/product-card'
@@ -10,7 +9,6 @@ import { Pagination, PaginationSkeleton } from '@/shared/ui/pagination'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
 import { useGetAllCourses } from '@/shared/services/courses.service'
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
-import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 import { FilterCategory } from '@/widgets/filter-category'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
 
@@ -59,18 +57,14 @@ const CoursesList = memo(
                         title={product.title}
                         categories={product?.subjects?.map((subject) => subject.title) ?? []}
                         exams={product?.exams?.title}
-                        duration={summClockTime(
-                          product.kinescopeVideos.map(
-                            (video: KinescopeVideoItem) => video.duration,
-                          ),
-                        )}
+                        duration={product.totalDuration}
                         description={product.description}
                         price={product.price}
                         discount={product.discount}
                         image={product.banner}
                         url={getRouteCourseBySlug({
                           slug: product.slug,
-                          videoId: product.kinescopeVideos[0].kinescopeId,
+                          videoId: product.previewVideoId,
                         })}
                       />
                     ))

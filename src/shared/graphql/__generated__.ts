@@ -479,10 +479,12 @@ export type Course = {
   readonly id: Scalars['Int']['output'];
   readonly isFree: Maybe<Scalars['Boolean']['output']>;
   readonly kinescopeVideos: Scalars['JSON']['output'];
+  readonly previewVideoId: Maybe<Scalars['String']['output']>;
   readonly price: Scalars['Float']['output'];
   readonly slug: Scalars['String']['output'];
   readonly subjects: Maybe<ReadonlyArray<Subject>>;
   readonly title: Scalars['String']['output'];
+  readonly totalDuration: Maybe<Scalars['String']['output']>;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -574,6 +576,17 @@ export type Course_KinescopeVideos_Operator = {
   readonly within: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type Course_PreviewVideoId_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Course_Price_Operator = {
   readonly equals: InputMaybe<Scalars['Float']['input']>;
   readonly greater_than: InputMaybe<Scalars['Float']['input']>;
@@ -612,6 +625,17 @@ export type Course_Title_Operator = {
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Course_TotalDuration_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Course_UpdatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
@@ -634,10 +658,12 @@ export type Course_Where = {
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly isFree: InputMaybe<Course_IsFree_Operator>;
   readonly kinescopeVideos: InputMaybe<Course_KinescopeVideos_Operator>;
+  readonly previewVideoId: InputMaybe<Course_PreviewVideoId_Operator>;
   readonly price: InputMaybe<Course_Price_Operator>;
   readonly slug: InputMaybe<Course_Slug_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
+  readonly totalDuration: InputMaybe<Course_TotalDuration_Operator>;
   readonly updatedAt: InputMaybe<Course_UpdatedAt_Operator>;
 };
 
@@ -652,10 +678,12 @@ export type Course_Where_And = {
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly isFree: InputMaybe<Course_IsFree_Operator>;
   readonly kinescopeVideos: InputMaybe<Course_KinescopeVideos_Operator>;
+  readonly previewVideoId: InputMaybe<Course_PreviewVideoId_Operator>;
   readonly price: InputMaybe<Course_Price_Operator>;
   readonly slug: InputMaybe<Course_Slug_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
+  readonly totalDuration: InputMaybe<Course_TotalDuration_Operator>;
   readonly updatedAt: InputMaybe<Course_UpdatedAt_Operator>;
 };
 
@@ -670,10 +698,12 @@ export type Course_Where_Or = {
   readonly id: InputMaybe<Course_Id_Operator>;
   readonly isFree: InputMaybe<Course_IsFree_Operator>;
   readonly kinescopeVideos: InputMaybe<Course_KinescopeVideos_Operator>;
+  readonly previewVideoId: InputMaybe<Course_PreviewVideoId_Operator>;
   readonly price: InputMaybe<Course_Price_Operator>;
   readonly slug: InputMaybe<Course_Slug_Operator>;
   readonly subjects: InputMaybe<Course_Subjects_Operator>;
   readonly title: InputMaybe<Course_Title_Operator>;
+  readonly totalDuration: InputMaybe<Course_TotalDuration_Operator>;
   readonly updatedAt: InputMaybe<Course_UpdatedAt_Operator>;
 };
 
@@ -725,10 +755,12 @@ export type CoursesDocAccessFields = {
   readonly exams: Maybe<CoursesDocAccessFields_Exams>;
   readonly isFree: Maybe<CoursesDocAccessFields_IsFree>;
   readonly kinescopeVideos: Maybe<CoursesDocAccessFields_KinescopeVideos>;
+  readonly previewVideoId: Maybe<CoursesDocAccessFields_PreviewVideoId>;
   readonly price: Maybe<CoursesDocAccessFields_Price>;
   readonly slug: Maybe<CoursesDocAccessFields_Slug>;
   readonly subjects: Maybe<CoursesDocAccessFields_Subjects>;
   readonly title: Maybe<CoursesDocAccessFields_Title>;
+  readonly totalDuration: Maybe<CoursesDocAccessFields_TotalDuration>;
   readonly updatedAt: Maybe<CoursesDocAccessFields_UpdatedAt>;
 };
 
@@ -928,6 +960,34 @@ export type CoursesDocAccessFields_KinescopeVideos_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type CoursesDocAccessFields_PreviewVideoId = {
+  readonly __typename?: 'CoursesDocAccessFields_previewVideoId';
+  readonly create: Maybe<CoursesDocAccessFields_PreviewVideoId_Create>;
+  readonly delete: Maybe<CoursesDocAccessFields_PreviewVideoId_Delete>;
+  readonly read: Maybe<CoursesDocAccessFields_PreviewVideoId_Read>;
+  readonly update: Maybe<CoursesDocAccessFields_PreviewVideoId_Update>;
+};
+
+export type CoursesDocAccessFields_PreviewVideoId_Create = {
+  readonly __typename?: 'CoursesDocAccessFields_previewVideoId_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_PreviewVideoId_Delete = {
+  readonly __typename?: 'CoursesDocAccessFields_previewVideoId_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_PreviewVideoId_Read = {
+  readonly __typename?: 'CoursesDocAccessFields_previewVideoId_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_PreviewVideoId_Update = {
+  readonly __typename?: 'CoursesDocAccessFields_previewVideoId_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type CoursesDocAccessFields_Price = {
   readonly __typename?: 'CoursesDocAccessFields_price';
   readonly create: Maybe<CoursesDocAccessFields_Price_Create>;
@@ -1040,6 +1100,34 @@ export type CoursesDocAccessFields_Title_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type CoursesDocAccessFields_TotalDuration = {
+  readonly __typename?: 'CoursesDocAccessFields_totalDuration';
+  readonly create: Maybe<CoursesDocAccessFields_TotalDuration_Create>;
+  readonly delete: Maybe<CoursesDocAccessFields_TotalDuration_Delete>;
+  readonly read: Maybe<CoursesDocAccessFields_TotalDuration_Read>;
+  readonly update: Maybe<CoursesDocAccessFields_TotalDuration_Update>;
+};
+
+export type CoursesDocAccessFields_TotalDuration_Create = {
+  readonly __typename?: 'CoursesDocAccessFields_totalDuration_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_TotalDuration_Delete = {
+  readonly __typename?: 'CoursesDocAccessFields_totalDuration_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_TotalDuration_Read = {
+  readonly __typename?: 'CoursesDocAccessFields_totalDuration_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesDocAccessFields_TotalDuration_Update = {
+  readonly __typename?: 'CoursesDocAccessFields_totalDuration_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type CoursesDocAccessFields_UpdatedAt = {
   readonly __typename?: 'CoursesDocAccessFields_updatedAt';
   readonly create: Maybe<CoursesDocAccessFields_UpdatedAt_Create>;
@@ -1077,10 +1165,12 @@ export type CoursesFields = {
   readonly exams: Maybe<CoursesFields_Exams>;
   readonly isFree: Maybe<CoursesFields_IsFree>;
   readonly kinescopeVideos: Maybe<CoursesFields_KinescopeVideos>;
+  readonly previewVideoId: Maybe<CoursesFields_PreviewVideoId>;
   readonly price: Maybe<CoursesFields_Price>;
   readonly slug: Maybe<CoursesFields_Slug>;
   readonly subjects: Maybe<CoursesFields_Subjects>;
   readonly title: Maybe<CoursesFields_Title>;
+  readonly totalDuration: Maybe<CoursesFields_TotalDuration>;
   readonly updatedAt: Maybe<CoursesFields_UpdatedAt>;
 };
 
@@ -1280,6 +1370,34 @@ export type CoursesFields_KinescopeVideos_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type CoursesFields_PreviewVideoId = {
+  readonly __typename?: 'CoursesFields_previewVideoId';
+  readonly create: Maybe<CoursesFields_PreviewVideoId_Create>;
+  readonly delete: Maybe<CoursesFields_PreviewVideoId_Delete>;
+  readonly read: Maybe<CoursesFields_PreviewVideoId_Read>;
+  readonly update: Maybe<CoursesFields_PreviewVideoId_Update>;
+};
+
+export type CoursesFields_PreviewVideoId_Create = {
+  readonly __typename?: 'CoursesFields_previewVideoId_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_PreviewVideoId_Delete = {
+  readonly __typename?: 'CoursesFields_previewVideoId_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_PreviewVideoId_Read = {
+  readonly __typename?: 'CoursesFields_previewVideoId_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_PreviewVideoId_Update = {
+  readonly __typename?: 'CoursesFields_previewVideoId_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type CoursesFields_Price = {
   readonly __typename?: 'CoursesFields_price';
   readonly create: Maybe<CoursesFields_Price_Create>;
@@ -1389,6 +1507,34 @@ export type CoursesFields_Title_Read = {
 
 export type CoursesFields_Title_Update = {
   readonly __typename?: 'CoursesFields_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_TotalDuration = {
+  readonly __typename?: 'CoursesFields_totalDuration';
+  readonly create: Maybe<CoursesFields_TotalDuration_Create>;
+  readonly delete: Maybe<CoursesFields_TotalDuration_Delete>;
+  readonly read: Maybe<CoursesFields_TotalDuration_Read>;
+  readonly update: Maybe<CoursesFields_TotalDuration_Update>;
+};
+
+export type CoursesFields_TotalDuration_Create = {
+  readonly __typename?: 'CoursesFields_totalDuration_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_TotalDuration_Delete = {
+  readonly __typename?: 'CoursesFields_totalDuration_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_TotalDuration_Read = {
+  readonly __typename?: 'CoursesFields_totalDuration_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type CoursesFields_TotalDuration_Update = {
+  readonly __typename?: 'CoursesFields_totalDuration_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -13480,10 +13626,12 @@ export type MutationCourseInput = {
   readonly exams: InputMaybe<Scalars['Int']['input']>;
   readonly isFree: InputMaybe<Scalars['Boolean']['input']>;
   readonly kinescopeVideos: Scalars['JSON']['input'];
+  readonly previewVideoId: InputMaybe<Scalars['String']['input']>;
   readonly price: Scalars['Float']['input'];
   readonly slug: Scalars['String']['input'];
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly title: Scalars['String']['input'];
+  readonly totalDuration: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -13495,10 +13643,12 @@ export type MutationCourseUpdateInput = {
   readonly exams: InputMaybe<Scalars['Int']['input']>;
   readonly isFree: InputMaybe<Scalars['Boolean']['input']>;
   readonly kinescopeVideos: InputMaybe<Scalars['JSON']['input']>;
+  readonly previewVideoId: InputMaybe<Scalars['String']['input']>;
   readonly price: InputMaybe<Scalars['Float']['input']>;
   readonly slug: InputMaybe<Scalars['String']['input']>;
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly title: InputMaybe<Scalars['String']['input']>;
+  readonly totalDuration: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -14340,21 +14490,21 @@ export type GetAllCoursesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly page: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly kinescopeVideos: any, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
+export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly page: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
 
 export type GetCourseBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetCourseBySlugQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly kinescopeVideos: any, readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
+export type GetCourseBySlugQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly kinescopeVideos: any, readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
 
 export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetFaGsQuery = { readonly __typename?: 'Query', readonly Faqs: { readonly __typename?: 'Faqs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Faq', readonly id: number, readonly question: string, readonly answer: string }> } };
 
-export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly kinescopeVideos: any, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> };
+export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> };
 
 export type ExamFragmentFragment = { readonly __typename?: 'Exam', readonly id: number, readonly title: string };
 
@@ -14547,7 +14697,8 @@ export const CourseFragmentFragmentDoc = gql`
     ...SubjectsFragment
   }
   isFree
-  kinescopeVideos
+  totalDuration
+  previewVideoId
 }
     ${MediaFragmentFragmentDoc}
 ${ExamFragmentFragmentDoc}
@@ -14654,8 +14805,8 @@ export const GetCourseBySlugDocument = gql`
     query GetCourseBySlug($slug: String) {
   Courses(where: {slug: {equals: $slug}}) {
     docs {
-      ...CourseFragment
       kinescopeVideos
+      ...CourseFragment
     }
   }
 }

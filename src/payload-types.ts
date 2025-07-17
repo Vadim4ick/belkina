@@ -377,6 +377,8 @@ export interface Course {
   subjects?: (number | Subject)[] | null;
   price: number;
   discount?: number | null;
+  previewVideoId?: string | null;
+  totalDuration?: string | null;
   slug: string;
   isFree?: boolean | null;
   kinescopeVideos:
@@ -739,6 +741,8 @@ export interface CoursesSelect<T extends boolean = true> {
   subjects?: T;
   price?: T;
   discount?: T;
+  previewVideoId?: T;
+  totalDuration?: T;
   slug?: T;
   isFree?: T;
   kinescopeVideos?: T;
