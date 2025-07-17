@@ -16,6 +16,6 @@ fragment CourseFragment on Course {
   }
 
   isFree
-
-  kinescopeVideos
+  totalDuration
+  previewVideoId
 }

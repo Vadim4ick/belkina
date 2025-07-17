@@ -1,5 +1,7 @@
 import { CollectionConfig } from 'payload'
 import slugify from 'slugify'
+import { summClockTime } from '../lib/utils'
+import { KinescopeVideo } from '../types/kinescope.types'
 
 const Courses: CollectionConfig = {
   slug: 'courses',
@@ -16,6 +18,16 @@ const Courses: CollectionConfig = {
         if (data.title && data.title !== originalDoc?.title) {
           data.slug = slugify(data.title, { lower: true, strict: true })
         }
+
+        const total = summClockTime(
+          data.kinescopeVideos?.map((video: KinescopeVideo) => video.duration) || [],
+        )
+
+        const preview = data.kinescopeVideos?.[0]?.kinescopeId || ''
+
+        data.totalDuration = total
+        data.previewVideoId = preview
+
         return data
       },
     ],
@@ -72,6 +84,17 @@ const Courses: CollectionConfig = {
       min: 0,
       max: 100,
       defaultValue: 0,
+    },
+
+    {
+      name: 'previewVideoId',
+      type: 'text',
+      admin: { position: 'sidebar', readOnly: true },
+    },
+    {
+      name: 'totalDuration',
+      type: 'text',
+      admin: { position: 'sidebar', readOnly: true },
     },
 
     {
