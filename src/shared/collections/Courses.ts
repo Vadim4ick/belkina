@@ -1,7 +1,53 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig, FieldHook } from 'payload'
 import slugify from 'slugify'
 import { summClockTime } from '../lib/utils'
-import { KinescopeVideo } from '../types/kinescope.types'
+import { KinescopeVideo, KinescopeVideoItem } from '../types/kinescope.types'
+import { JwtService } from '../services/jwt-service'
+import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+
+const filterVideos: FieldHook = async ({ value, req, data }) => {
+  const gql = await getServerAuthGqlClient({})
+
+  // 1) Админ видит всё
+  if (req.user?.role === 'admin') return true
+  if (data?.isFree) return true
+
+  const authHeader = req?.headers?.get('authorization')
+  const token = authHeader?.replace(/^Bearer\s/, '')
+
+  if (!token) {
+    return (value as KinescopeVideoItem[]).map((v, i) =>
+      i === 0 ? v : { ...v, kinescopeId: undefined },
+    )
+  }
+
+  try {
+    const { id } = await JwtService.verifyToken(token)
+
+    console.log('✅ Токен валиден')
+
+    const purchase = await gql.GetPurchaseById({
+      courseId: data?.id,
+      userId: id,
+    })
+
+    console.log('✅ Вы купили этот курс')
+
+    if (purchase.Purchases.docs?.[0]?.id) {
+      return value
+    } else {
+      console.warn('⚠️ Вы не купили этот курс')
+      return (value as KinescopeVideoItem[]).map((v, i) =>
+        i === 0 ? v : { ...v, kinescopeId: undefined },
+      )
+    }
+  } catch (err) {
+    console.warn('⚠️ Токен невалиден:', (err as Error)?.message)
+    return (value as KinescopeVideoItem[]).map((v, i) =>
+      i === 0 ? v : { ...v, kinescopeId: undefined },
+    )
+  }
+}
 
 const Courses: CollectionConfig = {
   slug: 'courses',
@@ -120,6 +166,9 @@ const Courses: CollectionConfig = {
       label: 'Видео из Kinescope',
       type: 'json',
       required: true,
+
+      hooks: { afterRead: [filterVideos] },
+
       admin: {
         components: {
           Field: '@/app/(payload)/components/fields/KinescopeVideoSelect',

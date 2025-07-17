@@ -101,7 +101,7 @@ const NavigationPanel = ({
         )}
 
         <div className="mt-auto flex w-full flex-col gap-2">
-          {prevVideo && hasAccessNavigation && (
+          {prevVideo && hasAccessNavigation && prevVideo.kinescopeId && (
             <Link
               href={getRouteCourseBySlug({
                 slug: course.slug,
@@ -121,7 +121,7 @@ const NavigationPanel = ({
 
           {nextVideo && (
             <>
-              {hasAccessNavigation ? (
+              {hasAccessNavigation && nextVideo.kinescopeId ? (
                 <Link
                   href={getRouteCourseBySlug({
                     slug: course.slug,

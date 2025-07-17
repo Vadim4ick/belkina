@@ -71,7 +71,7 @@ export interface KinescopeVideosResponse {
 }
 
 export interface KinescopeVideoItem {
-  kinescopeId: string
+  kinescopeId?: string
   title: string
   duration: number
   projectTitle?: string
