@@ -4,46 +4,20 @@ import { CourseVideo } from '@/shared/ui/course-video'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
-import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
-
-import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
-import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
-import { cookies } from 'next/headers'
-import { JwtService } from '@/shared/services/jwt-service'
+import { getCourseBySlugPage } from '../model/getCourseBySlugPage'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
-  const gql = await getServerAuthGqlClient({})
-
-  const courses = await gql.GetCourseBySlug({ slug })
-
-  if (!courses || !courses.Courses || !courses.Courses.docs.length) {
-    return notFound()
-  }
-
-  const cookieStore = await cookies()
-  const accessToken = cookieStore.get('accessToken')?.value
-
-  const payload = await JwtService.verifyToken(accessToken)
-
-  const purchase = await gql.GetPurchaseById({
-    courseId: courses.Courses.docs[0].id,
-    userId: payload?.id || null,
-  })
-
-  const course = courses.Courses.docs[0]
-  const videos = (course.kinescopeVideos as KinescopeVideoItem[]) || []
-
-  const activeVideoId = videoId
-  const activeVideo = videos.find((v) => v.kinescopeId === activeVideoId)
-  const activeIdx = videos.findIndex((v) => v.kinescopeId === activeVideoId)
-
-  const prevVideo = activeIdx > 0 ? videos[activeIdx - 1] : null
-  const nextVideo = activeIdx < videos.length - 1 ? videos[activeIdx + 1] : null
-
-  if (!activeVideo) {
-    return notFound()
-  }
+  const {
+    course,
+    videos,
+    activeVideo,
+    activeVideoId,
+    prevVideo,
+    nextVideo,
+    purchase,
+    hasAccessNavigation,
+  } = await getCourseBySlugPage(slug, videoId)
 
   return (
     <>
@@ -67,6 +41,7 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
                 nextVideo={nextVideo}
                 course={course}
                 courseTariff={purchase.Purchases.docs?.[0]?.tariff}
+                hasAccessNavigation={hasAccessNavigation}
               />
             </div>
           </div>

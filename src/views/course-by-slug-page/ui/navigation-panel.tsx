@@ -20,12 +20,14 @@ const NavigationPanel = ({
   nextVideo,
   course,
   courseTariff,
+  hasAccessNavigation,
 }: {
   activeVideo: KinescopeVideoItem
   prevVideo: KinescopeVideoItem | null
   nextVideo: KinescopeVideoItem | null
   course: CourseFragmentFragment
   courseTariff?: GetPurchaseByIdQuery['Purchases']['docs'][0]['tariff']
+  hasAccessNavigation?: boolean
 }) => {
   const { profile } = useProfileStore()
 
@@ -48,8 +50,6 @@ const NavigationPanel = ({
   const loading = isLoading || isFetching
 
   const isCompleted = testResult?.TestResults?.docs?.[0]?.status === 'completed'
-
-  const hasAccess = !!courseTariff?.id || course.isFree
 
   return (
     <aside
@@ -101,7 +101,7 @@ const NavigationPanel = ({
         )}
 
         <div className="mt-auto flex w-full flex-col gap-2">
-          {prevVideo && hasAccess && (
+          {prevVideo && hasAccessNavigation && (
             <Link
               href={getRouteCourseBySlug({
                 slug: course.slug,
@@ -121,7 +121,7 @@ const NavigationPanel = ({
 
           {nextVideo && (
             <>
-              {hasAccess ? (
+              {hasAccessNavigation ? (
                 <Link
                   href={getRouteCourseBySlug({
                     slug: course.slug,
