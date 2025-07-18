@@ -28,7 +28,12 @@ const TestsList = ({
             )}
 
             {tests && (
-              <div className="border-light-grey flex flex-col gap-3 rounded-xl py-6 md:py-5">
+              <div
+                className="grid gap-4"
+                style={{
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                }}
+              >
                 {tests.map((test, idx) => (
                   <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
                 ))}
