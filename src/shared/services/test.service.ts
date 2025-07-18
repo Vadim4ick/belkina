@@ -14,13 +14,14 @@ export const QUERY_KEYS = {
   testResult: (userId?: string | number, testId?: number) => ['testResult', userId, testId],
   allUserTests: (
     userId?: string | number,
-    params?: { status?: string; examId?: number; subjectId?: number },
+    params?: { status?: string; examId?: number; subjectId?: number; testIds?: number[] },
   ) => [
     'allUserTests',
     userId,
     params?.status || null,
     params?.examId || null,
     params?.subjectId || null,
+    params?.testIds || null,
   ],
 }
 
@@ -130,17 +131,19 @@ export const useGetAllUserTests = ({
   status,
   examId,
   subjectId,
+  testIds,
 }: {
   status?: TestResult_Status_All
   examId?: number
   subjectId?: number
+  testIds?: number[]
 }) => {
   const gql = useGqlClient({})
 
   const profile = useProfileStore()
 
   return useQuery({
-    queryKey: QUERY_KEYS.allUserTests(profile.profile?.id, { status, examId, subjectId }),
+    queryKey: QUERY_KEYS.allUserTests(profile.profile?.id, { status, examId, subjectId, testIds }),
     queryFn: async () => {
       const variables: Record<string, any> = {
         userId: Number(profile.profile?.id),
@@ -156,6 +159,10 @@ export const useGetAllUserTests = ({
 
       if (subjectId) {
         variables.subjectId = subjectId
+      }
+
+      if (testIds) {
+        variables.testIds = testIds
       }
 
       try {

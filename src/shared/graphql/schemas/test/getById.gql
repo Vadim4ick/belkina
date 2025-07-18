@@ -3,3 +3,25 @@ query GetByIdTest($id: Int!) {
     ...TestFragment
   }
 }
+
+query GetTestsByIds(
+  $or: [Test_where_or!]!
+  $limit: Int
+  $page: Int
+  $examId: JSON
+  $subjectId: JSON
+) {
+  Tests(
+    where: { OR: $or, exam: { equals: $examId }, subjects: { equals: $subjectId } }
+    limit: $limit
+    page: $page
+  ) {
+    docs {
+      ...TestFragment
+    }
+
+    page
+    totalPages
+    totalDocs
+  }
+}
