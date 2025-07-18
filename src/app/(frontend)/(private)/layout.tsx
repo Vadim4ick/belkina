@@ -27,9 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
         <SidebarInset>
           <SiteBarHeader />
-          <div className="flex flex-1 flex-col">
-            <Container>{children}</Container>
-          </div>
+          <div className="max-tablet:px-4 flex flex-1 flex-col px-6">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </AuthProviders>

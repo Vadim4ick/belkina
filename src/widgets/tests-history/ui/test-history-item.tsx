@@ -1,9 +1,9 @@
 import { GetTestResHistoryQuery } from '@/shared/graphql/__generated__'
 import { Badge } from '@/shared/ui/badge'
 import { Typography } from '@/shared/ui/typography'
-import { MAPPING_TEST_HISTORY_MODE } from '../model/const'
 import Link from 'next/link'
 import { getRouteTestById } from '@/shared/lib/routes'
+import { MAPPING_TEST_HISTORY_MODE } from '@/shared/const'
 
 const TestHistoryItem = ({ test }: { test: GetTestResHistoryQuery['TestResults']['docs'][0] }) => {
   return (
