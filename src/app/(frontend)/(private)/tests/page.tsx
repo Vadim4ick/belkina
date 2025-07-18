@@ -7,10 +7,23 @@ export const revalidate = 180
 export default async function Page() {
   const gql = await getServerAuthGqlClient({})
 
-  const [exams, subjects] = await Promise.allSettled([gql.GetAllExams(), gql.GetAllSubjects()])
+  const [exams, subjects, purchases] = await Promise.allSettled([
+    gql.GetAllExams(),
+    gql.GetAllSubjects(),
+    gql.GetPurchasesCoursesVideos({
+      userId: 29,
+    }),
+  ])
 
   const examsVal = getSettledValue(exams)
   const subjectsVal = getSettledValue(subjects)
+  const purchasesVal = getSettledValue(purchases)
 
-  return <TestsPage exams={examsVal?.Exams.docs} subjects={subjectsVal!.Subjects.docs} />
+  return (
+    <TestsPage
+      exams={examsVal?.Exams.docs}
+      subjects={subjectsVal!.Subjects.docs}
+      purchases={purchasesVal?.Purchases.docs}
+    />
+  )
 }

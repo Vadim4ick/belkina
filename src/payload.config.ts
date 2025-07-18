@@ -118,6 +118,11 @@ export default buildConfig({
             userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
             page: { type: GraphQL.GraphQLInt },
             limit: { type: GraphQL.GraphQLInt },
+            testIds: {
+              type: new GraphQL.GraphQLNonNull(
+                new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt)),
+              ),
+            },
             status: { type: TestResultStatusEnum },
             examId: { type: GraphQL.GraphQLInt },
             subjectId: { type: GraphQL.GraphQLInt }, // множественный, опциональный

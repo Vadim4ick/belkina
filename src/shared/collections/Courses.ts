@@ -9,8 +9,8 @@ const filterVideos: FieldHook = async ({ value, req, data }) => {
   const gql = await getServerAuthGqlClient({})
 
   // 1) Админ видит всё
-  if (req.user?.role === 'admin') return true
-  if (data?.isFree) return true
+  if (req.user?.role === 'admin') return value
+  if (data?.isFree) return value
 
   const authHeader = req?.headers?.get('authorization')
   const token = authHeader?.replace(/^Bearer\s/, '')

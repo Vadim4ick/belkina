@@ -9,23 +9,34 @@ export const GetUserTestsResolver = {
     {
       userId,
       status,
+      testIds,
       examId,
       subjectId,
     }: {
       userId: string
       status?: TestResult_Status_All | undefined
       examId: number
+      testIds: number[]
       subjectId: number
     },
   ) => {
     const gql = await getServerAuthGqlClient({})
 
-    // 1. Получаем все тесты
-    // @ts-ignore
-    const allTests = await gql.GetAllTests({
+    const allTests = await gql.GetTestsByIds({
+      // @ts-ignore
+      or: testIds.map((id) => ({ id: { equals: id } })),
       examId,
       subjectId,
+      limit: 1000,
+      page: 1,
     })
+
+    // 1. Получаем все тесты
+    // @ts-ignore
+    // const allTests = await gql.GetAllTests({
+    //   examId,
+    //   subjectId,
+    // })
     // const allTests = await gql.GetAllTests({
     //   limit,
     //   page,
