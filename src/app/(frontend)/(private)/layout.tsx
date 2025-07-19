@@ -1,7 +1,6 @@
 'use client'
 
 import { AuthProviders } from '@/shared/providers/auth-providers'
-import { Container } from '@/shared/ui/container'
 import { SidebarInset, SidebarProvider } from '@/shared/ui/sidebar'
 import { AppHeader } from '@/widgets/app-header'
 import { AppSidebar } from '@/widgets/app-sidebar'

@@ -71,8 +71,11 @@ export async function GET(req: Request) {
     await CookiesService.setAuthCookies({ accessToken, refreshToken })
 
     return response
-  } catch (err: any) {
+  } catch (err) {
     console.error(err)
-    return NextResponse.json({ error: err.message || 'Authentication failed' }, { status: 500 })
+    return NextResponse.json(
+      { error: (err as Error)?.message || 'Authentication failed' },
+      { status: 500 },
+    )
   }
 }

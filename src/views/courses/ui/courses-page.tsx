@@ -1,11 +1,9 @@
 import { CoursesList } from './courses-list'
 import { getSettledValue } from '@/shared/lib/utils'
-import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { getExams, getSubjects } from '@/shared/actions/category.action'
 
 const CoursesPage = async () => {
-  const gql = await getServerAuthGqlClient({})
-
-  const [exams, subjects] = await Promise.allSettled([gql.GetAllExams(), gql.GetAllSubjects()])
+  const [exams, subjects] = await Promise.allSettled([getExams(), getSubjects()])
 
   const examsVal = getSettledValue(exams)
   const subjectsVal = getSettledValue(subjects)

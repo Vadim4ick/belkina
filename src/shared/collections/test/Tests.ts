@@ -1,3 +1,5 @@
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 import { CollectionConfig } from 'payload'
 
 export const Tests: CollectionConfig = {
@@ -12,6 +14,40 @@ export const Tests: CollectionConfig = {
   },
 
   hooks: {
+    afterChange: [
+      async ({ doc }) => {
+        try {
+          const tags = new Set<string>()
+
+          if (doc?.id) {
+            tags.add(CacheKeys.tags.testById(doc.id))
+          }
+
+          await invalidateTags(...Array.from(tags))
+        } catch (e) {
+          console.warn('[tests.afterChange] cache invalidate failed', e)
+        }
+      },
+    ],
+
+    afterDelete: [
+      async ({ doc, id }) => {
+        try {
+          const tags = new Set<string>()
+
+          const testId = doc?.id || id
+
+          if (testId) {
+            tags.add(CacheKeys.tags.testById(testId))
+          }
+
+          await invalidateTags(...Array.from(tags))
+        } catch (e) {
+          console.warn('[tests.afterDelete] cache invalidate failed', e)
+        }
+      },
+    ],
+
     beforeDelete: [
       async ({ id, req }) => {
         const { payload } = req
