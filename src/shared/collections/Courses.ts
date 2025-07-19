@@ -93,6 +93,40 @@ const Courses: CollectionConfig = {
         return data
       },
     ],
+
+    beforeDelete: [
+      async ({ id, req }) => {
+        try {
+          // находим все покупки этого курса
+          // Если много покупок – можно пагинировать; здесь простой случай
+          const purchases = await req.payload.find({
+            collection: 'purchases',
+            where: { course: { equals: id } },
+            depth: 0,
+            limit: 1000, // при необходимости увеличить/цикл
+          })
+
+          if (purchases?.docs?.length) {
+            for (const p of purchases.docs) {
+              await req.payload.delete({
+                collection: 'purchases',
+                id: p.id,
+              })
+            }
+            if (process.env.NODE_ENV !== 'production') {
+              console.log(
+                `[cascade delete] удалены покупки курса ${id}:`,
+                purchases.docs.map((d) => d.id),
+              )
+            }
+          }
+        } catch (err) {
+          console.error('[cascade delete purchases error]', err)
+          // Можно кинуть ошибку, чтобы прервать удаление курса:
+          // throw new Error('Не удалось удалить связанные покупки')
+        }
+      },
+    ],
   },
 
   fields: [

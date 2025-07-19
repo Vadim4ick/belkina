@@ -1,5 +1,5 @@
-query GetTestResHistory($userId: JSON) {
-  TestResults(where: { user: { equals: $userId } }) {
+query GetTestResHistory($userId: JSON, $testIds: [JSON]) {
+  TestResults(where: { user: { equals: $userId }, test: { in: $testIds } }) {
     docs {
       status
 
