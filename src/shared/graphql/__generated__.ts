@@ -18476,6 +18476,7 @@ export type GetRecommendationsByIdsQuery = { readonly __typename?: 'Query', read
 
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
+  testIds: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>> | InputMaybe<Scalars['JSON']['input']>>;
 }>;
 
 
@@ -18886,8 +18887,8 @@ export const GetRecommendationsByIdsDocument = gql`
 }
     `;
 export const GetTestResHistoryDocument = gql`
-    query GetTestResHistory($userId: JSON) {
-  TestResults(where: {user: {equals: $userId}}) {
+    query GetTestResHistory($userId: JSON, $testIds: [JSON]) {
+  TestResults(where: {user: {equals: $userId}, test: {in: $testIds}}) {
     docs {
       status
       test {

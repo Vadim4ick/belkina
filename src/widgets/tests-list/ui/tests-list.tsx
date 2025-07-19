@@ -27,18 +27,17 @@ const TestsList = ({
               </Typography>
             )}
 
-            {tests && (
-              <div
-                className="grid gap-4"
-                style={{
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                }}
-              >
-                {tests.map((test, idx) => (
-                  <TestsListItem className="border-light-grey border-b-2" key={idx} test={test} />
-                ))}
-              </div>
-            )}
+            <div
+              className="grid gap-4"
+              style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}
+            >
+              {tests.map((test) => (
+                <TestsListItem className="border-light-grey border-b-2" key={test.id} test={test} />
+              ))}
+
+              {tests.length < 4 &&
+                Array.from({ length: 4 - tests.length }).map((_, i) => <div key={`ph-${i}`} />)}
+            </div>
           </>
         ) : (
           <Typography className="mt-4 text-center" tag="p" variant="visuelt-bold-32">
