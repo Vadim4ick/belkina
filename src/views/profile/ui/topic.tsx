@@ -1,6 +1,6 @@
 'use client'
 
-import { GetRecommendationsByIdsQuery } from '@/shared/graphql/__generated__'
+import { GetRecomendationsQuery } from '@/shared/graphql/__generated__'
 import { Typography } from '@/shared/ui/typography'
 import { memo } from 'react'
 
@@ -54,11 +54,7 @@ export const LexicalRenderer = ({ node }: { node: LexicalNode }) => {
 }
 
 const Topic = memo(
-  ({
-    recomendations,
-  }: {
-    recomendations: GetRecommendationsByIdsQuery['Recomendations']['docs']
-  }) => {
+  ({ recomendations }: { recomendations: GetRecomendationsQuery['GetUserRecommendations'] }) => {
     return (
       <>
         {recomendations?.map((el) => {
@@ -70,7 +66,7 @@ const Topic = memo(
               <div className="flex flex-col gap-6">
                 <h2 className="text-3xl font-bold text-black">{el.title}</h2>
 
-                <LexicalRenderer node={el.description.root} />
+                {el?.description && <LexicalRenderer node={JSON.parse(el?.description)?.root} />}
               </div>
             </div>
           )

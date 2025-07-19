@@ -2,7 +2,6 @@ import { UserIcon } from '@/shared/icons/user-icon'
 import { IsideBarItems } from '../_model/ISideBarItems'
 import { TagIcon } from '@/shared/icons/tag-icon'
 import { CalendarIcon } from '@/shared/icons/calendar-icon'
-import { MessagesIcon } from '@/shared/icons/messages-icon'
 import { getRouteProfile, getRouteTests } from '@/shared/lib/routes'
 
 export const PrivateMenuItems: IsideBarItems[] = [
@@ -22,9 +21,9 @@ export const PrivateMenuItems: IsideBarItems[] = [
     url: '#',
     icon: TagIcon,
   },
-  {
-    title: 'Онлайн чат',
-    url: '#',
-    icon: MessagesIcon,
-  },
+  // {
+  //   title: 'Онлайн чат',
+  //   url: '#',
+  //   icon: MessagesIcon,
+  // },
 ]

@@ -1,3 +1,5 @@
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {
@@ -8,6 +10,13 @@ export const HomePage: GlobalConfig = {
   },
   admin: {
     group: 'Страницы',
+  },
+  hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.getFAQ())
+      },
+    ],
   },
   fields: [
     {

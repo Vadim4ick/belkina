@@ -15,3 +15,15 @@ query GetPurchaseById($userId: JSON, $courseId: JSON) {
     }
   }
 }
+
+query GetPurchasesCoursesVideos($userId: JSON) {
+  Purchases(where: { user: { equals: $userId } }) {
+    docs {
+      course {
+        id
+
+        kinescopeVideos
+      }
+    }
+  }
+}

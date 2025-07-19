@@ -5,7 +5,6 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
 import { Users } from './shared/collections/Users'
 import { Media } from './shared/collections/Media'
 import { FAQs } from './shared/collections/FAQs'
@@ -26,6 +25,7 @@ import { Exams } from './shared/collections/categories/Exams'
 import { Subjects } from './shared/collections/categories/Subjects'
 import Courses from './shared/collections/Courses'
 import { GetUserTestsResolver } from './shared/graphql/resolvers/GetUserTestsResolver'
+import { GetUserRecommendationsResolver } from './shared/graphql/resolvers/GetUserRecommendations'
 
 dotenv.config()
 
@@ -111,6 +111,15 @@ export default buildConfig({
         },
       })
 
+      const RecommendationType = new GraphQL.GraphQLObjectType({
+        name: 'Recommendation',
+        fields: {
+          id: { type: GraphQL.GraphQLID },
+          title: { type: GraphQL.GraphQLString },
+          description: { type: GraphQL.GraphQLString },
+        },
+      })
+
       return {
         GetUserTests: {
           type: PaginatedTestsWithStatusType,
@@ -118,11 +127,24 @@ export default buildConfig({
             userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
             page: { type: GraphQL.GraphQLInt },
             limit: { type: GraphQL.GraphQLInt },
+            testIds: {
+              type: new GraphQL.GraphQLNonNull(
+                new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt)),
+              ),
+            },
             status: { type: TestResultStatusEnum },
             examId: { type: GraphQL.GraphQLInt },
             subjectId: { type: GraphQL.GraphQLInt }, // множественный, опциональный
           },
           resolve: GetUserTestsResolver.resolve,
+        },
+
+        GetUserRecommendations: {
+          type: new GraphQL.GraphQLList(RecommendationType),
+          args: {
+            userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
+          },
+          resolve: GetUserRecommendationsResolver.resolve,
         },
       }
     },

@@ -1,4 +1,7 @@
-import { useState, useEffect, useTransition, useOptimistic } from 'react'
+'use client'
+
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
@@ -32,36 +35,30 @@ export const useTestLogic = ({
   /* ------------------------- исходные данные ------------------------ */
   const questions = test?.questions || []
 
-  /** Базовое состояние, «истина» после ответа сервера */
+  /** «Истинные» значения после ответа сервера */
   const [answers, setAnswers] = useState<AnswerInput[]>([])
-
-  const [publicStep, setPublicStep] = useState(0)
   const [step, setStep] = useState(0)
 
-  /** Optimistic-состояния – мгновенно отражаются в UI */
-  const [optimisticAnswers, addOptimisticAnswers] = useOptimistic<AnswerInput[], AnswerInput[]>(
-    answers,
-    (_, next) => next,
-  )
+  /** Публичный режим */
+  const [publicStep, setPublicStep] = useState(0)
+  const [publicCorrectAnswers, setPublicCorrectAnswers] = useState(0)
+  const [publicCompleted, setPublicCompleted] = useState(false)
 
-  const [optimisticStep, addOptimisticStep] = useOptimistic<number, number>(step, (_, next) => next)
-
-  /** «Переход» для плавного обновления интерфейса */
-  const [, startTransition] = useTransition()
-
+  /** Прочее */
   const [start, setStart] = useState(false)
   const queryClient = useQueryClient()
-
   const { profile } = useProfileStore()
 
   /* ----------------------- текущий вопрос --------------------------- */
 
-  const renderStep = publicFlag ? publicStep : optimisticStep
+  const renderStep = publicFlag ? publicStep : step
   const renderSetStep = publicFlag ? setPublicStep : setStep
 
   const currentQuestion = questions[renderStep]
   const questionName = questionNameFn(currentQuestion?.id)
+
   /* -------------------- служебные утилиты / формы ------------------- */
+
   const { evaluateSingle, evaluate } = useTestEvaluation(questions.map((q) => q))
   const form = useForm({
     defaultValues: {},
@@ -73,12 +70,7 @@ export const useTestLogic = ({
   const { mutateAsync: createTestResult, isPending: isPendingStart } = useCreateTestResult()
   const { mutateAsync: updateTestResult, isPending: isPendingUpdate } = useUpdateTestResult()
   const { data: testResult, isLoading, isFetching } = useGetTestResultById({ testId: test?.id })
-
   const testRes = testResult?.TestResults?.docs[0]
-
-  /* ------------------------- режим «публичный» ---------------------- */
-  const [publicCorrectAnswers, setPublicCorrectAnswers] = useState(0)
-  const [publicCompleted, setPublicCompleted] = useState(false)
 
   /* ------------------------------------------------------------------ */
   /*                             EFFECTS                                */
@@ -102,8 +94,7 @@ export const useTestLogic = ({
             : answer.userAnswer
     }
 
-    reset(values)
-    // триггерим в следующем тике, чтобы сработала валидация
+    reset(values, { keepDirty: false })
     setTimeout(() => trigger(), 0)
   }, [testRes, reset, trigger, questions])
 
@@ -112,7 +103,7 @@ export const useTestLogic = ({
     if (testRes?.status === 'in_progress') setStart(true)
   }, [testRes])
 
-  /** Превращаем ответы из бекенда в масcив AnswerInput → state */
+  /** Превращаем ответы из бекенда в state */
   useEffect(() => {
     if (testRes) {
       const prepared: AnswerInput[] = testRes.answers.map((a) => ({
@@ -124,7 +115,7 @@ export const useTestLogic = ({
     }
   }, [testRes])
 
-  /** Восстанавливаем последний отвеченный вопрос после перезагрузки */
+  /** Восстанавливаем последний отвеченный вопрос */
   useEffect(() => {
     if (publicFlag) return
     if (testRes && questions.length) {
@@ -142,55 +133,40 @@ export const useTestLogic = ({
   /*                           ОБРАБОТЧИКИ                              */
   /* ------------------------------------------------------------------ */
 
-  /** click «Далее» */
-  const onNext = () => {
-    /* ------------------ НЕпубличный режим (сохраняем в БД) ----------- */
+  const onNext = async () => {
+    /* ------------------ НЕпубличный режим --------------------------- */
     if (!publicFlag) {
       const values = getValues() as Record<string, any>
       const isCorrect = evaluateSingle(currentQuestion.id, values)
       const userAnswer = formatUserAnswer(currentQuestion.questionType, values[questionName])
 
-      /** Новый массив ответов (с учётом возможного обновления) */
+      /** Новый массив ответов */
       const nextAnswers: AnswerInput[] = [
-        ...optimisticAnswers.filter((a) => a.question !== currentQuestion.id),
+        ...answers.filter((a) => a.question !== currentQuestion.id),
         { question: currentQuestion.id, userAnswer, isCorrect },
       ]
 
-      /* 1. Optimistic UI */
-      startTransition(() => {
-        addOptimisticAnswers(nextAnswers)
-        if (optimisticStep < questions.length - 1) addOptimisticStep(optimisticStep + 1)
-      })
-
-      /* 2. Запрос на сервер */
       if (!testRes?.id) return
       const isNotLast = step < questions.length - 1
 
-      updateTestResult(
-        {
+      try {
+        await updateTestResult({
           testResId: testRes.id,
           answers: nextAnswers,
           status: isNotLast ? 'in_progress' : 'completed',
-        },
-        {
-          onSuccess: () => {
-            setAnswers(nextAnswers)
-            setStep((prev) => (isNotLast ? prev + 1 : prev))
-            if (!isNotLast) {
-              queryClient.invalidateQueries({
-                queryKey: QUERY_KEYS.testResult(profile?.id, test?.id),
-              })
-            }
-          },
-          onError: () => {
-            // Rollback – возвращаем базовые значения
-            startTransition(() => {
-              addOptimisticAnswers(answers)
-              addOptimisticStep(step)
-            })
-          },
-        },
-      )
+        })
+
+        setAnswers(nextAnswers)
+        if (isNotLast) setStep((prev) => prev + 1)
+        if (!isNotLast) {
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.testResult(profile?.id, test?.id),
+          })
+        }
+      } catch (e) {
+        /* при ошибке ничего не меняем */
+        console.error('Ошибка обновления теста', e)
+      }
 
       return
     }
@@ -205,11 +181,10 @@ export const useTestLogic = ({
         const { correctCount } = evaluate(answers)
         setPublicCorrectAnswers(correctCount)
       }
-      return
     }
   }
 
-  /** Сбросить прогресс (админ-кнопка «Начать заново») */
+  /** Сбросить прогресс (админ‑кнопка «Начать заново») */
   const resetTestRes = () => {
     if (!testRes?.id) return
     updateTestResult(
@@ -220,19 +195,7 @@ export const useTestLogic = ({
           setStep(0)
           // @ts-ignore
           Object.keys(form.getValues()).forEach((name) => form.unregister(name))
-          form.reset(
-            {}, // newValues
-            {
-              keepValues: false,
-              keepDirty: false,
-              keepDirtyValues: false,
-              keepTouched: false,
-              keepDefaultValues: false,
-              keepIsSubmitted: false,
-              keepErrors: false,
-              keepSubmitCount: false,
-            },
-          )
+          form.reset({}, { keepValues: false })
           queryClient.invalidateQueries({
             queryKey: QUERY_KEYS.testResult(profile?.id, test?.id),
           })
@@ -258,7 +221,7 @@ export const useTestLogic = ({
     currentQuestion,
     testRes,
 
-    /* состояние (optimistic) */
+    /* состояние */
     step: renderStep,
     start,
     publicCorrectAnswers,
@@ -271,7 +234,7 @@ export const useTestLogic = ({
     isFetching,
 
     /* методы */
-    setStep: renderSetStep, // нужен в resetTestRes
+    setStep: renderSetStep,
     startFn,
     onNext,
     form,

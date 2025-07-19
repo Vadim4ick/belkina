@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useField } from '@payloadcms/ui'
@@ -53,7 +54,7 @@ const KinescopeProjectSelect: React.FC<{ path: string }> = ({ path }) => {
   // Загрузка тестов
   useEffect(() => {
     gql
-      .GetAllTests()
+      .GetAllTestsByTitles()
       .then((res) => {
         if (res?.Tests?.docs?.length) {
           setTests(res.Tests.docs.map((t) => ({ id: t.id, title: t.title })))

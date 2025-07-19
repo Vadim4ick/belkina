@@ -10,6 +10,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            staleTime: 3 * 60 * 1000,
           },
         },
       }),

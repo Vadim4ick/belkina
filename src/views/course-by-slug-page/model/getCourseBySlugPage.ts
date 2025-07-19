@@ -1,10 +1,9 @@
-import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { getCoursesBySlug } from '@/shared/actions/courses.actions'
 import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
 import { notFound } from 'next/navigation'
 
 export const getCourseBySlugPage = async (slug: string, videoId: string) => {
-  const gql = await getServerAuthGqlClient({})
-  const courses = await gql.GetCourseBySlug({ slug })
+  const courses = await getCoursesBySlug({ slug })
 
   if (!courses?.Courses?.docs?.length) {
     return notFound()

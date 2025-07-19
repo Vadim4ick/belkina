@@ -1,4 +1,6 @@
 import { CollectionConfig } from 'payload'
+import { invalidateTags } from '../redis/gqlCached'
+import { CacheKeys } from '../redis/cache-keys'
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
@@ -24,6 +26,18 @@ export const FAQs: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.getFAQ())
+      },
+    ],
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.getFAQ())
+      },
+    ],
+  },
   access: {
     read: () => true, // можно читать публично
   },
