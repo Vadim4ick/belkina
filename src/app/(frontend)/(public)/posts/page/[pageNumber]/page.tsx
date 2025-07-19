@@ -39,7 +39,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
 
-  const res = await gql.GetPostList({ limit: 3, page: +pageNumber })
+  const res = await gql.GetPostList({ limit: 6, page: +pageNumber })
 
   if (!res) {
     return notFound()
