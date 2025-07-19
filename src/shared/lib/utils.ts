@@ -37,7 +37,8 @@ export async function checkAccessToken({ req }: { req: PayloadRequest }): Promis
 
   try {
     await JwtService.verifyToken(token)
-    // console.log('✅ Токен валиден:', decoded)
+
+    console.log('✅ Токен валиден')
     return true
   } catch (err) {
     console.warn('⚠️ Токен невалиден:', (err as Error)?.message)

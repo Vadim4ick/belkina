@@ -1,13 +1,11 @@
 import { TestForm } from '@/features/test-form'
-import { getServerAuthGqlClient } from '@/shared/graphql/client'
+import { getTestById } from '@/shared/actions/test.action'
 import { Typography } from '@/shared/ui/typography'
 import { notFound } from 'next/navigation'
 
 const TestByIdPage = async ({ id }: { id: string }) => {
-  const gql = await getServerAuthGqlClient({})
-
   try {
-    const res = await gql.GetByIdTest({ id: Number(id) })
+    const res = await getTestById({ id })
 
     // Даже если нет ошибки, но `Test` = null (например, удалённый тест)
     if (!res?.Test) {

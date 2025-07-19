@@ -1,95 +1,63 @@
-/* style.module.scss */
-
-/* Контейнер поля */
 .kinescopeField {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* Таблица */
-.kinescopeTable {
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  max-height: 320px;
-}
-
-.kinescopeTable thead {
-  background: #f6f7f9;
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.kinescopeTable th,
-.kinescopeTable td {
-  padding: 8px 12px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.kinescopeTable th {
+.label {
   font-weight: 600;
-  color: #303540;
-  border-bottom: 1px solid #ececec;
+  margin-bottom: 4px;
 }
 
-.kinescopeTable tr {
-  transition: background 0.15s;
-  cursor: pointer;
-}
-
-.kinescopeTable tr.selected {
-  background: #e6f0ff !important;
-  font-weight: 700;
-}
-
-.kinescopeTable tr:hover:not(.selected) {
-  background: #f0f5ff;
-}
-
-/* Кнопка "Выбрано" */
-.selectedBadge {
-  display: inline-block;
-  padding: 2px 8px;
-  background: #2563eb;
-  color: #fff;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-left: 4px;
-}
-
-.searchInput {
-  border: 1px solid #ececec;
-  border-radius: 6px;
+.select {
   padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
   font-size: 14px;
-  width: 100%;
-  margin-bottom: 8px;
-  outline: none;
-  transition: border 0.15s;
-
-  &:focus {
-    border: 1.5px solid #2563eb;
-  }
+  background-color: #fff;
+  color: #1e293b;
+  max-width: 300px;
 }
 
-.errorMessage {
-  margin-top: 3px;
-  font-size: 13px;
-  color: #dc2626;
+.videoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.iframePreview {
-  margin-top: 16px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #ececec;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
-  width: fit-content;
+.videoListTitle {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.videoItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.videoInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.videoTitle {
+  font-weight: 500;
+}
+
+.videoDuration {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.selectTest {
+  padding: 4px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1e293b;
 }

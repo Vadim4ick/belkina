@@ -1,37 +1,15 @@
-import { gql } from '@/shared/graphql/client'
-import { getRouteCourseBySlug } from '@/shared/lib/routes'
 import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
 import { CourseVideo } from '@/shared/ui/course-video'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
-import { notFound } from 'next/navigation'
 import { NavigationPanel } from './navigation-panel'
-import { auth } from '@/entities/user/auth'
+import { getCourseBySlugPage } from '../model/getCourseBySlugPage'
 
 const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: string }) => {
-  const courses = await gql.GetCourseBySlug({ slug })
-
-  const session = await auth()
-
-  if (!courses || !courses.Courses || !courses.Courses.docs.length) {
-    return notFound()
-  }
-
-  const course = courses.Courses.docs[0]
-  const videos = course.kinescopeVideos || []
-
-  const activeVideoId = videoId
-  const activeVideo = videos.find((v) => v.kinescopeId === activeVideoId)
-  const activeIdx = videos.findIndex((v) => v.kinescopeId === activeVideoId)
-
-  const prevVideo = activeIdx > 0 ? videos[activeIdx - 1] : null
-  const nextVideo = activeIdx < videos.length - 1 ? videos[activeIdx + 1] : null
-
-  if (!activeVideo) {
-    return notFound()
-  }
+  const { course, videos, activeVideo, activeVideoId, prevVideo, nextVideo } =
+    await getCourseBySlugPage(slug, videoId)
 
   return (
     <>
@@ -62,27 +40,25 @@ const CourseBySlugPage = async ({ slug, videoId }: { slug: string; videoId: stri
 
       <section className="mt-6">
         <Container>
-          <ProductCardsGridCatalog isNull={videos.length === 0} title="Все уроки из курса">
+          <ProductCardsGridCatalog
+            isNull={videos.length === 0}
+            title={`Все уроки из курса (${videos.length} видео. Общая длительность ${summClockTime(
+              videos.map((video) => video.duration),
+            )})`}
+          >
             {videos?.length > 0 &&
-              videos.map((product) => (
+              videos.map((product, idx) => (
                 <ProductCard
-                  key={product.id}
+                  key={idx}
                   title={product.title}
-                  categories={course.subjects.map((subject) => subject.title)}
-                  exams={course.exams.title}
+                  categories={course?.subjects?.map((subject) => subject.title)}
+                  exams={course?.exams?.title}
                   duration={summClockTime([product.duration])}
                   description={course.description}
                   price={course.price}
                   discount={course.discount}
-                  image={course.banner}
-                  url={getRouteCourseBySlug({
-                    slug: course.slug,
-                    videoId: product.kinescopeId,
-                  })}
-                  btnText="Перейти"
-                  btnDisabled={videoId === product.kinescopeId}
+                  // image={course.banner}
                   showFooter={false}
-                  showButton={session?.user.tariffId === course.tariff.id}
                 />
               ))}
           </ProductCardsGridCatalog>

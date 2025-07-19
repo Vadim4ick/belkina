@@ -1,8 +1,5 @@
 'use client'
 
-import { TabCategory } from '@/features/tab-categories'
-import { getRouteCourseBySlug } from '@/shared/lib/routes'
-import { summClockTime } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 import { ProductCard, SkeletonProductCard } from '@/widgets/product-card'
@@ -12,6 +9,8 @@ import { Pagination, PaginationSkeleton } from '@/shared/ui/pagination'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
 import { useGetAllCourses } from '@/shared/services/courses.service'
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
+import { FilterCategory } from '@/widgets/filter-category'
+import { getRouteCourseBySlug } from '@/shared/lib/routes'
 
 const CoursesList = memo(
   ({
@@ -33,27 +32,12 @@ const CoursesList = memo(
       <>
         <section className="mt-12">
           <Container className="flex flex-col gap-6">
-            <div className="max-tablet:flex-col max-tablet:items-start mb-6 flex items-center justify-between gap-2">
+            <div className="flex items-center justify-between gap-2">
               <Typography tag="h2" variant="visuelt-bold-48">
                 Курсы
               </Typography>
 
-              <TabCategory
-                btns={[{ id: 1000, title: 'Все' }, ...(exams?.map((el) => el) || [])]}
-                value={filters.exams}
-                isLoading={isLoadingCourses}
-                onChange={(val) => setFilter('exams', val)}
-              />
-            </div>
-
-            <div className="flex items-center justify-between gap-4">
-              <TabCategory
-                btns={[{ id: 1000, title: 'Все' }, ...(subjects?.map((el) => el) || [])]}
-                variant="secondary"
-                value={filters.subjects}
-                isLoading={isLoadingCourses}
-                onChange={(val) => setFilter('subjects', val)}
-              />
+              <FilterCategory exams={exams} subjects={subjects} isLoading={isLoadingCourses} />
             </div>
           </Container>
         </section>
@@ -71,18 +55,16 @@ const CoursesList = memo(
                       <ProductCard
                         key={product.id}
                         title={product.title}
-                        categories={product.subjects.map((subject) => subject.title)}
-                        exams={product.exams.title}
-                        duration={summClockTime(
-                          product.kinescopeVideos.map((video) => video.duration),
-                        )}
+                        categories={product?.subjects?.map((subject) => subject.title) ?? []}
+                        exams={product?.exams?.title}
+                        duration={product.totalDuration}
                         description={product.description}
                         price={product.price}
                         discount={product.discount}
                         image={product.banner}
                         url={getRouteCourseBySlug({
                           slug: product.slug,
-                          videoId: product.kinescopeVideos[0]?.kinescopeId,
+                          videoId: product.previewVideoId,
                         })}
                       />
                     ))

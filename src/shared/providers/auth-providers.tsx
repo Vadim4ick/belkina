@@ -1,24 +1,12 @@
 'use client'
 
 import { Loader2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
-import { useAuthStore } from '../hooks/use-auth-store'
-import { useEffect } from 'react'
+import { useProfile } from '../hooks/use-profile'
 
-const AuthProviders = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession()
+const AuthProviders = ({ children, loading }: { children: React.ReactNode; loading?: boolean }) => {
+  const { isLoading } = useProfile()
 
-  const setSession = useAuthStore((state) => state.setSession)
-
-  useEffect(() => {
-    if (status === 'authenticated') {
-      setSession(session)
-    } else if (status === 'unauthenticated') {
-      setSession(null)
-    }
-  }, [status, session, setSession])
-
-  if (status === 'loading') {
+  if (isLoading && loading) {
     return (
       <div className="fixed top-1/2 left-1/2 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-white">
         <Loader2 className="size-8 animate-spin" />

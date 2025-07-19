@@ -2,8 +2,9 @@ import { Typography } from '@/shared/ui/typography'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { GetAllUserTestsQuery } from '@/shared/graphql/__generated__'
+import { GetAllUserTestsQuery, TestResult_Status_All } from '@/shared/graphql/__generated__'
 import { getRouteTestById } from '@/shared/lib/routes'
+import { MAPPING_TEST_HISTORY_MODE, TEST_STATUS_COLOR } from '@/shared/const'
 
 interface TestsListItemProps {
   test: GetAllUserTestsQuery['GetUserTests']['docs'][0]
@@ -14,26 +15,32 @@ const TestsListItem = ({ test, className }: TestsListItemProps) => {
   return (
     <div
       className={cn(
-        'max-tablet:flex-col flex items-center justify-between gap-3 rounded-[6px] bg-white px-2.5 py-3',
+        'flex flex-col gap-4 rounded-xl bg-white p-4 shadow-md transition hover:shadow-lg',
         className,
       )}
     >
-      <div className="lg:col-span-4">
-        <Typography tag="p" variant="poppins-reg-14" className="text-[#6B7280] uppercase">
+      <div className="flex items-start justify-between">
+        <Typography tag="h3" variant="poppins-md-16" className="text-[#111827] uppercase">
           {test.title}
         </Typography>
-      </div>
 
-      <div className="lg:col-span-2 lg:col-start-5">
-        <Typography tag="p" variant="poppins-reg-14" className="text-center text-[#6B7280]">
-          {test.description}
+        <Typography
+          tag="span"
+          variant="poppins-reg-14"
+          className={cn(TEST_STATUS_COLOR[test.status as TestResult_Status_All], 'font-semibold')}
+        >
+          {MAPPING_TEST_HISTORY_MODE[test.status as TestResult_Status_All]}
         </Typography>
       </div>
 
-      <div className="justify-self-end lg:col-span-2 lg:col-start-7">
+      <Typography tag="p" variant="poppins-reg-14" className="text-[#6B7280]">
+        {test.description}
+      </Typography>
+
+      <div className="mt-auto">
         <Link href={getRouteTestById({ id: test.id })}>
-          <Button variant="primary-inverted" className="w-[200px]">
-            Перейти к тесту
+          <Button variant="primary" className="w-full">
+            Перейти к тесту
           </Button>
         </Link>
       </div>

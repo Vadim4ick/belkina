@@ -1,27 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { useField } from '@payloadcms/ui'
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './style.module.scss'
-import { KinescopeVideo } from '@/shared/types/kinescope.types'
+import { KinescopeVideoItem } from '@/shared/types/kinescope.types'
+import { useGqlClient } from '@/shared/hooks/useGqlClient'
 
-interface KinescopeVideoSelectProps {
-  path: string
-}
+const KinescopeProjectSelect: React.FC<{ path: string }> = ({ path }) => {
+  const gql = useGqlClient({})
 
-const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => {
-  const { value, setValue, errorMessage } = useField<string>({ path })
-  const { setValue: setTitle } = useField<string>({ path: path.replace(/kinescopeId$/, 'title') })
-  const { setValue: setDuration } = useField<number>({
-    path: path.replace(/kinescopeId$/, 'duration'),
-  })
+  const { value = [], setValue } = useField<KinescopeVideoItem[]>({ path })
 
-  const [videos, setVideos] = useState<KinescopeVideo[]>([])
-  const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState('')
   const [projects, setProjects] = useState<Record<string, string>>({})
-  const [projectFilter, setProjectFilter] = useState<string>('')
+  const [projectId, setProjectId] = useState<string>('')
+  const [tests, setTests] = useState<{ id: number; title: string }[]>([])
+  const [loadingVideos, setLoadingVideos] = useState(false)
 
+  // Загрузка проектов
   useEffect(() => {
     fetch('/api/kinescope-projects')
       .then((res) => res.json())
@@ -34,52 +30,57 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
       })
   }, [])
 
+  // Загрузка видео по проекту
   useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const res = await fetch('/api/kinescope-list')
-        const data = await res.json()
-        setVideos(data.items)
-      } catch {
-        setVideos([])
-      }
-      setLoading(false)
-    }
-    fetchVideos()
+    if (!projectId) return
+    setLoadingVideos(true)
+
+    fetch(`/api/kinescope-list?projectId=${projectId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const videos = data.items.map((v: any) => ({
+          kinescopeId: v.id,
+          title: v.title,
+          duration: Math.round(v.duration),
+          projectId,
+          projectTitle: projects[projectId],
+          test: null,
+        }))
+        setValue(videos)
+      })
+      .finally(() => setLoadingVideos(false))
+  }, [projectId])
+
+  // Загрузка тестов
+  useEffect(() => {
+    gql
+      .GetAllTestsByTitles()
+      .then((res) => {
+        if (res?.Tests?.docs?.length) {
+          setTests(res.Tests.docs.map((t) => ({ id: t.id, title: t.title })))
+        }
+      })
+      .catch((err) => console.error('Ошибка при загрузке тестов', err))
   }, [])
 
-  const filtered = useMemo(() => {
-    const q = search.toLowerCase().trim()
-    let arr = videos
-    if (q) {
-      arr = arr.filter(
-        (v) =>
-          v.title?.toLowerCase().includes(q) ||
-          v.embed_link?.toLowerCase().includes(q) ||
-          v.id?.toLowerCase().includes(q),
-      )
-    }
-    if (projectFilter) {
-      arr = arr.filter((v) => v.project_id === projectFilter)
-    }
-    return arr
-  }, [search, videos, projectFilter])
+  const handleTestChange = (index: number, testId: number) => {
+    const updated = [...value]
+    const test = tests.find((t) => t.id === testId)
+    updated[index].test = test ? { id: test.id, title: test.title } : undefined
+    setValue(updated)
+  }
 
   return (
     <div className={styles.kinescopeField}>
-      <label>Видео из Kinescope</label>
+      <label className={styles.label}>Проект Kinescope</label>
 
-      {/* Фильтр по проекту */}
       <select
-        className={styles.searchInput}
-        value={projectFilter}
-        onChange={(e) => {
-          setProjectFilter(e.target.value)
-          setSearch('')
-        }}
-        style={{ marginBottom: 8, maxWidth: 260 }}
+        className={styles.select}
+        value={projectId?.length > 0 ? projectId : value?.[0]?.projectId}
+        onChange={(e) => setProjectId(e.target.value)}
+        disabled={Object.keys(projects).length === 0}
       >
-        <option value="">Все проекты</option>
+        <option value="">Выберите проект…</option>
         {Object.entries(projects).map(([id, name]) => (
           <option key={id} value={id}>
             {name}
@@ -87,93 +88,40 @@ const KinescopeVideoSelect: React.FC<KinescopeVideoSelectProps> = ({ path }) => 
         ))}
       </select>
 
-      {/* Поиск */}
-      <input
-        className={styles.searchInput}
-        placeholder="Поиск по названию или ID"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      {/* Таблица */}
-      <div style={{ maxHeight: 320, overflowY: 'auto' }}>
-        {loading ? (
-          <div style={{ padding: 16, color: '#94a3b8' }}>Загрузка…</div>
-        ) : (
-          <table className={styles.kinescopeTable}>
-            <thead>
-              <tr>
-                <th>Название</th>
-                <th>Проект</th>
-                <th>Длительность</th>
-                <th>Превью</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.length === 0 ? (
-                <tr>
-                  <td colSpan={5} style={{ padding: 16, textAlign: 'center', color: '#94a3b8' }}>
-                    Ничего не найдено
-                  </td>
-                </tr>
-              ) : (
-                filtered.map((v) => (
-                  <tr
-                    key={v.id}
-                    className={value === v.id ? styles.selected : undefined}
-                    onClick={() => {
-                      setValue(v.id)
-                      setTitle(v.title)
-                      setDuration(v.duration)
-                    }}
-                  >
-                    <td>{v.title}</td>
-                    <td>
-                      {projects[v.project_id] || (
-                        <span style={{ color: '#aaa' }}>{v.project_id}</span>
-                      )}
-                    </td>
-                    <td>{Math.round(v.duration)} сек.</td>
-                    <td>
-                      <a
-                        href={v.play_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        style={{ color: '#2563eb', textDecoration: 'underline' }}
-                      >
-                        Смотреть
-                      </a>
-                    </td>
-                    <td>
-                      {value === v.id && <span className={styles.selectedBadge}>Выбрано</span>}
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        )}
+      <div className={styles.selectedProject}>
+        Выбранный проект: <strong>{value?.[0]?.projectTitle || 'не выбран'}</strong>
       </div>
 
-      {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+      {loadingVideos && <div className={styles.loading}>Загрузка видео…</div>}
 
-      {/* Превью выбранного видео + инфо */}
-      {value && (
-        <div className={styles.iframePreview}>
-          <iframe
-            src={`https://kinescope.io/embed/${value}`}
-            width="320"
-            height="180"
-            allow="autoplay; fullscreen"
-            frameBorder="0"
-            allowFullScreen
-          />
+      {!loadingVideos && value.length > 0 && (
+        <div className={styles.videoList}>
+          <h4>Видео в проекте:</h4>
+          {value.map((v, index) => (
+            <div key={v.kinescopeId} className={styles.videoItem}>
+              <div>
+                <div className={styles.videoTitle}>{v.title}</div>
+                <div className={styles.videoDuration}>({v.duration} сек.)</div>
+              </div>
+
+              <select
+                className={styles.selectTest}
+                value={v.test?.id || ''}
+                onChange={(e) => handleTestChange(index, Number(e.target.value))}
+              >
+                <option value="">Выбрать тест</option>
+                {tests.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
         </div>
       )}
     </div>
   )
 }
 
-export default KinescopeVideoSelect
+export default KinescopeProjectSelect

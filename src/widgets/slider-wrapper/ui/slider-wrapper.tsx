@@ -1,5 +1,5 @@
 import { GetPostListQuery } from '@/shared/graphql/__generated__'
-import { getRoutePosts } from '@/shared/lib/routes'
+import { getRoutePostsBySlug } from '@/shared/lib/routes'
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
 } from '@/shared/ui/carousel'
 import { Container } from '@/shared/ui/container'
+import { Typography } from '@/shared/ui/typography'
 import { ProductCard } from '@/widgets/product-card'
 
 export type Props = {
@@ -18,6 +19,10 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
   return (
     <section className="py-12">
       <Container className="px-0">
+        <Typography className="mb-10 text-center" tag="h2" variant="visuelt-bold-48">
+          Блог
+        </Typography>
+
         <Carousel
           opts={{
             align: 'start',
@@ -32,8 +37,8 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
                     <ProductCard
                       title={product.title}
                       image={product.image}
-                      url={`${getRoutePosts()}/${product.slug}`}
                       showFooter={false}
+                      url={getRoutePostsBySlug(product.slug)}
                     />
                   </div>
                 </CarouselItem>

@@ -1,8 +1,36 @@
 import type { CollectionConfig } from 'payload'
-import bcrypt from 'bcryptjs'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+
+  hooks: {
+    beforeDelete: [
+      async ({ req, id }) => {
+        const payload = req.payload
+
+        // Найдём все testResults этого пользователя
+        const { docs: results } = await payload.find({
+          collection: 'testResults',
+          where: {
+            user: { equals: id },
+          },
+          depth: 0,
+        })
+
+        if (results.length) {
+          // Удалим все найденные testResults
+          for (const result of results) {
+            await payload.delete({
+              collection: 'testResults',
+              id: result.id,
+            })
+          }
+        }
+
+        return
+      },
+    ],
+  },
   admin: {
     useAsTitle: 'email',
 
@@ -48,6 +76,27 @@ export const Users: CollectionConfig = {
     },
 
     {
+      name: 'name',
+      label: {
+        ru: 'Имя',
+        en: 'Name',
+      },
+      type: 'text',
+      required: false,
+    },
+
+    {
+      name: 'avatar',
+      label: {
+        ru: 'Аватар',
+        en: 'Avatar',
+      },
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+
+    {
       name: 'role',
       type: 'select',
       required: true,
@@ -81,34 +130,23 @@ export const Users: CollectionConfig = {
       },
     },
 
-    {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: false,
-      defaultValue: async ({ req }) => {
-        const { docs } = await req.payload.find({
-          collection: 'tariffs',
-          limit: 1,
-          sort: 'createdAt',
-        })
-        return docs.find((doc) => doc.type === 'basic')?.id // первый созданный тариф по умолчанию
-      },
-      admin: {
-        position: 'sidebar',
-      },
-    },
-  ],
+    // {
+    //   name: 'tariff',
+    //   label: 'Тариф',
+    //   type: 'relationship',
+    //   relationTo: 'tariffs',
+    //   required: false,
+    //   defaultValue: async ({ req }) => {
+    //     const { docs } = await req.payload.find({
+    //       collection: 'tariffs',
+    //       sort: 'createdAt',
+    //     })
 
-  hooks: {
-    beforeChange: [
-      async ({ data, operation }) => {
-        if ((operation === 'create' || operation === 'update') && data.password) {
-          data.password = await bcrypt.hash(data.password, 10)
-        }
-        return data
-      },
-    ],
-  },
+    //     return docs.find((doc) => doc.isFree)?.id
+    //   },
+    //   admin: {
+    //     position: 'sidebar',
+    //   },
+    // },
+  ],
 }

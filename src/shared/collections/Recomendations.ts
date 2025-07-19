@@ -5,7 +5,8 @@ import {
   UnorderedListFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { checkAccessToken } from '../lib/utils'
+import { CacheKeys } from '../redis/cache-keys'
+import { invalidateTags } from '../redis/gqlCached'
 
 export const Recomendations: CollectionConfig = {
   slug: 'recomendations',
@@ -24,8 +25,22 @@ export const Recomendations: CollectionConfig = {
     },
   },
 
+  hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.recommendationsAll())
+      },
+    ],
+
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.recommendationsAll())
+      },
+    ],
+  },
+
   access: {
-    read: checkAccessToken,
+    read: () => true,
   },
 
   fields: [
@@ -34,15 +49,6 @@ export const Recomendations: CollectionConfig = {
       label: 'Заголовок',
       type: 'text',
       required: true,
-    },
-
-    {
-      name: 'tariff',
-      label: 'Тариф',
-      type: 'relationship',
-      relationTo: 'tariffs',
-      required: false,
-      admin: { position: 'sidebar' },
     },
 
     {

@@ -3,8 +3,21 @@ import { BookOpennCapIcon } from '@/shared/icons/book-open-text'
 import { FAQIcon } from '@/shared/icons/file-question-mark'
 import { Newspaper } from '@/shared/icons/newspaper'
 import { getRouteHome, getRouteCourses, getRoutePosts } from '@/shared/lib/routes'
+import { TestResult_Status_All } from '../graphql/__generated__'
 
 export const RUS_LETTERS = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('')
+
+export const MAPPING_TEST_HISTORY_MODE: Record<Exclude<TestResult_Status_All, 'all'>, string> = {
+  completed: 'Пройден',
+  in_progress: 'В процессе',
+  not_started: 'Не начат',
+}
+
+export const TEST_STATUS_COLOR = {
+  completed: 'text-green-600',
+  in_progress: 'text-yellow-600',
+  not_started: 'text-red-600',
+}
 
 export function getSymbolLabel(count: number): string {
   const plural = new Intl.PluralRules('ru-RU').select(count)

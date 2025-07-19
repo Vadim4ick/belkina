@@ -1,15 +1,9 @@
 query GetCourseBySlug($slug: String) {
   Courses(where: { slug: { equals: $slug } }) {
     docs {
-      ...CourseFragment
+      kinescopeVideos
 
-      kinescopeVideos {
-        ...Kinescope_Video_Fragment
-        test {
-          id
-          title
-        }
-      }
+      ...CourseFragment
     }
   }
 }

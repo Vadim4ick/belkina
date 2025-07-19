@@ -3,9 +3,16 @@ mutation CreateUser(
   $password: String!
   $role: User_role_MutationInput!
   $signupMethod: User_signupMethod_MutationInput!
+  $name: String
 ) {
   createUser(
-    data: { email: $email, password: $password, role: $role, signupMethod: $signupMethod }
+    data: {
+      email: $email
+      password: $password
+      role: $role
+      signupMethod: $signupMethod
+      name: $name
+    }
   ) {
     id
     email
@@ -21,8 +28,9 @@ query GetUserByEmail($email: EmailAddress!) {
       signupMethod
       role
 
-      tariff {
-        id
+      name
+      avatar {
+        ...MediaFragment
       }
     }
     totalDocs

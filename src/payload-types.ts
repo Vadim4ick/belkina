@@ -78,6 +78,7 @@ export interface Config {
     recomendations: Recomendation;
     exams: Exam;
     subjects: Subject;
+    purchases: Purchase;
     posts: Post;
     courses: Course;
     'payload-locked-documents': PayloadLockedDocument;
@@ -97,6 +98,7 @@ export interface Config {
     recomendations: RecomendationsSelect<false> | RecomendationsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
     subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    purchases: PurchasesSelect<false> | PurchasesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -149,27 +151,10 @@ export interface User {
   id: number;
   email: string;
   password: string;
+  name?: string | null;
+  avatar?: (number | null) | Media;
   role: 'admin' | 'user';
   signupMethod: 'email' | 'yandex' | 'google';
-  tariff?: (number | null) | Tariff;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tariffs".
- */
-export interface Tariff {
-  id: number;
-  title: string;
-  price: number;
-  type: 'basic' | 'corporate' | 'pro';
-  subtitle: string;
-  description: string;
-  benefits: {
-    value: string;
-    id?: string | null;
-  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -194,6 +179,22 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tariffs".
+ */
+export interface Tariff {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  benefits: {
+    value: string;
+    id?: string | null;
+  }[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqs".
  */
 export interface Faq {
@@ -210,7 +211,6 @@ export interface Faq {
 export interface Test {
   id: number;
   title: string;
-  tariff: number | Tariff;
   description?: string | null;
   questions?: (number | Question)[] | null;
   exam?: (number | null) | Exam;
@@ -253,7 +253,6 @@ export interface Question {
 export interface Recomendation {
   id: number;
   title: string;
-  tariff?: (number | null) | Tariff;
   /**
    * Можно использовать заголовки и нумерованные списки
    */
@@ -353,6 +352,49 @@ export interface Admin {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "purchases".
+ */
+export interface Purchase {
+  id: number;
+  user: number | User;
+  course: number | Course;
+  tariff: number | Tariff;
+  pricePaid: number;
+  purchasedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  description: string;
+  banner: number | Media;
+  exams?: (number | null) | Exam;
+  subjects?: (number | Subject)[] | null;
+  price: number;
+  discount?: number | null;
+  previewVideoId?: string | null;
+  totalDuration?: string | null;
+  slug: string;
+  isFree?: boolean | null;
+  kinescopeVideos:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts".
  */
 export interface Post {
@@ -386,31 +428,6 @@ export interface Post {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "courses".
- */
-export interface Course {
-  id: number;
-  title: string;
-  description: string;
-  banner: number | Media;
-  exams: number | Exam;
-  subjects: (number | Subject)[];
-  price: number;
-  discount?: number | null;
-  slug: string;
-  tariff: number | Tariff;
-  kinescopeVideos: {
-    kinescopeId: string;
-    title: string;
-    duration: number;
-    test?: (number | null) | Test;
-    id?: string | null;
-  }[];
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -462,6 +479,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subjects';
         value: number | Subject;
+      } | null)
+    | ({
+        relationTo: 'purchases';
+        value: number | Purchase;
       } | null)
     | ({
         relationTo: 'posts';
@@ -520,9 +541,10 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   email?: T;
   password?: T;
+  name?: T;
+  avatar?: T;
   role?: T;
   signupMethod?: T;
-  tariff?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -551,8 +573,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface TariffsSelect<T extends boolean = true> {
   title?: T;
   price?: T;
-  type?: T;
-  subtitle?: T;
   description?: T;
   benefits?:
     | T
@@ -579,7 +599,6 @@ export interface FaqsSelect<T extends boolean = true> {
  */
 export interface TestsSelect<T extends boolean = true> {
   title?: T;
-  tariff?: T;
   description?: T;
   questions?: T;
   exam?: T;
@@ -655,7 +674,6 @@ export interface AdminsSelect<T extends boolean = true> {
  */
 export interface RecomendationsSelect<T extends boolean = true> {
   title?: T;
-  tariff?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -677,6 +695,19 @@ export interface ExamsSelect<T extends boolean = true> {
 export interface SubjectsSelect<T extends boolean = true> {
   title?: T;
   code?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "purchases_select".
+ */
+export interface PurchasesSelect<T extends boolean = true> {
+  user?: T;
+  course?: T;
+  tariff?: T;
+  pricePaid?: T;
+  purchasedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -710,17 +741,11 @@ export interface CoursesSelect<T extends boolean = true> {
   subjects?: T;
   price?: T;
   discount?: T;
+  previewVideoId?: T;
+  totalDuration?: T;
   slug?: T;
-  tariff?: T;
-  kinescopeVideos?:
-    | T
-    | {
-        kinescopeId?: T;
-        title?: T;
-        duration?: T;
-        test?: T;
-        id?: T;
-      };
+  isFree?: T;
+  kinescopeVideos?: T;
   updatedAt?: T;
   createdAt?: T;
 }

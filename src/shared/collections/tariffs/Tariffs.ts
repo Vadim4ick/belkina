@@ -1,20 +1,15 @@
 import { CollectionConfig } from 'payload'
-
 export const Tariffs: CollectionConfig = {
   slug: 'tariffs',
+
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'price'],
+    defaultColumns: ['title', 'price', 'isFree'],
   },
+
   labels: {
-    singular: {
-      ru: 'Тариф',
-      en: 'Tariff',
-    },
-    plural: {
-      ru: 'Тарифы',
-      en: 'Tariffs',
-    },
+    singular: 'Тариф',
+    plural: 'Тарифы',
   },
 
   access: {
@@ -23,9 +18,10 @@ export const Tariffs: CollectionConfig = {
         collection: 'tariffs',
         depth: 0,
       })
-      return docs?.length < 3
+      return docs?.length < 2
     },
     read: () => true,
+    delete: () => true,
   },
 
   fields: [
@@ -34,6 +30,7 @@ export const Tariffs: CollectionConfig = {
       fields: [
         {
           name: 'title',
+          label: 'Название',
           type: 'text',
           required: true,
           admin: {
@@ -42,6 +39,7 @@ export const Tariffs: CollectionConfig = {
         },
         {
           name: 'price',
+          label: 'Цена',
           type: 'number',
           required: true,
           admin: {
@@ -50,31 +48,18 @@ export const Tariffs: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'type',
-      label: 'Тип тарифа',
-      type: 'select',
-      required: true,
-      options: [
-        { label: 'Базовый', value: 'basic' },
-        { label: 'Корпоративный', value: 'corporate' },
-        { label: 'Профессиональный', value: 'pro' },
-      ],
-    },
-    {
-      name: 'subtitle',
-      required: true,
-      type: 'text',
-    },
+
     {
       name: 'description',
+      label: 'Описание',
       required: true,
       type: 'textarea',
     },
+
     {
       name: 'benefits',
-      type: 'array',
       label: 'Преимущества',
+      type: 'array',
       labels: {
         singular: 'Преимущество',
         plural: 'Преимущества',
@@ -86,7 +71,7 @@ export const Tariffs: CollectionConfig = {
       fields: [
         {
           name: 'value',
-          label: 'Описание',
+          label: 'Описание преимущества',
           type: 'text',
           required: true,
         },

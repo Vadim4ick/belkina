@@ -1,3 +1,5 @@
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 import { CollectionConfig } from 'payload'
 
 export const Subjects: CollectionConfig = {
@@ -8,6 +10,18 @@ export const Subjects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+  },
+  hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.subjectsAll())
+      },
+    ],
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.subjectsAll())
+      },
+    ],
   },
   access: { read: () => true },
   fields: [

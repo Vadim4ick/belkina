@@ -3,14 +3,13 @@
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
 import { Typography } from '@/shared/ui/typography'
-import { GoogleIcon } from '@/shared/icons/google'
 import Link from 'next/link'
 import { Checkbox } from '@/shared/ui/checkbox'
-import { AuthProviders, FORM_MODE } from '../model/types'
+import { FORM_MODE } from '../model/types'
 import { MAPPING_FORM_AUTH_MODE } from '../model/const'
-import { signIn } from 'next-auth/react'
-import { YandexIcon } from '@/shared/icons/yandex'
 import { getRouteAuth, getRouteRegister } from '@/shared/lib/routes'
+import LoginBtn from '@/shared/ui/yandex-button'
+import GoogleLoginBtn from '@/shared/ui/google-login'
 
 type AuthFormProps = {
   mode: FORM_MODE
@@ -44,12 +43,6 @@ export function AuthForm({
   onVerify,
 }: AuthFormProps) {
   const isSignUp = mode === MAPPING_FORM_AUTH_MODE['sign-up']
-
-  const oauth = async (provider: AuthProviders) => {
-    await signIn(provider, {
-      callbackUrl: getRouteAuth(),
-    })
-  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-gray-100 p-4">
@@ -96,12 +89,9 @@ export function AuthForm({
             </div>
 
             <div className="flex gap-2">
-              <Button className="w-full" variant="ghost" onClick={() => oauth?.('yandex')}>
-                <YandexIcon className="size-6" />
-              </Button>
-              <Button onClick={() => oauth?.('google')} className="w-full" variant="ghost">
-                <GoogleIcon className="size-4" />
-              </Button>
+              <GoogleLoginBtn />
+
+              <LoginBtn />
             </div>
 
             <Typography

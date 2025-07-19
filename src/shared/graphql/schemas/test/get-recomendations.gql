@@ -22,10 +22,6 @@ query GetRecommendationsByIds($where: Recomendation_where) {
       id
       title
       description
-      tariff {
-        title
-        price
-      }
     }
   }
 }

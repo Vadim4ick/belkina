@@ -14,11 +14,8 @@ fragment CourseFragment on Course {
   subjects {
     ...SubjectsFragment
   }
-  tariff {
-    ...TariffFragment
-  }
 
-  kinescopeVideos {
-    ...Kinescope_Video_Fragment
-  }
+  isFree
+  totalDuration
+  previewVideoId
 }
