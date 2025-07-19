@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import {
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   HorizontalRuleFeature,
@@ -16,6 +17,7 @@ import {
 } from './hooks/revalidatePost'
 
 import { slugField } from '@/shared/fields/slug'
+import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -62,6 +64,7 @@ export const Posts: CollectionConfig<'posts'> = {
         features: ({ rootFeatures }) => [
           ...rootFeatures,
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          BlocksFeature({ blocks: [MediaBlock] }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
           HorizontalRuleFeature(),
