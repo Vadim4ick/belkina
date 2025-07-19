@@ -1,45 +1,35 @@
-version: '3'
-
+version: '3.9'
 services:
-  # payload:
-  #   image: node:18-alpine
-  #   ports:
-  #     - '3000:3000'
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    command: redis-server --appendonly yes
+    ports:
+      - '6379:6379' # доступен локально
+    volumes:
+      - redis_data:/data # файлы AOF/RDB на диск
+    restart: unless-stopped # автоподъём после перезагрузки
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - '8081:8081'
+    depends_on:
+      - redis
+
+  # postgres:
+  #   restart: always
+  #   image: postgres:15.3-alpine
   #   volumes:
-  #     - .:/home/node/app
-  #     - node_modules:/home/node/app/node_modules
-  #   working_dir: /home/node/app/
-  #   command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
-  #   depends_on:
-  #     - mongo
-  #     # - postgres
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - '5432:5432'
   #   env_file:
   #     - .env
 
-  # Ensure your DATABASE_URI uses 'mongo' as the hostname ie. mongodb://mongo/my-db-name
-  # mongo:
-  #   image: mongo:latest
-  #   ports:
-  #     - '27017:27017'
-  #   command:
-  #     - --storageEngine=wiredTiger
-  #   volumes:
-  #     - data:/data/db
-  #   logging:
-  #     driver: none
-
-  # Uncomment the following to use postgres
-  postgres:
-    restart: always
-    image: postgres:15.3-alpine
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
-    env_file:
-      - .env
-
 volumes:
-  # data:
-  pgdata:
-  # node_modules:
+  redis_data:
+  # pgdata:

@@ -1,3 +1,5 @@
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 import { CollectionConfig } from 'payload'
 
 export const TestResults: CollectionConfig = {
@@ -10,10 +12,55 @@ export const TestResults: CollectionConfig = {
     singular: 'Резултат теста',
     plural: 'Результаты тестов',
   },
+  hooks: {
+    /**
+     * Создание / обновление
+     */
+    afterChange: [
+      async ({ doc, previousDoc, operation }) => {
+        try {
+          const userId = doc?.user
+          if (!userId) return
+
+          // create: инвалидируем всегда
+          if (operation === 'create') {
+            await invalidateTags(CacheKeys.tags.testHistory(userId))
+            return
+          }
+
+          // update: сравниваем статус
+          if (operation === 'update') {
+            const prevStatus = previousDoc?.status
+            const newStatus = doc?.status
+
+            if (prevStatus !== newStatus) {
+              await invalidateTags(CacheKeys.tags.testHistory(userId))
+            }
+          }
+        } catch (e) {
+          console.warn('[TestResults.afterChange] invalidate failed', e)
+        }
+      },
+    ],
+
+    /**
+     * Удаление
+     */
+    afterDelete: [
+      async ({ doc }) => {
+        try {
+          const userId = doc?.user?.id
+          if (!userId) return
+
+          await invalidateTags(CacheKeys.tags.testHistory(userId))
+        } catch (e) {
+          console.warn('[TestResults.afterDelete] invalidate failed', e)
+        }
+      },
+    ],
+  },
+
   access: {
-    // read: checkAccessToken,
-    // create: checkAccessToken,
-    // update: checkAccessToken,
     read: () => true,
     create: () => true,
     update: () => true,

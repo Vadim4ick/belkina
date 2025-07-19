@@ -1,18 +1,21 @@
-import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { getExams, getSubjects } from '@/shared/actions/category.action'
+import { getPurchasesCourses } from '@/shared/actions/purchases.action'
 import { getSettledValue } from '@/shared/lib/utils'
+import { JwtService } from '@/shared/services/jwt-service'
 import { TestsPage } from '@/views/tests'
+import { cookies } from 'next/headers'
 
 export const revalidate = 180
 
 export default async function Page() {
-  const gql = await getServerAuthGqlClient({})
+  const token = (await cookies()).get('accessToken')?.value
+
+  const { id } = await JwtService.verifyToken(token)
 
   const [exams, subjects, purchases] = await Promise.allSettled([
-    gql.GetAllExams(),
-    gql.GetAllSubjects(),
-    gql.GetPurchasesCoursesVideos({
-      userId: 29,
-    }),
+    getExams(),
+    getSubjects(),
+    getPurchasesCourses(Number(id)),
   ])
 
   const examsVal = getSettledValue(exams)

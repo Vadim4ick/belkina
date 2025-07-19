@@ -7848,6 +7848,7 @@ export type Query = {
   readonly Exams: Maybe<Exams>;
   readonly Faq: Maybe<Faq>;
   readonly Faqs: Maybe<Faqs>;
+  readonly GetUserRecommendations: Maybe<ReadonlyArray<Maybe<Recommendation>>>;
   readonly GetUserTests: Maybe<PaginatedTestsWithStatus>;
   readonly HomePage: Maybe<HomePage>;
   readonly Media: Maybe<Media>;
@@ -7991,6 +7992,11 @@ export type QueryFaqsArgs = {
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
   where: InputMaybe<Faq_Where>;
+};
+
+
+export type QueryGetUserRecommendationsArgs = {
+  userId: Scalars['Int']['input'];
 };
 
 
@@ -10073,6 +10079,13 @@ export type RecomendationsUpdateDocAccess = {
   readonly __typename?: 'RecomendationsUpdateDocAccess';
   readonly permission: Scalars['Boolean']['output'];
   readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type Recommendation = {
+  readonly __typename?: 'Recommendation';
+  readonly description: Maybe<Scalars['String']['output']>;
+  readonly id: Maybe<Scalars['ID']['output']>;
+  readonly title: Maybe<Scalars['String']['output']>;
 };
 
 export type Subject = {
@@ -14558,12 +14571,12 @@ export type GetPurchasesCoursesVideosQueryVariables = Exact<{
 
 export type GetPurchasesCoursesVideosQuery = { readonly __typename?: 'Query', readonly Purchases: { readonly __typename?: 'Purchases', readonly docs: ReadonlyArray<{ readonly __typename?: 'Purchase', readonly course: { readonly __typename?: 'Course', readonly id: number, readonly kinescopeVideos: any } }> } };
 
-export type GetRecomendationByIdsQueryVariables = Exact<{
-  whereOR: InputMaybe<ReadonlyArray<InputMaybe<Recomendation_Where_Or>> | InputMaybe<Recomendation_Where_Or>>;
+export type GetRecomendationsQueryVariables = Exact<{
+  userId: Scalars['Int']['input'];
 }>;
 
 
-export type GetRecomendationByIdsQuery = { readonly __typename?: 'Query', readonly Recomendations: { readonly __typename?: 'Recomendations', readonly docs: ReadonlyArray<{ readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any }> } };
+export type GetRecomendationsQuery = { readonly __typename?: 'Query', readonly GetUserRecommendations: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string }> };
 
 export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -14933,14 +14946,12 @@ export const GetPurchasesCoursesVideosDocument = gql`
   }
 }
     `;
-export const GetRecomendationByIdsDocument = gql`
-    query GetRecomendationByIds($whereOR: [Recomendation_where_or]) {
-  Recomendations(where: {OR: $whereOR}) {
-    docs {
-      id
-      title
-      description
-    }
+export const GetRecomendationsDocument = gql`
+    query GetRecomendations($userId: Int!) {
+  GetUserRecommendations(userId: $userId) {
+    id
+    title
+    description
   }
 }
     `;
@@ -15161,8 +15172,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetPurchasesCoursesVideos(variables?: GetPurchasesCoursesVideosQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetPurchasesCoursesVideosQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPurchasesCoursesVideosQuery>({ document: GetPurchasesCoursesVideosDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetPurchasesCoursesVideos', 'query', variables);
     },
-    GetRecomendationByIds(variables?: GetRecomendationByIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecomendationByIdsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetRecomendationByIdsQuery>({ document: GetRecomendationByIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecomendationByIds', 'query', variables);
+    GetRecomendations(variables: GetRecomendationsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecomendationsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRecomendationsQuery>({ document: GetRecomendationsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecomendations', 'query', variables);
     },
     GetTaraffis(variables?: GetTaraffisQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTaraffisQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTaraffisQuery>({ document: GetTaraffisDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTaraffis', 'query', variables);
