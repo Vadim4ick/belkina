@@ -25,8 +25,7 @@ export const CacheKeys = {
 
     getFAQ: () => join(V, 'faq'),
 
-    // courseBySlug: ({ slug }: { slug: string }) => join(V, 'courses', slug),
-    courseBySlug: () => join(V, 'courseBySlug'),
+    courseBySlug: ({ slug }: { slug: string }) => join(V, 'courses', slug),
 
     testById: (id: string | number) => join(V, 'test', id),
     recommendations: (userId: string | number) => join(V, 'recommendations', userId),

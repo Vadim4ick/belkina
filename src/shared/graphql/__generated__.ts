@@ -18367,6 +18367,13 @@ export type GetCourseBySlugQueryVariables = Exact<{
 
 export type GetCourseBySlugQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly kinescopeVideos: any, readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
 
+export type GetCourseSlugByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetCourseSlugByIdQuery = { readonly __typename?: 'Query', readonly Course: { readonly __typename?: 'Course', readonly slug: string } };
+
 export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -18694,6 +18701,13 @@ export const GetCourseBySlugDocument = gql`
   }
 }
     ${CourseFragmentFragmentDoc}`;
+export const GetCourseSlugByIdDocument = gql`
+    query GetCourseSlugById($id: Int!) {
+  Course(id: $id) {
+    slug
+  }
+}
+    `;
 export const GetFaGsDocument = gql`
     query GetFAGs {
   Faqs {
@@ -19008,6 +19022,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetCourseBySlug(variables?: GetCourseBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetCourseBySlugQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCourseBySlugQuery>({ document: GetCourseBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetCourseBySlug', 'query', variables);
+    },
+    GetCourseSlugById(variables: GetCourseSlugByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetCourseSlugByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetCourseSlugByIdQuery>({ document: GetCourseSlugByIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetCourseSlugById', 'query', variables);
     },
     GetFAGs(variables?: GetFaGsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFaGsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetFaGsQuery>({ document: GetFaGsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFAGs', 'query', variables);
