@@ -3547,6 +3547,7 @@ export type LocaleInputType =
 export type Media = {
   readonly __typename?: 'Media';
   readonly alt: Scalars['String']['output'];
+  readonly caption: Maybe<Scalars['JSON']['output']>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly filename: Maybe<Scalars['String']['output']>;
   readonly filesize: Maybe<Scalars['Float']['output']>;
@@ -3555,10 +3556,16 @@ export type Media = {
   readonly height: Maybe<Scalars['Float']['output']>;
   readonly id: Scalars['Int']['output'];
   readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly sizes: Maybe<Media_Sizes>;
   readonly thumbnailURL: Maybe<Scalars['String']['output']>;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
   readonly url: Maybe<Scalars['String']['output']>;
   readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+
+export type MediaCaptionArgs = {
+  depth: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MediaCreateAccess = {
@@ -3588,6 +3595,7 @@ export type MediaDeleteDocAccess = {
 export type MediaDocAccessFields = {
   readonly __typename?: 'MediaDocAccessFields';
   readonly alt: Maybe<MediaDocAccessFields_Alt>;
+  readonly caption: Maybe<MediaDocAccessFields_Caption>;
   readonly createdAt: Maybe<MediaDocAccessFields_CreatedAt>;
   readonly filename: Maybe<MediaDocAccessFields_Filename>;
   readonly filesize: Maybe<MediaDocAccessFields_Filesize>;
@@ -3595,6 +3603,7 @@ export type MediaDocAccessFields = {
   readonly focalY: Maybe<MediaDocAccessFields_FocalY>;
   readonly height: Maybe<MediaDocAccessFields_Height>;
   readonly mimeType: Maybe<MediaDocAccessFields_MimeType>;
+  readonly sizes: Maybe<MediaDocAccessFields_Sizes>;
   readonly thumbnailURL: Maybe<MediaDocAccessFields_ThumbnailUrl>;
   readonly updatedAt: Maybe<MediaDocAccessFields_UpdatedAt>;
   readonly url: Maybe<MediaDocAccessFields_Url>;
@@ -3626,6 +3635,34 @@ export type MediaDocAccessFields_Alt_Read = {
 
 export type MediaDocAccessFields_Alt_Update = {
   readonly __typename?: 'MediaDocAccessFields_alt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Caption = {
+  readonly __typename?: 'MediaDocAccessFields_caption';
+  readonly create: Maybe<MediaDocAccessFields_Caption_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Caption_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Caption_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Caption_Update>;
+};
+
+export type MediaDocAccessFields_Caption_Create = {
+  readonly __typename?: 'MediaDocAccessFields_caption_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Caption_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_caption_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Caption_Read = {
+  readonly __typename?: 'MediaDocAccessFields_caption_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Caption_Update = {
+  readonly __typename?: 'MediaDocAccessFields_caption_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -3825,6 +3862,1495 @@ export type MediaDocAccessFields_MimeType_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type MediaDocAccessFields_Sizes = {
+  readonly __typename?: 'MediaDocAccessFields_sizes';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_Fields';
+  readonly large: Maybe<MediaDocAccessFields_Sizes_Large>;
+  readonly medium: Maybe<MediaDocAccessFields_Sizes_Medium>;
+  readonly og: Maybe<MediaDocAccessFields_Sizes_Og>;
+  readonly small: Maybe<MediaDocAccessFields_Sizes_Small>;
+  readonly square: Maybe<MediaDocAccessFields_Sizes_Square>;
+  readonly thumbnail: Maybe<MediaDocAccessFields_Sizes_Thumbnail>;
+  readonly xlarge: Maybe<MediaDocAccessFields_Sizes_Xlarge>;
+};
+
+export type MediaDocAccessFields_Sizes_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Large_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Large_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Large_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Large_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Large_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Large_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Large_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Large_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Large_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Large_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Large_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Large_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Large_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_large_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Medium_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Medium_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Medium_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Medium_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Medium_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Medium_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Medium_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Medium_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Medium_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Medium_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Medium_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Medium_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_medium_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Og_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Og_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Og_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Og_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Og_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Og_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Og_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Og_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Og_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Og_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Og_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Og_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Og_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_og_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Small_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Small_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Small_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Small_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Small_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Small_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Small_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Small_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Small_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Small_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Small_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Small_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Small_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_small_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Square_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Square_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Square_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Square_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Square_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Square_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Square_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Square_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Square_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Square_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Square_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Square_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Square_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_square_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Thumbnail_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Thumbnail_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Thumbnail_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_thumbnail_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Delete>;
+  readonly fields: Maybe<MediaDocAccessFields_Sizes_Xlarge_Fields>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Fields = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_Fields';
+  readonly filename: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filename>;
+  readonly filesize: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filesize>;
+  readonly height: Maybe<MediaDocAccessFields_Sizes_Xlarge_Height>;
+  readonly mimeType: Maybe<MediaDocAccessFields_Sizes_Xlarge_MimeType>;
+  readonly url: Maybe<MediaDocAccessFields_Sizes_Xlarge_Url>;
+  readonly width: Maybe<MediaDocAccessFields_Sizes_Xlarge_Width>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filename = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filename';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filename_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filename_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filename_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filename_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filename_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filename_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filename_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filename_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filesize = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filesize';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filesize_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filesize_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filesize_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Filesize_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filesize_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filesize_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filesize_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Filesize_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Height = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_height';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Height_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Height_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Height_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Height_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Height_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Height_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Height_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Height_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_MimeType = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_mimeType';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_MimeType_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_MimeType_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_MimeType_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_MimeType_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_MimeType_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_MimeType_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_MimeType_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_MimeType_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Url = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_url';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Url_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Url_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Url_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Url_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Url_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Url_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Url_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Url_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Width = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_width';
+  readonly create: Maybe<MediaDocAccessFields_Sizes_Xlarge_Width_Create>;
+  readonly delete: Maybe<MediaDocAccessFields_Sizes_Xlarge_Width_Delete>;
+  readonly read: Maybe<MediaDocAccessFields_Sizes_Xlarge_Width_Read>;
+  readonly update: Maybe<MediaDocAccessFields_Sizes_Xlarge_Width_Update>;
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Width_Create = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Width_Delete = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Width_Read = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaDocAccessFields_Sizes_Xlarge_Width_Update = {
+  readonly __typename?: 'MediaDocAccessFields_sizes_xlarge_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type MediaDocAccessFields_ThumbnailUrl = {
   readonly __typename?: 'MediaDocAccessFields_thumbnailURL';
   readonly create: Maybe<MediaDocAccessFields_ThumbnailUrl_Create>;
@@ -3940,6 +5466,7 @@ export type MediaDocAccessFields_Width_Update = {
 export type MediaFields = {
   readonly __typename?: 'MediaFields';
   readonly alt: Maybe<MediaFields_Alt>;
+  readonly caption: Maybe<MediaFields_Caption>;
   readonly createdAt: Maybe<MediaFields_CreatedAt>;
   readonly filename: Maybe<MediaFields_Filename>;
   readonly filesize: Maybe<MediaFields_Filesize>;
@@ -3947,6 +5474,7 @@ export type MediaFields = {
   readonly focalY: Maybe<MediaFields_FocalY>;
   readonly height: Maybe<MediaFields_Height>;
   readonly mimeType: Maybe<MediaFields_MimeType>;
+  readonly sizes: Maybe<MediaFields_Sizes>;
   readonly thumbnailURL: Maybe<MediaFields_ThumbnailUrl>;
   readonly updatedAt: Maybe<MediaFields_UpdatedAt>;
   readonly url: Maybe<MediaFields_Url>;
@@ -3978,6 +5506,34 @@ export type MediaFields_Alt_Read = {
 
 export type MediaFields_Alt_Update = {
   readonly __typename?: 'MediaFields_alt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Caption = {
+  readonly __typename?: 'MediaFields_caption';
+  readonly create: Maybe<MediaFields_Caption_Create>;
+  readonly delete: Maybe<MediaFields_Caption_Delete>;
+  readonly read: Maybe<MediaFields_Caption_Read>;
+  readonly update: Maybe<MediaFields_Caption_Update>;
+};
+
+export type MediaFields_Caption_Create = {
+  readonly __typename?: 'MediaFields_caption_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Caption_Delete = {
+  readonly __typename?: 'MediaFields_caption_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Caption_Read = {
+  readonly __typename?: 'MediaFields_caption_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Caption_Update = {
+  readonly __typename?: 'MediaFields_caption_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -4177,6 +5733,1495 @@ export type MediaFields_MimeType_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
+export type MediaFields_Sizes = {
+  readonly __typename?: 'MediaFields_sizes';
+  readonly create: Maybe<MediaFields_Sizes_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Update>;
+};
+
+export type MediaFields_Sizes_Create = {
+  readonly __typename?: 'MediaFields_sizes_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Delete = {
+  readonly __typename?: 'MediaFields_sizes_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Fields = {
+  readonly __typename?: 'MediaFields_sizes_Fields';
+  readonly large: Maybe<MediaFields_Sizes_Large>;
+  readonly medium: Maybe<MediaFields_Sizes_Medium>;
+  readonly og: Maybe<MediaFields_Sizes_Og>;
+  readonly small: Maybe<MediaFields_Sizes_Small>;
+  readonly square: Maybe<MediaFields_Sizes_Square>;
+  readonly thumbnail: Maybe<MediaFields_Sizes_Thumbnail>;
+  readonly xlarge: Maybe<MediaFields_Sizes_Xlarge>;
+};
+
+export type MediaFields_Sizes_Read = {
+  readonly __typename?: 'MediaFields_sizes_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Update = {
+  readonly __typename?: 'MediaFields_sizes_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large = {
+  readonly __typename?: 'MediaFields_sizes_large';
+  readonly create: Maybe<MediaFields_Sizes_Large_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Large_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Update>;
+};
+
+export type MediaFields_Sizes_Large_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Fields = {
+  readonly __typename?: 'MediaFields_sizes_large_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Large_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Large_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Large_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Large_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Large_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Large_Width>;
+};
+
+export type MediaFields_Sizes_Large_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filename = {
+  readonly __typename?: 'MediaFields_sizes_large_filename';
+  readonly create: Maybe<MediaFields_Sizes_Large_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Large_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_large_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Large_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Large_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Height = {
+  readonly __typename?: 'MediaFields_sizes_large_height';
+  readonly create: Maybe<MediaFields_Sizes_Large_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Height_Update>;
+};
+
+export type MediaFields_Sizes_Large_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_large_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Large_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Large_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Url = {
+  readonly __typename?: 'MediaFields_sizes_large_url';
+  readonly create: Maybe<MediaFields_Sizes_Large_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Url_Update>;
+};
+
+export type MediaFields_Sizes_Large_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Width = {
+  readonly __typename?: 'MediaFields_sizes_large_width';
+  readonly create: Maybe<MediaFields_Sizes_Large_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Large_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Large_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Large_Width_Update>;
+};
+
+export type MediaFields_Sizes_Large_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_large_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_large_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_large_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Large_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_large_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium = {
+  readonly __typename?: 'MediaFields_sizes_medium';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Medium_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Fields = {
+  readonly __typename?: 'MediaFields_sizes_medium_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Medium_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Medium_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Medium_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Medium_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Medium_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Medium_Width>;
+};
+
+export type MediaFields_Sizes_Medium_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filename = {
+  readonly __typename?: 'MediaFields_sizes_medium_filename';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_medium_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Height = {
+  readonly __typename?: 'MediaFields_sizes_medium_height';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Height_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_medium_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Medium_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Medium_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Url = {
+  readonly __typename?: 'MediaFields_sizes_medium_url';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Url_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Width = {
+  readonly __typename?: 'MediaFields_sizes_medium_width';
+  readonly create: Maybe<MediaFields_Sizes_Medium_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Medium_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Medium_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Medium_Width_Update>;
+};
+
+export type MediaFields_Sizes_Medium_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_medium_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_medium_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_medium_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Medium_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_medium_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og = {
+  readonly __typename?: 'MediaFields_sizes_og';
+  readonly create: Maybe<MediaFields_Sizes_Og_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Og_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Update>;
+};
+
+export type MediaFields_Sizes_Og_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Fields = {
+  readonly __typename?: 'MediaFields_sizes_og_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Og_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Og_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Og_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Og_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Og_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Og_Width>;
+};
+
+export type MediaFields_Sizes_Og_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filename = {
+  readonly __typename?: 'MediaFields_sizes_og_filename';
+  readonly create: Maybe<MediaFields_Sizes_Og_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Og_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_og_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Og_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Og_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Height = {
+  readonly __typename?: 'MediaFields_sizes_og_height';
+  readonly create: Maybe<MediaFields_Sizes_Og_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Height_Update>;
+};
+
+export type MediaFields_Sizes_Og_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_og_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Og_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Og_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Url = {
+  readonly __typename?: 'MediaFields_sizes_og_url';
+  readonly create: Maybe<MediaFields_Sizes_Og_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Url_Update>;
+};
+
+export type MediaFields_Sizes_Og_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Width = {
+  readonly __typename?: 'MediaFields_sizes_og_width';
+  readonly create: Maybe<MediaFields_Sizes_Og_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Og_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Og_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Og_Width_Update>;
+};
+
+export type MediaFields_Sizes_Og_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_og_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_og_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_og_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Og_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_og_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small = {
+  readonly __typename?: 'MediaFields_sizes_small';
+  readonly create: Maybe<MediaFields_Sizes_Small_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Small_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Update>;
+};
+
+export type MediaFields_Sizes_Small_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Fields = {
+  readonly __typename?: 'MediaFields_sizes_small_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Small_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Small_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Small_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Small_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Small_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Small_Width>;
+};
+
+export type MediaFields_Sizes_Small_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filename = {
+  readonly __typename?: 'MediaFields_sizes_small_filename';
+  readonly create: Maybe<MediaFields_Sizes_Small_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Small_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_small_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Small_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Small_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Height = {
+  readonly __typename?: 'MediaFields_sizes_small_height';
+  readonly create: Maybe<MediaFields_Sizes_Small_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Height_Update>;
+};
+
+export type MediaFields_Sizes_Small_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_small_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Small_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Small_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Url = {
+  readonly __typename?: 'MediaFields_sizes_small_url';
+  readonly create: Maybe<MediaFields_Sizes_Small_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Url_Update>;
+};
+
+export type MediaFields_Sizes_Small_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Width = {
+  readonly __typename?: 'MediaFields_sizes_small_width';
+  readonly create: Maybe<MediaFields_Sizes_Small_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Small_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Small_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Small_Width_Update>;
+};
+
+export type MediaFields_Sizes_Small_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_small_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_small_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_small_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Small_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_small_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square = {
+  readonly __typename?: 'MediaFields_sizes_square';
+  readonly create: Maybe<MediaFields_Sizes_Square_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Square_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Update>;
+};
+
+export type MediaFields_Sizes_Square_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Fields = {
+  readonly __typename?: 'MediaFields_sizes_square_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Square_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Square_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Square_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Square_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Square_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Square_Width>;
+};
+
+export type MediaFields_Sizes_Square_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filename = {
+  readonly __typename?: 'MediaFields_sizes_square_filename';
+  readonly create: Maybe<MediaFields_Sizes_Square_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Square_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_square_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Square_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Square_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Height = {
+  readonly __typename?: 'MediaFields_sizes_square_height';
+  readonly create: Maybe<MediaFields_Sizes_Square_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Height_Update>;
+};
+
+export type MediaFields_Sizes_Square_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_square_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Square_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Square_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Url = {
+  readonly __typename?: 'MediaFields_sizes_square_url';
+  readonly create: Maybe<MediaFields_Sizes_Square_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Url_Update>;
+};
+
+export type MediaFields_Sizes_Square_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Width = {
+  readonly __typename?: 'MediaFields_sizes_square_width';
+  readonly create: Maybe<MediaFields_Sizes_Square_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Square_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Square_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Square_Width_Update>;
+};
+
+export type MediaFields_Sizes_Square_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_square_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_square_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_square_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Square_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_square_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Thumbnail_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Fields = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Thumbnail_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Thumbnail_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Thumbnail_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Thumbnail_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Thumbnail_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Thumbnail_Width>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filename = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filename';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Height = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_height';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Height_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Url = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_url';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Url_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Width = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_width';
+  readonly create: Maybe<MediaFields_Sizes_Thumbnail_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Thumbnail_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Thumbnail_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Thumbnail_Width_Update>;
+};
+
+export type MediaFields_Sizes_Thumbnail_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Thumbnail_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_thumbnail_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge = {
+  readonly __typename?: 'MediaFields_sizes_xlarge';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Delete>;
+  readonly fields: Maybe<MediaFields_Sizes_Xlarge_Fields>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Fields = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_Fields';
+  readonly filename: Maybe<MediaFields_Sizes_Xlarge_Filename>;
+  readonly filesize: Maybe<MediaFields_Sizes_Xlarge_Filesize>;
+  readonly height: Maybe<MediaFields_Sizes_Xlarge_Height>;
+  readonly mimeType: Maybe<MediaFields_Sizes_Xlarge_MimeType>;
+  readonly url: Maybe<MediaFields_Sizes_Xlarge_Url>;
+  readonly width: Maybe<MediaFields_Sizes_Xlarge_Width>;
+};
+
+export type MediaFields_Sizes_Xlarge_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filename = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filename';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Filename_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Filename_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Filename_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Filename_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Filename_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filename_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filename_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filename_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filename_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filename_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filename_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filename_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filesize = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filesize';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Filesize_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Filesize_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Filesize_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Filesize_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Filesize_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filesize_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filesize_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filesize_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filesize_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filesize_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Filesize_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_filesize_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Height = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_height';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Height_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Height_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Height_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Height_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Height_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_height_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Height_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_height_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Height_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_height_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Height_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_height_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_MimeType = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_mimeType';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_MimeType_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_MimeType_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_MimeType_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_MimeType_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_MimeType_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_mimeType_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_MimeType_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_mimeType_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_MimeType_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_mimeType_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_MimeType_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_mimeType_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Url = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_url';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Url_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Url_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Url_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Url_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Url_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_url_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Url_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_url_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Url_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_url_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Url_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_url_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Width = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_width';
+  readonly create: Maybe<MediaFields_Sizes_Xlarge_Width_Create>;
+  readonly delete: Maybe<MediaFields_Sizes_Xlarge_Width_Delete>;
+  readonly read: Maybe<MediaFields_Sizes_Xlarge_Width_Read>;
+  readonly update: Maybe<MediaFields_Sizes_Xlarge_Width_Update>;
+};
+
+export type MediaFields_Sizes_Xlarge_Width_Create = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_width_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Width_Delete = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_width_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Width_Read = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_width_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MediaFields_Sizes_Xlarge_Width_Update = {
+  readonly __typename?: 'MediaFields_sizes_xlarge_width_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type MediaFields_ThumbnailUrl = {
   readonly __typename?: 'MediaFields_thumbnailURL';
   readonly create: Maybe<MediaFields_ThumbnailUrl_Create>;
@@ -4313,6 +7358,87 @@ export type MediaUpdateDocAccess = {
   readonly where: Maybe<Scalars['JSONObject']['output']>;
 };
 
+export type Media_Sizes = {
+  readonly __typename?: 'Media_Sizes';
+  readonly large: Maybe<Media_Sizes_Large>;
+  readonly medium: Maybe<Media_Sizes_Medium>;
+  readonly og: Maybe<Media_Sizes_Og>;
+  readonly small: Maybe<Media_Sizes_Small>;
+  readonly square: Maybe<Media_Sizes_Square>;
+  readonly thumbnail: Maybe<Media_Sizes_Thumbnail>;
+  readonly xlarge: Maybe<Media_Sizes_Xlarge>;
+};
+
+export type Media_Sizes_Large = {
+  readonly __typename?: 'Media_Sizes_Large';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Medium = {
+  readonly __typename?: 'Media_Sizes_Medium';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Og = {
+  readonly __typename?: 'Media_Sizes_Og';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Small = {
+  readonly __typename?: 'Media_Sizes_Small';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Square = {
+  readonly __typename?: 'Media_Sizes_Square';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Thumbnail = {
+  readonly __typename?: 'Media_Sizes_Thumbnail';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
+export type Media_Sizes_Xlarge = {
+  readonly __typename?: 'Media_Sizes_Xlarge';
+  readonly filename: Maybe<Scalars['String']['output']>;
+  readonly filesize: Maybe<Scalars['Float']['output']>;
+  readonly height: Maybe<Scalars['Float']['output']>;
+  readonly mimeType: Maybe<Scalars['String']['output']>;
+  readonly url: Maybe<Scalars['String']['output']>;
+  readonly width: Maybe<Scalars['Float']['output']>;
+};
+
 export type Media_Alt_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   readonly contains: InputMaybe<Scalars['String']['input']>;
@@ -4321,6 +7447,14 @@ export type Media_Alt_Operator = {
   readonly like: InputMaybe<Scalars['String']['input']>;
   readonly not_equals: InputMaybe<Scalars['String']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Caption_Operator = {
+  readonly contains: InputMaybe<Scalars['JSON']['input']>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly like: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Media_CreatedAt_Operator = {
@@ -4406,6 +7540,447 @@ export type Media_MimeType_Operator = {
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type Media_Sizes__Large__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Large__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Large__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Large__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Large__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Large__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Medium__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Medium__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Medium__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Medium__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Medium__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Medium__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Og__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Og__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Og__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Og__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Og__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Og__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Small__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Small__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Small__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Small__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Small__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Small__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Square__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Square__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Square__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Square__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Square__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Square__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Thumbnail__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Thumbnail__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Thumbnail__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Thumbnail__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Thumbnail__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Thumbnail__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Xlarge__Filename_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Xlarge__Filesize_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Xlarge__Height_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type Media_Sizes__Xlarge__MimeType_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Xlarge__Url_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type Media_Sizes__Xlarge__Width_Operator = {
+  readonly equals: InputMaybe<Scalars['Float']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Float']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than: InputMaybe<Scalars['Float']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Float']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type Media_ThumbnailUrl_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   readonly contains: InputMaybe<Scalars['String']['input']>;
@@ -4443,6 +8018,7 @@ export type Media_Where = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_Or>>>;
   readonly alt: InputMaybe<Media_Alt_Operator>;
+  readonly caption: InputMaybe<Media_Caption_Operator>;
   readonly createdAt: InputMaybe<Media_CreatedAt_Operator>;
   readonly filename: InputMaybe<Media_Filename_Operator>;
   readonly filesize: InputMaybe<Media_Filesize_Operator>;
@@ -4451,6 +8027,48 @@ export type Media_Where = {
   readonly height: InputMaybe<Media_Height_Operator>;
   readonly id: InputMaybe<Media_Id_Operator>;
   readonly mimeType: InputMaybe<Media_MimeType_Operator>;
+  readonly sizes__large__filename: InputMaybe<Media_Sizes__Large__Filename_Operator>;
+  readonly sizes__large__filesize: InputMaybe<Media_Sizes__Large__Filesize_Operator>;
+  readonly sizes__large__height: InputMaybe<Media_Sizes__Large__Height_Operator>;
+  readonly sizes__large__mimeType: InputMaybe<Media_Sizes__Large__MimeType_Operator>;
+  readonly sizes__large__url: InputMaybe<Media_Sizes__Large__Url_Operator>;
+  readonly sizes__large__width: InputMaybe<Media_Sizes__Large__Width_Operator>;
+  readonly sizes__medium__filename: InputMaybe<Media_Sizes__Medium__Filename_Operator>;
+  readonly sizes__medium__filesize: InputMaybe<Media_Sizes__Medium__Filesize_Operator>;
+  readonly sizes__medium__height: InputMaybe<Media_Sizes__Medium__Height_Operator>;
+  readonly sizes__medium__mimeType: InputMaybe<Media_Sizes__Medium__MimeType_Operator>;
+  readonly sizes__medium__url: InputMaybe<Media_Sizes__Medium__Url_Operator>;
+  readonly sizes__medium__width: InputMaybe<Media_Sizes__Medium__Width_Operator>;
+  readonly sizes__og__filename: InputMaybe<Media_Sizes__Og__Filename_Operator>;
+  readonly sizes__og__filesize: InputMaybe<Media_Sizes__Og__Filesize_Operator>;
+  readonly sizes__og__height: InputMaybe<Media_Sizes__Og__Height_Operator>;
+  readonly sizes__og__mimeType: InputMaybe<Media_Sizes__Og__MimeType_Operator>;
+  readonly sizes__og__url: InputMaybe<Media_Sizes__Og__Url_Operator>;
+  readonly sizes__og__width: InputMaybe<Media_Sizes__Og__Width_Operator>;
+  readonly sizes__small__filename: InputMaybe<Media_Sizes__Small__Filename_Operator>;
+  readonly sizes__small__filesize: InputMaybe<Media_Sizes__Small__Filesize_Operator>;
+  readonly sizes__small__height: InputMaybe<Media_Sizes__Small__Height_Operator>;
+  readonly sizes__small__mimeType: InputMaybe<Media_Sizes__Small__MimeType_Operator>;
+  readonly sizes__small__url: InputMaybe<Media_Sizes__Small__Url_Operator>;
+  readonly sizes__small__width: InputMaybe<Media_Sizes__Small__Width_Operator>;
+  readonly sizes__square__filename: InputMaybe<Media_Sizes__Square__Filename_Operator>;
+  readonly sizes__square__filesize: InputMaybe<Media_Sizes__Square__Filesize_Operator>;
+  readonly sizes__square__height: InputMaybe<Media_Sizes__Square__Height_Operator>;
+  readonly sizes__square__mimeType: InputMaybe<Media_Sizes__Square__MimeType_Operator>;
+  readonly sizes__square__url: InputMaybe<Media_Sizes__Square__Url_Operator>;
+  readonly sizes__square__width: InputMaybe<Media_Sizes__Square__Width_Operator>;
+  readonly sizes__thumbnail__filename: InputMaybe<Media_Sizes__Thumbnail__Filename_Operator>;
+  readonly sizes__thumbnail__filesize: InputMaybe<Media_Sizes__Thumbnail__Filesize_Operator>;
+  readonly sizes__thumbnail__height: InputMaybe<Media_Sizes__Thumbnail__Height_Operator>;
+  readonly sizes__thumbnail__mimeType: InputMaybe<Media_Sizes__Thumbnail__MimeType_Operator>;
+  readonly sizes__thumbnail__url: InputMaybe<Media_Sizes__Thumbnail__Url_Operator>;
+  readonly sizes__thumbnail__width: InputMaybe<Media_Sizes__Thumbnail__Width_Operator>;
+  readonly sizes__xlarge__filename: InputMaybe<Media_Sizes__Xlarge__Filename_Operator>;
+  readonly sizes__xlarge__filesize: InputMaybe<Media_Sizes__Xlarge__Filesize_Operator>;
+  readonly sizes__xlarge__height: InputMaybe<Media_Sizes__Xlarge__Height_Operator>;
+  readonly sizes__xlarge__mimeType: InputMaybe<Media_Sizes__Xlarge__MimeType_Operator>;
+  readonly sizes__xlarge__url: InputMaybe<Media_Sizes__Xlarge__Url_Operator>;
+  readonly sizes__xlarge__width: InputMaybe<Media_Sizes__Xlarge__Width_Operator>;
   readonly thumbnailURL: InputMaybe<Media_ThumbnailUrl_Operator>;
   readonly updatedAt: InputMaybe<Media_UpdatedAt_Operator>;
   readonly url: InputMaybe<Media_Url_Operator>;
@@ -4461,6 +8079,7 @@ export type Media_Where_And = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_Or>>>;
   readonly alt: InputMaybe<Media_Alt_Operator>;
+  readonly caption: InputMaybe<Media_Caption_Operator>;
   readonly createdAt: InputMaybe<Media_CreatedAt_Operator>;
   readonly filename: InputMaybe<Media_Filename_Operator>;
   readonly filesize: InputMaybe<Media_Filesize_Operator>;
@@ -4469,6 +8088,48 @@ export type Media_Where_And = {
   readonly height: InputMaybe<Media_Height_Operator>;
   readonly id: InputMaybe<Media_Id_Operator>;
   readonly mimeType: InputMaybe<Media_MimeType_Operator>;
+  readonly sizes__large__filename: InputMaybe<Media_Sizes__Large__Filename_Operator>;
+  readonly sizes__large__filesize: InputMaybe<Media_Sizes__Large__Filesize_Operator>;
+  readonly sizes__large__height: InputMaybe<Media_Sizes__Large__Height_Operator>;
+  readonly sizes__large__mimeType: InputMaybe<Media_Sizes__Large__MimeType_Operator>;
+  readonly sizes__large__url: InputMaybe<Media_Sizes__Large__Url_Operator>;
+  readonly sizes__large__width: InputMaybe<Media_Sizes__Large__Width_Operator>;
+  readonly sizes__medium__filename: InputMaybe<Media_Sizes__Medium__Filename_Operator>;
+  readonly sizes__medium__filesize: InputMaybe<Media_Sizes__Medium__Filesize_Operator>;
+  readonly sizes__medium__height: InputMaybe<Media_Sizes__Medium__Height_Operator>;
+  readonly sizes__medium__mimeType: InputMaybe<Media_Sizes__Medium__MimeType_Operator>;
+  readonly sizes__medium__url: InputMaybe<Media_Sizes__Medium__Url_Operator>;
+  readonly sizes__medium__width: InputMaybe<Media_Sizes__Medium__Width_Operator>;
+  readonly sizes__og__filename: InputMaybe<Media_Sizes__Og__Filename_Operator>;
+  readonly sizes__og__filesize: InputMaybe<Media_Sizes__Og__Filesize_Operator>;
+  readonly sizes__og__height: InputMaybe<Media_Sizes__Og__Height_Operator>;
+  readonly sizes__og__mimeType: InputMaybe<Media_Sizes__Og__MimeType_Operator>;
+  readonly sizes__og__url: InputMaybe<Media_Sizes__Og__Url_Operator>;
+  readonly sizes__og__width: InputMaybe<Media_Sizes__Og__Width_Operator>;
+  readonly sizes__small__filename: InputMaybe<Media_Sizes__Small__Filename_Operator>;
+  readonly sizes__small__filesize: InputMaybe<Media_Sizes__Small__Filesize_Operator>;
+  readonly sizes__small__height: InputMaybe<Media_Sizes__Small__Height_Operator>;
+  readonly sizes__small__mimeType: InputMaybe<Media_Sizes__Small__MimeType_Operator>;
+  readonly sizes__small__url: InputMaybe<Media_Sizes__Small__Url_Operator>;
+  readonly sizes__small__width: InputMaybe<Media_Sizes__Small__Width_Operator>;
+  readonly sizes__square__filename: InputMaybe<Media_Sizes__Square__Filename_Operator>;
+  readonly sizes__square__filesize: InputMaybe<Media_Sizes__Square__Filesize_Operator>;
+  readonly sizes__square__height: InputMaybe<Media_Sizes__Square__Height_Operator>;
+  readonly sizes__square__mimeType: InputMaybe<Media_Sizes__Square__MimeType_Operator>;
+  readonly sizes__square__url: InputMaybe<Media_Sizes__Square__Url_Operator>;
+  readonly sizes__square__width: InputMaybe<Media_Sizes__Square__Width_Operator>;
+  readonly sizes__thumbnail__filename: InputMaybe<Media_Sizes__Thumbnail__Filename_Operator>;
+  readonly sizes__thumbnail__filesize: InputMaybe<Media_Sizes__Thumbnail__Filesize_Operator>;
+  readonly sizes__thumbnail__height: InputMaybe<Media_Sizes__Thumbnail__Height_Operator>;
+  readonly sizes__thumbnail__mimeType: InputMaybe<Media_Sizes__Thumbnail__MimeType_Operator>;
+  readonly sizes__thumbnail__url: InputMaybe<Media_Sizes__Thumbnail__Url_Operator>;
+  readonly sizes__thumbnail__width: InputMaybe<Media_Sizes__Thumbnail__Width_Operator>;
+  readonly sizes__xlarge__filename: InputMaybe<Media_Sizes__Xlarge__Filename_Operator>;
+  readonly sizes__xlarge__filesize: InputMaybe<Media_Sizes__Xlarge__Filesize_Operator>;
+  readonly sizes__xlarge__height: InputMaybe<Media_Sizes__Xlarge__Height_Operator>;
+  readonly sizes__xlarge__mimeType: InputMaybe<Media_Sizes__Xlarge__MimeType_Operator>;
+  readonly sizes__xlarge__url: InputMaybe<Media_Sizes__Xlarge__Url_Operator>;
+  readonly sizes__xlarge__width: InputMaybe<Media_Sizes__Xlarge__Width_Operator>;
   readonly thumbnailURL: InputMaybe<Media_ThumbnailUrl_Operator>;
   readonly updatedAt: InputMaybe<Media_UpdatedAt_Operator>;
   readonly url: InputMaybe<Media_Url_Operator>;
@@ -4479,6 +8140,7 @@ export type Media_Where_Or = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Media_Where_Or>>>;
   readonly alt: InputMaybe<Media_Alt_Operator>;
+  readonly caption: InputMaybe<Media_Caption_Operator>;
   readonly createdAt: InputMaybe<Media_CreatedAt_Operator>;
   readonly filename: InputMaybe<Media_Filename_Operator>;
   readonly filesize: InputMaybe<Media_Filesize_Operator>;
@@ -4487,6 +8149,48 @@ export type Media_Where_Or = {
   readonly height: InputMaybe<Media_Height_Operator>;
   readonly id: InputMaybe<Media_Id_Operator>;
   readonly mimeType: InputMaybe<Media_MimeType_Operator>;
+  readonly sizes__large__filename: InputMaybe<Media_Sizes__Large__Filename_Operator>;
+  readonly sizes__large__filesize: InputMaybe<Media_Sizes__Large__Filesize_Operator>;
+  readonly sizes__large__height: InputMaybe<Media_Sizes__Large__Height_Operator>;
+  readonly sizes__large__mimeType: InputMaybe<Media_Sizes__Large__MimeType_Operator>;
+  readonly sizes__large__url: InputMaybe<Media_Sizes__Large__Url_Operator>;
+  readonly sizes__large__width: InputMaybe<Media_Sizes__Large__Width_Operator>;
+  readonly sizes__medium__filename: InputMaybe<Media_Sizes__Medium__Filename_Operator>;
+  readonly sizes__medium__filesize: InputMaybe<Media_Sizes__Medium__Filesize_Operator>;
+  readonly sizes__medium__height: InputMaybe<Media_Sizes__Medium__Height_Operator>;
+  readonly sizes__medium__mimeType: InputMaybe<Media_Sizes__Medium__MimeType_Operator>;
+  readonly sizes__medium__url: InputMaybe<Media_Sizes__Medium__Url_Operator>;
+  readonly sizes__medium__width: InputMaybe<Media_Sizes__Medium__Width_Operator>;
+  readonly sizes__og__filename: InputMaybe<Media_Sizes__Og__Filename_Operator>;
+  readonly sizes__og__filesize: InputMaybe<Media_Sizes__Og__Filesize_Operator>;
+  readonly sizes__og__height: InputMaybe<Media_Sizes__Og__Height_Operator>;
+  readonly sizes__og__mimeType: InputMaybe<Media_Sizes__Og__MimeType_Operator>;
+  readonly sizes__og__url: InputMaybe<Media_Sizes__Og__Url_Operator>;
+  readonly sizes__og__width: InputMaybe<Media_Sizes__Og__Width_Operator>;
+  readonly sizes__small__filename: InputMaybe<Media_Sizes__Small__Filename_Operator>;
+  readonly sizes__small__filesize: InputMaybe<Media_Sizes__Small__Filesize_Operator>;
+  readonly sizes__small__height: InputMaybe<Media_Sizes__Small__Height_Operator>;
+  readonly sizes__small__mimeType: InputMaybe<Media_Sizes__Small__MimeType_Operator>;
+  readonly sizes__small__url: InputMaybe<Media_Sizes__Small__Url_Operator>;
+  readonly sizes__small__width: InputMaybe<Media_Sizes__Small__Width_Operator>;
+  readonly sizes__square__filename: InputMaybe<Media_Sizes__Square__Filename_Operator>;
+  readonly sizes__square__filesize: InputMaybe<Media_Sizes__Square__Filesize_Operator>;
+  readonly sizes__square__height: InputMaybe<Media_Sizes__Square__Height_Operator>;
+  readonly sizes__square__mimeType: InputMaybe<Media_Sizes__Square__MimeType_Operator>;
+  readonly sizes__square__url: InputMaybe<Media_Sizes__Square__Url_Operator>;
+  readonly sizes__square__width: InputMaybe<Media_Sizes__Square__Width_Operator>;
+  readonly sizes__thumbnail__filename: InputMaybe<Media_Sizes__Thumbnail__Filename_Operator>;
+  readonly sizes__thumbnail__filesize: InputMaybe<Media_Sizes__Thumbnail__Filesize_Operator>;
+  readonly sizes__thumbnail__height: InputMaybe<Media_Sizes__Thumbnail__Height_Operator>;
+  readonly sizes__thumbnail__mimeType: InputMaybe<Media_Sizes__Thumbnail__MimeType_Operator>;
+  readonly sizes__thumbnail__url: InputMaybe<Media_Sizes__Thumbnail__Url_Operator>;
+  readonly sizes__thumbnail__width: InputMaybe<Media_Sizes__Thumbnail__Width_Operator>;
+  readonly sizes__xlarge__filename: InputMaybe<Media_Sizes__Xlarge__Filename_Operator>;
+  readonly sizes__xlarge__filesize: InputMaybe<Media_Sizes__Xlarge__Filesize_Operator>;
+  readonly sizes__xlarge__height: InputMaybe<Media_Sizes__Xlarge__Height_Operator>;
+  readonly sizes__xlarge__mimeType: InputMaybe<Media_Sizes__Xlarge__MimeType_Operator>;
+  readonly sizes__xlarge__url: InputMaybe<Media_Sizes__Xlarge__Url_Operator>;
+  readonly sizes__xlarge__width: InputMaybe<Media_Sizes__Xlarge__Width_Operator>;
   readonly thumbnailURL: InputMaybe<Media_ThumbnailUrl_Operator>;
   readonly updatedAt: InputMaybe<Media_UpdatedAt_Operator>;
   readonly url: InputMaybe<Media_Url_Operator>;
@@ -13729,6 +17433,7 @@ export type MutationHomePage_MainOfferBanner_OptionsInput = {
 
 export type MutationMediaInput = {
   readonly alt: Scalars['String']['input'];
+  readonly caption: InputMaybe<Scalars['JSON']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly filename: InputMaybe<Scalars['String']['input']>;
   readonly filesize: InputMaybe<Scalars['Float']['input']>;
@@ -13736,6 +17441,7 @@ export type MutationMediaInput = {
   readonly focalY: InputMaybe<Scalars['Float']['input']>;
   readonly height: InputMaybe<Scalars['Float']['input']>;
   readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly sizes: InputMaybe<MutationMedia_SizesInput>;
   readonly thumbnailURL: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
   readonly url: InputMaybe<Scalars['String']['input']>;
@@ -13744,6 +17450,7 @@ export type MutationMediaInput = {
 
 export type MutationMediaUpdateInput = {
   readonly alt: InputMaybe<Scalars['String']['input']>;
+  readonly caption: InputMaybe<Scalars['JSON']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly filename: InputMaybe<Scalars['String']['input']>;
   readonly filesize: InputMaybe<Scalars['Float']['input']>;
@@ -13751,8 +17458,155 @@ export type MutationMediaUpdateInput = {
   readonly focalY: InputMaybe<Scalars['Float']['input']>;
   readonly height: InputMaybe<Scalars['Float']['input']>;
   readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly sizes: InputMaybe<MutationMediaUpdate_SizesInput>;
   readonly thumbnailURL: InputMaybe<Scalars['String']['input']>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_SizesInput = {
+  readonly large: InputMaybe<MutationMediaUpdate_Sizes_LargeInput>;
+  readonly medium: InputMaybe<MutationMediaUpdate_Sizes_MediumInput>;
+  readonly og: InputMaybe<MutationMediaUpdate_Sizes_OgInput>;
+  readonly small: InputMaybe<MutationMediaUpdate_Sizes_SmallInput>;
+  readonly square: InputMaybe<MutationMediaUpdate_Sizes_SquareInput>;
+  readonly thumbnail: InputMaybe<MutationMediaUpdate_Sizes_ThumbnailInput>;
+  readonly xlarge: InputMaybe<MutationMediaUpdate_Sizes_XlargeInput>;
+};
+
+export type MutationMediaUpdate_Sizes_LargeInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_MediumInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_OgInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_SmallInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_SquareInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_ThumbnailInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMediaUpdate_Sizes_XlargeInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_SizesInput = {
+  readonly large: InputMaybe<MutationMedia_Sizes_LargeInput>;
+  readonly medium: InputMaybe<MutationMedia_Sizes_MediumInput>;
+  readonly og: InputMaybe<MutationMedia_Sizes_OgInput>;
+  readonly small: InputMaybe<MutationMedia_Sizes_SmallInput>;
+  readonly square: InputMaybe<MutationMedia_Sizes_SquareInput>;
+  readonly thumbnail: InputMaybe<MutationMedia_Sizes_ThumbnailInput>;
+  readonly xlarge: InputMaybe<MutationMedia_Sizes_XlargeInput>;
+};
+
+export type MutationMedia_Sizes_LargeInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_MediumInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_OgInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_SmallInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_SquareInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_ThumbnailInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
+  readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly width: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type MutationMedia_Sizes_XlargeInput = {
+  readonly filename: InputMaybe<Scalars['String']['input']>;
+  readonly filesize: InputMaybe<Scalars['Float']['input']>;
+  readonly height: InputMaybe<Scalars['Float']['input']>;
+  readonly mimeType: InputMaybe<Scalars['String']['input']>;
   readonly url: InputMaybe<Scalars['String']['input']>;
   readonly width: InputMaybe<Scalars['Float']['input']>;
 };

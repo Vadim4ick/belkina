@@ -28,7 +28,7 @@ export default async function Page() {
     tags: ['posts-list'],
   })
 
-  const res = await gql.GetPostList({ limit: 3, page: 1 })
+  const res = await gql.GetPostList({ limit: 6, page: 1 })
 
   if (!res) {
     return notFound()
