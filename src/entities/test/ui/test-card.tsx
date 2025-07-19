@@ -205,7 +205,7 @@ const TestCard = memo(
           {title}
         </Typography>
         <div className="flex flex-col gap-6">
-          <Progress value={((step + 1) / total) * 100} />
+          <Progress value={(step / total) * 100} />
 
           <div className="max-tablet:flex-col max-tablet:items-start flex items-center gap-4">
             <Typography

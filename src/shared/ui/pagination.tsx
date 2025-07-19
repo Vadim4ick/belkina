@@ -64,7 +64,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   const pagesToShow = getPagesToShow()
 
   return (
-    <div className="flex w-fit items-center rounded-[4px] border border-gray-300">
+    <div className="mb-4 flex w-fit items-center rounded-[4px] border border-gray-300">
       <button
         className="cursor-pointer px-3 py-1.5 disabled:opacity-50"
         disabled={page <= 1 || isLoading}

@@ -1,16 +1,9 @@
-query GetAllTests($limit: Int, $page: Int, $examId: JSON, $subjectId: JSON) {
-  Tests(
-    where: { exam: { equals: $examId }, subjects: { equals: $subjectId } }
-    limit: $limit
-    page: $page
-  ) {
+query GetAllTestsByTitles {
+  Tests {
     docs {
-      ...TestFragment
+      id
+      title
     }
-
-    page
-    totalPages
-    totalDocs
   }
 }
 
@@ -19,8 +12,15 @@ query GetAllUserTests(
   $status: TestResult_Status_ALL
   $examId: Int
   $subjectId: Int
+  $testIds: [Int!]!
 ) {
-  GetUserTests(userId: $userId, status: $status, examId: $examId, subjectId: $subjectId) {
+  GetUserTests(
+    userId: $userId
+    status: $status
+    examId: $examId
+    subjectId: $subjectId
+    testIds: $testIds
+  ) {
     docs {
       id
       title

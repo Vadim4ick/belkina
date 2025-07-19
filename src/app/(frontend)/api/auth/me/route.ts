@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { JwtService } from '@/shared/services/jwt-service'
-import { gql } from '@/shared/graphql/client'
 import { CookiesService } from '@/shared/services/cookies-service'
+import { getMeCached } from '@/shared/actions/me.action'
 
 export async function GET() {
   const { accessToken, refreshToken } = await CookiesService.getTokens()
@@ -15,10 +15,10 @@ export async function GET() {
   try {
     // ✅ Пробуем accessToken
     payload = await JwtService.verifyToken(accessToken)
-  } catch (err: any) {
+  } catch (err) {
     console.error(err)
 
-    if (err.code === 'ERR_JWT_EXPIRED' && refreshToken) {
+    if ((err as { code: string }).code === 'ERR_JWT_EXPIRED' && refreshToken) {
       console.info('Access token expired, trying refresh token…')
 
       try {
@@ -49,18 +49,13 @@ export async function GET() {
     return NextResponse.json({ user: null })
   }
 
-  try {
-    const res = await gql.GetUserByEmail({ email: payload.email })
-    const user = res.Users?.docs?.[0] || null
+  if (!payload) return NextResponse.json({ user: null })
 
-    if (!user) {
-      await CookiesService.clearAuthCookies()
-      return NextResponse.json({ user: null })
-    }
-
-    return NextResponse.json({ user })
-  } catch (err) {
-    console.error(err)
+  const user = await getMeCached(payload.email)
+  if (!user) {
+    await CookiesService.clearAuthCookies()
     return NextResponse.json({ user: null })
   }
+
+  return NextResponse.json({ user })
 }

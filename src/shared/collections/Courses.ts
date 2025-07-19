@@ -4,13 +4,15 @@ import { summClockTime } from '../lib/utils'
 import { KinescopeVideo, KinescopeVideoItem } from '../types/kinescope.types'
 import { JwtService } from '../services/jwt-service'
 import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+import { invalidateTags } from '../redis/gqlCached'
+import { CacheKeys } from '../redis/cache-keys'
 
 const filterVideos: FieldHook = async ({ value, req, data }) => {
   const gql = await getServerAuthGqlClient({})
 
   // 1) Админ видит всё
-  if (req.user?.role === 'admin') return true
-  if (data?.isFree) return true
+  if (req.user?.role === 'admin') return value
+  if (data?.isFree) return value
 
   const authHeader = req?.headers?.get('authorization')
   const token = authHeader?.replace(/^Bearer\s/, '')
@@ -59,6 +61,20 @@ const Courses: CollectionConfig = {
   },
 
   hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.purchasesAll())
+        await invalidateTags(CacheKeys.tags.courseBySlug())
+      },
+    ],
+
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.purchasesAll())
+        await invalidateTags(CacheKeys.tags.courseBySlug())
+      },
+    ],
+
     beforeChange: [
       async ({ data, originalDoc }) => {
         if (data.title && data.title !== originalDoc?.title) {
