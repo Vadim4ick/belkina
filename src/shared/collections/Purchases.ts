@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
+import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
 
 const Purchases: CollectionConfig = {
   slug: 'purchases',
@@ -22,13 +23,24 @@ const Purchases: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, previousDoc, operation }) => {
+        const gql = await getServerAuthGqlClient({})
+
         const newUserId = doc?.user
         const prevUserId = previousDoc?.user
+
+        const courseId = doc?.course
+        const prevCourseId = previousDoc?.course
 
         // Set для устранения дубликатов
         const tags = new Set<string>()
 
-        await invalidateTags(CacheKeys.tags.courseBySlug())
+        await gql
+          .GetCourseSlugById({
+            id: courseId || prevCourseId,
+          })
+          .then((res) => {
+            tags.add(CacheKeys.tags.courseBySlug({ slug: res?.Course?.slug }))
+          })
 
         if (operation === 'create') {
           if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
@@ -57,7 +69,11 @@ const Purchases: CollectionConfig = {
       async ({ doc }) => {
         const userId = doc?.user?.id
 
-        await invalidateTags(CacheKeys.tags.courseBySlug())
+        await invalidateTags(
+          CacheKeys.tags.courseBySlug({
+            slug: doc?.course?.slug,
+          }),
+        )
 
         if (userId != null) {
           await invalidateTags(CacheKeys.tags.purchasesByUser(userId))
