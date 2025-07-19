@@ -1,5 +1,6 @@
 import {
   DefaultNodeTypes,
+  SerializedBlockNode,
   SerializedLinkNode,
   type DefaultTypedEditorState,
 } from '@payloadcms/richtext-lexical'
@@ -8,10 +9,12 @@ import {
   LinkJSXConverter,
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
-import { cn } from '../lib/utils'
-import { getRoutePostsBySlug } from '../lib/routes'
 
-type NodeTypes = DefaultNodeTypes
+import type { MediaBlock as MediaBlockProps } from '@/payload-types'
+import { cn } from '@/shared/lib/utils'
+import { MediaBlock } from '../blocks/MediaBlock/Component'
+
+type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -19,12 +22,24 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
     throw new Error('Expected value to be an object')
   }
   const slug = value.slug
-  return relationTo === 'posts' ? getRoutePostsBySlug(slug as string) : `/${slug}`
+  return relationTo === 'posts' ? `/posts/${slug}` : `/${slug}`
 }
 
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  blocks: {
+    mediaBlock: ({ node }) => (
+      <MediaBlock
+        className="col-span-3 col-start-1"
+        imgClassName="m-0"
+        {...node.fields}
+        captionClassName="mx-auto max-w-[48rem]"
+        enableGutter={false}
+        disableInnerContainer={true}
+      />
+    ),
+  },
 })
 
 type Props = {

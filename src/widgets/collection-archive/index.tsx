@@ -23,6 +23,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
               title={product.title}
               image={product.image}
               showFooter={false}
+              url={`/posts/${product.slug}`}
             />
           ))}
       </ProductCardsGridCatalog>
