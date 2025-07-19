@@ -5,6 +5,8 @@ import { cookies } from 'next/headers'
 import { JwtService } from '@/shared/services/jwt-service'
 import { getTestHistoryByUserId } from '@/shared/actions/test.action'
 import { getRecommendations } from '@/shared/actions/recommendation.action'
+import { getSettledValue } from '@/shared/lib/utils'
+import { getPurchasesCourses } from '@/shared/actions/purchases.action'
 
 // const mockProducts = [
 //   {
@@ -93,13 +95,27 @@ export async function Profile() {
 
   const payload = await JwtService.verifyToken(accessToken)
 
-  const testHistory = await getTestHistoryByUserId({
-    userId: payload.id,
-  })
+  const purchases = await getPurchasesCourses(Number(payload.id))
 
-  const recommendations = await getRecommendations({
-    userId: payload.id,
-  })
+  const testIds = purchases.Purchases.docs
+    ?.flatMap((p) => p.course.kinescopeVideos)
+    // 2) оставляем только те видео, у которых есть непустое поле test
+    .filter((v) => v.test != null)
+    // 3) забираем только сами test‑id
+    .map((v) => v.test?.id)
+
+  const [testHistory, recommendations] = await Promise.allSettled([
+    getTestHistoryByUserId({
+      userId: payload.id,
+      testIds,
+    }),
+    getRecommendations({
+      userId: payload.id,
+    }),
+  ])
+
+  const testHistoryVal = getSettledValue(testHistory)
+  const recommendationsVal = getSettledValue(recommendations)
 
   return (
     <section className="max-mobile:py-6 py-12">
@@ -107,11 +123,11 @@ export async function Profile() {
         Профиль
       </Typography>
 
-      {recommendations?.GetUserRecommendations?.length > 0 && (
-        <Topic recomendations={recommendations.GetUserRecommendations} />
+      {recommendationsVal && recommendationsVal?.GetUserRecommendations?.length > 0 && (
+        <Topic recomendations={recommendationsVal.GetUserRecommendations} />
       )}
 
-      <TestsHistory testHistory={testHistory.TestResults.docs} />
+      {testHistoryVal && <TestsHistory testHistory={testHistoryVal.TestResults.docs} />}
 
       {/* <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (

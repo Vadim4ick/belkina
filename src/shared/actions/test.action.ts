@@ -10,10 +10,16 @@ export async function fetchTestById({ id }: { id: string }) {
   return await gql.GetByIdTest({ id: Number(id) })
 }
 
-export async function fetchTestHistoryByUserId({ userId }: { userId: string }) {
+export async function fetchTestHistoryByUserId({
+  userId,
+  testIds,
+}: {
+  userId: string
+  testIds: number[]
+}) {
   const gql = await getServerAuthGqlClient({})
 
-  return await gql.GetTestResHistory({ userId: userId })
+  return await gql.GetTestResHistory({ userId: userId, testIds })
 }
 
 export const getTestById = withRedisCache(fetchTestById, {
