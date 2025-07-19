@@ -7,3 +7,9 @@ query GetCourseBySlug($slug: String) {
     }
   }
 }
+
+query GetCourseSlugById($id: Int!) {
+  Course(id: $id) {
+    slug
+  }
+}
