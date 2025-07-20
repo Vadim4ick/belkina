@@ -32,7 +32,8 @@ export default async function middleware(req: NextRequest) {
       // устанавливаем новый accessToken
       res.cookies.set('accessToken', newAccessToken, {
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
+        // secure: process.env.NODE_ENV === 'production',
+        secure: false,
       })
 
       user = payload
