@@ -32,6 +32,10 @@ export const CacheKeys = {
     recommendationsAll: () => join(V, 'recommendations'),
 
     testHistory: (userId: string | number) => join(V, 'testHistory', userId),
+
+    posts: () => join(V, 'posts'),
+    postBySlug: ({ slug }: { slug: string }) => join(V, 'posts', slug),
+    postsByPage: ({ page }: { page: number }) => join(V, 'posts', page),
   },
 } as const
 

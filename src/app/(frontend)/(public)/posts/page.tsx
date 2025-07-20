@@ -2,8 +2,8 @@ import type { Metadata } from 'next/types'
 
 import React from 'react'
 import { notFound } from 'next/navigation'
-import { createGqlClient } from '@/shared/graphql/client'
 import { PostListPage } from '@/views/posts'
+import { getPosts } from '@/shared/actions/post.action'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 60
@@ -24,13 +24,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const gql = createGqlClient({
-    tags: ['posts-list'],
-  })
+  // const gql = createGqlClient({
+  //   tags: ['posts-list'],
+  // })
 
-  const res = await gql.GetPostList({ limit: 6, page: 1 })
+  const res = await getPosts()
 
-  if (!res) {
+  if (!res || !res.Posts) {
     return notFound()
   }
 

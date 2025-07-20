@@ -18415,7 +18415,7 @@ export type GetPostListQueryVariables = Exact<{
 }>;
 
 
-export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly alt: string, readonly url: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }> }> } };
+export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly alt: string, readonly url: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }> }> } };
 
 export type GetPurchaseByIdQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -18763,6 +18763,7 @@ export const GetPostListDocument = gql`
       id
       slug
       title
+      description
       image {
         id
         alt

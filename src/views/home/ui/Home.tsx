@@ -5,18 +5,12 @@ import { AskedQuestions } from '@/features/asked-questions'
 import { TestCardQuestions } from '@/widgets/test-card-questions'
 import { getSettledValue } from '@/shared/lib/utils'
 import { SliderWrapper } from '@/widgets/slider-wrapper'
-import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { getHomePage } from '@/shared/actions/home.action'
 import { getFAQ } from '@/shared/actions/faq.action copy'
+import { getPosts } from '@/shared/actions/post.action'
 
 const Home = async () => {
-  const gql = await getServerAuthGqlClient({})
-
-  const [res, faqs, posts] = await Promise.allSettled([
-    getHomePage(),
-    getFAQ(),
-    gql.GetPostList({ limit: 9, page: 1 }),
-  ])
+  const [res, faqs, posts] = await Promise.allSettled([getHomePage(), getFAQ(), getPosts()])
 
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)

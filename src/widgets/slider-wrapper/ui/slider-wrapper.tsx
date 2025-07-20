@@ -31,18 +31,21 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
         >
           <CarouselContent>
             {posts &&
-              posts.docs?.map((product) => (
-                <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-3">
-                    <ProductCard
-                      title={product.title}
-                      image={product.image}
-                      showFooter={false}
-                      url={getRoutePostsBySlug(product.slug)}
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
+              posts.docs?.map((product) => {
+                return (
+                  <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-3">
+                      <ProductCard
+                        title={product.title}
+                        description={product?.description ?? ''}
+                        image={product.image}
+                        showFooter={false}
+                        url={getRoutePostsBySlug(product.slug)}
+                      />
+                    </div>
+                  </CarouselItem>
+                )
+              })}
           </CarouselContent>
           <CarouselPrevious className="bg-accent" />
           <CarouselNext className="bg-accent" />
