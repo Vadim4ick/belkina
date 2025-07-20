@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
 import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+import { expireQueue } from '../lib/queue'
 
 const Purchases: CollectionConfig = {
   slug: 'purchases',
@@ -18,19 +19,20 @@ const Purchases: CollectionConfig = {
   access: {
     read: () => true,
     create: () => true,
+    update: () => true,
   },
 
   hooks: {
-    // beforeChange: [
-    //   async ({ data, operation }) => {
-    //     if (operation === 'create') {
-    //       const now = new Date()
-    //       now.setMinutes(now.getMinutes() + 2)
-    //       data.expiresAt = now
-    //     }
-    //     return data
-    //   },
-    // ],
+    beforeChange: [
+      async ({ data, operation }) => {
+        if (operation === 'create') {
+          const now = new Date()
+          now.setMinutes(now.getMinutes() + 1)
+          data.expiresAt = now
+        }
+        return data
+      },
+    ],
 
     afterChange: [
       async ({ doc, previousDoc, operation }) => {
@@ -52,6 +54,20 @@ const Purchases: CollectionConfig = {
           .then((res) => {
             tags.add(CacheKeys.tags.courseBySlug({ slug: res?.Course?.slug }))
           })
+
+        if (operation === 'create') {
+          await expireQueue.add(
+            'expire',
+            { purchaseId: doc.id },
+            {
+              delay: 10 * 1000, // 10 секунд
+              jobId: `expire-${doc.id}`, // не даём дубликатов
+              removeOnComplete: true,
+              removeOnFail: true,
+            },
+          )
+          console.log('[QUEUE] added expire-', doc.id)
+        }
 
         if (operation === 'create') {
           if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
