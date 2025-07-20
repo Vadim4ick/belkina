@@ -11,13 +11,17 @@ export const CookiesService = {
 
     store.set('accessToken', accessToken, {
       path: '/',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
     })
 
     store.set('refreshToken', refreshToken, {
       path: '/',
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
     })
   },
 
@@ -26,7 +30,9 @@ export const CookiesService = {
 
     store.set('accessToken', accessToken, {
       path: '/',
-      secure: process.env.NODE_ENV === 'production',
+      secure: false,
+      sameSite: 'lax',
+      // secure: process.env.NODE_ENV === 'production',
     })
   },
 
