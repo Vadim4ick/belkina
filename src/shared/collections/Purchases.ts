@@ -21,6 +21,17 @@ const Purchases: CollectionConfig = {
   },
 
   hooks: {
+    // beforeChange: [
+    //   async ({ data, operation }) => {
+    //     if (operation === 'create') {
+    //       const now = new Date()
+    //       now.setMinutes(now.getMinutes() + 2)
+    //       data.expiresAt = now
+    //     }
+    //     return data
+    //   },
+    // ],
+
     afterChange: [
       async ({ doc, previousDoc, operation }) => {
         const gql = await getServerAuthGqlClient({})
@@ -94,6 +105,17 @@ const Purchases: CollectionConfig = {
       relationTo: 'users',
       required: true,
     },
+
+    {
+      name: 'status',
+      label: 'Статус',
+      type: 'select',
+      defaultValue: 'active',
+      options: [
+        { label: 'Активна', value: 'active' },
+        { label: 'Неактивна', value: 'inactive' },
+      ],
+    },
     {
       name: 'course',
       label: 'Курс',
@@ -119,6 +141,24 @@ const Purchases: CollectionConfig = {
       label: 'Дата покупки',
       type: 'date',
       defaultValue: () => new Date(),
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+
+    {
+      name: 'expiresAt',
+      label: 'Дата истечения',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
     },
   ],
 }
