@@ -1,6 +1,8 @@
 import { CollectionConfig } from 'payload'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
+import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+import { expireQueue } from '../lib/queue'
 
 const Purchases: CollectionConfig = {
   slug: 'purchases',
@@ -17,18 +19,55 @@ const Purchases: CollectionConfig = {
   access: {
     read: () => true,
     create: () => true,
+    update: () => true,
   },
 
   hooks: {
+    beforeChange: [
+      async ({ data, operation }) => {
+        if (operation === 'create') {
+          const now = new Date()
+          now.setMinutes(now.getMinutes() + 1)
+          data.expiresAt = now
+        }
+        return data
+      },
+    ],
+
     afterChange: [
       async ({ doc, previousDoc, operation }) => {
+        const gql = await getServerAuthGqlClient({})
+
         const newUserId = doc?.user
         const prevUserId = previousDoc?.user
+
+        const courseId = doc?.course
+        const prevCourseId = previousDoc?.course
 
         // Set для устранения дубликатов
         const tags = new Set<string>()
 
-        await invalidateTags(CacheKeys.tags.courseBySlug())
+        await gql
+          .GetCourseSlugById({
+            id: courseId || prevCourseId,
+          })
+          .then((res) => {
+            tags.add(CacheKeys.tags.courseBySlug({ slug: res?.Course?.slug }))
+          })
+
+        if (operation === 'create') {
+          await expireQueue.add(
+            'expire',
+            { purchaseId: doc.id },
+            {
+              delay: 10 * 1000, // 10 секунд
+              jobId: `expire-${doc.id}`, // не даём дубликатов
+              removeOnComplete: true,
+              removeOnFail: true,
+            },
+          )
+          console.log('[QUEUE] added expire-', doc.id)
+        }
 
         if (operation === 'create') {
           if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
@@ -57,7 +96,11 @@ const Purchases: CollectionConfig = {
       async ({ doc }) => {
         const userId = doc?.user?.id
 
-        await invalidateTags(CacheKeys.tags.courseBySlug())
+        await invalidateTags(
+          CacheKeys.tags.courseBySlug({
+            slug: doc?.course?.slug,
+          }),
+        )
 
         if (userId != null) {
           await invalidateTags(CacheKeys.tags.purchasesByUser(userId))
@@ -77,6 +120,17 @@ const Purchases: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: true,
+    },
+
+    {
+      name: 'status',
+      label: 'Статус',
+      type: 'select',
+      defaultValue: 'active',
+      options: [
+        { label: 'Активна', value: 'active' },
+        { label: 'Неактивна', value: 'inactive' },
+      ],
     },
     {
       name: 'course',
@@ -103,6 +157,24 @@ const Purchases: CollectionConfig = {
       label: 'Дата покупки',
       type: 'date',
       defaultValue: () => new Date(),
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+
+    {
+      name: 'expiresAt',
+      label: 'Дата истечения',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
     },
   ],
 }

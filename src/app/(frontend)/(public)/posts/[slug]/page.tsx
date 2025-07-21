@@ -7,6 +7,9 @@ import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { getPostsBySlug } from '@/shared/actions/post.action'
+
+export const revalidate = 60
 
 export default async function Post({
   params: paramsPromise,
@@ -17,12 +20,12 @@ export default async function Post({
 }) {
   const { slug = '' } = await paramsPromise
 
-  const res = await gql.GetPostBySlug({ slug })
+  const res = await getPostsBySlug({ slug })
 
-  if (!res) {
+  const post = res.Posts.docs?.[0]
+  if (!post) {
     return notFound()
   }
-  const post = res.Posts.docs?.[0]
 
   return (
     <article className="max-mobile:py-6 py-12">

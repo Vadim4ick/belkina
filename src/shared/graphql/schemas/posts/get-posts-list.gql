@@ -4,6 +4,7 @@ query GetPostList($limit: Int!, $page: Int!) {
       id
       slug
       title
+      description
       image {
         id
         alt

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next/types'
 
 import React from 'react'
-import { gql } from '@/shared/graphql/client'
 import { notFound } from 'next/navigation'
 import { PostListPage } from '@/views/posts'
+import { getPostsByPage } from '@/shared/actions/post.action'
 
 export const dynamic = 'force-static'
 export const revalidate = 60
@@ -39,9 +39,9 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 export default async function Page({ params: paramsPromise }: Args) {
   const { pageNumber } = await paramsPromise
 
-  const res = await gql.GetPostList({ limit: 6, page: +pageNumber })
+  const res = await getPostsByPage({ page: parseInt(pageNumber) })
 
-  if (!res) {
+  if (!res || !res.Posts) {
     return notFound()
   }
 
