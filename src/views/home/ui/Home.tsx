@@ -6,7 +6,7 @@ import { TestCardQuestions } from '@/widgets/test-card-questions'
 import { getSettledValue } from '@/shared/lib/utils'
 import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
-import { getFAQ } from '@/shared/actions/faq.action copy'
+import { getFAQ } from '@/shared/actions/faq.action'
 import { getPosts } from '@/shared/actions/post.action'
 
 const Home = async () => {
@@ -15,10 +15,6 @@ const Home = async () => {
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)
   const postsVal = getSettledValue(posts)
-
-  console.log('resVal', resVal)
-  console.log('faqsVal', faqsVal)
-  console.log('postsVal', postsVal)
 
   return (
     <>

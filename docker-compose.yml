@@ -1,35 +1,54 @@
-version: '3.9'
 services:
   redis:
     image: redis:7.2-alpine
     container_name: redis
-    command: redis-server --appendonly yes
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD}
     ports:
-      - '6379:6379' # доступен локально
+      - '6379:6379'
     volumes:
-      - redis_data:/data # файлы AOF/RDB на диск
-    restart: unless-stopped # автоподъём после перезагрузки
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD}', 'ping']
+      interval: 30s
+      timeout: 10s
+    networks:
+      backend-network:  
 
   redis-commander:
-    image: rediscommander/redis-commander:latest
+    image: ghcr.io/joeferner/redis-commander:latest
     container_name: redis-commander
     environment:
-      - REDIS_HOSTS=local:redis:6379
+      - REDIS_HOSTS=local:redis:6379:0:${REDIS_PASSWORD}
+      - HTTP_USER=admin
+      - HTTP_PASSWORD=${COMMANDER_PASSWORD}
     ports:
       - '8081:8081'
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      backend-network:
 
-  # postgres:
-  #   restart: always
-  #   image: postgres:15.3-alpine
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   ports:
-  #     - '5432:5432'
-  #   env_file:
-  #     - .env
+  postgres:
+    restart: always
+    image: postgres:latest
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'  
+    networks:
+      backend-network:  
 
 volumes:
   redis_data:
-  # pgdata:
+  pgdata:
+
+networks:
+  backend-network:
+    driver: bridge  

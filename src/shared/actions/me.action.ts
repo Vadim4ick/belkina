@@ -12,4 +12,5 @@ export async function fetchMeDto(email: string) {
 export const getMeCached = withRedisCache(fetchMeDto, {
   ttl: 120,
   tags: ([email]) => [CacheKeys.tags.getMe(email)],
+  name: 'fetchMe',
 })
