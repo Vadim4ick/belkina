@@ -1,0 +1,118 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  # Этап 1: Проверка изменений (выполняется на серверах GitHub)
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_changed: ${{ steps.frontend.outputs.changed }}
+    steps:
+      # Шаг 1.1: Получаем код из репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Берем только последние 2 коммита для экономии времени
+
+      # Шаг 1.2: Проверяем, были ли изменения в фронтенде
+      - name: Detect frontend changes
+        id: frontend
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep "./"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+  # Этап 2: Деплой (выполняется только если были изменения)
+  deploy:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      # Шаг 2.1: Забираем код из репозитория (полная версия)
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # Здесь мы получаем полную версию кода (в отличие от этапа detect-changes)
+
+      # Шаг 2.2: Настраиваем Node.js с кэшированием зависимостей
+      - name: Setup Node.js (with caching)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0' # Используем конкретную версию Node.js
+          cache: 'npm' # Включаем автоматическое кэширование node_modules
+
+      # Шаг 2.3: Устанавливаем зависимости с использованием кэша
+      - name: Install dependencies
+        run: |
+          # Проверяем целостность lock-файла
+          if [ -f "package-lock.json" ]; then
+            echo "Проверяем согласованность package.json и package-lock.json..."
+            if npm ci --dry-run; then
+              echo "Lock-файл валиден, используем npm ci"
+              npm ci
+            else
+              echo "Обнаружены расхождения, обновляем lock-файл..."
+              rm -f package-lock.json
+              npm install
+            fi
+          else
+            echo "Lock-файл отсутствует, создаем новый..."
+            npm install
+          fi
+          npm cache verify
+
+      # Шаг 2.4: Собираем проект (происходит на серверах GitHub)
+      # - name: Build project
+      # run: |
+      # Сборка с ограничением памяти и без deprecated-предупреждений
+      # NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
+      # du -sh ./build  # Показываем размер собранных файлов
+
+      # Шаг 2.5: Настраиваем SSH-доступ к вашему VPS
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Используем секрет из GitHub
+
+      # Шаг 2.6: Копируем файлы на сервер (исключая ненужные директории)
+      - name: Rsync to VPS
+        run: |
+          rsync -az --delete \
+            --exclude='.git' \          # Не копируем git-метаданные
+            --exclude='node_modules' \  # Не копируем зависимости
+            -e "ssh -o StrictHostKeyChecking=no" \  # Отключаем проверку хоста
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }}:/home/${{ secrets.SERVER_USER }}/belkina-app
+
+      # Шаг 2.7: Завершающие действия на вашем VPS
+      - name: Deploy on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
+          set -e  # Прерываем выполнение при ошибке
+
+          # Настраиваем NVM (менеджер версий Node.js)
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+
+          # Переходим в директорию проекта
+          cd ~/belkina-app
+
+          # Устанавливаем ТОЛЬКО production-зависимости
+          npm install --production
+
+          # Управление процессами через PM2
+          # Перезапускаем приложение, если оно уже работает, или запускаем новое
+          pm2 restart belkina-app || pm2 start npm --name belkina-app -- run start
+
+          # Аналогично для worker-процесса
+          pm2 restart belkina-worker || pm2 start npm --name belkina-worker -- run worker
+
+          # Сохраняем список процессов PM2
+          pm2 save
+
+          echo "✅ Деплой завершен успешно"
+          EOF
