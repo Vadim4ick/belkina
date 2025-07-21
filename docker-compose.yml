@@ -15,6 +15,8 @@ services:
       test: ['CMD', 'redis-cli', '-a', '${REDIS_PASSWORD}', 'ping']
       interval: 30s
       timeout: 10s
+    networks:
+      backend-network:  
 
   redis-commander:
     image: ghcr.io/joeferner/redis-commander:latest
@@ -29,6 +31,24 @@ services:
       redis:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      backend-network:
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'  
+    networks:
+      backend-network:  
 
 volumes:
   redis_data:
+  pgdata:
+
+networks:
+  backend-network:
+    driver: bridge  
