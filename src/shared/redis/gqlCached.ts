@@ -10,13 +10,14 @@ interface CacheOptions<T extends Fn> {
   ttl?: number
   tags?: (args: Parameters<T>) => string[] // динамические теги
   staticTags?: string[] // статические теги
+  name?: string
 }
 
 export function withRedisCache<T extends Fn>(resolver: T, options: CacheOptions<T> = {}): T {
-  const { ttl = DEFAULT_TTL, tags, staticTags = [] } = options
+  const { ttl = DEFAULT_TTL, tags, staticTags = [], name } = options
 
   return async function (...args: Parameters<T>): Promise<ReturnType<T>> {
-    const key = CacheKeys.gql(resolver.name, hash(args))
+    const key = CacheKeys.gql(name ?? resolver.name, hash(args))
 
     const cached = await redis.get(key)
     if (cached) {

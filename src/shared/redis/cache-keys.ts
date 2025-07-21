@@ -38,8 +38,3 @@ export const CacheKeys = {
     postsByPage: ({ page }: { page: number }) => join(V, 'posts', page),
   },
 } as const
-
-export type CacheTag =
-  | ReturnType<typeof CacheKeys.tags.examsAll>
-  | ReturnType<typeof CacheKeys.tags.subjectsAll>
-  | ReturnType<typeof CacheKeys.tags.purchasesByUser>
