@@ -11,4 +11,5 @@ async function fetchFAQ() {
 export const getFAQ = withRedisCache(fetchFAQ, {
   ttl: 360,
   tags: () => [CacheKeys.tags.getFAQ()],
+  name: 'fetchFAQ',
 })
