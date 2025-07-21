@@ -85,7 +85,9 @@ export async function GET(req: Request) {
       email: user.email,
     })
 
-    const response = NextResponse.redirect(new URL('/', req.url))
+    const response = NextResponse.redirect(
+      new URL(`${process.env.NEXT_PUBLIC_SERVER_URL!}/profile`, req.url),
+    )
 
     await CookiesService.setAuthCookies({ accessToken, refreshToken })
 
