@@ -27,6 +27,7 @@ export const getTestById = withRedisCache(fetchTestById, {
   tags: ([{ id }]) => {
     return [CacheKeys.tags.testById(id)]
   },
+  name: 'fetchTestById',
 })
 
 export const getTestHistoryByUserId = withRedisCache(fetchTestHistoryByUserId, {
@@ -34,4 +35,5 @@ export const getTestHistoryByUserId = withRedisCache(fetchTestHistoryByUserId, {
   tags: ([{ userId }]) => {
     return [CacheKeys.tags.testHistory(userId)]
   },
+  name: 'fetchTestHistoryByUserId',
 })

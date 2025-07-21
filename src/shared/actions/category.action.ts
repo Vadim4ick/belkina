@@ -12,6 +12,7 @@ async function fetchExams() {
 export const getExams = withRedisCache(fetchExams, {
   ttl: 180,
   staticTags: [CacheKeys.tags.examsAll()],
+  name: 'getExams',
 })
 
 async function fetchSubjects() {
@@ -22,4 +23,5 @@ async function fetchSubjects() {
 export const getSubjects = withRedisCache(fetchSubjects, {
   ttl: 180,
   staticTags: [CacheKeys.tags.subjectsAll()],
+  name: 'getSubjects',
 })

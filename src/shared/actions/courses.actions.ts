@@ -17,4 +17,5 @@ export const getCoursesBySlug = withRedisCache(fetchCoursesBySlug, {
   tags: ([{ slug }]) => {
     return [CacheKeys.tags.courseBySlug({ slug })]
   },
+  name: 'fetchCoursesBySlug',
 })

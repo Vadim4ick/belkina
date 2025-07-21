@@ -17,4 +17,5 @@ export const getRecommendations = withRedisCache(fetchRecommendations, {
   tags: ([{ userId }]) => {
     return [CacheKeys.tags.recommendationsAll(), CacheKeys.tags.recommendations(userId)]
   },
+  name: 'fetchRecommendations',
 })
