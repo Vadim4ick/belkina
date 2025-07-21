@@ -9,7 +9,7 @@ async function fetchFAQ() {
   return gql.GetFAGs()
 }
 export const getFAQ = withRedisCache(fetchFAQ, {
-  ttl: 360,
+  ttl: 180,
   tags: () => [CacheKeys.tags.getFAQ()],
   name: 'fetchFAQ',
 })
