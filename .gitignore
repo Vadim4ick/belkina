@@ -9,7 +9,7 @@
 /.idea/*
 !/.idea/runConfigurations
 
-# package-lock.json
+package-lock.json
 
 .vscode
 
