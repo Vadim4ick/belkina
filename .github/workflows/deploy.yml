@@ -22,7 +22,7 @@ jobs:
       - name: Detect frontend changes
         id: frontend
         run: |
-          if git diff --name-only HEAD^ HEAD | grep -q "client/"; then
+          if git diff --name-only HEAD^ HEAD | grep "./"; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
