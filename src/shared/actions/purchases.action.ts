@@ -11,4 +11,5 @@ async function fetchPurchasesCourses(userId: number) {
 export const getPurchasesCourses = withRedisCache(fetchPurchasesCourses, {
   ttl: 180,
   tags: ([userId]) => [CacheKeys.tags.purchasesByUser(userId), CacheKeys.tags.purchasesAll()],
+  name: 'fetchPurchasesCourses',
 })
