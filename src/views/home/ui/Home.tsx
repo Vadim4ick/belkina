@@ -14,9 +14,7 @@ const Home = async () => {
 
   const resVal = getSettledValue(res)
   const faqsVal = getSettledValue(faqs)
-  const postssVal = getSettledValue(posts)
-
-  console.log('home', resVal)
+  const postsVal = getSettledValue(posts)
 
   return (
     <>
@@ -28,8 +26,8 @@ const Home = async () => {
         <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
       )}
 
-      {resVal && resVal?.HomePage.featuredTest && resVal?.HomePage.featuredTest && (
-        <TestCardQuestions test={resVal?.HomePage.featuredTest} />
+      {resVal && resVal?.HomePage && resVal?.HomePage?.featuredTest && (
+        <TestCardQuestions test={resVal?.HomePage?.featuredTest} />
       )}
 
       {faqsVal && faqsVal?.Faqs && faqsVal?.Faqs?.docs?.length > 0 && (
@@ -42,8 +40,8 @@ const Home = async () => {
           <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
         )}
 
-      {postssVal && postssVal?.Posts && postssVal?.Posts?.docs?.length > 0 && (
-        <SliderWrapper posts={postssVal?.Posts} />
+      {postsVal && postsVal?.Posts && postsVal?.Posts?.docs?.length > 0 && (
+        <SliderWrapper posts={postsVal?.Posts} />
       )}
     </>
   )
