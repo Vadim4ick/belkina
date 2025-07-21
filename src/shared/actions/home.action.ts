@@ -11,4 +11,5 @@ async function fetchHomePage() {
 export const getHomePage = withRedisCache(fetchHomePage, {
   ttl: 360,
   tags: () => [CacheKeys.tags.getHomePage()],
+  name: 'fetchHomePage',
 })
