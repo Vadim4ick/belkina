@@ -6,88 +6,99 @@ on:
       - main
 
 jobs:
+  # Этап 1: Проверка изменений (выполняется на серверах GitHub)
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
       frontend_changed: ${{ steps.frontend.outputs.changed }}
     steps:
+      # Шаг 1.1: Получаем код из репозитория
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 2 # Берем только последние 2 коммита для экономии времени
 
+      # Шаг 1.2: Проверяем, были ли изменения в фронтенде
       - name: Detect frontend changes
         id: frontend
         run: |
-          if git diff --name-only HEAD^ HEAD | grep "./"; then
+          if git diff --name-only HEAD^ HEAD | grep -q "client/"; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
 
+  # Этап 2: Деплой (выполняется только если были изменения)
   deploy:
     needs: detect-changes
-    runs-on: ubuntu-latest
     if: needs.detect-changes.outputs.frontend_changed == 'true'
+    runs-on: ubuntu-latest
     steps:
-      - name: Set up Node.js
+      # Шаг 2.1: Забираем код из репозитория (полная версия)
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # Здесь мы получаем полную версию кода (в отличие от этапа detect-changes)
+
+      # Шаг 2.2: Настраиваем Node.js с кэшированием зависимостей
+      - name: Setup Node.js (with caching)
         uses: actions/setup-node@v4
         with:
-          node-version: '22.14.0'
+          node-version: '22.14.0' # Используем конкретную версию Node.js
+          cache: 'npm' # Включаем автоматическое кэширование node_modules
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Шаг 2.3: Устанавливаем зависимости с использованием кэша
+      - name: Install dependencies
+        run: |
+          npm ci  # Чистая установка зависимостей (быстрее чем npm install)
+          npm cache verify  # Проверяем целостность кэша
 
-      - name: Set up SSH access
+      # Шаг 2.4: Собираем проект (происходит на серверах GitHub)
+      - name: Build project
+        run: |
+          # Сборка с ограничением памяти и без deprecated-предупреждений
+          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
+          du -sh ./build  # Показываем размер собранных файлов
+
+      # Шаг 2.5: Настраиваем SSH-доступ к вашему VPS
+      - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} # Используем секрет из GitHub
 
-      - name: Rsync project to VPS
+      # Шаг 2.6: Копируем файлы на сервер (исключая ненужные директории)
+      - name: Rsync to VPS
         run: |
           rsync -az --delete \
-            -e "ssh -o StrictHostKeyChecking=no" \
+            --exclude='.git' \          # Не копируем git-метаданные
+            --exclude='node_modules' \  # Не копируем зависимости
+            -e "ssh -o StrictHostKeyChecking=no" \  # Отключаем проверку хоста
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }}:/home/${{ secrets.SERVER_USER }}/belkina-app
 
-      - name: Deploy & restart via PM2
+      # Шаг 2.7: Завершающие действия на вашем VPS
+      - name: Deploy on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }} << 'EOF'
-          set -e
+          set -e  # Прерываем выполнение при ошибке
 
+          # Настраиваем NVM (менеджер версий Node.js)
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
-          nvm use 22.14.0
 
+          # Переходим в директорию проекта
           cd ~/belkina-app
 
-          echo "📦 Копируем .env"
-          cp ~/secrets/env .env
+          # Устанавливаем ТОЛЬКО production-зависимости
+          npm install --production
 
-          echo "📦 Устанавливаем зависимости"
-          npm install
+          # Управление процессами через PM2
+          # Перезапускаем приложение, если оно уже работает, или запускаем новое
+          pm2 restart belkina-app || pm2 start npm --name belkina-app -- run start
 
-          # echo "⚙️ Билдим проект"
-          # NODE_OPTIONS=--no-deprecation npm run build --debug
+          # Аналогично для worker-процесса
+          pm2 restart belkina-worker || pm2 start npm --name belkina-worker -- run worker
 
-          echo "⚙️ Билдим проект"
-          # Установка на ограничение потребляемой памяти
-          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
-
-          echo "🚀 Запускаем через PM2"
-          if pm2 list | grep -q belkina-app; then
-            pm2 restart belkina-app --update-env
-          else
-            pm2 start npm --name belkina-app -- run start
-          fi
-
-          echo "🚀 Запускаем worker через PM2"
-          if pm2 list | grep -q belkina-worker; then
-            pm2 restart belkina-worker
-          else
-            pm2 start npm --name belkina-worker -- run worker
-          fi
-
+          # Сохраняем список процессов PM2
           pm2 save
 
-          echo "✅ Деплой завершён"
+          echo "✅ Деплой завершен успешно"
           EOF
