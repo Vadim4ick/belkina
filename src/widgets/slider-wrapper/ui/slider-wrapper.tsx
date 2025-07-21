@@ -20,7 +20,7 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
     <section className="py-12">
       <Container className="px-0">
         <Typography className="mb-10 text-center" tag="h2" variant="visuelt-bold-48">
-          Блог
+          Новости
         </Typography>
 
         <Carousel
