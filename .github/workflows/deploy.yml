@@ -49,8 +49,22 @@ jobs:
       # Шаг 2.3: Устанавливаем зависимости с использованием кэша
       - name: Install dependencies
         run: |
-          npm ci  # Чистая установка зависимостей (быстрее чем npm install)
-          npm cache verify  # Проверяем целостность кэша
+          # Проверяем целостность lock-файла
+          if [ -f "package-lock.json" ]; then
+            echo "Проверяем согласованность package.json и package-lock.json..."
+            if npm ci --dry-run; then
+              echo "Lock-файл валиден, используем npm ci"
+              npm ci
+            else
+              echo "Обнаружены расхождения, обновляем lock-файл..."
+              rm -f package-lock.json
+              npm install
+            fi
+          else
+            echo "Lock-файл отсутствует, создаем новый..."
+            npm install
+          fi
+          npm cache verify
 
       # Шаг 2.4: Собираем проект (происходит на серверах GitHub)
       - name: Build project
