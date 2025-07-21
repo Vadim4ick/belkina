@@ -26,19 +26,18 @@ const filterVideos: FieldHook = async ({ value, req, data }) => {
   try {
     const { id } = await JwtService.verifyToken(token)
 
-    console.log('✅ Токен валиден')
+    // console.log('✅ Токен валиден')
 
     const purchase = await gql.GetPurchaseById({
       courseId: data?.id,
       userId: id,
     })
 
-    console.log('✅ Вы купили этот курс')
-
     if (purchase.Purchases.docs?.[0]?.id) {
+      // console.log('✅ Вы купили этот курс')
       return value
     } else {
-      console.warn('⚠️ Вы не купили этот курс')
+      // console.warn('⚠️ Вы не купили этот курс')
       return (value as KinescopeVideoItem[]).map((v, i) =>
         i === 0 ? v : { ...v, kinescopeId: undefined },
       )
@@ -62,16 +61,33 @@ const Courses: CollectionConfig = {
 
   hooks: {
     afterChange: [
-      async () => {
+      async ({ doc, operation, previousDoc }) => {
+        if (operation === 'create') {
+          await invalidateTags(
+            CacheKeys.tags.courseBySlug({
+              slug: doc?.slug,
+            }),
+          )
+        } else {
+          await invalidateTags(
+            CacheKeys.tags.courseBySlug({
+              slug: previousDoc?.slug,
+            }),
+          )
+        }
+
         await invalidateTags(CacheKeys.tags.purchasesAll())
-        await invalidateTags(CacheKeys.tags.courseBySlug())
       },
     ],
 
     afterDelete: [
-      async () => {
+      async ({ doc }) => {
         await invalidateTags(CacheKeys.tags.purchasesAll())
-        await invalidateTags(CacheKeys.tags.courseBySlug())
+        await invalidateTags(
+          CacheKeys.tags.courseBySlug({
+            slug: doc?.slug,
+          }),
+        )
       },
     ],
 

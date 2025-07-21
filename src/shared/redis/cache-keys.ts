@@ -25,14 +25,17 @@ export const CacheKeys = {
 
     getFAQ: () => join(V, 'faq'),
 
-    // courseBySlug: ({ slug }: { slug: string }) => join(V, 'courses', slug),
-    courseBySlug: () => join(V, 'courseBySlug'),
+    courseBySlug: ({ slug }: { slug: string }) => join(V, 'courses', slug),
 
     testById: (id: string | number) => join(V, 'test', id),
     recommendations: (userId: string | number) => join(V, 'recommendations', userId),
     recommendationsAll: () => join(V, 'recommendations'),
 
     testHistory: (userId: string | number) => join(V, 'testHistory', userId),
+
+    posts: () => join(V, 'posts'),
+    postBySlug: ({ slug }: { slug: string }) => join(V, 'posts', slug),
+    postsByPage: ({ page }: { page: number }) => join(V, 'posts', page),
   },
 } as const
 

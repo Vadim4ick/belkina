@@ -14,7 +14,7 @@ export async function fetchCoursesBySlug({ slug }: { slug: string }) {
 
 export const getCoursesBySlug = withRedisCache(fetchCoursesBySlug, {
   ttl: 180,
-  tags: () => {
-    return [CacheKeys.tags.courseBySlug()]
+  tags: ([{ slug }]) => {
+    return [CacheKeys.tags.courseBySlug({ slug })]
   },
 })

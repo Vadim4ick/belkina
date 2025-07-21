@@ -27,3 +27,10 @@ query GetPurchasesCoursesVideos($userId: JSON) {
     }
   }
 }
+
+mutation UpdatePurchasesStatus($id: Int!, $status: PurchaseUpdate_status_MutationInput) {
+  updatePurchase(id: $id, data: { status: $status }) {
+    id
+    status
+  }
+}
