@@ -1,3 +1,5 @@
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 import { CollectionConfig } from 'payload'
 
 export const TestQuestions: CollectionConfig = {
@@ -12,6 +14,19 @@ export const TestQuestions: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.recommendationsAll())
+      },
+    ],
+
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.recommendationsAll())
+      },
+    ],
   },
   fields: [
     {

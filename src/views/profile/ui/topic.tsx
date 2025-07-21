@@ -1,79 +1,229 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
+import React, { useMemo } from 'react'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import { GetRecomendationsQuery } from '@/shared/graphql/__generated__'
-import { Typography } from '@/shared/ui/typography'
-import { memo } from 'react'
+import { ArrowLeft } from 'lucide-react'
 
 type LexicalNode = {
   type: string
   text?: string
   tag?: string
+  format?: number
+  detail?: number
+  version?: number
   children?: LexicalNode[]
 }
 
-export const LexicalRenderer = ({ node }: { node: LexicalNode }) => {
-  const renderNode = (node: LexicalNode, key?: number): React.ReactNode => {
-    if (!node) return null
+function parseLexical(desc: unknown): LexicalNode | null {
+  if (!desc) return null
+  try {
+    const data = typeof desc === 'string' ? JSON.parse(desc) : (desc as any)
 
-    switch (node.type) {
+    if (data && data.root && data.root.type === 'root') {
+      return data.root
+    }
+    // иногда payload richtext может быть сразу root
+    if (data && (data as any).type === 'root') {
+      return data as LexicalNode
+    }
+    return null
+  } catch (e) {
+    console.warn('[Lexical parse] failed', e, desc)
+    return null
+  }
+}
+
+/* ===== Renderer ===== */
+const LexicalRenderer: React.FC<{ node: LexicalNode | null }> = ({ node }) => {
+  if (!node) return null
+
+  const render = (n: LexicalNode, key?: React.Key): React.ReactNode => {
+    switch (n.type) {
       case 'root':
-        return <div key={key}>{node.children?.map((child, i) => renderNode(child, i))}</div>
+        return <div key={key}>{n.children?.map((c, i) => render(c, i))}</div>
+
+      case 'paragraph':
+        return (
+          <p key={key} className="mb-3 text-base leading-relaxed text-[#424242]">
+            {n.children?.map((c, i) => render(c, i))}
+          </p>
+        )
+
+      case 'heading': {
+        const Tag = (n.tag as any) || 'h3'
+        return (
+          <Tag key={key} className="mt-4 mb-2 text-xl font-semibold text-black">
+            {n.children?.map((c, i) => render(c, i))}
+          </Tag>
+        )
+      }
 
       case 'list':
         return (
-          <ul key={key} className="space-y-1 text-base text-[#626262]">
-            {node.children?.map((child, i) => renderNode(child, i))}
+          <ul key={key} className="mb-4 list-disc space-y-1 pl-5 text-[#424242]">
+            {n.children?.map((c, i) => render(c, i))}
           </ul>
         )
 
       case 'listitem':
+        return <li key={key}>{n.children?.map((c, i) => render(c, i))}</li>
+
+      case 'quote':
         return (
-          <Typography
-            className="flex items-center gap-1"
-            key={key}
-            tag="li"
-            variant="poppins-md-16"
-          >
-            - {node.children?.map((child, i) => renderNode(child, i))}
-          </Typography>
+          <blockquote key={key} className="border-accent mb-4 border-l-4 pl-4 text-[#555] italic">
+            {n.children?.map((c, i) => render(c, i))}
+          </blockquote>
         )
 
-      case 'text':
-        return (
-          <Typography key={key} tag="p" variant="poppins-md-16">
-            {node.text}
-          </Typography>
-        )
+      case 'linebreak':
+        return <br key={key} />
+
+      case 'text': {
+        // Можешь добавить анализ format (bold/italic и т.д.)
+        return <span key={key}>{n.text}</span>
+      }
 
       default:
         return null
     }
   }
 
-  return <div className="prose">{renderNode(node)}</div>
+  return <div>{render(node)}</div>
 }
 
-const Topic = memo(
-  ({ recomendations }: { recomendations: GetRecomendationsQuery['GetUserRecommendations'] }) => {
-    return (
-      <>
-        {recomendations?.map((el) => {
-          return (
-            <div
-              key={el.id}
-              className="bg-light-grey flex flex-col gap-12 rounded-xl px-4 py-6 md:px-6 md:py-8 lg:px-12"
-            >
-              <div className="flex flex-col gap-6">
-                <h2 className="text-3xl font-bold text-black">{el.title}</h2>
+type TopicProps = {
+  recomendations: GetRecomendationsQuery['GetUserRecommendations']
+  autoplayDelay?: number
+}
 
-                {el?.description && <LexicalRenderer node={JSON.parse(el?.description)?.root} />}
+/* ===== Styles Helpers (можешь заменить на tailwind classes) ===== */
+const cardBaseClasses =
+  'w-full bg-[#f4f4f4] rounded-xl px-6 py-8 flex flex-col gap-6 min-h-[210px] h-full'
+
+/* ===== Single Recommendation (no carousel) ===== */
+const SingleRecommendation: React.FC<{
+  rec: GetRecomendationsQuery['GetUserRecommendations'][number]
+}> = ({ rec }) => {
+  const rootNode = useMemo(() => parseLexical(rec.description), [rec.description])
+
+  return (
+    <div className="w-full">
+      <div className={cardBaseClasses}>
+        <h2 className="text-3xl font-bold text-black">{rec.title}</h2>
+        {rootNode ? (
+          <LexicalRenderer node={rootNode} />
+        ) : (
+          <p className="text-base text-[#626262]">Нет подробного описания.</p>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/* ===== Multiple Recommendations (carousel) ===== */
+const CarouselRecommendations: React.FC<{
+  recs: GetRecomendationsQuery['GetUserRecommendations']
+  autoplayDelay: number
+}> = ({ recs, autoplayDelay }) => {
+  const plugins =
+    recs.length > 1
+      ? [
+          Autoplay({
+            delay: autoplayDelay,
+            stopOnInteraction: false,
+            playOnInit: true,
+          }),
+        ]
+      : []
+
+  // Embla – viewportRef вешаем на контейнер дорожки
+  const [viewportRef, emblaApi] = useEmblaCarousel(
+    {
+      align: 'start',
+      loop: true,
+      skipSnaps: false,
+    },
+    plugins,
+  )
+
+  return (
+    <div className="relative w-full">
+      {/* Viewport */}
+      <div ref={viewportRef} className="overflow-hidden">
+        {/* Container */}
+        <div className="-ml-4 flex">
+          {recs.map((rec) => {
+            const rootNode = parseLexical(rec.description)
+            return (
+              <div
+                key={rec.id}
+                className="flex-[0_0_100%] pl-4 md:flex-[0_0_100%] lg:flex-[0_0_100%] xl:flex-[0_0_100%]"
+              >
+                <div className={cardBaseClasses}>
+                  <h2 className="text-2xl font-bold text-black">{rec.title}</h2>
+                  {rootNode ? (
+                    <LexicalRenderer node={rootNode} />
+                  ) : (
+                    <p className="text-base text-[#626262]">Нет описания.</p>
+                  )}
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </>
-    )
-  },
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Навигация (кастомные кнопки) */}
+      {recs.length > 1 && (
+        <div className="absolut pointer-events-none inset-0 flex w-full items-center justify-between">
+          <CarouselNavButton dir="prev" onClick={() => emblaApi?.scrollPrev()} />
+          <CarouselNavButton dir="next" onClick={() => emblaApi?.scrollNext()} />
+        </div>
+      )}
+    </div>
+  )
+}
+
+const CarouselNavButton: React.FC<{ dir: 'prev' | 'next'; onClick: () => void }> = ({
+  dir,
+  onClick,
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={`pointer-events-auto m-2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-black shadow transition hover:bg-white ${
+      dir === 'prev' ? '' : ''
+    }`}
+    aria-label={dir === 'prev' ? 'Предыдущая рекомендация' : 'Следующая рекомендация'}
+  >
+    {dir === 'prev' ? (
+      <ArrowLeft className="size-4" />
+    ) : (
+      <ArrowLeft className="size-4 rotate-180" />
+    )}
+  </button>
 )
 
-export { Topic }
+export const Topic: React.FC<TopicProps> = ({ recomendations, autoplayDelay = 7500 }) => {
+  const list = recomendations || []
+  if (!list.length) {
+    return null
+  }
+
+  if (list.length === 1) {
+    return (
+      <div className="mx-auto">
+        <SingleRecommendation rec={list[0]} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="mx-auto">
+      <CarouselRecommendations recs={list} autoplayDelay={autoplayDelay} />
+    </div>
+  )
+}

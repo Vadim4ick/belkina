@@ -9,15 +9,10 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import {
-  revalidateDelete,
-  revalidatePost,
-  revalidatePostsList,
-  revalidatePostsListDelete,
-} from './hooks/revalidatePost'
-
 import { slugField } from '@/shared/fields/slug'
 import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
+import { CacheKeys } from '@/shared/redis/cache-keys'
+import { invalidateTags } from '@/shared/redis/gqlCached'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -114,10 +109,35 @@ export const Posts: CollectionConfig<'posts'> = {
       },
     },
   ],
+  // hooks: {
+  //   afterChange: [revalidatePost, revalidatePostsList],
+  //   afterDelete: [revalidateDelete, revalidatePostsListDelete],
+  // },
+
   hooks: {
-    afterChange: [revalidatePost, revalidatePostsList],
-    afterDelete: [revalidateDelete, revalidatePostsListDelete],
+    afterChange: [
+      async ({ doc, previousDoc, operation }) => {
+        const tags = new Set<string>()
+        tags.add(CacheKeys.tags.posts())
+
+        if (doc?.slug) tags.add(CacheKeys.tags.postBySlug(doc.slug))
+        if (operation === 'update' && previousDoc?.slug && previousDoc.slug !== doc.slug) {
+          tags.add(CacheKeys.tags.postBySlug(previousDoc.slug))
+        }
+
+        await invalidateTags(...Array.from(tags))
+      },
+    ],
+    afterDelete: [
+      async ({ doc }) => {
+        const tags = new Set<string>()
+        tags.add(CacheKeys.tags.posts())
+        if (doc?.slug) tags.add(CacheKeys.tags.postBySlug(doc.slug))
+        await invalidateTags(...Array.from(tags))
+      },
+    ],
   },
+
   versions: {
     drafts: true,
     maxPerDoc: 5,

@@ -430,10 +430,12 @@ export interface Admin {
 export interface Purchase {
   id: number;
   user: number | User;
+  status?: ('active' | 'inactive') | null;
   course: number | Course;
   tariff: number | Tariff;
   pricePaid: number;
   purchasedAt?: string | null;
+  expiresAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -852,10 +854,12 @@ export interface SubjectsSelect<T extends boolean = true> {
  */
 export interface PurchasesSelect<T extends boolean = true> {
   user?: T;
+  status?: T;
   course?: T;
   tariff?: T;
   pricePaid?: T;
   purchasedAt?: T;
+  expiresAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -1,6 +1,8 @@
 import { GraphQLClient } from 'graphql-request'
 import * as generated from './__generated__'
 
+import 'dotenv/config'
+
 export const nextFetchWithTags = (tags: string[]) => {
   const nextFetch = (input: RequestInfo, init?: RequestInit) => {
     return fetch(input, {
