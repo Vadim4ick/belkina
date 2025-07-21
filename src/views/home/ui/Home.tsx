@@ -16,27 +16,33 @@ const Home = async () => {
   const faqsVal = getSettledValue(faqs)
   const postssVal = getSettledValue(posts)
 
+  console.log('home', resVal)
+
   return (
     <>
-      {resVal && resVal?.HomePage.mainOfferBanner.title && (
-        <MainBanner content={resVal?.HomePage.mainOfferBanner} />
+      {resVal && resVal?.HomePage && resVal?.HomePage?.mainOfferBanner?.title && (
+        <MainBanner content={resVal?.HomePage?.mainOfferBanner} />
       )}
 
-      {resVal && resVal?.HomePage.aboutProjectBanner.title && (
+      {resVal && resVal?.HomePage && resVal?.HomePage.aboutProjectBanner.title && (
         <AboutBanner content={resVal?.HomePage.aboutProjectBanner} />
       )}
 
-      {resVal && resVal?.HomePage.featuredTest && (
+      {resVal && resVal?.HomePage.featuredTest && resVal?.HomePage.featuredTest && (
         <TestCardQuestions test={resVal?.HomePage.featuredTest} />
       )}
 
-      {faqsVal && faqsVal?.Faqs?.docs?.length > 0 && <AskedQuestions faqs={faqsVal?.Faqs.docs} />}
-
-      {resVal && resVal?.HomePage.diagnosticTestBanner.title && (
-        <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
+      {faqsVal && faqsVal?.Faqs && faqsVal?.Faqs?.docs?.length > 0 && (
+        <AskedQuestions faqs={faqsVal?.Faqs.docs} />
       )}
 
-      {postssVal && postssVal?.Posts?.docs?.length > 0 && (
+      {resVal &&
+        resVal?.HomePage.diagnosticTestBanner &&
+        resVal?.HomePage.diagnosticTestBanner.title && (
+          <TestsBanner content={resVal?.HomePage.diagnosticTestBanner} />
+        )}
+
+      {postssVal && postssVal?.Posts && postssVal?.Posts?.docs?.length > 0 && (
         <SliderWrapper posts={postssVal?.Posts} />
       )}
     </>
