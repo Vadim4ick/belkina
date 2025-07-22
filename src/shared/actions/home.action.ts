@@ -9,7 +9,7 @@ async function fetchHomePage() {
   return gql.GetHomePage()
 }
 export const getHomePage = withRedisCache(fetchHomePage, {
-  ttl: 360,
+  ttl: 180,
   tags: () => [CacheKeys.tags.getHomePage()],
   name: 'fetchHomePage',
 })
