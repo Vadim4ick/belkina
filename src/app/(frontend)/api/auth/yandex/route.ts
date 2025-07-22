@@ -22,12 +22,12 @@ export async function GET(req: Request) {
   }
 
   try {
-    console.log('🚀 Exchange params', {
-      code,
-      client_id: process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID,
-      client_secret: process.env.YANDEX_CLIENT_SECRET,
-      redirect_uri: process.env.NEXT_PUBLIC_YANDEX_REDIRECT_URI,
-    })
+    // console.log('🚀 Exchange params', {
+    //   code,
+    //   client_id: process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID,
+    //   client_secret: process.env.YANDEX_CLIENT_SECRET,
+    //   redirect_uri: process.env.NEXT_PUBLIC_YANDEX_REDIRECT_URI,
+    // })
 
     // 🔷 получить access_token
     const tokenRes = await axios.post(
