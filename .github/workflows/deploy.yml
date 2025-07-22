@@ -49,6 +49,7 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=no" \
             --exclude='package-lock.json' \
             --exclude='node_modules' \
+            --exclude='media' \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }}:/home/${{ secrets.SERVER_USER }}/belkina-app
 
       - name: Deploy & restart via PM2
