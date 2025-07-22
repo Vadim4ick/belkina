@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { JwtService } from '@/shared/services/jwt-service'
 import { CookiesService } from '@/shared/services/cookies-service'
-import { getMeCached } from '@/shared/actions/me.action'
+import { gql } from '@/shared/graphql/client'
 
 export async function GET() {
   const { accessToken, refreshToken } = await CookiesService.getTokens()
@@ -51,7 +51,9 @@ export async function GET() {
 
   if (!payload) return NextResponse.json({ user: null })
 
-  const user = await getMeCached(payload.email)
+  const res = await gql.GetUserByEmail({ email: payload.email })
+  const user = res.Users?.docs?.[0]
+
   if (!user) {
     await CookiesService.clearAuthCookies()
     return NextResponse.json({ user: null })

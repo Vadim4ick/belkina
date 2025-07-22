@@ -120,6 +120,8 @@ export const Posts: CollectionConfig<'posts'> = {
         const tags = new Set<string>()
         tags.add(CacheKeys.tags.posts())
 
+        await invalidateTags(CacheKeys.tags.getHomePage())
+
         if (doc?.slug) tags.add(CacheKeys.tags.postBySlug(doc.slug))
         if (operation === 'update' && previousDoc?.slug && previousDoc.slug !== doc.slug) {
           tags.add(CacheKeys.tags.postBySlug(previousDoc.slug))
@@ -132,6 +134,7 @@ export const Posts: CollectionConfig<'posts'> = {
       async ({ doc }) => {
         const tags = new Set<string>()
         tags.add(CacheKeys.tags.posts())
+        await invalidateTags(CacheKeys.tags.getHomePage())
         if (doc?.slug) tags.add(CacheKeys.tags.postBySlug(doc.slug))
         await invalidateTags(...Array.from(tags))
       },

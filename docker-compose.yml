@@ -16,7 +16,7 @@ services:
       interval: 30s
       timeout: 10s
     networks:
-      backend-network:  
+      backend-network:
 
   redis-commander:
     image: ghcr.io/joeferner/redis-commander:latest
@@ -34,21 +34,21 @@ services:
     networks:
       backend-network:
 
-  postgres:
-    restart: always
-    image: postgres:latest
-    env_file: .env
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'  
-    networks:
-      backend-network:  
+  # postgres:
+  #   restart: always
+  #   image: postgres:latest
+  #   env_file: .env
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - '5432:5432'
+  #   networks:
+  #     backend-network:
 
 volumes:
   redis_data:
-  pgdata:
+  # pgdata:
 
 networks:
   backend-network:
-    driver: bridge  
+    driver: bridge

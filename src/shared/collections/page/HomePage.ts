@@ -15,6 +15,7 @@ export const HomePage: GlobalConfig = {
     afterChange: [
       async () => {
         await invalidateTags(CacheKeys.tags.getFAQ())
+        await invalidateTags(CacheKeys.tags.getHomePage())
       },
     ],
   },

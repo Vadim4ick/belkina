@@ -12,7 +12,6 @@ import { gql } from '../graphql/client'
 const redisOpts = {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
-  password: process.env.REDIS_PASSWORD,
 }
 
 const redis = new IORedis(process.env.REDIS_URL ?? 'redis://localhost:6379', redisOpts)
