@@ -18722,6 +18722,22 @@ export type GetUserByEmailQueryVariables = Exact<{
 
 export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string } }> } };
 
+export type UpdateUserEmailMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  email: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserEmailMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
+export type UpdateUserPasswordMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  password: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserPasswordMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
   id
@@ -19184,6 +19200,22 @@ export const GetUserByEmailDocument = gql`
   }
 }
     ${MediaFragmentFragmentDoc}`;
+export const UpdateUserEmailDocument = gql`
+    mutation UpdateUserEmail($id: Int!, $email: String) {
+  updateUser(id: $id, data: {email: $email}) {
+    id
+    email
+  }
+}
+    `;
+export const UpdateUserPasswordDocument = gql`
+    mutation UpdateUserPassword($id: Int!, $password: String) {
+  updateUser(id: $id, data: {password: $password}) {
+    id
+    email
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -19272,6 +19304,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetUserByEmail(variables: GetUserByEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserByEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserByEmailQuery>({ document: GetUserByEmailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUserByEmail', 'query', variables);
+    },
+    UpdateUserEmail(variables: UpdateUserEmailMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserEmailMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserEmailMutation>({ document: UpdateUserEmailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserEmail', 'mutation', variables);
+    },
+    UpdateUserPassword(variables: UpdateUserPasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserPasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserPasswordMutation>({ document: UpdateUserPasswordDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserPassword', 'mutation', variables);
     }
   };
 }

@@ -5,20 +5,12 @@ import { gql } from '@/shared/graphql/client'
 import { JwtService } from '@/shared/services/jwt-service'
 import { CookiesService } from '@/shared/services/cookies-service'
 
-// тут глобально, чтобы `Set` жил между запросами
-const usedCodes = new Set<string>()
-
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const code = searchParams.get('code')
 
   if (!code) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 })
-  }
-
-  // 👮‍♂️ Проверка на повторное использование
-  if (usedCodes.has(code)) {
-    return NextResponse.json({ error: 'Code already used' }, { status: 400 })
   }
 
   try {
@@ -41,8 +33,6 @@ export async function GET(req: Request) {
       }),
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     )
-
-    usedCodes.add(code)
 
     const { access_token } = tokenRes.data
     if (!access_token) throw new Error('No access_token')
@@ -101,7 +91,7 @@ export async function GET(req: Request) {
     let userMessage = 'Произошла ошибка при авторизации. Пожалуйста, попробуйте снова.'
 
     if (errorDescription.includes('expired') || errorDescription.includes('invalid_grant')) {
-      userMessage = 'Код авторизации устарел. Пожалуйста, попробуйте войди снова.'
+      userMessage = 'Код авторизации устарел. Пожалуйста, попробуйте войти снова.'
     }
 
     return NextResponse.json(

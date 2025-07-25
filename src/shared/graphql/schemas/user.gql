@@ -36,3 +36,17 @@ query GetUserByEmail($email: EmailAddress!) {
     totalDocs
   }
 }
+
+mutation UpdateUserEmail($id: Int!, $email: String) {
+  updateUser(id: $id, data: { email: $email }) {
+    id
+    email
+  }
+}
+
+mutation UpdateUserPassword($id: Int!, $password: String) {
+  updateUser(id: $id, data: { password: $password }) {
+    id
+    email
+  }
+}
