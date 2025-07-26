@@ -150,6 +150,7 @@ export interface AdminAuthOperations {
 export interface User {
   id: number;
   email: string;
+  isVerified?: boolean | null;
   password: string;
   name?: string | null;
   avatar?: (number | null) | Media;
@@ -615,6 +616,7 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   email?: T;
+  isVerified?: T;
   password?: T;
   name?: T;
   avatar?: T;
