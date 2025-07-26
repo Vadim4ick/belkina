@@ -120,7 +120,7 @@ export async function Profile() {
 
   return (
     <section className="max-mobile:py-6 py-12">
-      <div className="flex w-full items-center justify-between gap-4">
+      <div className="flex flex-col gap-4">
         <ProfileTitle />
 
         <ProfileForm />

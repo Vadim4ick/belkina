@@ -5,7 +5,7 @@ import { JwtService } from '@/shared/services/jwt-service'
 import { CookiesService } from '@/shared/services/cookies-service'
 
 export async function POST(req: Request) {
-  const { email, password, type } = await req.json()
+  const { email, password, type, name } = await req.json()
   const { accessToken } = await CookiesService.getTokens()
   const { id } = await JwtService.verifyToken(accessToken)
 
@@ -23,10 +23,15 @@ export async function POST(req: Request) {
       id: Number(id),
       email: email,
     })
-  } else {
+  } else if (type === 'password') {
     updatedUser = await gql.UpdateUserPassword({
       id: Number(id),
       password: hashedPassword || '',
+    })
+  } else {
+    updatedUser = await gql.UpdateUserName({
+      id: Number(id),
+      name: name,
     })
   }
 

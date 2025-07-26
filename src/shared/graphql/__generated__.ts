@@ -18815,6 +18815,14 @@ export type UpdateUserVerifiedMutationVariables = Exact<{
 
 export type UpdateUserVerifiedMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
 
+export type UpdateUserNameMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  name: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserNameMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
   id
@@ -19303,6 +19311,14 @@ export const UpdateUserVerifiedDocument = gql`
   }
 }
     `;
+export const UpdateUserNameDocument = gql`
+    mutation UpdateUserName($id: Int!, $name: String) {
+  updateUser(id: $id, data: {name: $name}) {
+    id
+    email
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -19400,6 +19416,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     UpdateUserVerified(variables: UpdateUserVerifiedMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserVerifiedMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserVerifiedMutation>({ document: UpdateUserVerifiedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserVerified', 'mutation', variables);
+    },
+    UpdateUserName(variables: UpdateUserNameMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserNameMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserNameMutation>({ document: UpdateUserNameDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserName', 'mutation', variables);
     }
   };
 }
