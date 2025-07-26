@@ -59,3 +59,10 @@ mutation UpdateUserVerified($id: Int!) {
     email
   }
 }
+
+mutation UpdateUserName($id: Int!, $name: String) {
+  updateUser(id: $id, data: { name: $name }) {
+    id
+    email
+  }
+}

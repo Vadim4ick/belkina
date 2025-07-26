@@ -10,125 +10,90 @@ import {
   DialogClose,
   DialogDescription,
 } from '@/shared/ui/dialog'
-import { useProfileStore } from '@/entities/user/use-profile-store'
-import { useState } from 'react'
-import { toast } from 'sonner'
-import { useUpdateUser } from '@/shared/services/profile.service'
 import { Skeleton } from '@/shared/ui/skeleton'
-import { authService } from '@/shared/services/auth.service'
-import { useQueryClient } from '@tanstack/react-query'
+import { useProfileForm } from '../model/hooks'
 
 export const ProfileForm = () => {
-  const profile = useProfileStore((el) => el.profile)
-
-  const [isOpen, setIsOpen] = useState<'email' | 'password' | null>(null)
-  const [verifyOpen, setVerifyOpen] = useState(false)
-  const [email, setEmail] = useState(profile?.email || '')
-  const [password, setPassword] = useState('')
-  const [code, setCode] = useState('')
-  const [token, setToken] = useState<string | null>(null)
-  const [pending, setPending] = useState(false)
-
-  const { mutate, isPending } = useUpdateUser()
-  const queryClient = useQueryClient()
-
-  const handleUpdate = async () => {
-    if (!isOpen) return
-
-    mutate(
-      {
-        gqlFn: async (data) => {
-          const res = await fetch('/api/profile/update', {
-            method: 'POST',
-            body: JSON.stringify(data),
-          })
-
-          const json = await res.json()
-
-          if (!res.ok) {
-            throw new Error(json.error ?? 'Произошла ошибка при обновлении')
-          }
-
-          return json
-        },
-        variables: isOpen === 'email' ? { type: 'email', email } : { type: 'password', password },
-      },
-      {
-        onSuccess: () => {
-          toast.success('Данные успешно обновлены')
-          setIsOpen(null)
-        },
-        onError: (err) => {
-          toast.error(err.message || 'Ошибка при обновлении')
-        },
-      },
-    )
-  }
-
-  const handleConfirm = async () => {
-    try {
-      setPending(true)
-      const res = await authService.resendCodeToEmail(profile?.email)
-      setToken(res.token)
-      setVerifyOpen(true)
-      toast.success('Код подтверждения отправлен на почту')
-    } catch (e) {
-      toast.error((e as Error).message)
-    } finally {
-      setPending(false)
-    }
-  }
-
-  const handleVerify = async () => {
-    if (!token || !code) return toast.error('Введите код')
-
-    try {
-      setPending(true)
-      await authService.confirm(token, code)
-      toast.success('Email подтверждён')
-      setVerifyOpen(false)
-      queryClient.invalidateQueries({ queryKey: ['me'] })
-    } catch (e) {
-      toast.error((e as Error).message)
-    } finally {
-      setPending(false)
-    }
-  }
+  const {
+    profile,
+    profileFields,
+    isOpen,
+    setIsOpen,
+    verifyOpen,
+    setVerifyOpen,
+    code,
+    setCode,
+    pending,
+    isPending,
+    handleUpdate,
+    handleConfirm,
+    handleVerify,
+  } = useProfileForm()
 
   return (
-    <div className="flex items-center justify-between gap-4">
-      {profile?.isVerified ? (
-        <>
-          <Button className="w-full" onClick={() => setIsOpen('email')}>
-            Изменить почту
-          </Button>
-          <Button className="w-full" onClick={() => setIsOpen('password')}>
-            Изменить пароль
-          </Button>
-        </>
-      ) : (
-        <Button className="w-full" onClick={handleConfirm} disabled={pending}>
-          Подтвердить почту
-        </Button>
-      )}
+    <div className="border-border w-full rounded-xl border bg-white p-6 shadow-sm">
+      <h2 className="mb-4 text-xl font-semibold">Персональные данные</h2>
 
-      {/* Диалог изменения email / пароля */}
+      <div className="mb-6 space-y-2 text-sm">
+        <p>
+          <span className="text-muted-foreground">Имя:</span>{' '}
+          <span className="font-medium">{profile?.name || '—'}</span>
+        </p>
+        <p>
+          <span className="text-muted-foreground">Email:</span>{' '}
+          <span className="font-medium">{profile?.email || '—'}</span>
+        </p>
+        <p>
+          <span className="text-muted-foreground">Статус:</span>{' '}
+          <span
+            className={
+              profile?.isVerified ? 'font-medium text-green-600' : 'font-medium text-red-600'
+            }
+          >
+            {profile?.isVerified ? 'Подтверждён' : 'Не подтверждён'}
+          </span>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        {profile?.isVerified ? (
+          profileFields.map((field) => (
+            <Button
+              key={field.key}
+              variant="secondary"
+              className="w-full"
+              onClick={() => setIsOpen(field.key as typeof isOpen)}
+            >
+              {field.label}
+            </Button>
+          ))
+        ) : (
+          <Button className="col-span-full" onClick={handleConfirm} disabled={pending}>
+            Подтвердить почту
+          </Button>
+        )}
+      </div>
+
+      {/* Диалог изменения email / пароля / имени */}
       <Dialog open={!!isOpen} onOpenChange={() => setIsOpen(null)}>
-        <DialogContent className="flex max-w-[300px] flex-col gap-4 rounded-[8px] bg-white p-6">
+        <DialogContent className="flex max-w-[360px] flex-col gap-4 rounded-[10px] bg-white p-6">
           <DialogHeader>
-            <DialogTitle>{isOpen === 'email' ? 'Изменение почты' : 'Изменение пароля'}</DialogTitle>
+            <DialogTitle>
+              {profileFields.find((f) => f.key === isOpen)?.label || 'Изменение'}
+            </DialogTitle>
           </DialogHeader>
 
           {isPending ? (
             <Skeleton className="bg-muted h-10 w-full rounded-md" />
           ) : (
             <Input
-              value={isOpen === 'email' ? email : password}
-              onChange={(e) =>
-                isOpen === 'email' ? setEmail(e.target.value) : setPassword(e.target.value)
-              }
-              type={isOpen === 'email' ? 'email' : 'password'}
-              placeholder={isOpen === 'email' ? 'Новая почта' : 'Новый пароль'}
+              value={profileFields.find((f) => f.key === isOpen)?.value || ''}
+              onChange={(e) => {
+                const setter = profileFields.find((f) => f.key === isOpen)?.setValue
+                if (setter) setter(e.target.value)
+              }}
+              type={profileFields.find((f) => f.key === isOpen)?.type || 'text'}
+              placeholder={profileFields.find((f) => f.key === isOpen)?.placeholder}
             />
           )}
 
@@ -147,7 +112,7 @@ export const ProfileForm = () => {
 
       {/* Диалог подтверждения email */}
       <Dialog open={verifyOpen} onOpenChange={setVerifyOpen}>
-        <DialogContent className="flex max-w-[340px] flex-col gap-4 rounded-[8px] bg-white p-6">
+        <DialogContent className="flex max-w-[360px] flex-col gap-4 rounded-[10px] bg-white p-6">
           <DialogHeader>
             <DialogTitle>Подтверждение Email</DialogTitle>
             <DialogDescription>Введите код, полученный на вашу почту.</DialogDescription>
