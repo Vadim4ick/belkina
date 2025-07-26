@@ -67,6 +67,11 @@ export const Users: CollectionConfig = {
       unique: true,
     },
     {
+      name: 'isVerified',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
       name: 'password',
       type: 'text',
       required: true,

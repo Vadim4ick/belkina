@@ -5,11 +5,9 @@ import { Typography } from '@/shared/ui/typography'
 import { Container } from '@/shared/ui/container'
 import { Pagination } from '@/shared/ui/pagination'
 import { GetPostListQuery } from '@/shared/graphql/__generated__'
-import { EmptyDataMessage } from '@/widgets/widgets/empty-data-message'
+import { EmptyDataMessage } from '@/widgets/empty-data-message'
 
 const PostListPage = ({ posts }: { posts: GetPostListQuery['Posts'] }) => {
-  console.log('posts', posts.docs.length < 1)
-
   if (posts.docs.length < 1)
     return (
       <section className="max-mobile:py-6 py-12">

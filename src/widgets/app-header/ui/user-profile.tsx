@@ -24,6 +24,7 @@ import { useProfileStore } from '@/entities/user/use-profile-store'
 
 import { useLogout, useProfile } from '@/shared/hooks/use-profile'
 import { Skeleton } from '@/shared/ui/skeleton'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
 
 interface UserProfileProps {
   className?: string
@@ -64,9 +65,27 @@ export const UserProfile = memo(({ className, reverse }: UserProfileProps) => {
       <Typography variant="poppins-md-16">{profile?.name}</Typography>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-12 w-12 self-center rounded-full p-px">
-            <ProfileAvatar path={profile?.avatar?.url ?? ''} className="h-12 w-12" />
-          </Button>
+          <div className="relative">
+            <Button variant="ghost" className="h-12 w-12 self-center rounded-full p-px">
+              <ProfileAvatar path={profile?.avatar?.url ?? ''} className="h-12 w-12" />
+            </Button>
+
+            {!profile.isVerified && (
+              <Tooltip>
+                <TooltipTrigger
+                  className={cn(
+                    'absolute top-0.5 right-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white',
+                  )}
+                >
+                  !
+                </TooltipTrigger>
+
+                <TooltipContent side="top" sideOffset={6}>
+                  Почта не подтверждена. Пожалуйста подтвердите ее в профиле
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mr-2 w-56">
           <DropdownMenuLabel>

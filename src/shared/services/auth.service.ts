@@ -1,62 +1,76 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import axios, { AxiosError } from 'axios'
+
 export class AuthService {
   async login(email: string, password: string) {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-
-    if (!res.ok) {
-      const data = await res.json()
-      throw new Error(data.error || 'Ошибка авторизации')
+    try {
+      await axios.post('/api/auth/login', { email, password })
+      return true
+    } catch (error) {
+      // @ts-ignore
+      throw new Error((error as AxiosError).response?.data?.message || 'Ошибка авторизации')
     }
-
-    return true
   }
 
   async register(email: string, password: string) {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-
-    if (!res.ok) {
-      const data = await res.json()
-      throw new Error(data.error || 'Ошибка регистрации')
+    try {
+      const res = await axios.post('/api/auth/register', { email, password })
+      return res.data.token as string
+    } catch (error) {
+      // @ts-ignore
+      throw new Error((error as AxiosError).response?.data?.message || 'Ошибка регистрации')
     }
+  }
 
-    return true
+  async confirm(token: string, code: string) {
+    try {
+      const res = await axios.post('/api/auth/register/confirm', { token, code })
+      return res.data
+    } catch (error) {
+      // @ts-ignore
+      throw new Error((error as AxiosError).response?.data?.message || 'Ошибка подтверждения')
+    }
+  }
+
+  async resendCode(token: string) {
+    try {
+      const res = await axios.post('/api/auth/resend-code', { token })
+      return res.data
+    } catch (error) {
+      // @ts-ignore
+      throw new Error((error as AxiosError).response?.data?.message || 'Ошибка отправки')
+    }
   }
 
   async logout() {
-    await fetch('/api/auth/logout', {
-      method: 'POST',
-    })
+    await axios.post('/api/auth/logout')
   }
 
   async refresh() {
-    const res = await fetch('/api/auth/refresh', {
-      method: 'POST',
-    })
-
-    if (!res.ok) {
+    try {
+      await axios.post('/api/auth/refresh')
+      return true
+    } catch {
       throw new Error('Не удалось обновить токен')
     }
-
-    return true
   }
 
   async getMe() {
-    const res = await fetch('/api/auth/me', {
-      method: 'GET',
-    })
-
-    if (!res.ok) {
+    try {
+      const res = await axios.get('/api/auth/me')
+      return res.data
+    } catch {
       throw new Error('Не удалось получить данные пользователя')
     }
+  }
 
-    return res.json()
+  async resendCodeToEmail(email: string) {
+    try {
+      const res = await axios.post('/api/auth/resend-code-to-email', { email })
+      return res.data
+    } catch {
+      throw new Error('Не удалось отправить код на почту')
+    }
   }
 }
 

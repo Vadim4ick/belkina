@@ -1,4 +1,3 @@
-import { Typography } from '@/shared/ui/typography'
 import { TestsHistory } from '@/widgets/tests-history'
 import { Topic } from './topic'
 import { cookies } from 'next/headers'
@@ -8,6 +7,7 @@ import { getRecommendations } from '@/shared/actions/recommendation.action'
 import { getSettledValue } from '@/shared/lib/utils'
 import { getPurchasesCourses } from '@/shared/actions/purchases.action'
 import { ProfileForm } from './profile-form'
+import { ProfileTitle } from './profile-title'
 
 // const mockProducts = [
 //   {
@@ -121,9 +121,7 @@ export async function Profile() {
   return (
     <section className="max-mobile:py-6 py-12">
       <div className="flex w-full items-center justify-between gap-4">
-        <Typography tag="h1" variant="visuelt-bold-48" className="mb-6">
-          Профиль
-        </Typography>
+        <ProfileTitle />
 
         <ProfileForm />
       </div>
