@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 import { useUpdateUser } from '@/shared/services/profile.service'
 import { authService } from '@/shared/services/auth.service'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
+import axios from 'axios'
 
 export const useProfileForm = () => {
   const profile = useProfileStore((s) => s.profile)
@@ -54,24 +56,26 @@ export const useProfileForm = () => {
     mutate(
       {
         gqlFn: async (data) => {
-          const res = await fetch('/api/profile/update', {
-            method: 'POST',
-            body: JSON.stringify(data),
-          })
+          try {
+            const res = await axios.post('/api/profile/update', data)
+            return res.data
+          } catch (error: any) {
+            const message = error?.response?.data?.message || 'Ошибка при обновлении профиля'
 
-          const json = await res.json()
-          if (!res.ok) throw new Error(json.error ?? 'Ошибка при обновлении')
-          return json
+            throw {
+              message,
+              response: error?.response,
+            }
+          }
         },
         variables: { type: field.key, [field.key]: field.value },
       },
       {
         onSuccess: () => {
-          toast.success('Данные успешно обновлены')
-          setIsOpen(null)
-        },
-        onError: (err) => {
-          toast.error(err.message || 'Ошибка при обновлении')
+          // setIsOpen(null)
+          setTimeout(() => {
+            setIsOpen(null)
+          }, 200)
         },
       },
     )
