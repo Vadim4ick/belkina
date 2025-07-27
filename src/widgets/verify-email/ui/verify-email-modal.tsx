@@ -43,6 +43,7 @@ export function VerifyEmailModal({ token, isOpen, onClose }: Props) {
       toast.success(res?.message ?? 'Подтверждение прошло успешно')
       queryClient.invalidateQueries({ queryKey: ['me'] })
       onClose()
+      setCode('')
     } catch (error) {
       toast.error((error as Error).message ?? 'Неизвестная ошибка')
     } finally {
@@ -56,7 +57,9 @@ export function VerifyEmailModal({ token, isOpen, onClose }: Props) {
     setSuccess('')
 
     try {
-      await authService.resendCode(token as string)
+      await authService.resendCode({
+        token: token as string,
+      })
 
       setSuccess('Новый код отправлен на почту')
     } catch (e) {

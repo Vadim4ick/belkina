@@ -22,9 +22,9 @@ export class AuthService {
     }
   }
 
-  async confirm(token: string, code: string) {
+  async confirm(token: string, code: string, onlyCheck = false) {
     try {
-      const res = await axios.post('/api/auth/register/confirm', { token, code })
+      const res = await axios.post('/api/auth/register/confirm', { token, code, onlyCheck })
       return res.data
     } catch (error) {
       // @ts-ignore
@@ -32,13 +32,17 @@ export class AuthService {
     }
   }
 
-  async resendCode(token: string) {
+  async resendCode({ token, email }: { token?: string; email?: string }) {
     try {
-      const res = await axios.post('/api/auth/resend-code', { token })
+      const res = await axios.post('/api/auth/resend-code', {
+        ...(token && { token }),
+        ...(email && { email }),
+      })
+
       return res.data
     } catch (error) {
-      // @ts-ignore
-      throw new Error((error as AxiosError).response?.data?.message || 'Ошибка отправки')
+      console.error(error)
+      throw new Error('Ошибка при повторной отправке кода')
     }
   }
 

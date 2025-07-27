@@ -5,11 +5,17 @@ import { CookiesService } from '@/shared/services/cookies-service'
 import { gql } from '@/shared/graphql/client'
 
 export async function POST(req: Request) {
-  const { token, code } = await req.json()
+  const { token, code, onlyCheck } = await req.json()
 
   const isValid = await NodemailerService.verifyCodeToken(token, code)
+
   if (!isValid) {
     return NextResponse.json({ message: 'Неверный или истёкший код' }, { status: 400 })
+  }
+
+  // Если нужно только проверить код — ничего больше не делаем
+  if (onlyCheck) {
+    return NextResponse.json({ message: 'Код подтверждён' })
   }
 
   // Распакуем email из токена
