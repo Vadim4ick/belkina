@@ -6,10 +6,11 @@ import { authService } from '@/shared/services/auth.service'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
+import { ProfileVariantField } from './type'
 
 export const useProfileForm = () => {
   const profile = useProfileStore((s) => s.profile)
-  const [isOpen, setIsOpen] = useState<'email' | 'password' | 'name' | null>(null)
+  const [isOpen, setIsOpen] = useState<ProfileVariantField | null>(null)
   const [verifyOpen, setVerifyOpen] = useState(false)
   const [email, setEmail] = useState(profile?.email || '')
   const [password, setPassword] = useState('')
@@ -18,7 +19,9 @@ export const useProfileForm = () => {
   const [token, setToken] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
-  const [pendingField, setPendingField] = useState<'email' | 'password' | null>(null)
+  const [pendingField, setPendingField] = useState<Exclude<ProfileVariantField, 'name'> | null>(
+    null,
+  )
 
   const { mutate, isPending } = useUpdateUser()
   const queryClient = useQueryClient()
@@ -50,12 +53,12 @@ export const useProfileForm = () => {
     },
   ]
 
-  const startChange = async (field: 'email' | 'password' | 'name') => {
+  const startChange = async (field: ProfileVariantField) => {
     if (field === 'name') {
-      // имя можно менять без верификации
       setIsOpen('name')
       return
     }
+
     try {
       setPending(true)
       const res = await authService.resendCode({
