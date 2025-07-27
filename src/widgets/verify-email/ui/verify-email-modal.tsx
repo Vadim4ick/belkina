@@ -77,7 +77,12 @@ export function VerifyEmailModal({ token, isOpen, onClose }: Props) {
           <DialogDescription>Введите код из письма. Он действует 10 минут.</DialogDescription>
         </DialogHeader>
 
-        <Input placeholder="Введите код" value={code} onChange={(e) => setCode(e.target.value)} />
+        <Input
+          placeholder="Введите код"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          maxLength={4}
+        />
 
         {error && <p className="text-sm text-red-500">{error}</p>}
         {success && <p className="text-sm text-green-500">{success}</p>}

@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 import { useUpdateUser } from '@/shared/services/profile.service'
 import { authService } from '@/shared/services/auth.service'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
 import { ProfileVariantField } from './type'
 
 export const useProfileForm = () => {
@@ -82,19 +80,6 @@ export const useProfileForm = () => {
 
     mutate(
       {
-        gqlFn: async (data) => {
-          try {
-            const res = await axios.post('/api/profile/update', data)
-            return res.data
-          } catch (error: any) {
-            const message = error?.response?.data?.message || 'Ошибка при обновлении профиля'
-
-            throw {
-              message,
-              response: error?.response,
-            }
-          }
-        },
         variables: { type: field.key, [field.key]: field.value },
       },
       {

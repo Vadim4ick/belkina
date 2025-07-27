@@ -120,16 +120,20 @@ export const ProfileForm = () => {
           setCode('')
         }}
       >
-        <DialogContent className="flex max-w-[360px] flex-col gap-4 rounded-[10px] bg-white p-6">
+        <DialogContent className="flex max-w-[450px] flex-col gap-4 rounded-[10px] bg-white p-6">
           <DialogHeader>
-            <DialogTitle>Подтверждение Email</DialogTitle>
-            <DialogDescription>Введите код, полученный на вашу почту.</DialogDescription>
+            <DialogTitle>Подтверждение основной почты</DialogTitle>
+            <DialogDescription>
+              Прежде чем изменить email или пароль, подтвердите доступ к текущей почте (
+              {profile?.email}). Введите код, отправленный на ваш адрес.
+            </DialogDescription>
           </DialogHeader>
 
           <Input
             placeholder="Код из письма"
             value={code}
             onChange={(e) => setCode(e.target.value)}
+            maxLength={4}
           />
 
           <div className="flex flex-col gap-2">

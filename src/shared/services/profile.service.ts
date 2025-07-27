@@ -3,10 +3,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 import { toast } from 'sonner'
+import { authService } from './auth.service'
 
 type UpdateUserArgs = {
   mutationKey?: string[]
-  gqlFn: (args: any) => Promise<any> // универсальная GQL-функция
   variables: any // переменные для gqlFn
   invalidateMe?: boolean // если нужно инвалидировать `me`
 }
@@ -18,11 +18,8 @@ export const useUpdateUser = () => {
   return useMutation({
     mutationKey: ['updateUser', profile.profile?.id],
 
-    mutationFn: async ({
-      gqlFn,
-      variables,
-    }: Omit<UpdateUserArgs, 'mutationKey' | 'invalidateMe'>) => {
-      return await gqlFn(variables)
+    mutationFn: async ({ variables }: Omit<UpdateUserArgs, 'mutationKey' | 'invalidateMe'>) => {
+      return await authService.profileUpdate(variables)
     },
 
     onSuccess: () => {
