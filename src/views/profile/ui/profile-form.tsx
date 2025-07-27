@@ -12,6 +12,7 @@ import {
 } from '@/shared/ui/dialog'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { useProfileForm } from '../model/hooks'
+import { ProfileVariantField } from '../model/type'
 
 export const ProfileForm = () => {
   const {
@@ -63,8 +64,7 @@ export const ProfileForm = () => {
               key={field.key}
               variant="secondary"
               className="w-full"
-              // onClick={() => setIsOpen(field.key as typeof isOpen)}
-              onClick={() => startChange(field.key as 'email' | 'password' | 'name')}
+              onClick={() => startChange(field.key as ProfileVariantField)}
             >
               {field.label}
             </Button>

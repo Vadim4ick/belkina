@@ -24,7 +24,7 @@ export class AuthService {
 
   async confirm(token: string, code: string, onlyCheck = false) {
     try {
-      const res = await axios.post('/api/auth/register/confirm', { token, code, onlyCheck })
+      const res = await axios.post('/api/profile/confirm', { token, code, onlyCheck })
       return res.data
     } catch (error) {
       // @ts-ignore
