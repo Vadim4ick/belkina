@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios, { AxiosError } from 'axios'
 
@@ -19,6 +20,20 @@ export class AuthService {
     } catch (error) {
       // @ts-ignore
       throw new Error((error as AxiosError).response?.data?.message || 'Ошибка регистрации')
+    }
+  }
+
+  async profileUpdate(data: any) {
+    try {
+      const res = await axios.post('/api/profile/update', data)
+      return res.data
+    } catch (error: any) {
+      const message = error?.response?.data?.message || 'Ошибка при обновлении профиля'
+
+      throw {
+        message,
+        response: error?.response,
+      }
     }
   }
 
