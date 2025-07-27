@@ -26,6 +26,8 @@ export const useUpdateUser = () => {
     },
 
     onSuccess: () => {
+      toast.success('Данные успешно обновлены')
+
       queryClient.invalidateQueries({ queryKey: ['me'] })
     },
 
