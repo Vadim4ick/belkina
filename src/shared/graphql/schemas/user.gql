@@ -16,6 +16,7 @@ mutation CreateUser(
   ) {
     id
     email
+    isVerified
   }
 }
 
@@ -27,6 +28,7 @@ query GetUserByEmail($email: EmailAddress!) {
       password
       signupMethod
       role
+      isVerified
 
       name
       avatar {
@@ -34,5 +36,33 @@ query GetUserByEmail($email: EmailAddress!) {
       }
     }
     totalDocs
+  }
+}
+
+mutation UpdateUserEmail($id: Int!, $email: String) {
+  updateUser(id: $id, data: { email: $email }) {
+    id
+    email
+  }
+}
+
+mutation UpdateUserPassword($id: Int!, $password: String) {
+  updateUser(id: $id, data: { password: $password }) {
+    id
+    email
+  }
+}
+
+mutation UpdateUserVerified($id: Int!) {
+  updateUser(id: $id, data: { isVerified: true }) {
+    id
+    email
+  }
+}
+
+mutation UpdateUserName($id: Int!, $name: String) {
+  updateUser(id: $id, data: { name: $name }) {
+    id
+    email
   }
 }

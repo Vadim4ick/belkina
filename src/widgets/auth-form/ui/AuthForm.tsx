@@ -17,6 +17,7 @@ type AuthFormProps = {
   password: string
   code?: string
   pending: boolean
+  isCode?: boolean
   agreed?: boolean
   error: string
   onEmailChange: (v: string) => void
@@ -30,6 +31,7 @@ type AuthFormProps = {
 export function AuthForm({
   mode,
   email,
+  isCode,
   password,
   code = '',
   pending,
@@ -51,7 +53,19 @@ export function AuthForm({
       </Typography>
 
       <div className="border-stroke flex w-full max-w-[350px] flex-col gap-4 rounded-md border bg-white px-8 py-[20px]">
-        {!pending ? (
+        {isCode ? (
+          <>
+            <Input
+              type="text"
+              placeholder="Код подтверждения"
+              value={code}
+              onChange={(e) => onCodeChange?.(e.target.value)}
+            />
+            <Button size="xl" onClick={onVerify} disabled={pending}>
+              {pending ? 'Проверка...' : 'Подтвердить'}
+            </Button>
+          </>
+        ) : (
           <>
             <Input
               type="email"
@@ -78,8 +92,8 @@ export function AuthForm({
               </label>
             )}
 
-            <Button disabled={isSignUp && !agreed} size="xl" onClick={onSubmit}>
-              {isSignUp ? 'Регистрация' : 'Войти'}
+            <Button disabled={(isSignUp && !agreed) || pending} size="xl" onClick={onSubmit}>
+              {pending ? 'Загрузка...' : isSignUp ? 'Регистрация' : 'Войти'}
             </Button>
 
             <div className="flex items-center">
@@ -90,7 +104,6 @@ export function AuthForm({
 
             <div className="flex gap-2">
               <GoogleLoginBtn />
-
               <LoginBtn />
             </div>
 
@@ -105,18 +118,6 @@ export function AuthForm({
                 </Typography>
               </Link>
             </Typography>
-          </>
-        ) : (
-          <>
-            <Input
-              type="text"
-              placeholder="Код подтверждения"
-              value={code}
-              onChange={(e) => onCodeChange?.(e.target.value)}
-            />
-            <Button size="xl" onClick={onVerify}>
-              Подтвердить
-            </Button>
           </>
         )}
 

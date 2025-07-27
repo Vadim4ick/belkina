@@ -16517,6 +16517,7 @@ export type User = {
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly email: Scalars['EmailAddress']['output'];
   readonly id: Scalars['Int']['output'];
+  readonly isVerified: Maybe<Scalars['Boolean']['output']>;
   readonly name: Maybe<Scalars['String']['output']>;
   readonly password: Scalars['String']['output'];
   readonly role: User_Role;
@@ -16577,6 +16578,12 @@ export type User_Id_Operator = {
   readonly less_than: InputMaybe<Scalars['Int']['input']>;
   readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
   readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type User_IsVerified_Operator = {
+  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type User_Name_Operator = {
@@ -16661,6 +16668,7 @@ export type User_Where = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly isVerified: InputMaybe<User_IsVerified_Operator>;
   readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
@@ -16675,6 +16683,7 @@ export type User_Where_And = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly isVerified: InputMaybe<User_IsVerified_Operator>;
   readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
@@ -16689,6 +16698,7 @@ export type User_Where_Or = {
   readonly createdAt: InputMaybe<User_CreatedAt_Operator>;
   readonly email: InputMaybe<User_Email_Operator>;
   readonly id: InputMaybe<User_Id_Operator>;
+  readonly isVerified: InputMaybe<User_IsVerified_Operator>;
   readonly name: InputMaybe<User_Name_Operator>;
   readonly password: InputMaybe<User_Password_Operator>;
   readonly role: InputMaybe<User_Role_Operator>;
@@ -16740,6 +16750,7 @@ export type UsersDocAccessFields = {
   readonly avatar: Maybe<UsersDocAccessFields_Avatar>;
   readonly createdAt: Maybe<UsersDocAccessFields_CreatedAt>;
   readonly email: Maybe<UsersDocAccessFields_Email>;
+  readonly isVerified: Maybe<UsersDocAccessFields_IsVerified>;
   readonly name: Maybe<UsersDocAccessFields_Name>;
   readonly password: Maybe<UsersDocAccessFields_Password>;
   readonly role: Maybe<UsersDocAccessFields_Role>;
@@ -16828,6 +16839,34 @@ export type UsersDocAccessFields_Email_Read = {
 
 export type UsersDocAccessFields_Email_Update = {
   readonly __typename?: 'UsersDocAccessFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_IsVerified = {
+  readonly __typename?: 'UsersDocAccessFields_isVerified';
+  readonly create: Maybe<UsersDocAccessFields_IsVerified_Create>;
+  readonly delete: Maybe<UsersDocAccessFields_IsVerified_Delete>;
+  readonly read: Maybe<UsersDocAccessFields_IsVerified_Read>;
+  readonly update: Maybe<UsersDocAccessFields_IsVerified_Update>;
+};
+
+export type UsersDocAccessFields_IsVerified_Create = {
+  readonly __typename?: 'UsersDocAccessFields_isVerified_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_IsVerified_Delete = {
+  readonly __typename?: 'UsersDocAccessFields_isVerified_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_IsVerified_Read = {
+  readonly __typename?: 'UsersDocAccessFields_isVerified_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersDocAccessFields_IsVerified_Update = {
+  readonly __typename?: 'UsersDocAccessFields_isVerified_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -16976,6 +17015,7 @@ export type UsersFields = {
   readonly avatar: Maybe<UsersFields_Avatar>;
   readonly createdAt: Maybe<UsersFields_CreatedAt>;
   readonly email: Maybe<UsersFields_Email>;
+  readonly isVerified: Maybe<UsersFields_IsVerified>;
   readonly name: Maybe<UsersFields_Name>;
   readonly password: Maybe<UsersFields_Password>;
   readonly role: Maybe<UsersFields_Role>;
@@ -17064,6 +17104,34 @@ export type UsersFields_Email_Read = {
 
 export type UsersFields_Email_Update = {
   readonly __typename?: 'UsersFields_email_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_IsVerified = {
+  readonly __typename?: 'UsersFields_isVerified';
+  readonly create: Maybe<UsersFields_IsVerified_Create>;
+  readonly delete: Maybe<UsersFields_IsVerified_Delete>;
+  readonly read: Maybe<UsersFields_IsVerified_Read>;
+  readonly update: Maybe<UsersFields_IsVerified_Update>;
+};
+
+export type UsersFields_IsVerified_Create = {
+  readonly __typename?: 'UsersFields_isVerified_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_IsVerified_Delete = {
+  readonly __typename?: 'UsersFields_isVerified_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_IsVerified_Read = {
+  readonly __typename?: 'UsersFields_isVerified_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type UsersFields_IsVerified_Update = {
+  readonly __typename?: 'UsersFields_isVerified_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -18017,6 +18085,7 @@ export type MutationUserInput = {
   readonly avatar: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: Scalars['String']['input'];
+  readonly isVerified: InputMaybe<Scalars['Boolean']['input']>;
   readonly name: InputMaybe<Scalars['String']['input']>;
   readonly password: Scalars['String']['input'];
   readonly role: User_Role_MutationInput;
@@ -18028,6 +18097,7 @@ export type MutationUserUpdateInput = {
   readonly avatar: InputMaybe<Scalars['Int']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly email: InputMaybe<Scalars['String']['input']>;
+  readonly isVerified: InputMaybe<Scalars['Boolean']['input']>;
   readonly name: InputMaybe<Scalars['String']['input']>;
   readonly password: InputMaybe<Scalars['String']['input']>;
   readonly role: InputMaybe<UserUpdate_Role_MutationInput>;
@@ -18713,14 +18783,45 @@ export type CreateUserMutationVariables = Exact<{
 }>;
 
 
-export type CreateUserMutation = { readonly __typename?: 'Mutation', readonly createUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+export type CreateUserMutation = { readonly __typename?: 'Mutation', readonly createUser: { readonly __typename?: 'User', readonly id: number, readonly email: any, readonly isVerified: boolean } };
 
 export type GetUserByEmailQueryVariables = Exact<{
   email: Scalars['EmailAddress']['input'];
 }>;
 
 
-export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string } }> } };
+export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly isVerified: boolean, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string } }> } };
+
+export type UpdateUserEmailMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  email: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserEmailMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
+export type UpdateUserPasswordMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  password: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserPasswordMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
+export type UpdateUserVerifiedMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type UpdateUserVerifiedMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
+
+export type UpdateUserNameMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+  name: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type UpdateUserNameMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
 
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
@@ -19163,6 +19264,7 @@ export const CreateUserDocument = gql`
   ) {
     id
     email
+    isVerified
   }
 }
     `;
@@ -19175,6 +19277,7 @@ export const GetUserByEmailDocument = gql`
       password
       signupMethod
       role
+      isVerified
       name
       avatar {
         ...MediaFragment
@@ -19184,6 +19287,38 @@ export const GetUserByEmailDocument = gql`
   }
 }
     ${MediaFragmentFragmentDoc}`;
+export const UpdateUserEmailDocument = gql`
+    mutation UpdateUserEmail($id: Int!, $email: String) {
+  updateUser(id: $id, data: {email: $email}) {
+    id
+    email
+  }
+}
+    `;
+export const UpdateUserPasswordDocument = gql`
+    mutation UpdateUserPassword($id: Int!, $password: String) {
+  updateUser(id: $id, data: {password: $password}) {
+    id
+    email
+  }
+}
+    `;
+export const UpdateUserVerifiedDocument = gql`
+    mutation UpdateUserVerified($id: Int!) {
+  updateUser(id: $id, data: {isVerified: true}) {
+    id
+    email
+  }
+}
+    `;
+export const UpdateUserNameDocument = gql`
+    mutation UpdateUserName($id: Int!, $name: String) {
+  updateUser(id: $id, data: {name: $name}) {
+    id
+    email
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -19272,6 +19407,18 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetUserByEmail(variables: GetUserByEmailQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserByEmailQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserByEmailQuery>({ document: GetUserByEmailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUserByEmail', 'query', variables);
+    },
+    UpdateUserEmail(variables: UpdateUserEmailMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserEmailMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserEmailMutation>({ document: UpdateUserEmailDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserEmail', 'mutation', variables);
+    },
+    UpdateUserPassword(variables: UpdateUserPasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserPasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserPasswordMutation>({ document: UpdateUserPasswordDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserPassword', 'mutation', variables);
+    },
+    UpdateUserVerified(variables: UpdateUserVerifiedMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserVerifiedMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserVerifiedMutation>({ document: UpdateUserVerifiedDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserVerified', 'mutation', variables);
+    },
+    UpdateUserName(variables: UpdateUserNameMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserNameMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserNameMutation>({ document: UpdateUserNameDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserName', 'mutation', variables);
     }
   };
 }

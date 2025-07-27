@@ -8,6 +8,7 @@ import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
 import { getFAQ } from '@/shared/actions/faq.action'
 import { getPosts } from '@/shared/actions/post.action'
+import { VerifyEmail } from '@/widgets/verify-email'
 
 const Home = async () => {
   const [res, faqs, posts] = await Promise.allSettled([getHomePage(), getFAQ(), getPosts()])
@@ -43,6 +44,8 @@ const Home = async () => {
       {postsVal && postsVal?.Posts && postsVal?.Posts?.docs?.length > 0 && (
         <SliderWrapper posts={postsVal?.Posts} />
       )}
+
+      <VerifyEmail />
     </>
   )
 }

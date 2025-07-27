@@ -8,19 +8,19 @@ export async function POST(req: Request) {
   const { email, password } = await req.json()
 
   if (!email || !password) {
-    return NextResponse.json({ error: 'Некорректные данные' }, { status: 400 })
+    return NextResponse.json({ message: 'Некорректные данные' }, { status: 400 })
   }
 
   const userRes = await gql.GetUserByEmail({ email })
   if (userRes.Users.totalDocs <= 0) {
-    return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 })
+    return NextResponse.json({ message: 'Пользователь не найден' }, { status: 404 })
   }
 
   const user = userRes.Users.docs[0]
 
   const isPasswordValid = await bcrypt.compare(password, user.password)
   if (!isPasswordValid) {
-    return NextResponse.json({ error: 'Неверный пароль' }, { status: 401 })
+    return NextResponse.json({ message: 'Неверный пароль' }, { status: 401 })
   }
 
   console.log('✅ ')
