@@ -18,6 +18,8 @@ export const useProfileForm = () => {
   const [token, setToken] = useState<string | null>(null)
   const [pending, setPending] = useState(false)
 
+  const [pendingField, setPendingField] = useState<'email' | 'password' | null>(null)
+
   const { mutate, isPending } = useUpdateUser()
   const queryClient = useQueryClient()
 
@@ -47,6 +49,28 @@ export const useProfileForm = () => {
       placeholder: 'Новое имя',
     },
   ]
+
+  const startChange = async (field: 'email' | 'password' | 'name') => {
+    if (field === 'name') {
+      // имя можно менять без верификации
+      setIsOpen('name')
+      return
+    }
+    try {
+      setPending(true)
+      const res = await authService.resendCode({
+        email: profile?.email,
+      })
+      setToken(res.token)
+      setPendingField(field) // запоминаем, что собирались менять
+      setVerifyOpen(true) // открываем окно с кодом
+      toast.success('Код подтверждения отправлен на почту')
+    } catch (e) {
+      toast.error((e as Error).message)
+    } finally {
+      setPending(false)
+    }
+  }
 
   const handleUpdate = async () => {
     if (!isOpen) return
@@ -84,7 +108,17 @@ export const useProfileForm = () => {
   const handleConfirm = async () => {
     try {
       setPending(true)
-      const res = await authService.resendCodeToEmail(profile?.email)
+
+      let res
+
+      if (!pendingField) {
+        res = await authService.resendCodeToEmail(profile?.email)
+      } else {
+        res = await authService.resendCode({
+          email: profile?.email,
+        })
+      }
+
       setToken(res.token)
       setVerifyOpen(true)
       toast.success('Код подтверждения отправлен на почту')
@@ -99,10 +133,20 @@ export const useProfileForm = () => {
     if (!token || !code) return toast.error('Введите код')
     try {
       setPending(true)
-      await authService.confirm(token, code)
+
+      await authService.confirm(token, code, pendingField ? true : false)
+
       toast.success('Email подтверждён')
+
+      setIsOpen(pendingField)
+      setPendingField(null)
       setVerifyOpen(false)
-      queryClient.invalidateQueries({ queryKey: ['me'] })
+
+      setCode('')
+
+      if (!pendingField) {
+        queryClient.invalidateQueries({ queryKey: ['me'] })
+      }
     } catch (e) {
       toast.error((e as Error).message)
     } finally {
@@ -124,5 +168,6 @@ export const useProfileForm = () => {
     handleUpdate,
     handleConfirm,
     handleVerify,
+    startChange,
   }
 }

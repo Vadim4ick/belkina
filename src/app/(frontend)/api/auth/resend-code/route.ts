@@ -2,11 +2,20 @@ import { NextResponse } from 'next/server'
 import { NodemailerService } from '@/shared/services/nodemailer.service'
 
 export async function POST(req: Request) {
-  const { token } = await req.json()
+  const body = await req.json()
+  const { token, email: rawEmail } = body
 
   try {
-    const { payload } = await NodemailerService.decode(token)
-    const email = payload.email
+    let email = rawEmail
+
+    if (token) {
+      const { payload } = await NodemailerService.decode(token)
+      email = payload.email
+    }
+
+    if (!email) {
+      return NextResponse.json({ message: 'Email не указан' }, { status: 400 })
+    }
 
     const code = NodemailerService.generateCode()
     const newToken = await NodemailerService.signCode(email, code)

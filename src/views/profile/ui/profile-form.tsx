@@ -28,6 +28,7 @@ export const ProfileForm = () => {
     handleUpdate,
     handleConfirm,
     handleVerify,
+    startChange,
   } = useProfileForm()
 
   return (
@@ -62,7 +63,8 @@ export const ProfileForm = () => {
               key={field.key}
               variant="secondary"
               className="w-full"
-              onClick={() => setIsOpen(field.key as typeof isOpen)}
+              // onClick={() => setIsOpen(field.key as typeof isOpen)}
+              onClick={() => startChange(field.key as 'email' | 'password' | 'name')}
             >
               {field.label}
             </Button>
@@ -111,7 +113,13 @@ export const ProfileForm = () => {
       </Dialog>
 
       {/* Диалог подтверждения email */}
-      <Dialog open={verifyOpen} onOpenChange={setVerifyOpen}>
+      <Dialog
+        open={verifyOpen}
+        onOpenChange={() => {
+          setVerifyOpen(false)
+          setCode('')
+        }}
+      >
         <DialogContent className="flex max-w-[360px] flex-col gap-4 rounded-[10px] bg-white p-6">
           <DialogHeader>
             <DialogTitle>Подтверждение Email</DialogTitle>
