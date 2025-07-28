@@ -124,14 +124,14 @@ export default buildConfig({
         GetUserTests: {
           type: PaginatedTestsWithStatusType,
           args: {
-            userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
+            userId: { type: GraphQL.GraphQLInt },
             page: { type: GraphQL.GraphQLInt },
             limit: { type: GraphQL.GraphQLInt },
-            testIds: {
-              type: new GraphQL.GraphQLNonNull(
-                new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt)),
-              ),
-            },
+            // testIds: {
+            //   type: new GraphQL.GraphQLNonNull(
+            //     new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt)),
+            //   ),
+            // },
             status: { type: TestResultStatusEnum },
             examId: { type: GraphQL.GraphQLInt },
             subjectId: { type: GraphQL.GraphQLInt }, // множественный, опциональный

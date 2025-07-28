@@ -4,15 +4,9 @@ query GetByIdTest($id: Int!) {
   }
 }
 
-query GetTestsByIds(
-  $or: [Test_where_or!]!
-  $limit: Int
-  $page: Int
-  $examId: JSON
-  $subjectId: JSON
-) {
+query GetTestsByIds($limit: Int, $page: Int, $examId: JSON, $subjectId: JSON) {
   Tests(
-    where: { OR: $or, exam: { equals: $examId }, subjects: { equals: $subjectId } }
+    where: { exam: { equals: $examId }, subjects: { equals: $subjectId } }
     limit: $limit
     page: $page
   ) {

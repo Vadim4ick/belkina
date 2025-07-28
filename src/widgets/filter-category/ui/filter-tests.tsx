@@ -1,4 +1,5 @@
 import { useTestsStore } from '@/entities/test/model/use-tests-store'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 import { TabCategory } from '@/features/tab-categories'
 import { GetAllExamsQuery, GetAllSubjectsQuery } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
@@ -14,6 +15,7 @@ const FilterTests = ({
   subjects?: GetAllSubjectsQuery['Subjects']['docs']
 }) => {
   const [open, setOpen] = useState(false)
+  const { profile } = useProfileStore()
 
   const { filters, setFilter, setCategoryIdx } = useTestsStore()
 
@@ -46,11 +48,13 @@ const FilterTests = ({
             <DialogTitle>Фильтры</DialogTitle>
           </DialogHeader>
 
-          <TabCategory
-            btns={btnsCategoryTests}
-            value={filters.categoryIdx}
-            onChange={(val) => setCategoryIdx(val)}
-          />
+          {!!profile?.id && (
+            <TabCategory
+              btns={btnsCategoryTests}
+              value={filters.categoryIdx}
+              onChange={(val) => setCategoryIdx(val)}
+            />
+          )}
 
           <div className="flex flex-col gap-4">
             <TabCategory

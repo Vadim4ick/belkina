@@ -23,7 +23,7 @@ export class NodemailerService {
     const verifyLink = `${process.env.NEXT_PUBLIC_SERVER_URL}?token=${token}`
 
     await this.transporter.sendMail({
-      from: `"Поддержка" <${process.env.SMTP_USER}>`,
+      from: `"Поддержка BELKINA.ONLINE" <${process.env.SMTP_USER}>`,
       to: email,
       subject: 'Код подтверждения',
       html: `
