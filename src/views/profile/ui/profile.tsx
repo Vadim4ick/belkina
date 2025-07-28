@@ -8,6 +8,7 @@ import { getSettledValue } from '@/shared/lib/utils'
 import { getPurchasesCourses } from '@/shared/actions/purchases.action'
 import { ProfileForm } from './profile-form'
 import { ProfileTitle } from './profile-title'
+import { Container } from '@/shared/ui/container'
 
 // const mockProducts = [
 //   {
@@ -120,19 +121,21 @@ export async function Profile() {
 
   return (
     <section className="max-mobile:py-6 py-12">
-      <div className="flex flex-col gap-4">
-        <ProfileTitle />
+      {/* Обертка контейнер использована на время деактивированноо сайдбара. При активации сайдбара контейнер не нужен!!!!!!!! */}
+      <Container>
+        <div className="flex flex-col gap-4">
+          <ProfileTitle />
 
-        <ProfileForm />
-      </div>
+          <ProfileForm />
+        </div>
 
-      {recommendationsVal && recommendationsVal?.GetUserRecommendations?.length > 0 && (
-        <Topic recomendations={recommendationsVal.GetUserRecommendations} />
-      )}
+        {recommendationsVal && recommendationsVal?.GetUserRecommendations?.length > 0 && (
+          <Topic recomendations={recommendationsVal.GetUserRecommendations} />
+        )}
 
-      {testHistoryVal && <TestsHistory testHistory={testHistoryVal.TestResults.docs} />}
+        {testHistoryVal && <TestsHistory testHistory={testHistoryVal.TestResults.docs} />}
 
-      {/* <ProductCardsGridCatalog title="Бесплатные материалы">
+        {/* <ProductCardsGridCatalog title="Бесплатные материалы">
         {mockProducts.map((product) => (
           <ProductCard key={product.id} {...product} />
         ))}
@@ -142,6 +145,7 @@ export async function Profile() {
           <ProductCard key={product.id} {...product} />
         ))}
       </ProductCardsGridCatalog> */}
+      </Container>
     </section>
   )
 }
