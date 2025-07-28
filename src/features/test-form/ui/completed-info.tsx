@@ -1,3 +1,4 @@
+import { useProfileStore } from '@/entities/user/use-profile-store'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Typography } from '@/shared/ui/typography'
@@ -17,9 +18,11 @@ const CompletedInfo = memo(
     publicFlag: boolean
     publicCorrectAnswers: number
   }) => {
-    if (publicFlag) {
+    const { profile } = useProfileStore()
+
+    if (publicFlag || !!!profile?.id) {
       return (
-        <div className="border-blue mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
+        <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
           <div className="text-4xl">🎉</div>
 
           <Typography tag="h2" variant="poppins-md-16" className="font-semibold text-green-400">
