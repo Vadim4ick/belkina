@@ -156,24 +156,22 @@ const WebinarCalendar = () => {
   }, [])
 
   return (
-    <section className="mt-12 md:px-5">
-      <div className="h-[800px] overflow-auto px-4 py-10 text-xs md:px-8">
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          onSelectEvent={handleSelectEvent}
-          messages={trenslateToRussian}
-          culture="ru"
-          popup
-          // Ограничения по времени для отображения (опционально)
-          min={new Date(0, 0, 0, 9, 0, 0)} // 9:00
-          max={new Date(0, 0, 0, 16, 0, 0)} // 16:00
-          views={['month']}
-        />
-      </div>
-    </section>
+    <div className="h-[600px] overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
+      <Calendar
+        localizer={localizer}
+        events={events}
+        startAccessor="start"
+        endAccessor="end"
+        onSelectEvent={handleSelectEvent}
+        messages={trenslateToRussian}
+        culture="ru"
+        popup
+        // Ограничения по времени для отображения (опционально)
+        min={new Date(0, 0, 0, 9, 0, 0)} // 9:00
+        max={new Date(0, 0, 0, 16, 0, 0)} // 16:00
+        views={['month']}
+      />
+    </div>
   )
 }
 
