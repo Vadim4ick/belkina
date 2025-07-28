@@ -7,20 +7,9 @@ import 'moment/locale/ru'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar-castom-styles.css'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/shared/ui/dialog'
-import { RegistrationForm } from '@/features/webinar-registration'
-
 // --- Инициализация локализации и локализатора ---
 moment.locale('ru')
 const localizer = momentLocalizer(moment)
-
-// --- Типы данных ---
 
 interface Webinar {
   id: number
@@ -34,9 +23,10 @@ interface CalendarEvent extends Event {
   resource: Webinar
 }
 
-// --- Русские сообщения для календаря ---
-
-const messages: Messages = {
+/**
+--- Русский интерфейс для календаря ---
+ */
+const trenslateToRussian: Messages = {
   allDay: 'Весь день',
   previous: 'Назад',
   next: 'Вперед',
@@ -52,14 +42,20 @@ const messages: Messages = {
   showMore: (total) => `+ ещё ${total}`,
 }
 
-// --- Мок-данные с ограничением времени 9:00 - 16:00 (МСК) ---
-
+/**
+--- возращает мок-данные с ограничением времени 9:00 - 16:00 (МСК) ---
+ * @returns id: number
+ * @returns name: string
+ * @returns start: string // ISO дата в UTC
+ * @returns end: string // ISO дата в UTC
+ * @returns seats: number
+ */
 const fetchWebinars = async (): Promise<Webinar[]> => {
   return [
     // Время в UTC соответствует 9:00 МСК + 0-7 часов на другие временные сдвиги до 16:00 МСК
     {
       id: 1,
-      name: 'Вебинар по Математике: Логарифмы',
+      name: 'Вебинар по Математике: ЛогарифмыЛога ифмыЛогарифм огарифмыЛогарифмыЛогариф мыЛогарифмыЛогари фмыЛогарифмы',
       start: '2025-07-01T06:00:00Z', // 9:00 МСК
       end: '2025-07-01T07:30:00Z', // 10:30 МСК
       seats: 25,
@@ -131,7 +127,6 @@ const fetchWebinars = async (): Promise<Webinar[]> => {
 }
 
 // --- Основной компонент с календарём и модалкой регистрации ---
-
 const WebinarCalendar = () => {
   const [rawWebinars, setRawWebinars] = useState<Webinar[]>([])
   const [selectedWebinar, setSelectedWebinar] = useState<Webinar | null>(null)
@@ -157,7 +152,7 @@ const WebinarCalendar = () => {
 
   const handleSelectEvent = useCallback((event: CalendarEvent) => {
     setSelectedWebinar(event.resource)
-    setIsModalOpen(true)
+    alert(event.title)
   }, [])
 
   return (
@@ -169,45 +164,15 @@ const WebinarCalendar = () => {
           startAccessor="start"
           endAccessor="end"
           onSelectEvent={handleSelectEvent}
-          messages={messages}
+          messages={trenslateToRussian}
           culture="ru"
           popup
           // Ограничения по времени для отображения (опционально)
           min={new Date(0, 0, 0, 9, 0, 0)} // 9:00
           max={new Date(0, 0, 0, 16, 0, 0)} // 16:00
-          views={[
-            'month',
-            //  'week',
-            //  'day',
-            // 'agenda',
-          ]}
+          views={['month']}
         />
       </div>
-
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="mx-1 w-[90%] rounded-xl bg-white px-6 py-8 md:max-w-[425px]">
-          {selectedWebinar && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-start">{selectedWebinar.name}</DialogTitle>
-                <DialogDescription className="text-start">
-                  Зарегистрируйтесь, чтобы принять участие.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-5">
-                <p>
-                  <strong>Дата:</strong> {/* Вывод с локализацией, показываем московское время */}
-                  {moment(selectedWebinar.start).utcOffset(3).format('LLLL')}
-                </p>
-                <p>
-                  <strong>Свободных мест:</strong> {selectedWebinar.seats}
-                </p>
-                <RegistrationForm />
-              </div>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
     </section>
   )
 }
