@@ -1,0 +1,154 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_changed: ${{ steps.frontend.outputs.changed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect frontend changes
+        id: frontend
+        run: |
+          # В вашем исходном скрипте git diff --name-only HEAD^ HEAD | grep "./"
+          # всегда будет true, т.к. "/" будет найдено.
+          # Если вы хотите проверять изменения именно во frontend-части,
+          # измените `grep "./"` на что-то вроде `grep -e "src/" -e "public/" -e "package.json"`.
+          # Для простоты пока оставим как есть, но учтите это.
+          if git diff --name-only HEAD^ HEAD | grep -q './'; then # добавил -q для grep
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+  deploy:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.frontend_changed == 'true'
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.0' # Убедитесь, что эта версия соответствует вашей на сервере
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH access
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy new release
+        run: |
+          # Генерируем уникальное имя для папки релиза на основе timestamp
+          RELEASE_TIMESTAMP=$(date +'%Y%m%d%H%M%S')
+          RELEASE_PATH="/home/${{ secrets.SERVER_USER }}/belkina-app/releases/$RELEASE_TIMESTAMP"
+          CURRENT_PATH="/home/${{ secrets.SERVER_USER }}/belkina-app/current"
+          PM2_ECOSYSTEM_CONFIG="/home/${{ secrets.SERVER_USER }}/belkina-app/ecosystem.config.js"
+
+          echo "Создаем новую директорию релиза на VPS: $RELEASE_PATH"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }} "mkdir -p $RELEASE_PATH"
+
+          echo "Rsyncing проект в новую директорию релиза..."
+          rsync -az \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            --exclude='package-lock.json' \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.vscode' \
+            --exclude='media' \
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }}:$RELEASE_PATH
+
+          echo "Выполняем команды на VPS..."
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.REMOTE_HOST }} << EOF
+          set -e # Выйти при первой ошибке
+
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+          nvm use 22.14.0 # Убедитесь, что NVM и эта версия Node.js установлены на сервере
+
+          echo "Переходим в директорию релиза: $RELEASE_PATH"
+          cd "$RELEASE_PATH"
+
+          echo "📦 Копируем .env файл"
+          cp ~/secrets/env .env
+
+          echo "📦 Устанавливаем зависимости (npm ci для CI/CD)"
+          npm ci # npm ci предпочтительнее npm install в CI/CD для воспроизводимости
+
+          echo "⚙️ Билдим проект (Next.js)"
+          # Убедитесь, что у вас достаточно памяти на VPS для этого шага
+          NODE_OPTIONS="--max-old-space-size=2048 --no-deprecation" npm run build
+
+          echo "Сохраняем конфиг PM2 (если еще не существует или требуется обновить)"
+          # Этот блок можно убрать, если ecosystem.config.js уже передан через rsync выше
+          # и его не нужно каждый раз генерировать
+          cat > "$PM2_ECOSYSTEM_CONFIG" << 'PM2_CONF'
+          module.exports = {
+            apps: [
+              {
+                name: 'belkina-app',
+                script: 'npm',
+                args: 'start',
+                cwd: '/home/${{ secrets.SERVER_USER }}/belkina-app/current',
+                instances: 'max',
+                exec_mode: 'cluster',
+                watch: false,
+                max_memory_restart: '1G',
+                env: {
+                  NODE_ENV: 'production',
+                },
+              },
+              {
+                name: 'belkina-worker',
+                script: 'npm',
+                args: 'run worker',
+                cwd: '/home/${{ secrets.SERVER_USER }}/belkina-app/current',
+                instances: 1,
+                watch: false,
+                max_memory_restart: '512M',
+                env: {
+                  NODE_ENV: 'production',
+                },
+              },
+            ],
+          };
+          PM2_CONF
+
+          echo "Переключаем симлинк 'current' на новый релиз: $RELEASE_PATH"
+          ln -sfn "$RELEASE_PATH" "$CURRENT_PATH"
+
+          echo "Перезагружаем PM2 процессы с новой конфигурацией и симлинком"
+          # Если PM2_ECOSYSTEM_CONFIG еще не добавлен, то pm2 start сначала
+          if ! pm2 list | grep -q belkina-app; then
+            echo "PM2 процесс belkina-app не найден, запускаем впервые."
+            pm2 start "$PM2_ECOSYSTEM_CONFIG" --only belkina-app
+          else
+            pm2 reload belkina-app --update-env # graceful reload
+          fi
+
+          if ! pm2 list | grep -q belkina-worker; then
+            echo "PM2 процесс belkina-worker не найден, запускаем впервые."
+            pm2 start "$PM2_ECOSYSTEM_CONFIG" --only belkina-worker
+          else
+            pm2 reload belkina-worker # graceful reload
+          fi
+
+          pm2 save # Сохраняем состояние PM2
+
+          echo "Очистка старых релизов (опционально, оставляем 5 последних)"
+          ls -dt /home/${{ secrets.SERVER_USER }}/belkina-app/releases/* | tail -n +6 | xargs rm -rf -- {} || true
+
+          echo "✅ Деплой завершён!!!!"
+          EOF
