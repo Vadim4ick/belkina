@@ -131,22 +131,20 @@ export const useGetAllUserTests = ({
   status,
   examId,
   subjectId,
-  testIds,
 }: {
   status?: TestResult_Status_All
   examId?: number
   subjectId?: number
-  testIds?: number[]
 }) => {
   const gql = useGqlClient({})
 
   const profile = useProfileStore()
 
   return useQuery({
-    queryKey: QUERY_KEYS.allUserTests(profile.profile?.id, { status, examId, subjectId, testIds }),
+    queryKey: QUERY_KEYS.allUserTests(profile.profile?.id, { status, examId, subjectId }),
     queryFn: async () => {
       const variables: Record<string, any> = {
-        userId: Number(profile.profile?.id),
+        ...(profile.profile?.id && { userId: Number(profile.profile.id) }),
       }
 
       if (status) {
@@ -161,10 +159,6 @@ export const useGetAllUserTests = ({
         variables.subjectId = subjectId
       }
 
-      if (testIds) {
-        variables.testIds = testIds
-      }
-
       try {
         // @ts-ignore
         return await gql.GetAllUserTests(variables)
@@ -174,6 +168,6 @@ export const useGetAllUserTests = ({
       }
     },
 
-    enabled: !!profile.profile?.id,
+    // enabled: !!profile.profile?.id,
   })
 }

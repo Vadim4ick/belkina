@@ -9,7 +9,7 @@ const ProfileTitle = () => {
   const { profile } = useProfileStore()
 
   return (
-    <Typography variant="visuelt-bold-48" className="relative mb-6">
+    <Typography variant="visuelt-bold-48" className="relative w-fit">
       Профиль{' '}
       {!profile?.isVerified && (
         <Tooltip>

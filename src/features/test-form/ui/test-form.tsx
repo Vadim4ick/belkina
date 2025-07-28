@@ -10,9 +10,12 @@ import { totalCorrectAnswersFn } from '../model/lib'
 import { SkeletonTestCard } from './skeleton-test-card'
 import { CompletedInfo } from './completed-info'
 import { useTestLogic } from '../model/hooks/useTestLogic'
+import { useProfileStore } from '@/entities/user/use-profile-store'
 
 const TestForm = memo(
   ({ test, publicFlag = false }: { test?: TestFragmentFragment; publicFlag?: boolean }) => {
+    const { profile } = useProfileStore()
+
     const {
       questions,
       step,
@@ -30,7 +33,7 @@ const TestForm = memo(
       isLoading,
       isFetching,
       testRes,
-    } = useTestLogic({ test, publicFlag })
+    } = useTestLogic({ test, publicFlag: publicFlag || !!!profile?.id })
 
     const totalCorrectAnswers = totalCorrectAnswersFn(testRes?.answers ?? [])
 
