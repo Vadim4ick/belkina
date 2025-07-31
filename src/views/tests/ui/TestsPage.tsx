@@ -38,6 +38,7 @@ const TestsPage = memo(
               Тесты
             </Typography>
 
+            {/* To Do По Аналогии с курсами привести верстку и  */}
             <FilterTests exams={exams} subjects={subjects} />
           </div>
 

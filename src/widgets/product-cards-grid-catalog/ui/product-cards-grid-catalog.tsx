@@ -15,7 +15,7 @@ const ProductCardsGridCatalog = ({
   isNull,
 }: ProductCardsGridCatalogProps) => {
   return (
-    <div className={cn('pt-8 pb-4 antialiased md:pt-12', className)}>
+    <div className={cn('antialiased', className)}>
       <div className="mx-auto flex flex-col gap-4 2xl:px-0">
         <div className="items-end justify-between space-y-4 sm:flex sm:space-y-0">
           <Typography tag="h2" variant="poppins-md-24">
