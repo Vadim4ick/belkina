@@ -10,5 +10,11 @@ export default async function Page() {
   const examsVal = getSettledValue(exams)
   const subjectsVal = getSettledValue(subjects)
 
+  // Добавляем проверку на null/undefined
+  if (!examsVal?.Exams?.docs || !subjectsVal?.Subjects?.docs) {
+    console.error('Missing required data:', { examsVal, subjectsVal })
+    return <div>Error loading data. Please try again later.</div>
+  }
+
   return <TestsPage exams={examsVal?.Exams.docs} subjects={subjectsVal!.Subjects.docs} />
 }
