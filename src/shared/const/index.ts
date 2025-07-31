@@ -55,11 +55,11 @@ export const navItems: NavItemsProps[] = [
     url: getRouteTests(),
     icon: BrainIcon,
   },
-  {
-    title: 'FAQ',
-    url: '#',
-    icon: FAQIcon,
-  },
+  // {
+  //   title: 'FAQ',
+  //   url: '#',
+  //   icon: FAQIcon,
+  // },
   {
     title: 'Блог',
     url: getRoutePosts(),
