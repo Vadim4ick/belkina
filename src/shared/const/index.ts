@@ -2,8 +2,9 @@ import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
 import { BookOpennCapIcon } from '@/shared/icons/book-open-text'
 import { FAQIcon } from '@/shared/icons/file-question-mark'
 import { Newspaper } from '@/shared/icons/newspaper'
-import { getRouteHome, getRouteCourses, getRoutePosts, getRouteVebinars } from '@/shared/lib/routes'
+import { getRouteHome, getRouteCourses, getRoutePosts, getRouteVebinars, getRouteTests } from '@/shared/lib/routes'
 import { TestResult_Status_All } from '../graphql/__generated__'
+import { BrainIcon } from 'lucide-react'
 
 export const RUS_LETTERS = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('')
 
@@ -58,7 +59,15 @@ export const navItems: NavItemsProps[] = [
     title: 'FAQ',
     url: '#',
     icon: FAQIcon,
+    title: 'Тесты',
+    url: getRouteTests(),
+    icon: BrainIcon,
   },
+  // {
+  //   title: 'FAQ',
+  //   url: '#',
+  //   icon: FAQIcon,
+  // },
   {
     title: 'Блог',
     url: getRoutePosts(),

@@ -215,14 +215,14 @@ export const Topic: React.FC<TopicProps> = ({ recomendations, autoplayDelay = 75
 
   if (list.length === 1) {
     return (
-      <div className="mx-auto">
+      <div className="mx-auto mt-6">
         <SingleRecommendation rec={list[0]} />
       </div>
     )
   }
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto mt-6">
       <CarouselRecommendations recs={list} autoplayDelay={autoplayDelay} />
     </div>
   )
