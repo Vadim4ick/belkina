@@ -5,6 +5,7 @@ export const getRouteProfile = () => '/profile'
 export const getRouteTests = () => '/tests'
 export const getRouteTestById = ({ id }: { id: string | number }) => `${getRouteTests()}/${id}`
 export const getRouteCourses = () => '/courses'
+export const getRouteVebinars = () => '/vebinars'
 export const getRouteCourseBySlug = ({ slug, videoId }: { slug: string; videoId: string }) =>
   `${getRouteCourses()}/${slug}/${videoId}`
 
