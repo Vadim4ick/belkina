@@ -17,6 +17,7 @@ import { TestQuestions } from './shared/collections/test/questions'
 import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
+import { Webinars } from './shared/collections/Webinars'
 import Purchases from './shared/collections/Purchases'
 
 import dotenv from 'dotenv'
@@ -64,6 +65,7 @@ export default buildConfig({
     Purchases,
     Posts,
     Courses,
+    Webinars,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),

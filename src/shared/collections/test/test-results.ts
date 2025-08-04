@@ -48,6 +48,8 @@ export const TestResults: CollectionConfig = {
      */
     afterDelete: [
       async ({ doc }) => {
+        if (doc?.user?.id == null) return
+
         try {
           const userId = doc?.user?.id
           if (!userId) return
