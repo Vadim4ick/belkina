@@ -11870,8 +11870,7 @@ export type QueryGetUserTestsArgs = {
   page: InputMaybe<Scalars['Int']['input']>;
   status: InputMaybe<TestResult_Status_All>;
   subjectId: InputMaybe<Scalars['Int']['input']>;
-  testIds: ReadonlyArray<Scalars['Int']['input']>;
-  userId: Scalars['Int']['input'];
+  userId: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -18737,11 +18736,10 @@ export type GetAllTestsByTitlesQueryVariables = Exact<{ [key: string]: never; }>
 export type GetAllTestsByTitlesQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string }> } };
 
 export type GetAllUserTestsQueryVariables = Exact<{
-  userId: Scalars['Int']['input'];
+  userId: InputMaybe<Scalars['Int']['input']>;
   status: InputMaybe<TestResult_Status_All>;
   examId: InputMaybe<Scalars['Int']['input']>;
   subjectId: InputMaybe<Scalars['Int']['input']>;
-  testIds: ReadonlyArray<Scalars['Int']['input']> | Scalars['Int']['input'];
 }>;
 
 
@@ -18755,7 +18753,6 @@ export type GetByIdTestQueryVariables = Exact<{
 export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } };
 
 export type GetTestsByIdsQueryVariables = Exact<{
-  or: ReadonlyArray<Test_Where_Or> | Test_Where_Or;
   limit: InputMaybe<Scalars['Int']['input']>;
   page: InputMaybe<Scalars['Int']['input']>;
   examId: InputMaybe<Scalars['JSON']['input']>;
@@ -19206,13 +19203,12 @@ export const GetAllTestsByTitlesDocument = gql`
 }
     `;
 export const GetAllUserTestsDocument = gql`
-    query GetAllUserTests($userId: Int!, $status: TestResult_Status_ALL, $examId: Int, $subjectId: Int, $testIds: [Int!]!) {
+    query GetAllUserTests($userId: Int, $status: TestResult_Status_ALL, $examId: Int, $subjectId: Int) {
   GetUserTests(
     userId: $userId
     status: $status
     examId: $examId
     subjectId: $subjectId
-    testIds: $testIds
   ) {
     docs {
       id
@@ -19234,9 +19230,9 @@ export const GetByIdTestDocument = gql`
 }
     ${TestFragmentFragmentDoc}`;
 export const GetTestsByIdsDocument = gql`
-    query GetTestsByIds($or: [Test_where_or!]!, $limit: Int, $page: Int, $examId: JSON, $subjectId: JSON) {
+    query GetTestsByIds($limit: Int, $page: Int, $examId: JSON, $subjectId: JSON) {
   Tests(
-    where: {OR: $or, exam: {equals: $examId}, subjects: {equals: $subjectId}}
+    where: {exam: {equals: $examId}, subjects: {equals: $subjectId}}
     limit: $limit
     page: $page
   ) {
@@ -19390,13 +19386,13 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetAllTestsByTitles(variables?: GetAllTestsByTitlesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllTestsByTitlesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllTestsByTitlesQuery>({ document: GetAllTestsByTitlesDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllTestsByTitles', 'query', variables);
     },
-    GetAllUserTests(variables: GetAllUserTestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllUserTestsQuery> {
+    GetAllUserTests(variables?: GetAllUserTestsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllUserTestsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllUserTestsQuery>({ document: GetAllUserTestsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllUserTests', 'query', variables);
     },
     GetByIdTest(variables: GetByIdTestQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetByIdTestQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetByIdTestQuery>({ document: GetByIdTestDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetByIdTest', 'query', variables);
     },
-    GetTestsByIds(variables: GetTestsByIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTestsByIdsQuery> {
+    GetTestsByIds(variables?: GetTestsByIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTestsByIdsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTestsByIdsQuery>({ document: GetTestsByIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTestsByIds', 'query', variables);
     },
     UpdateTestResult(variables: UpdateTestResultMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateTestResultMutation> {

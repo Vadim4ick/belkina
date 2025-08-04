@@ -11,6 +11,7 @@ import { useGetAllCourses } from '@/shared/services/courses.service'
 import { useCoursesStore } from '@/entities/courses/use-сourses-store'
 import { FilterCategory } from '@/widgets/filter-category'
 import { getRouteCourseBySlug } from '@/shared/lib/routes'
+import { EmptyDataMessage } from '@/widgets/empty-data-message'
 
 const CoursesList = memo(
   ({
@@ -30,23 +31,14 @@ const CoursesList = memo(
 
     return (
       <>
-        <section className="mt-12">
-          <Container className="flex flex-col gap-6">
-            <div className="flex items-center justify-between gap-2">
-              <Typography tag="h2" variant="visuelt-bold-48">
-                Курсы
-              </Typography>
-
+        <div className="py-6">
+          <Container className="flex flex-col">
+            <div className="flex justify-end">
               <FilterCategory exams={exams} subjects={subjects} isLoading={isLoadingCourses} />
             </div>
-          </Container>
-        </section>
-
-        <section>
-          <Container>
             <ProductCardsGridCatalog
               isNull={courses?.Courses?.docs.length === 0}
-              title="Каталог курсов"
+              // title="Каталог курсов"
             >
               {!isLoadingCourses && (
                 <>
@@ -70,7 +62,11 @@ const CoursesList = memo(
                     ))
                   ) : (
                     <div className="mt-12 flex items-center justify-center">
-                      <Typography variant="visuelt-bold-32">Курсы не найдены</Typography>
+                      {/* <Typography variant="visuelt-bold-32">Курсы не найдены</Typography> */}
+                      <EmptyDataMessage
+                        title="Курсы не найдены"
+                        message="Измените параметры поиска или попробуйте снова."
+                      />
                     </div>
                   )}
                 </>
@@ -96,7 +92,7 @@ const CoursesList = memo(
               </div>
             )}
           </Container>
-        </section>
+        </div>
       </>
     )
   },

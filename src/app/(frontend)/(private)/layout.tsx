@@ -11,7 +11,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <AuthProviders loading={true}>
       <AppHeader className="max-lg:hidden" />
 
-      <SidebarProvider
+      {/* Сайдбар закоментирован до момента появления видеокурсов и связанных с ними вкладок */}
+      {/* <SidebarProvider
         style={
           {
             '--sidebar-width': 'calc(var(--spacing) * 72)',
@@ -28,7 +29,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <SiteBarHeader />
           <div className="max-tablet:px-4 flex flex-1 flex-col px-6">{children}</div>
         </SidebarInset>
-      </SidebarProvider>
+      </SidebarProvider> */}
+
+      <main className="mt-[var(--header-height)] w-full flex-1">{children}</main>
     </AuthProviders>
   )
 }

@@ -7,20 +7,8 @@ query GetAllTestsByTitles {
   }
 }
 
-query GetAllUserTests(
-  $userId: Int!
-  $status: TestResult_Status_ALL
-  $examId: Int
-  $subjectId: Int
-  $testIds: [Int!]!
-) {
-  GetUserTests(
-    userId: $userId
-    status: $status
-    examId: $examId
-    subjectId: $subjectId
-    testIds: $testIds
-  ) {
+query GetAllUserTests($userId: Int, $status: TestResult_Status_ALL, $examId: Int, $subjectId: Int) {
+  GetUserTests(userId: $userId, status: $status, examId: $examId, subjectId: $subjectId) {
     docs {
       id
       title

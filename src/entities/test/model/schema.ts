@@ -20,19 +20,38 @@ export const createStepSchema = (question: QuestionFragmentFragment) => {
         [key]: z.array(z.string()).min(1, 'Выберите хотя бы один вариант'),
       })
 
-    // case 'matching':
-    //   return z.object({
-    //     [key]: z.object({
-    //       userAnswer: z
-    //         .record(z.string().regex(/^\d+$/, 'Ответ должен быть числом'))
-    //         .refine((obj) => Object.keys(obj).length === question.matchingPairs.length, {
-    //           message: 'Заполните все поля',
-    //         })
-    //         .refine((obj) => Object.values(obj).every((v) => v.trim() !== ''), {
-    //           message: 'Заполните все поля',
-    //         }),
-    //     }),
-    //   })
+    case 'matching': {
+      const pairsCount = question.matchingPairs.length
+
+      return z.object({
+        [key]: z.object({
+          /** Строка вида "132", длина = количеству пар */
+          answer: z
+            .string()
+            .trim()
+            .min(pairsCount, `Введите ${pairsCount} символ${pairsCount === 1 ? '' : 'а'}`)
+            .max(pairsCount, `Введите ровно ${pairsCount} символ${pairsCount === 1 ? '' : 'а'}`)
+            .regex(
+              new RegExp(`^[1-${pairsCount}]+$`),
+              `Допустимы только цифры 1‑${pairsCount} без пробелов`,
+            )
+            .refine(
+              (val) => new Set(val.split('')).size === pairsCount,
+              'Цифры не должны повторяться',
+            ),
+
+          shuffled: z
+            .array(
+              z.object({
+                id: z.string(),
+                left: z.string(),
+                right: z.string(),
+              }),
+            )
+            .length(pairsCount),
+        }),
+      })
+    }
 
     default:
       return z.object({})
