@@ -5,6 +5,7 @@ import { createTests } from './data/tests'
 import { seedRecommendations } from './data/recomendations'
 import { seedExams, seedSubjects } from './data/categories'
 import { seedTariffs } from './data/tariffs'
+import { seedWebinars } from './data/webinars'
 
 export const seed = async () => {
   console.log('🌱 Запуск сидеров...')
@@ -20,6 +21,8 @@ export const seed = async () => {
 
   const recommendation = await seedRecommendations()
   await createTests(recommendation.id)
+
+  await seedWebinars()
 
   console.log('✅ Сидеры завершены.')
 }
