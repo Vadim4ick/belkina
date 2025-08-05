@@ -65,7 +65,7 @@ export const WebinarCalendar = ({
   )
 
   return (
-    <div className="h-[600px] overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
+    <div className="h-full overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
       <Calendar
         localizer={localizer}
         events={events}
