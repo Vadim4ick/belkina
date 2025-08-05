@@ -51,7 +51,7 @@ export const WebinarCalendar = ({
       title: webinar.title,
       slug: webinar.slug,
       start: new Date(webinar.startsAt),
-      end: new Date(webinar.startsAt),
+      end: new Date(webinar.endAt),
       resource: webinar,
     }))
   }, [webinars])
