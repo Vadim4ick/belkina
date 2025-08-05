@@ -1,35 +1,31 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
-import { Calendar, Messages, momentLocalizer, Event, EventProps } from 'react-big-calendar'
+import { useCallback, useMemo } from 'react'
+import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
+import type { Event as RBCEvent } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import './calendar-castom-styles.css'
+import { useRouter } from 'next/navigation'
+import type { GetAllWebinarsQuery } from '@/shared/graphql/__generated__'
+import { getRouteWebinarsBySlug } from '@/shared/lib/routes'
 
-// --- Инициализация локализации и локализатора ---
 moment.locale('ru')
+
 const localizer = momentLocalizer(moment)
 
-interface Webinar {
-  id: number
-  name: string
-  start: string // ISO дата в UTC
-  end: string // ISO дата в UTC
-  seats: number
-}
+type Webinar = GetAllWebinarsQuery['Webinars']['docs'][number]
 
-interface CalendarEvent extends Event {
+interface CalendarEvent extends RBCEvent {
+  slug: string
   resource: Webinar
 }
 
-/**
---- Русский интерфейс для календаря ---
- */
-const trenslateToRussian: Messages = {
+const messages: Partial<Messages> = {
   allDay: 'Весь день',
   previous: 'Назад',
-  next: 'Вперед',
+  next: 'Вперёд',
   today: 'Сегодня',
   month: 'Месяц',
   week: 'Неделя',
@@ -38,66 +34,35 @@ const trenslateToRussian: Messages = {
   date: 'Дата',
   time: 'Время',
   event: 'Событие',
-  noEventsInRange: 'В этом диапазоне нет событий.',
+  noEventsInRange: 'В этом диапазоне нет событий',
   showMore: (total) => `+ ещё ${total}`,
 }
 
-/**
---- возращает мок-данные с ограничением времени 9:00 - 16:00 (МСК) ---
- * @returns id: number
- * @returns name: string
- * @returns start: string // ISO дата в UTC
- * @returns end: string // ISO дата в UTC
- * @returns seats: number
- */
-const fetchWebinars = async (): Promise<Webinar[]> => {
-  return [
-    // Время в UTC соответствует 9:00 МСК + 0-7 часов на другие временные сдвиги до 16:00 МСК
-    {
-      id: 1,
-      name: 'Вебинар по Математике: Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical',
-      start: '2025-08-04T06:00:00Z', // 9:00 МСК
-      end: '2025-08-04T07:30:00Z', // 10:30 МСК
-      seats: 25,
-    },
-    {
-      id: 2,
-      name: 'Вебинар по Русскому языку: Сочинение',
-      start: '2025-08-03T08:00:00Z', // 11:00 МСК
-      end: '2025-08-03T09:30:00Z', // 12:30 МСК
-      seats: 30,
-    },
-  ]
-}
+export const WebinarCalendar = ({
+  webinars,
+}: {
+  webinars: GetAllWebinarsQuery['Webinars']['docs']
+}) => {
+  const router = useRouter()
 
-// --- Основной компонент с календарём и модалкой регистрации ---
-const WebinarCalendar = () => {
-  const [rawWebinars, setRawWebinars] = useState<Webinar[]>([])
-  const [selectedWebinar, setSelectedWebinar] = useState<Webinar | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  useEffect(() => {
-    const getWebinars = async () => {
-      const webinarsData = await fetchWebinars()
-      setRawWebinars(webinarsData)
-    }
-    getWebinars()
-  }, [])
-
-  // Маппим данные в формат для react-big-calendar с датами JS Date
+  // Преобразуем документы в события календаря
   const events = useMemo<CalendarEvent[]>(() => {
-    return rawWebinars.map((webinar) => ({
-      title: webinar.name,
-      start: new Date(webinar.start),
-      end: new Date(webinar.end),
+    return webinars.map((webinar) => ({
+      title: webinar.title,
+      slug: webinar.slug,
+      start: new Date(webinar.startsAt),
+      end: new Date(webinar.startsAt),
       resource: webinar,
     }))
-  }, [rawWebinars])
+  }, [webinars])
 
-  const handleSelectEvent = useCallback((event: CalendarEvent) => {
-    setSelectedWebinar(event.resource)
-    // alert(event.title)
-  }, [])
+  // Обработчик клика по событию
+  const handleSelectEvent = useCallback(
+    (event: CalendarEvent) => {
+      router.push(getRouteWebinarsBySlug({ slug: event.slug }))
+    },
+    [router],
+  )
 
   return (
     <div className="h-full overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
@@ -107,16 +72,24 @@ const WebinarCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
-        messages={trenslateToRussian}
+        messages={messages}
         culture="ru"
         popup
-        // Ограничения по времени для отображения (опционально)
-        min={new Date(0, 0, 0, 9, 0, 0)} // 9:00
-        max={new Date(0, 0, 0, 16, 0, 0)} // 16:00
-        views={['month', 'week', 'day']}
+        defaultView="month"
+        // Ограничиваем рабочее окно (9 — 16)
+        min={moment().hour(9).minute(0).toDate()}
+        max={moment().hour(16).minute(0).toDate()}
+        // Отключаем лишние виды, если нужны только месяц/день — допиши
+        views={['month', 'agenda']}
+        // Красим сегодняшнюю дату (пример)
+        // dayPropGetter={(date) =>
+        //   moment(date).isSame(new Date(), 'day')
+        //     ? { className: 'bg-violet-50' }
+        //     : undefined
+        // }
+        // Убираем лишние inline-style, чтобы не мешали Tailwindʼу
+        style={{ height: '100%' }}
       />
     </div>
   )
 }
-
-export { WebinarCalendar }

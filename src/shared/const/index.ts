@@ -6,7 +6,7 @@ import {
   getRouteHome,
   getRouteCourses,
   getRoutePosts,
-  getRouteVebinars,
+  getRouteWebinars,
   getRouteTests,
 } from '@/shared/lib/routes'
 import { TestResult_Status_All } from '../graphql/__generated__'
@@ -58,7 +58,7 @@ export const navItems: NavItemsProps[] = [
   },
   {
     title: 'Вебинары',
-    url: getRouteVebinars(),
+    url: getRouteWebinars(),
     icon: BookOpennCapIcon,
   },
   {
