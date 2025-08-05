@@ -10,6 +10,8 @@ import type { CollectionConfig } from 'payload'
 
 import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
 import slugify from 'slugify'
+import { invalidateTags } from '../redis/gqlCached'
+import { CacheKeys } from '../redis/cache-keys'
 
 const Webinars: CollectionConfig = {
   slug: 'webinars',
@@ -31,6 +33,34 @@ const Webinars: CollectionConfig = {
         }
 
         return data
+      },
+    ],
+
+    afterChange: [
+      async ({ doc, operation, previousDoc }) => {
+        if (operation === 'create') {
+          await invalidateTags(
+            CacheKeys.tags.webinarBySlug({
+              slug: doc?.slug,
+            }),
+          )
+        } else {
+          await invalidateTags(
+            CacheKeys.tags.webinarBySlug({
+              slug: previousDoc?.slug,
+            }),
+          )
+        }
+      },
+    ],
+
+    afterDelete: [
+      async ({ doc }) => {
+        await invalidateTags(
+          CacheKeys.tags.webinarBySlug({
+            slug: doc?.slug,
+          }),
+        )
       },
     ],
   },
