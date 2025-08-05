@@ -51,6 +51,8 @@ const Webinars: CollectionConfig = {
             }),
           )
         }
+
+        await invalidateTags(CacheKeys.tags.webinars())
       },
     ],
 
@@ -114,6 +116,32 @@ const Webinars: CollectionConfig = {
 
           displayFormat: 'dd.MM.yyyy HH:mm',
         },
+      },
+    },
+
+    // 📅 Дата и время окончания
+    {
+      name: 'endAt',
+      label: 'Дата и время окончания',
+      type: 'date',
+      required: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+          displayFormat: 'dd.MM.yyyy HH:mm',
+        },
+      },
+      validate: (value, { siblingData }) => {
+        const start = new Date((siblingData as { startsAt?: string })?.startsAt || '')
+
+        if (!value || isNaN(start.getTime())) return true
+
+        const end = new Date(value)
+        if (end < start) {
+          return 'Дата окончания не может быть раньше даты начала'
+        }
+
+        return true
       },
     },
 
