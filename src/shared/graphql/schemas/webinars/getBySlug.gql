@@ -1,0 +1,8 @@
+query GetWebinarsBySlug($slug: String) {
+  Webinars(where: { slug: { equals: $slug } }) {
+    docs {
+      ...WebinarFragment
+      content
+    }
+  }
+}

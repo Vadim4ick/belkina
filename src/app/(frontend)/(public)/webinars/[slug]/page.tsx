@@ -1,18 +1,20 @@
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
-import { WebinarCalendar } from '@/widgets/webinar-calendar'
 
-function page() {
+export const revalidate = 0
+
+async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = await params
+
   return (
     <section className="mt-12">
       <Container className="flex flex-col gap-6">
         <Typography tag="h2" variant="visuelt-bold-48">
-          Вебинары
+          Вебинар {slug}
         </Typography>
       </Container>
-      <WebinarCalendar />
     </section>
   )
 }
 
-export default page
+export default Page

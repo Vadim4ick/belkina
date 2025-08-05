@@ -518,7 +518,6 @@ export interface Webinar {
   maxParticipants?: number | null;
   startsAt: string;
   url: string;
-  preview?: (number | null) | Media;
   price?: number | null;
   content: {
     root: {
@@ -535,6 +534,7 @@ export interface Webinar {
     };
     [k: string]: unknown;
   };
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -950,9 +950,9 @@ export interface WebinarsSelect<T extends boolean = true> {
   maxParticipants?: T;
   startsAt?: T;
   url?: T;
-  preview?: T;
   price?: T;
   content?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

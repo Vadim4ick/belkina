@@ -3,7 +3,6 @@ import { getSettledValue } from '@/shared/lib/utils'
 import { getExams, getSubjects } from '@/shared/actions/category.action'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
-import { FilterCategory } from '@/widgets/filter-category'
 
 const CoursesPage = async () => {
   const [exams, subjects] = await Promise.allSettled([getExams(), getSubjects()])
@@ -19,6 +18,7 @@ const CoursesPage = async () => {
             Курсы
           </Typography>
         </Container>
+
         <CoursesList exams={examsVal?.Exams.docs} subjects={subjectsVal?.Subjects.docs} />
       </section>
     </>

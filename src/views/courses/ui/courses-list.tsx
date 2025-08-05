@@ -1,7 +1,6 @@
 'use client'
 
 import { Container } from '@/shared/ui/container'
-import { Typography } from '@/shared/ui/typography'
 import { ProductCard, SkeletonProductCard } from '@/widgets/product-card'
 import { ProductCardsGridCatalog } from '@/widgets/product-cards-grid-catalog'
 import { memo } from 'react'
