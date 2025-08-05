@@ -9,6 +9,7 @@ import {
 import type { CollectionConfig } from 'payload'
 
 import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
+import slugify from 'slugify'
 
 const Webinars: CollectionConfig = {
   slug: 'webinars',
@@ -20,6 +21,18 @@ const Webinars: CollectionConfig = {
   labels: {
     singular: 'Вебинар',
     plural: 'Вебинары',
+  },
+
+  hooks: {
+    beforeChange: [
+      async ({ data, originalDoc }) => {
+        if (data.title && data.title !== originalDoc?.title) {
+          data.slug = slugify(data.title, { lower: true, strict: true })
+        }
+
+        return data
+      },
+    ],
   },
 
   fields: [
@@ -83,15 +96,6 @@ const Webinars: CollectionConfig = {
       admin: { placeholder: 'https://…' },
     },
 
-    // 🖼 Превью
-    {
-      name: 'preview',
-      label: 'Превью-изображение',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-
     // 💰 Цена (прячем при бесплатном типе)
     {
       name: 'price',
@@ -121,6 +125,18 @@ const Webinars: CollectionConfig = {
           HorizontalRuleFeature(),
         ],
       }),
+    },
+
+    {
+      name: 'slug',
+      label: 'Slug',
+      type: 'text',
+      unique: true,
+      required: true,
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+      },
     },
   ],
 

@@ -36,5 +36,8 @@ export const CacheKeys = {
     posts: () => join(V, 'posts'),
     postBySlug: ({ slug }: { slug: string }) => join(V, 'posts', slug),
     postsByPage: ({ page }: { page: number }) => join(V, 'posts', page),
+
+    webinars: () => join(V, 'webinars'),
+    webinarBySlug: ({ slug }: { slug: string }) => join(V, 'webinars', slug),
   },
 } as const
