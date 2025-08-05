@@ -80,7 +80,7 @@ export const WebinarCalendar = ({
         min={moment().hour(9).minute(0).toDate()}
         max={moment().hour(16).minute(0).toDate()}
         // Отключаем лишние виды, если нужны только месяц/день — допиши
-        views={['month', 'agenda']}
+        views={['month', 'week', 'day', 'agenda']}
         // Красим сегодняшнюю дату (пример)
         // dayPropGetter={(date) =>
         //   moment(date).isSame(new Date(), 'day')
