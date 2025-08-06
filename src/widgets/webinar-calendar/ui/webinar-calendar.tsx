@@ -38,6 +38,13 @@ const messages: Partial<Messages> = {
   showMore: (total) => `+ ещё ${total}`,
 }
 
+const eventTypeColors: Record<string, string> = {
+  individual: '#a3d9ff',
+  exam_practice: '#ffb3a3',
+  free: '#a3ffa3',
+  minigroup: '#ffcc99',
+}
+
 export const WebinarCalendar = ({
   webinars,
 }: {
@@ -67,6 +74,18 @@ export const WebinarCalendar = ({
     [router],
   )
 
+  const eventPropGetter = (event: CalendarEvent) => {
+    const backgroundColor = eventTypeColors[event.resource.type] || '#1455fe'
+    return {
+      style: {
+        backgroundColor,
+        color: '#1455fe',
+        borderRadius: '4px',
+        border: 'none',
+      },
+    }
+  }
+
   return (
     <div className="h-full overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
       <Calendar
@@ -88,13 +107,7 @@ export const WebinarCalendar = ({
         }}
         date={currentDate}
         onNavigate={(newDate) => setCurrentDate(newDate)}
-        // Красим сегодняшнюю дату (пример)
-        // dayPropGetter={(date) =>
-        //   moment(date).isSame(new Date(), 'day')
-        //     ? { className: 'bg-violet-50' }
-        //     : undefined
-        // }
-        // Убираем лишние inline-style, чтобы не мешали Tailwindʼу
+        eventPropGetter={eventPropGetter}
         style={{ height: '100%' }}
       />
     </div>
