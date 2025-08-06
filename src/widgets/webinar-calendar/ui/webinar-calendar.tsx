@@ -82,8 +82,6 @@ export const WebinarCalendar = ({
         color: '#1455fe',
         borderRadius: '4px',
         border: 'none',
-        maxHeight: '3.5em',
-        whiteSpace: 'normal',
       },
     }
   }
