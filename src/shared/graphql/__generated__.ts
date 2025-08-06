@@ -11748,6 +11748,7 @@ export type Query = {
   readonly Exams: Maybe<Exams>;
   readonly Faq: Maybe<Faq>;
   readonly Faqs: Maybe<Faqs>;
+  readonly GetRecommendationsByQuestionsIDS: Maybe<ReadonlyArray<Maybe<Recommendation>>>;
   readonly GetUserRecommendations: Maybe<ReadonlyArray<Maybe<Recommendation>>>;
   readonly GetUserTests: Maybe<PaginatedTestsWithStatus>;
   readonly HomePage: Maybe<HomePage>;
@@ -11896,6 +11897,11 @@ export type QueryFaqsArgs = {
   pagination: InputMaybe<Scalars['Boolean']['input']>;
   sort: InputMaybe<Scalars['String']['input']>;
   where: InputMaybe<Faq_Where>;
+};
+
+
+export type QueryGetRecommendationsByQuestionsIdsArgs = {
+  answerIds: ReadonlyArray<Scalars['String']['input']>;
 };
 
 
@@ -19769,6 +19775,20 @@ export type GetRecommendationsByIdsQueryVariables = Exact<{
 
 export type GetRecommendationsByIdsQuery = { readonly __typename?: 'Query', readonly Recomendations: { readonly __typename?: 'Recomendations', readonly docs: ReadonlyArray<{ readonly __typename?: 'Recomendation', readonly id: number, readonly title: string, readonly description: any }> } };
 
+export type GetRecommendationsByQuestionsIdsQueryVariables = Exact<{
+  where: InputMaybe<Question_Where>;
+}>;
+
+
+export type GetRecommendationsByQuestionsIdsQuery = { readonly __typename?: 'Query', readonly Questions: { readonly __typename?: 'Questions', readonly docs: ReadonlyArray<{ readonly __typename?: 'Question', readonly recommendation: { readonly __typename?: 'Recomendation', readonly id: number } }> } };
+
+export type GetRecommendationsByQuestionsIds2QueryVariables = Exact<{
+  questionsIds: ReadonlyArray<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string }> };
+
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
   testIds: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>> | InputMaybe<Scalars['JSON']['input']>>;
@@ -20253,6 +20273,25 @@ export const GetRecommendationsByIdsDocument = gql`
   }
 }
     `;
+export const GetRecommendationsByQuestionsIdsDocument = gql`
+    query GetRecommendationsByQuestionsIds($where: Question_where) {
+  Questions(where: $where) {
+    docs {
+      recommendation {
+        id
+      }
+    }
+  }
+}
+    `;
+export const GetRecommendationsByQuestionsIds2Document = gql`
+    query GetRecommendationsByQuestionsIDS2($questionsIds: [String!]!) {
+  GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
+    id
+    title
+  }
+}
+    `;
 export const GetTestResHistoryDocument = gql`
     query GetTestResHistory($userId: JSON, $testIds: [JSON]) {
   TestResults(where: {user: {equals: $userId}, test: {in: $testIds}}) {
@@ -20472,6 +20511,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetRecommendationsByIds(variables?: GetRecommendationsByIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsByIdsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsByIdsQuery>({ document: GetRecommendationsByIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendationsByIds', 'query', variables);
+    },
+    GetRecommendationsByQuestionsIds(variables?: GetRecommendationsByQuestionsIdsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsByQuestionsIdsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsByQuestionsIdsQuery>({ document: GetRecommendationsByQuestionsIdsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendationsByQuestionsIds', 'query', variables);
+    },
+    GetRecommendationsByQuestionsIDS2(variables: GetRecommendationsByQuestionsIds2QueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetRecommendationsByQuestionsIds2Query> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetRecommendationsByQuestionsIds2Query>({ document: GetRecommendationsByQuestionsIds2Document, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetRecommendationsByQuestionsIDS2', 'query', variables);
     },
     GetTestResHistory(variables?: GetTestResHistoryQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTestResHistoryQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTestResHistoryQuery>({ document: GetTestResHistoryDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTestResHistory', 'query', variables);

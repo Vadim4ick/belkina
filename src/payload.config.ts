@@ -27,6 +27,7 @@ import { Subjects } from './shared/collections/categories/Subjects'
 import Courses from './shared/collections/Courses'
 import { GetUserTestsResolver } from './shared/graphql/resolvers/GetUserTestsResolver'
 import { GetUserRecommendationsResolver } from './shared/graphql/resolvers/GetUserRecommendations'
+import { GetRecommendationsByAnswerIdsResolver } from './shared/graphql/resolvers/GetRecommendationsByAnswerIdsResolver'
 
 dotenv.config()
 
@@ -147,6 +148,18 @@ export default buildConfig({
             userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
           },
           resolve: GetUserRecommendationsResolver.resolve,
+        },
+
+        GetRecommendationsByQuestionsIDS: {
+          type: new GraphQL.GraphQLList(RecommendationType),
+          args: {
+            answerIds: {
+              type: new GraphQL.GraphQLNonNull(
+                new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)),
+              ),
+            },
+          },
+          resolve: GetRecommendationsByAnswerIdsResolver.resolve,
         },
       }
     },
