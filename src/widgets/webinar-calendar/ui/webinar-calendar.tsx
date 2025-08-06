@@ -51,7 +51,7 @@ export const WebinarCalendar = ({
       title: webinar.title,
       slug: webinar.slug,
       start: new Date(webinar.startsAt),
-      end: new Date(webinar.startsAt),
+      end: new Date(webinar.endAt),
       resource: webinar,
     }))
   }, [webinars])
@@ -76,9 +76,6 @@ export const WebinarCalendar = ({
         culture="ru"
         popup
         defaultView="month"
-        // Ограничиваем рабочее окно (9 — 16)
-        min={moment().hour(9).minute(0).toDate()}
-        max={moment().hour(16).minute(0).toDate()}
         // Отключаем лишние виды, если нужны только месяц/день — допиши
         views={['month', 'week', 'day', 'agenda']}
         // Красим сегодняшнюю дату (пример)

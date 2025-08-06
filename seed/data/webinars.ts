@@ -1,11 +1,14 @@
 // seeds/seedWebinars.ts
 import payload from 'payload'
 
+// ➜ хелпер для копии даты с нужным временем
+const at = (d: Date, h: number, m = 0) => new Date(new Date(d).setHours(h, m, 0, 0))
+
 export const seedWebinars = async () => {
   console.log('🎓 Создание вебинаров...')
 
-  const now = new Date()
-  const later = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000) // через 3 дня
+  const now = new Date() // сегодня
+  const later = new Date(now.getTime() + 3 * 864e5) // + 3 дня
 
   const baseData = {
     url: 'https://example.com/webinar',
@@ -18,7 +21,8 @@ export const seedWebinars = async () => {
       data: {
         title: 'Минигруппа по математике',
         type: 'minigroup',
-        startsAt: now.toISOString(),
+        startsAt: at(now, 10).toISOString(), // сегодня 10:00
+        endAt: at(now, 11).toISOString(),
         price: 790,
         maxParticipants: 5,
         slug: 'minigroup-matematika',
@@ -60,7 +64,8 @@ export const seedWebinars = async () => {
         title: 'Минигруппа по русскому языку',
         slug: 'minigroup-russian',
         type: 'minigroup',
-        startsAt: later.toISOString(),
+        startsAt: at(later, 10).toISOString(), // через 3 дня 10:00
+        endAt: at(later, 11).toISOString(),
         price: 850,
         maxParticipants: 4,
         content: {
@@ -103,7 +108,8 @@ export const seedWebinars = async () => {
         title: 'Разбор задания №8 — вводные слова',
         slug: 'razbor-zadaniya-8-vvodnye-slova',
         type: 'exam_practice',
-        startsAt: now.toISOString(),
+        startsAt: at(now, 13).toISOString(), // сегодня 13:00
+        endAt: at(now, 17).toISOString(),
         price: 990,
         content: {
           root: {
@@ -143,7 +149,8 @@ export const seedWebinars = async () => {
         title: 'Разбор задания №10 — грамматическая основа',
         slug: 'razbor-zadaniya-10-grammaticheskaya-osnova',
         type: 'exam_practice',
-        startsAt: later.toISOString(),
+        startsAt: at(later, 13).toISOString(), // через 3 дня 13:00
+        endAt: at(later, 16).toISOString(),
         price: 990,
         content: {
           root: {
@@ -185,7 +192,8 @@ export const seedWebinars = async () => {
         title: 'Как не выгореть в подготовке к ЕГЭ',
         slug: 'kak-ne-vygoret-v-podgotovke-k-eges',
         type: 'free',
-        startsAt: now.toISOString(),
+        startsAt: at(now, 16).toISOString(), // сегодня 16:00
+        endAt: at(now, 20).toISOString(),
         price: 0,
         content: {
           root: {
@@ -225,7 +233,9 @@ export const seedWebinars = async () => {
         title: 'Как составить план подготовки за 2 месяца',
         slug: 'kak-sostavit-plan-podgotovki-za-2-mesyac',
         type: 'free',
-        startsAt: later.toISOString(),
+        startsAt: at(later, 16).toISOString(), // через 3 дня 16:00
+        endAt: at(later, 20).toISOString(),
+        price: 0,
         content: {
           root: {
             type: 'root',
@@ -255,7 +265,6 @@ export const seedWebinars = async () => {
             ],
           },
         },
-        price: 0,
         ...baseData,
       },
     }),
@@ -267,7 +276,8 @@ export const seedWebinars = async () => {
         title: 'Индивидуальное занятие по профильной математике',
         slug: 'individualnoe-zanyatie-po-profilnoy-matematike',
         type: 'individual',
-        startsAt: now.toISOString(),
+        startsAt: at(now, 19).toISOString(), // сегодня 19:00
+        endAt: at(now, 22).toISOString(),
         price: 1200,
         content: {
           root: {
@@ -307,7 +317,8 @@ export const seedWebinars = async () => {
         title: 'Индивидуальное занятие по сочинению',
         slug: 'individualnoe-zanyatie-po-sochineniyu',
         type: 'individual',
-        startsAt: later.toISOString(),
+        startsAt: at(later, 19).toISOString(), // через 3 дня 19:00
+        endAt: at(later, 22).toISOString(),
         price: 1100,
         content: {
           root: {
