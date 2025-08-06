@@ -1,6 +1,5 @@
 import { getWebinarsBySlug } from '@/shared/actions/webinars.action'
-import { Container } from '@/shared/ui/container'
-import { Typography } from '@/shared/ui/typography'
+import { WebinarsBySlugPage } from '@/views/webinars-by-slug-page'
 import { notFound } from 'next/navigation'
 
 export const revalidate = 0
@@ -10,21 +9,13 @@ async function Page({ params }: { params: { slug: string } }) {
 
   const res = await getWebinarsBySlug({ slug })
 
-  const post = res.Webinars.docs?.[0]
+  const webinar = res.Webinars.docs?.[0]
 
-  if (!post) {
+  if (!webinar) {
     return notFound()
   }
 
-  return (
-    <section className="mt-12">
-      <Container className="flex flex-col gap-6">
-        <Typography tag="h2" variant="visuelt-bold-48">
-          Вебинар {slug}
-        </Typography>
-      </Container>
-    </section>
-  )
+  return <WebinarsBySlugPage webinar={webinar} />
 }
 
 export default Page
