@@ -69,14 +69,14 @@ const Purchases: CollectionConfig = {
           console.log('[QUEUE] added expire-', doc.id)
         }
 
-        if (operation === 'create') {
-          if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
-        } else {
-          if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
-          if (prevUserId != null && prevUserId !== newUserId) {
-            tags.add(CacheKeys.tags.purchasesByUser(prevUserId))
-          }
-        }
+        // if (operation === 'create') {
+        //   if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
+        // } else {
+        //   if (newUserId != null) tags.add(CacheKeys.tags.purchasesByUser(newUserId))
+        //   if (prevUserId != null && prevUserId !== newUserId) {
+        //     tags.add(CacheKeys.tags.purchasesByUser(prevUserId))
+        //   }
+        // }
 
         if (tags.size) {
           await invalidateTags(...Array.from(tags))
@@ -102,9 +102,9 @@ const Purchases: CollectionConfig = {
           }),
         )
 
-        if (userId != null) {
-          await invalidateTags(CacheKeys.tags.purchasesByUser(userId))
-        }
+        // if (userId != null) {
+        //   await invalidateTags(CacheKeys.tags.purchasesByUser(userId))
+        // }
 
         if (process.env.NODE_ENV !== 'production') {
           console.log('[invalidate purchases afterDelete]', { userId, id: doc?.id })

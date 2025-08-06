@@ -76,13 +76,13 @@ const Courses: CollectionConfig = {
           )
         }
 
-        await invalidateTags(CacheKeys.tags.purchasesAll())
+        // await invalidateTags(CacheKeys.tags.purchasesAll())
       },
     ],
 
     afterDelete: [
       async ({ doc }) => {
-        await invalidateTags(CacheKeys.tags.purchasesAll())
+        // await invalidateTags(CacheKeys.tags.purchasesAll())
         await invalidateTags(
           CacheKeys.tags.courseBySlug({
             slug: doc?.slug,

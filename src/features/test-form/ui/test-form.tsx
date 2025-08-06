@@ -39,7 +39,7 @@ const TestForm = memo(
 
     const { formState, handleSubmit } = form
 
-    if (isLoading || isFetching || (!testRes && !publicFlag)) {
+    if (isLoading || isFetching) {
       return <SkeletonTestCard />
     }
 
@@ -96,6 +96,7 @@ const TestForm = memo(
               {(testRes?.status === 'completed' || publicCompleted) && (
                 <CompletedInfo
                   resetTestRes={resetTestRes}
+                  testRes={testRes}
                   totalCorrectAnswers={totalCorrectAnswers}
                   countQuestions={questions.length}
                   publicFlag={publicFlag}

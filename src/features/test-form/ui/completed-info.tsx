@@ -1,7 +1,10 @@
 import { useProfileStore } from '@/entities/user/use-profile-store'
+import { GetByIdTestResultQuery } from '@/shared/graphql/__generated__'
 import { getRouteWebinars } from '@/shared/lib/routes'
 import { getResultLevel } from '@/shared/lib/utils'
+import { useGetRecommendationQuestionByIds } from '@/shared/services/recommendations.service'
 import { Button } from '@/shared/ui/button'
+import { Skeleton } from '@/shared/ui/skeleton'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
 import { memo } from 'react'
@@ -13,12 +16,14 @@ const CompletedInfo = memo(
     countQuestions,
     publicFlag,
     publicCorrectAnswers,
+    testRes,
   }: {
     totalCorrectAnswers: number
     resetTestRes: () => void
     countQuestions: number
     publicFlag: boolean
     publicCorrectAnswers: number
+    testRes?: GetByIdTestResultQuery['TestResults']['docs'][0]
   }) => {
     const { profile } = useProfileStore()
 
@@ -26,6 +31,15 @@ const CompletedInfo = memo(
 
     const score = publicFlag ? publicCorrectAnswers : totalCorrectAnswers
     const resultLevel = getResultLevel(percent)
+
+    const questionNoCorrectIds = testRes?.answers
+      .filter((a) => !a.isCorrect)
+      .map((a) => a.question.id)
+
+    const { data: recommendations, isLoading: isLoadingRecommendations } =
+      useGetRecommendationQuestionByIds({
+        questionsIds: questionNoCorrectIds?.map((id) => String(id)),
+      })
 
     if (publicFlag || !!!profile?.id) {
       return (
@@ -71,16 +85,22 @@ const CompletedInfo = memo(
           </li>
         </ul>
 
-        <Typography tag="h3" variant="poppins-md-16" className="mb-2 text-left">
-          Рекомендации:
-        </Typography>
+        {recommendations && recommendations.GetRecommendationsByQuestionsIDS.length > 0 && (
+          <>
+            <Typography tag="h3" variant="poppins-md-16" className="mb-2 text-left">
+              Рекомендации:
+            </Typography>
+            <ul className="mb-6 ml-4 list-disc text-left">
+              {recommendations.GetRecommendationsByQuestionsIDS.map((r) => (
+                <li key={r.id}>{r.title}</li>
+              ))}
+            </ul>
+          </>
+        )}
 
-        <ul className="mb-6 ml-4 list-disc text-left">
-          <li>Вы хорошо ориентируетесь в теме — продолжайте развиваться в том же духе!</li>
-          <li>
-            Мы рекомендуем пройти <b>задание 4</b> для закрепления тем, в которых были ошибки.
-          </li>
-        </ul>
+        {isLoadingRecommendations && (
+          <Skeleton className="mb-6 ml-4 h-[50px] w-full max-w-[320px]" />
+        )}
 
         <Typography tag="h3" variant="poppins-md-16" className="mb-2 text-left">
           Что дальше?
