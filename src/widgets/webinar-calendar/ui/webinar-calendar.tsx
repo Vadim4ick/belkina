@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
 import type { Event as RBCEvent } from 'react-big-calendar'
 import moment from 'moment'
@@ -43,15 +43,18 @@ export const WebinarCalendar = ({
 }: {
   webinars: GetAllWebinarsQuery['Webinars']['docs']
 }) => {
+  const [view, setView] = useState<'month' | 'week' | 'day' | 'agenda'>('month')
+  const [currentDate, setCurrentDate] = useState(new Date())
   const router = useRouter()
 
+  console.log('webinars ==> ', webinars)
   // Преобразуем документы в события календаря
   const events = useMemo<CalendarEvent[]>(() => {
     return webinars.map((webinar) => ({
       title: webinar.title,
       slug: webinar.slug,
       start: new Date(webinar.startsAt),
-      end: new Date(webinar.endAt),
+      end: new Date(webinar.startsAt),
       resource: webinar,
     }))
   }, [webinars])
@@ -76,8 +79,15 @@ export const WebinarCalendar = ({
         culture="ru"
         popup
         defaultView="month"
-        // Отключаем лишние виды, если нужны только месяц/день — допиши
         views={['month', 'week', 'day', 'agenda']}
+        view={view}
+        onView={(nextView) => {
+          if (['month', 'week', 'day', 'agenda'].includes(nextView)) {
+            setView(nextView as 'month' | 'week' | 'day' | 'agenda')
+          }
+        }}
+        date={currentDate}
+        onNavigate={(newDate) => setCurrentDate(newDate)}
         // Красим сегодняшнюю дату (пример)
         // dayPropGetter={(date) =>
         //   moment(date).isSame(new Date(), 'day')
