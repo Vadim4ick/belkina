@@ -39,7 +39,7 @@ const TestForm = memo(
 
     const { formState, handleSubmit } = form
 
-    if (isLoading || isFetching) {
+    if (isLoading || isFetching || (!testRes && !publicFlag)) {
       return <SkeletonTestCard />
     }
 
