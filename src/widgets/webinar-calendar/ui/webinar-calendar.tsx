@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
-import type { Event as RBCEvent } from 'react-big-calendar'
+import type { EventProps, Event as RBCEvent } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -38,12 +38,22 @@ const messages: Partial<Messages> = {
   showMore: (total) => `+ ещё ${total}`,
 }
 
+const eventTypeColors: Record<string, string> = {
+  individual: '#a3d9ff',
+  exam_practice: '#ffb3a3',
+  free: '#a3ffa3',
+  minigroup: '#ffcc99',
+}
+
 export const WebinarCalendar = ({
   webinars,
 }: {
   webinars: GetAllWebinarsQuery['Webinars']['docs']
 }) => {
+  const [view, setView] = useState<'month' | 'week' | 'day' | 'agenda'>('month')
+  const [currentDate, setCurrentDate] = useState(new Date())
   const router = useRouter()
+  console.log('webinars ==> ', webinars)
 
   // Преобразуем документы в события календаря
   const events = useMemo<CalendarEvent[]>(() => {
@@ -64,11 +74,31 @@ export const WebinarCalendar = ({
     [router],
   )
 
+  const eventPropGetter = (event: CalendarEvent) => {
+    const backgroundColor = eventTypeColors[event.resource.type] || '#1455fe'
+    return {
+      style: {
+        backgroundColor,
+        color: '#1455fe',
+        borderRadius: '4px',
+        border: 'none',
+      },
+    }
+  }
+
+  const components = useMemo(
+    () => ({
+      event: MyEvent,
+    }),
+    [],
+  )
+
   return (
     <div className="h-full overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
       <Calendar
         localizer={localizer}
         events={events}
+        components={components}
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
@@ -76,17 +106,31 @@ export const WebinarCalendar = ({
         culture="ru"
         popup
         defaultView="month"
-        // Отключаем лишние виды, если нужны только месяц/день — допиши
         views={['month', 'week', 'day', 'agenda']}
-        // Красим сегодняшнюю дату (пример)
-        // dayPropGetter={(date) =>
-        //   moment(date).isSame(new Date(), 'day')
-        //     ? { className: 'bg-violet-50' }
-        //     : undefined
-        // }
-        // Убираем лишние inline-style, чтобы не мешали Tailwindʼу
+        view={view}
+        onView={(nextView) => {
+          if (['month', 'week', 'day', 'agenda'].includes(nextView)) {
+            setView(nextView as 'month' | 'week' | 'day' | 'agenda')
+          }
+        }}
+        date={currentDate}
+        onNavigate={(newDate) => setCurrentDate(newDate)}
+        eventPropGetter={eventPropGetter}
         style={{ height: '100%' }}
       />
+    </div>
+  )
+}
+
+function MyEvent({ event, title }: EventProps<CalendarEvent>) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <span>{title}</span>
+      {event.resource.price ? (
+        <small style={{ fontSize: 10, color: '#666' }}>Цена: {event.resource.price} Руб.</small>
+      ) : (
+        <small style={{ fontSize: 10, color: '#666' }}>Бесплатно</small>
+      )}
     </div>
   )
 }

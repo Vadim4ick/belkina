@@ -90,3 +90,14 @@ sudo systemctl reload nginx
 
 sudo apt install certbot python3-certbot-nginx -y
 sudo certbot --nginx -d belkina.online
+
+# Загружает переменные из .env (игнорируя комментарии)
+
+Get-Content .env | Where-Object { $_ -notmatch '^\s*#' -and $_ -match '=' } | ForEach-Object {
+    $parts = $_.Split('=', 2)
+    [Environment]::SetEnvironmentVariable($parts[0].Trim(), $parts[1].Trim(), "Process")
+}
+
+# Проверить, что переменные загружены
+
+Get-ChildItem Env:
