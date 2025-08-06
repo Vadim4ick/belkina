@@ -517,6 +517,7 @@ export interface Webinar {
   type: 'minigroup' | 'exam_practice' | 'free' | 'individual';
   maxParticipants?: number | null;
   startsAt: string;
+  endAt: string;
   url: string;
   price?: number | null;
   content: {
@@ -949,6 +950,7 @@ export interface WebinarsSelect<T extends boolean = true> {
   type?: T;
   maxParticipants?: T;
   startsAt?: T;
+  endAt?: T;
   url?: T;
   price?: T;
   content?: T;

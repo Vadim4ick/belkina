@@ -17374,6 +17374,7 @@ export type Webinar = {
   readonly __typename?: 'Webinar';
   readonly content: Scalars['JSON']['output'];
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly endAt: Scalars['DateTime']['output'];
   readonly id: Scalars['Int']['output'];
   readonly maxParticipants: Maybe<Scalars['Float']['output']>;
   readonly price: Maybe<Scalars['Float']['output']>;
@@ -17406,6 +17407,16 @@ export type Webinar_Content_Operator = {
 export type Webinar_CreatedAt_Operator = {
   readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type Webinar_EndAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
   readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
   readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
   readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
@@ -17526,6 +17537,7 @@ export type Webinar_Where = {
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Webinar_Where_Or>>>;
   readonly content: InputMaybe<Webinar_Content_Operator>;
   readonly createdAt: InputMaybe<Webinar_CreatedAt_Operator>;
+  readonly endAt: InputMaybe<Webinar_EndAt_Operator>;
   readonly id: InputMaybe<Webinar_Id_Operator>;
   readonly maxParticipants: InputMaybe<Webinar_MaxParticipants_Operator>;
   readonly price: InputMaybe<Webinar_Price_Operator>;
@@ -17542,6 +17554,7 @@ export type Webinar_Where_And = {
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Webinar_Where_Or>>>;
   readonly content: InputMaybe<Webinar_Content_Operator>;
   readonly createdAt: InputMaybe<Webinar_CreatedAt_Operator>;
+  readonly endAt: InputMaybe<Webinar_EndAt_Operator>;
   readonly id: InputMaybe<Webinar_Id_Operator>;
   readonly maxParticipants: InputMaybe<Webinar_MaxParticipants_Operator>;
   readonly price: InputMaybe<Webinar_Price_Operator>;
@@ -17558,6 +17571,7 @@ export type Webinar_Where_Or = {
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Webinar_Where_Or>>>;
   readonly content: InputMaybe<Webinar_Content_Operator>;
   readonly createdAt: InputMaybe<Webinar_CreatedAt_Operator>;
+  readonly endAt: InputMaybe<Webinar_EndAt_Operator>;
   readonly id: InputMaybe<Webinar_Id_Operator>;
   readonly maxParticipants: InputMaybe<Webinar_MaxParticipants_Operator>;
   readonly price: InputMaybe<Webinar_Price_Operator>;
@@ -17612,6 +17626,7 @@ export type WebinarsDocAccessFields = {
   readonly __typename?: 'WebinarsDocAccessFields';
   readonly content: Maybe<WebinarsDocAccessFields_Content>;
   readonly createdAt: Maybe<WebinarsDocAccessFields_CreatedAt>;
+  readonly endAt: Maybe<WebinarsDocAccessFields_EndAt>;
   readonly maxParticipants: Maybe<WebinarsDocAccessFields_MaxParticipants>;
   readonly price: Maybe<WebinarsDocAccessFields_Price>;
   readonly slug: Maybe<WebinarsDocAccessFields_Slug>;
@@ -17675,6 +17690,34 @@ export type WebinarsDocAccessFields_CreatedAt_Read = {
 
 export type WebinarsDocAccessFields_CreatedAt_Update = {
   readonly __typename?: 'WebinarsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_EndAt = {
+  readonly __typename?: 'WebinarsDocAccessFields_endAt';
+  readonly create: Maybe<WebinarsDocAccessFields_EndAt_Create>;
+  readonly delete: Maybe<WebinarsDocAccessFields_EndAt_Delete>;
+  readonly read: Maybe<WebinarsDocAccessFields_EndAt_Read>;
+  readonly update: Maybe<WebinarsDocAccessFields_EndAt_Update>;
+};
+
+export type WebinarsDocAccessFields_EndAt_Create = {
+  readonly __typename?: 'WebinarsDocAccessFields_endAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_EndAt_Delete = {
+  readonly __typename?: 'WebinarsDocAccessFields_endAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_EndAt_Read = {
+  readonly __typename?: 'WebinarsDocAccessFields_endAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_EndAt_Update = {
+  readonly __typename?: 'WebinarsDocAccessFields_endAt_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -17906,6 +17949,7 @@ export type WebinarsFields = {
   readonly __typename?: 'WebinarsFields';
   readonly content: Maybe<WebinarsFields_Content>;
   readonly createdAt: Maybe<WebinarsFields_CreatedAt>;
+  readonly endAt: Maybe<WebinarsFields_EndAt>;
   readonly maxParticipants: Maybe<WebinarsFields_MaxParticipants>;
   readonly price: Maybe<WebinarsFields_Price>;
   readonly slug: Maybe<WebinarsFields_Slug>;
@@ -17969,6 +18013,34 @@ export type WebinarsFields_CreatedAt_Read = {
 
 export type WebinarsFields_CreatedAt_Update = {
   readonly __typename?: 'WebinarsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_EndAt = {
+  readonly __typename?: 'WebinarsFields_endAt';
+  readonly create: Maybe<WebinarsFields_EndAt_Create>;
+  readonly delete: Maybe<WebinarsFields_EndAt_Delete>;
+  readonly read: Maybe<WebinarsFields_EndAt_Read>;
+  readonly update: Maybe<WebinarsFields_EndAt_Update>;
+};
+
+export type WebinarsFields_EndAt_Create = {
+  readonly __typename?: 'WebinarsFields_endAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_EndAt_Delete = {
+  readonly __typename?: 'WebinarsFields_endAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_EndAt_Read = {
+  readonly __typename?: 'WebinarsFields_endAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_EndAt_Update = {
+  readonly __typename?: 'WebinarsFields_endAt_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -19034,6 +19106,7 @@ export type MutationUserUpdateInput = {
 export type MutationWebinarInput = {
   readonly content: Scalars['JSON']['input'];
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly endAt: Scalars['String']['input'];
   readonly maxParticipants: InputMaybe<Scalars['Float']['input']>;
   readonly price: InputMaybe<Scalars['Float']['input']>;
   readonly slug: Scalars['String']['input'];
@@ -19047,6 +19120,7 @@ export type MutationWebinarInput = {
 export type MutationWebinarUpdateInput = {
   readonly content: InputMaybe<Scalars['JSON']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly endAt: InputMaybe<Scalars['String']['input']>;
   readonly maxParticipants: InputMaybe<Scalars['Float']['input']>;
   readonly price: InputMaybe<Scalars['Float']['input']>;
   readonly slug: InputMaybe<Scalars['String']['input']>;
@@ -19601,7 +19675,7 @@ export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly 
 
 export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
 
-export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any };
+export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any };
 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -19796,14 +19870,14 @@ export type UpdateUserNameMutation = { readonly __typename?: 'Mutation', readonl
 export type GetAllWebinarsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllWebinarsQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any }> } };
+export type GetAllWebinarsQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any }> } };
 
 export type GetWebinarsBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetWebinarsBySlugQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly content: any, readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any }> } };
+export type GetWebinarsBySlugQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly content: any, readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any }> } };
 
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
@@ -19929,6 +20003,7 @@ export const WebinarFragmentFragmentDoc = gql`
   price
   updatedAt
   createdAt
+  endAt
 }
     `;
 export const GetAllExamsDocument = gql`
