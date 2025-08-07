@@ -51,11 +51,11 @@ export const navItems: NavItemsProps[] = [
     url: getRouteHome(),
     icon: GraduationCapIcon,
   },
-  {
-    title: 'Курсы',
-    url: getRouteCourses(),
-    icon: BookOpennCapIcon,
-  },
+  // {
+  //   title: 'Курсы',
+  //   url: getRouteCourses(),
+  //   icon: BookOpennCapIcon,
+  // },
   {
     title: 'Вебинары',
     url: getRouteWebinars(),
