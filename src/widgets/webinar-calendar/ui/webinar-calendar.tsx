@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
-import type { EventProps, Event as RBCEvent } from 'react-big-calendar'
+import type { Event as RBCEvent } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'react-big-calendar/lib/css/react-big-calendar.css'

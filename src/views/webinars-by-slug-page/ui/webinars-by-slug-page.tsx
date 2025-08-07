@@ -3,6 +3,7 @@ import { Container } from '@/shared/ui/container'
 import RichText from '@/shared/ui/rich-text'
 import { Typography } from '@/shared/ui/typography'
 import { PaymentBtn } from './payment-btn'
+import { UrlWebinar } from './url-webinar'
 
 const WebinarsBySlugPage = ({
   webinar,
@@ -53,9 +54,11 @@ const WebinarsBySlugPage = ({
           </div>
         )}
 
+        <UrlWebinar webinarId={webinar.id} webinarUrl={webinar?.url} />
+
         {Boolean(webinar?.price) && (
           <div className="flex max-w-[300px] flex-col gap-4">
-            <PaymentBtn />
+            <PaymentBtn webinarId={webinar.id} />
           </div>
         )}
       </Container>

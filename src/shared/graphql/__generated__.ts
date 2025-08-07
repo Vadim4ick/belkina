@@ -41,6 +41,7 @@ export type Access = {
   readonly testResults: Maybe<TestResultsAccess>;
   readonly tests: Maybe<TestsAccess>;
   readonly users: Maybe<UsersAccess>;
+  readonly webinar_payments: Maybe<Webinar_PaymentsAccess>;
   readonly webinars: Maybe<WebinarsAccess>;
 };
 
@@ -8227,6 +8228,7 @@ export type Mutation = {
   readonly createTestResult: Maybe<TestResult>;
   readonly createUser: Maybe<User>;
   readonly createWebinar: Maybe<Webinar>;
+  readonly createWebinarPayment: Maybe<WebinarPayment>;
   readonly deleteAdmin: Maybe<Admin>;
   readonly deleteCourse: Maybe<Course>;
   readonly deleteExam: Maybe<Exam>;
@@ -8244,6 +8246,7 @@ export type Mutation = {
   readonly deleteTestResult: Maybe<TestResult>;
   readonly deleteUser: Maybe<User>;
   readonly deleteWebinar: Maybe<Webinar>;
+  readonly deleteWebinarPayment: Maybe<WebinarPayment>;
   readonly duplicateCourse: Maybe<Course>;
   readonly duplicateExam: Maybe<Exam>;
   readonly duplicateFaq: Maybe<Faq>;
@@ -8260,6 +8263,7 @@ export type Mutation = {
   readonly duplicateTestResult: Maybe<TestResult>;
   readonly duplicateUser: Maybe<User>;
   readonly duplicateWebinar: Maybe<Webinar>;
+  readonly duplicateWebinarPayment: Maybe<WebinarPayment>;
   readonly forgotPasswordAdmin: Scalars['Boolean']['output'];
   readonly loginAdmin: Maybe<AdminsLoginResult>;
   readonly logoutAdmin: Maybe<Scalars['String']['output']>;
@@ -8285,6 +8289,7 @@ export type Mutation = {
   readonly updateTestResult: Maybe<TestResult>;
   readonly updateUser: Maybe<User>;
   readonly updateWebinar: Maybe<Webinar>;
+  readonly updateWebinarPayment: Maybe<WebinarPayment>;
   readonly verifyEmailAdmin: Maybe<Scalars['Boolean']['output']>;
 };
 
@@ -8408,6 +8413,13 @@ export type MutationCreateWebinarArgs = {
 };
 
 
+export type MutationCreateWebinarPaymentArgs = {
+  data: MutationWebinarPaymentInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationDeleteAdminArgs = {
   id: Scalars['Int']['input'];
 };
@@ -8489,6 +8501,11 @@ export type MutationDeleteUserArgs = {
 
 
 export type MutationDeleteWebinarArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteWebinarPaymentArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -8585,6 +8602,12 @@ export type MutationDuplicateUserArgs = {
 
 export type MutationDuplicateWebinarArgs = {
   data: MutationWebinarInput;
+  id: Scalars['Int']['input'];
+};
+
+
+export type MutationDuplicateWebinarPaymentArgs = {
+  data: MutationWebinarPaymentInput;
   id: Scalars['Int']['input'];
 };
 
@@ -8779,6 +8802,15 @@ export type MutationUpdateWebinarArgs = {
 };
 
 
+export type MutationUpdateWebinarPaymentArgs = {
+  autosave: InputMaybe<Scalars['Boolean']['input']>;
+  data: MutationWebinarPaymentUpdateInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
 export type MutationVerifyEmailAdminArgs = {
   token: InputMaybe<Scalars['String']['input']>;
 };
@@ -8834,6 +8866,7 @@ export type PayloadLockedDocumentUpdate_DocumentRelationshipInputRelationTo =
   | 'testResults'
   | 'tests'
   | 'users'
+  | 'webinar_payments'
   | 'webinars';
 
 export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
@@ -8844,7 +8877,7 @@ export type PayloadLockedDocumentUpdate_UserRelationshipInput = {
 export type PayloadLockedDocumentUpdate_UserRelationshipInputRelationTo =
   | 'admins';
 
-export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | Post | Purchase | Question | Recomendation | Subject | Tariff | Test | TestResult | User | Webinar;
+export type PayloadLockedDocument_Document = Admin | Course | Exam | Faq | Media | Post | Purchase | Question | Recomendation | Subject | Tariff | Test | TestResult | User | Webinar | WebinarPayment;
 
 export type PayloadLockedDocument_DocumentRelationshipInput = {
   readonly relationTo: InputMaybe<PayloadLockedDocument_DocumentRelationshipInputRelationTo>;
@@ -8866,6 +8899,7 @@ export type PayloadLockedDocument_DocumentRelationshipInputRelationTo =
   | 'testResults'
   | 'tests'
   | 'users'
+  | 'webinar_payments'
   | 'webinars';
 
 export type PayloadLockedDocument_Document_RelationTo =
@@ -8883,6 +8917,7 @@ export type PayloadLockedDocument_Document_RelationTo =
   | 'testResults'
   | 'tests'
   | 'users'
+  | 'webinar_payments'
   | 'webinars';
 
 export type PayloadLockedDocument_Document_Relationship = {
@@ -8941,6 +8976,7 @@ export type PayloadLockedDocument_Document_Relation_RelationTo =
   | 'testResults'
   | 'tests'
   | 'users'
+  | 'webinar_payments'
   | 'webinars';
 
 export type PayloadLockedDocument_GlobalSlug_Operator = {
@@ -11776,6 +11812,8 @@ export type Query = {
   readonly User: Maybe<User>;
   readonly Users: Maybe<Users>;
   readonly Webinar: Maybe<Webinar>;
+  readonly WebinarPayment: Maybe<WebinarPayment>;
+  readonly WebinarPayments: Maybe<WebinarPayments>;
   readonly Webinars: Maybe<Webinars>;
   readonly allMedia: Maybe<AllMedia>;
   readonly countAdmins: Maybe<CountAdmins>;
@@ -11793,6 +11831,7 @@ export type Query = {
   readonly countTestResults: Maybe<CountTestResults>;
   readonly countTests: Maybe<CountTests>;
   readonly countUsers: Maybe<CountUsers>;
+  readonly countWebinarPayments: Maybe<CountWebinarPayments>;
   readonly countWebinars: Maybe<CountWebinars>;
   readonly countallMedia: Maybe<CountallMedia>;
   readonly docAccessAdmin: Maybe<AdminsDocAccess>;
@@ -11813,6 +11852,7 @@ export type Query = {
   readonly docAccessTestResult: Maybe<TestResultsDocAccess>;
   readonly docAccessUser: Maybe<UsersDocAccess>;
   readonly docAccessWebinar: Maybe<WebinarsDocAccess>;
+  readonly docAccessWebinarPayment: Maybe<Webinar_PaymentsDocAccess>;
   readonly initializedAdmin: Maybe<Scalars['Boolean']['output']>;
   readonly meAdmin: Maybe<AdminsMe>;
   readonly versionPost: Maybe<PostVersion>;
@@ -12163,6 +12203,26 @@ export type QueryWebinarArgs = {
 };
 
 
+export type QueryWebinarPaymentArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  id: Scalars['Int']['input'];
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryWebinarPaymentsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pagination: InputMaybe<Scalars['Boolean']['input']>;
+  sort: InputMaybe<Scalars['String']['input']>;
+  where: InputMaybe<WebinarPayment_Where>;
+};
+
+
 export type QueryWebinarsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
@@ -12292,6 +12352,13 @@ export type QueryCountUsersArgs = {
 };
 
 
+export type QueryCountWebinarPaymentsArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+  where: InputMaybe<WebinarPayment_Where>;
+};
+
+
 export type QueryCountWebinarsArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
@@ -12387,6 +12454,11 @@ export type QueryDocAccessUserArgs = {
 
 
 export type QueryDocAccessWebinarArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryDocAccessWebinarPaymentArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -17389,12 +17461,482 @@ export type Webinar = {
   readonly title: Scalars['String']['output'];
   readonly type: Webinar_Type;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly url: Scalars['String']['output'];
+  readonly url: Maybe<Scalars['String']['output']>;
 };
 
 
 export type WebinarContentArgs = {
   depth: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type WebinarPayment = {
+  readonly __typename?: 'WebinarPayment';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly id: Scalars['Int']['output'];
+  readonly paid: Maybe<Scalars['Boolean']['output']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly user: User;
+  readonly webinar: Webinar;
+};
+
+
+export type WebinarPaymentUserArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type WebinarPaymentWebinarArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+export type WebinarPayment_CreatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type WebinarPayment_Id_Operator = {
+  readonly equals: InputMaybe<Scalars['Int']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['Int']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than: InputMaybe<Scalars['Int']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['Int']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type WebinarPayment_Paid_Operator = {
+  readonly equals: InputMaybe<Scalars['Boolean']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly not_equals: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type WebinarPayment_UpdatedAt_Operator = {
+  readonly equals: InputMaybe<Scalars['DateTime']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly greater_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly greater_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than: InputMaybe<Scalars['DateTime']['input']>;
+  readonly less_than_equal: InputMaybe<Scalars['DateTime']['input']>;
+  readonly like: InputMaybe<Scalars['DateTime']['input']>;
+  readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type WebinarPayment_User_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type WebinarPayment_Webinar_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
+};
+
+export type WebinarPayment_Where = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_Or>>>;
+  readonly createdAt: InputMaybe<WebinarPayment_CreatedAt_Operator>;
+  readonly id: InputMaybe<WebinarPayment_Id_Operator>;
+  readonly paid: InputMaybe<WebinarPayment_Paid_Operator>;
+  readonly updatedAt: InputMaybe<WebinarPayment_UpdatedAt_Operator>;
+  readonly user: InputMaybe<WebinarPayment_User_Operator>;
+  readonly webinar: InputMaybe<WebinarPayment_Webinar_Operator>;
+};
+
+export type WebinarPayment_Where_And = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_Or>>>;
+  readonly createdAt: InputMaybe<WebinarPayment_CreatedAt_Operator>;
+  readonly id: InputMaybe<WebinarPayment_Id_Operator>;
+  readonly paid: InputMaybe<WebinarPayment_Paid_Operator>;
+  readonly updatedAt: InputMaybe<WebinarPayment_UpdatedAt_Operator>;
+  readonly user: InputMaybe<WebinarPayment_User_Operator>;
+  readonly webinar: InputMaybe<WebinarPayment_Webinar_Operator>;
+};
+
+export type WebinarPayment_Where_Or = {
+  readonly AND: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_And>>>;
+  readonly OR: InputMaybe<ReadonlyArray<InputMaybe<WebinarPayment_Where_Or>>>;
+  readonly createdAt: InputMaybe<WebinarPayment_CreatedAt_Operator>;
+  readonly id: InputMaybe<WebinarPayment_Id_Operator>;
+  readonly paid: InputMaybe<WebinarPayment_Paid_Operator>;
+  readonly updatedAt: InputMaybe<WebinarPayment_UpdatedAt_Operator>;
+  readonly user: InputMaybe<WebinarPayment_User_Operator>;
+  readonly webinar: InputMaybe<WebinarPayment_Webinar_Operator>;
+};
+
+export type WebinarPayments = {
+  readonly __typename?: 'WebinarPayments';
+  readonly docs: ReadonlyArray<WebinarPayment>;
+  readonly hasNextPage: Scalars['Boolean']['output'];
+  readonly hasPrevPage: Scalars['Boolean']['output'];
+  readonly limit: Scalars['Int']['output'];
+  readonly nextPage: Maybe<Scalars['Int']['output']>;
+  readonly offset: Maybe<Scalars['Int']['output']>;
+  readonly page: Scalars['Int']['output'];
+  readonly pagingCounter: Scalars['Int']['output'];
+  readonly prevPage: Maybe<Scalars['Int']['output']>;
+  readonly totalDocs: Scalars['Int']['output'];
+  readonly totalPages: Scalars['Int']['output'];
+};
+
+export type WebinarPaymentsCreateAccess = {
+  readonly __typename?: 'WebinarPaymentsCreateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsCreateDocAccess = {
+  readonly __typename?: 'WebinarPaymentsCreateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsDeleteAccess = {
+  readonly __typename?: 'WebinarPaymentsDeleteAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsDeleteDocAccess = {
+  readonly __typename?: 'WebinarPaymentsDeleteDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsDocAccessFields = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields';
+  readonly createdAt: Maybe<WebinarPaymentsDocAccessFields_CreatedAt>;
+  readonly paid: Maybe<WebinarPaymentsDocAccessFields_Paid>;
+  readonly updatedAt: Maybe<WebinarPaymentsDocAccessFields_UpdatedAt>;
+  readonly user: Maybe<WebinarPaymentsDocAccessFields_User>;
+  readonly webinar: Maybe<WebinarPaymentsDocAccessFields_Webinar>;
+};
+
+export type WebinarPaymentsDocAccessFields_CreatedAt = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_createdAt';
+  readonly create: Maybe<WebinarPaymentsDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<WebinarPaymentsDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<WebinarPaymentsDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<WebinarPaymentsDocAccessFields_CreatedAt_Update>;
+};
+
+export type WebinarPaymentsDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Paid = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_paid';
+  readonly create: Maybe<WebinarPaymentsDocAccessFields_Paid_Create>;
+  readonly delete: Maybe<WebinarPaymentsDocAccessFields_Paid_Delete>;
+  readonly read: Maybe<WebinarPaymentsDocAccessFields_Paid_Read>;
+  readonly update: Maybe<WebinarPaymentsDocAccessFields_Paid_Update>;
+};
+
+export type WebinarPaymentsDocAccessFields_Paid_Create = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_paid_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Paid_Delete = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_paid_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Paid_Read = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_paid_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Paid_Update = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_paid_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_updatedAt';
+  readonly create: Maybe<WebinarPaymentsDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<WebinarPaymentsDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<WebinarPaymentsDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<WebinarPaymentsDocAccessFields_UpdatedAt_Update>;
+};
+
+export type WebinarPaymentsDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_User = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_user';
+  readonly create: Maybe<WebinarPaymentsDocAccessFields_User_Create>;
+  readonly delete: Maybe<WebinarPaymentsDocAccessFields_User_Delete>;
+  readonly read: Maybe<WebinarPaymentsDocAccessFields_User_Read>;
+  readonly update: Maybe<WebinarPaymentsDocAccessFields_User_Update>;
+};
+
+export type WebinarPaymentsDocAccessFields_User_Create = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_user_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_User_Delete = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_user_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_User_Read = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_user_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_User_Update = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_user_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Webinar = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_webinar';
+  readonly create: Maybe<WebinarPaymentsDocAccessFields_Webinar_Create>;
+  readonly delete: Maybe<WebinarPaymentsDocAccessFields_Webinar_Delete>;
+  readonly read: Maybe<WebinarPaymentsDocAccessFields_Webinar_Read>;
+  readonly update: Maybe<WebinarPaymentsDocAccessFields_Webinar_Update>;
+};
+
+export type WebinarPaymentsDocAccessFields_Webinar_Create = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_webinar_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Webinar_Delete = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_webinar_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Webinar_Read = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_webinar_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsDocAccessFields_Webinar_Update = {
+  readonly __typename?: 'WebinarPaymentsDocAccessFields_webinar_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields = {
+  readonly __typename?: 'WebinarPaymentsFields';
+  readonly createdAt: Maybe<WebinarPaymentsFields_CreatedAt>;
+  readonly paid: Maybe<WebinarPaymentsFields_Paid>;
+  readonly updatedAt: Maybe<WebinarPaymentsFields_UpdatedAt>;
+  readonly user: Maybe<WebinarPaymentsFields_User>;
+  readonly webinar: Maybe<WebinarPaymentsFields_Webinar>;
+};
+
+export type WebinarPaymentsFields_CreatedAt = {
+  readonly __typename?: 'WebinarPaymentsFields_createdAt';
+  readonly create: Maybe<WebinarPaymentsFields_CreatedAt_Create>;
+  readonly delete: Maybe<WebinarPaymentsFields_CreatedAt_Delete>;
+  readonly read: Maybe<WebinarPaymentsFields_CreatedAt_Read>;
+  readonly update: Maybe<WebinarPaymentsFields_CreatedAt_Update>;
+};
+
+export type WebinarPaymentsFields_CreatedAt_Create = {
+  readonly __typename?: 'WebinarPaymentsFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_CreatedAt_Delete = {
+  readonly __typename?: 'WebinarPaymentsFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_CreatedAt_Read = {
+  readonly __typename?: 'WebinarPaymentsFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_CreatedAt_Update = {
+  readonly __typename?: 'WebinarPaymentsFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Paid = {
+  readonly __typename?: 'WebinarPaymentsFields_paid';
+  readonly create: Maybe<WebinarPaymentsFields_Paid_Create>;
+  readonly delete: Maybe<WebinarPaymentsFields_Paid_Delete>;
+  readonly read: Maybe<WebinarPaymentsFields_Paid_Read>;
+  readonly update: Maybe<WebinarPaymentsFields_Paid_Update>;
+};
+
+export type WebinarPaymentsFields_Paid_Create = {
+  readonly __typename?: 'WebinarPaymentsFields_paid_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Paid_Delete = {
+  readonly __typename?: 'WebinarPaymentsFields_paid_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Paid_Read = {
+  readonly __typename?: 'WebinarPaymentsFields_paid_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Paid_Update = {
+  readonly __typename?: 'WebinarPaymentsFields_paid_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_UpdatedAt = {
+  readonly __typename?: 'WebinarPaymentsFields_updatedAt';
+  readonly create: Maybe<WebinarPaymentsFields_UpdatedAt_Create>;
+  readonly delete: Maybe<WebinarPaymentsFields_UpdatedAt_Delete>;
+  readonly read: Maybe<WebinarPaymentsFields_UpdatedAt_Read>;
+  readonly update: Maybe<WebinarPaymentsFields_UpdatedAt_Update>;
+};
+
+export type WebinarPaymentsFields_UpdatedAt_Create = {
+  readonly __typename?: 'WebinarPaymentsFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_UpdatedAt_Delete = {
+  readonly __typename?: 'WebinarPaymentsFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_UpdatedAt_Read = {
+  readonly __typename?: 'WebinarPaymentsFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_UpdatedAt_Update = {
+  readonly __typename?: 'WebinarPaymentsFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_User = {
+  readonly __typename?: 'WebinarPaymentsFields_user';
+  readonly create: Maybe<WebinarPaymentsFields_User_Create>;
+  readonly delete: Maybe<WebinarPaymentsFields_User_Delete>;
+  readonly read: Maybe<WebinarPaymentsFields_User_Read>;
+  readonly update: Maybe<WebinarPaymentsFields_User_Update>;
+};
+
+export type WebinarPaymentsFields_User_Create = {
+  readonly __typename?: 'WebinarPaymentsFields_user_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_User_Delete = {
+  readonly __typename?: 'WebinarPaymentsFields_user_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_User_Read = {
+  readonly __typename?: 'WebinarPaymentsFields_user_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_User_Update = {
+  readonly __typename?: 'WebinarPaymentsFields_user_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Webinar = {
+  readonly __typename?: 'WebinarPaymentsFields_webinar';
+  readonly create: Maybe<WebinarPaymentsFields_Webinar_Create>;
+  readonly delete: Maybe<WebinarPaymentsFields_Webinar_Delete>;
+  readonly read: Maybe<WebinarPaymentsFields_Webinar_Read>;
+  readonly update: Maybe<WebinarPaymentsFields_Webinar_Update>;
+};
+
+export type WebinarPaymentsFields_Webinar_Create = {
+  readonly __typename?: 'WebinarPaymentsFields_webinar_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Webinar_Delete = {
+  readonly __typename?: 'WebinarPaymentsFields_webinar_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Webinar_Read = {
+  readonly __typename?: 'WebinarPaymentsFields_webinar_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsFields_Webinar_Update = {
+  readonly __typename?: 'WebinarPaymentsFields_webinar_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarPaymentsReadAccess = {
+  readonly __typename?: 'WebinarPaymentsReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsReadDocAccess = {
+  readonly __typename?: 'WebinarPaymentsReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsUpdateAccess = {
+  readonly __typename?: 'WebinarPaymentsUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type WebinarPaymentsUpdateDocAccess = {
+  readonly __typename?: 'WebinarPaymentsUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
 };
 
 export type WebinarUpdate_Type_MutationInput =
@@ -18444,6 +18986,11 @@ export type CountUsers = {
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
 };
 
+export type CountWebinarPayments = {
+  readonly __typename?: 'countWebinarPayments';
+  readonly totalDocs: Maybe<Scalars['Int']['output']>;
+};
+
 export type CountWebinars = {
   readonly __typename?: 'countWebinars';
   readonly totalDocs: Maybe<Scalars['Int']['output']>;
@@ -19120,7 +19667,23 @@ export type MutationWebinarInput = {
   readonly title: Scalars['String']['input'];
   readonly type: Webinar_Type_MutationInput;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
-  readonly url: Scalars['String']['input'];
+  readonly url: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationWebinarPaymentInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly paid: InputMaybe<Scalars['Boolean']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+  readonly user: InputMaybe<Scalars['Int']['input']>;
+  readonly webinar: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MutationWebinarPaymentUpdateInput = {
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly paid: InputMaybe<Scalars['Boolean']['input']>;
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
+  readonly user: InputMaybe<Scalars['Int']['input']>;
+  readonly webinar: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MutationWebinarUpdateInput = {
@@ -19607,6 +20170,24 @@ export type VersionsPosts = {
   readonly totalPages: Scalars['Int']['output'];
 };
 
+export type Webinar_PaymentsAccess = {
+  readonly __typename?: 'webinar_paymentsAccess';
+  readonly create: Maybe<WebinarPaymentsCreateAccess>;
+  readonly delete: Maybe<WebinarPaymentsDeleteAccess>;
+  readonly fields: Maybe<WebinarPaymentsFields>;
+  readonly read: Maybe<WebinarPaymentsReadAccess>;
+  readonly update: Maybe<WebinarPaymentsUpdateAccess>;
+};
+
+export type Webinar_PaymentsDocAccess = {
+  readonly __typename?: 'webinar_paymentsDocAccess';
+  readonly create: Maybe<WebinarPaymentsCreateDocAccess>;
+  readonly delete: Maybe<WebinarPaymentsDeleteDocAccess>;
+  readonly fields: Maybe<WebinarPaymentsDocAccessFields>;
+  readonly read: Maybe<WebinarPaymentsReadDocAccess>;
+  readonly update: Maybe<WebinarPaymentsUpdateDocAccess>;
+};
+
 export type WebinarsAccess = {
   readonly __typename?: 'webinarsAccess';
   readonly create: Maybe<WebinarsCreateAccess>;
@@ -19898,6 +20479,14 @@ export type GetWebinarsBySlugQueryVariables = Exact<{
 
 
 export type GetWebinarsBySlugQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly content: any, readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any }> } };
+
+export type GetWebinarPaymentByUserIdQueryVariables = Exact<{
+  userId: InputMaybe<Scalars['JSON']['input']>;
+  webinarId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetWebinarPaymentByUserIdQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly webinar: { readonly __typename?: 'Webinar', readonly id: number, readonly url: string } }> } };
 
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
@@ -20447,6 +21036,20 @@ export const GetWebinarsBySlugDocument = gql`
   }
 }
     ${WebinarFragmentFragmentDoc}`;
+export const GetWebinarPaymentByUserIdDocument = gql`
+    query GetWebinarPaymentByUserId($userId: JSON, $webinarId: JSON) {
+  WebinarPayments(
+    where: {user: {equals: $userId}, webinar: {equals: $webinarId}, paid: {equals: true}}
+  ) {
+    docs {
+      webinar {
+        id
+        url
+      }
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -20559,6 +21162,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetWebinarsBySlug(variables?: GetWebinarsBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarsBySlugQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarsBySlugQuery>({ document: GetWebinarsBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarsBySlug', 'query', variables);
+    },
+    GetWebinarPaymentByUserId(variables?: GetWebinarPaymentByUserIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarPaymentByUserIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarPaymentByUserIdQuery>({ document: GetWebinarPaymentByUserIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarPaymentByUserId', 'query', variables);
     }
   };
 }
