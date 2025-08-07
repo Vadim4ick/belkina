@@ -4,6 +4,12 @@ import { CacheKeys } from '../redis/cache-keys'
 import { withRedisCache } from '../redis/gqlCached'
 import { getServerAuthGqlClient } from './getServerAuthGqlClient'
 
+export async function fetchAllTestsIds() {
+  const gql = await getServerAuthGqlClient({})
+
+  return await gql.GetAllTestsByTitles()
+}
+
 export async function fetchTestById({ id }: { id: string }) {
   const gql = await getServerAuthGqlClient({})
 
@@ -21,6 +27,14 @@ export async function fetchTestHistoryByUserId({
 
   return await gql.GetTestResHistory({ userId: userId, testIds })
 }
+
+export const getFetchAllTestsIds = withRedisCache(fetchAllTestsIds, {
+  ttl: 180,
+  tags: ([]) => {
+    return [CacheKeys.tags.fetchAllTestsIds()]
+  },
+  name: 'fetchAllTestsIds',
+})
 
 export const getTestById = withRedisCache(fetchTestById, {
   ttl: 180,

@@ -25,3 +25,20 @@ query GetRecommendationsByIds($where: Recomendation_where) {
     }
   }
 }
+
+query GetRecommendationsByQuestionsIds($where: Question_where) {
+  Questions(where: $where) {
+    docs {
+      recommendation {
+        id
+      }
+    }
+  }
+}
+
+query GetRecommendationsByQuestionsIDS2($questionsIds: [String!]!) {
+  GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
+    id
+    title
+  }
+}
