@@ -103,19 +103,19 @@ export const WebinarCalendar = ({
     [],
   )
 
-  const components = useMemo(
-    () => ({
-      event: MyEvent,
-    }),
-    [],
-  )
+  // const components = useMemo(
+  //   () => ({
+  //     event: MyEvent,
+  //   }),
+  //   [],
+  // )
 
   return (
     <div className="h-[800px]">
       <Calendar
         localizer={localizer}
         events={events}
-        components={components}
+        // components={components}
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
@@ -139,15 +139,15 @@ export const WebinarCalendar = ({
   )
 }
 
-function MyEvent({ event, title }: EventProps<CalendarEvent>) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <span>{title}</span>
-      {/* {event.resource.price ? (
-        <small style={{ fontSize: 10, color: '#666' }}>Цена: {event.resource.price} Руб.</small>
-      ) : (
-        <small style={{ fontSize: 10, color: '#666' }}>Бесплатно</small>
-      )} */}
-    </div>
-  )
-}
+// function MyEvent({ event, title }: EventProps<CalendarEvent>) {
+//   return (
+//     <div style={{ display: 'flex', flexDirection: 'column' }}>
+//       <span>{title}</span>
+//       {event.resource.price ? (
+//         <small style={{ fontSize: 10, color: '#666' }}>Цена: {event.resource.price} Руб.</small>
+//       ) : (
+//         <small style={{ fontSize: 10, color: '#666' }}>Бесплатно</small>
+//       )}
+//     </div>
+//   )
+// }
