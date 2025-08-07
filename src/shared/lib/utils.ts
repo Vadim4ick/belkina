@@ -45,3 +45,19 @@ export async function checkAccessToken({ req }: { req: PayloadRequest }): Promis
     return false
   }
 }
+
+export function getResultLevel(percent: number): string {
+  if (percent === 100) {
+    return 'Идеальный результат!'
+  } else if (percent >= 90) {
+    return 'Отличный уровень!'
+  } else if (percent >= 70) {
+    return 'Хороший результат!'
+  } else if (percent >= 50) {
+    return 'Неплохо, но есть над чем поработать'
+  } else if (percent > 0) {
+    return 'Рекомендуем повторить теорию'
+  } else {
+    return 'Похоже, стоит начать с основ'
+  }
+}
