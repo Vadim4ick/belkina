@@ -111,7 +111,7 @@ export const WebinarCalendar = ({
   )
 
   return (
-    <div className="h-[600px]">
+    <div className="h-[800px]">
       <Calendar
         localizer={localizer}
         events={events}
@@ -143,11 +143,11 @@ function MyEvent({ event, title }: EventProps<CalendarEvent>) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <span>{title}</span>
-      {event.resource.price ? (
+      {/* {event.resource.price ? (
         <small style={{ fontSize: 10, color: '#666' }}>Цена: {event.resource.price} Руб.</small>
       ) : (
         <small style={{ fontSize: 10, color: '#666' }}>Бесплатно</small>
-      )}
+      )} */}
     </div>
   )
 }
