@@ -92,12 +92,7 @@ export const WebinarCalendar = ({
       event: 'Событие',
       noEventsInRange: 'В этом диапазоне нет событий',
       showMore: (total) => (
-        <button
-          className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
-          type="button"
-        >
-          + ещё {total}
-        </button>
+        <span className="font-ligh text-[#1455fe] hover:text-[#0034ba]">+ ещё {total}</span>
       ),
     }),
     [],
