@@ -10,6 +10,7 @@ import './calendar-castom-styles.css'
 import { useRouter } from 'next/navigation'
 import type { GetAllWebinarsQuery } from '@/shared/graphql/__generated__'
 import { getRouteWebinarsBySlug } from '@/shared/lib/routes'
+import { eventTypeColors } from '../model/const'
 
 moment.locale('ru')
 
@@ -20,13 +21,6 @@ type Webinar = GetAllWebinarsQuery['Webinars']['docs'][number]
 interface CalendarEvent extends RBCEvent {
   slug: string
   resource: Webinar
-}
-
-const eventTypeColors: Record<string, string> = {
-  individual: '#a3d9ff',
-  exam_practice: '#ffb3a3',
-  free: '#a3ffa3',
-  minigroup: '#ffcc99',
 }
 
 export const WebinarCalendar = ({
@@ -48,8 +42,6 @@ export const WebinarCalendar = ({
       resource: webinar,
     }))
   }, [webinars])
-
-  console.log('events ==> ', events)
 
   // Обработчик клика по событию
   const handleSelectEvent = useCallback(
