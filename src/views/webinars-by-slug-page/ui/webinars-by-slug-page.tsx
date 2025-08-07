@@ -53,7 +53,7 @@ const WebinarsBySlugPage = ({
           </div>
         )}
 
-        {Boolean(webinar?.price) && webinar?.maxParticipants && (
+        {Boolean(webinar?.price) && (
           <div className="flex max-w-[300px] flex-col gap-4">
             <PaymentBtn />
           </div>
