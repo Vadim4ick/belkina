@@ -32,6 +32,14 @@ const TestCard = memo(
 
     const shuffledRight = useShuffledOnClient(question.matchingPairs?.map((p) => p))
 
+    const combinedPairs = useMemo(() => {
+      return question.matchingPairs.map((pair, idx) => ({
+        id: pair.id,
+        left: pair.left,
+        right: shuffledRight[idx]?.right ?? '',
+      }))
+    }, [question.matchingPairs, shuffledRight])
+
     const renderContent = useMemo(() => {
       switch (question.questionType) {
         case 'single_choice':
@@ -127,7 +135,7 @@ const TestCard = memo(
               key={question.id}
               control={control}
               name={questionName}
-              defaultValue={{ answer: '', shuffled: shuffledRight }}
+              defaultValue={{ answer: '', shuffled: combinedPairs }}
               render={({ field }) => (
                 <div className="flex flex-col gap-4">
                   <div className="bg-light-grey max-mobile:grid-cols-1 grid grid-cols-2 justify-center gap-4 rounded-md p-4">
@@ -141,12 +149,11 @@ const TestCard = memo(
                     </div>
                     <div className="flex flex-col gap-2">
                       <Typography variant="poppins-md-16">Правая часть</Typography>
-                      {shuffledRight.map((pair, idx) => (
-                        <div key={pair.id} className="flex items-center gap-2">
-                          <Typography variant="poppins-md-16">
-                            {idx + 1}) {pair.right}
-                          </Typography>
-                        </div>
+
+                      {combinedPairs.map((p, idx) => (
+                        <Typography key={idx} variant="poppins-md-16">
+                          {idx + 1}) {p.right}
+                        </Typography>
                       ))}
                     </div>
                   </div>
@@ -163,7 +170,7 @@ const TestCard = memo(
                       onChange={(e) =>
                         field.onChange({
                           answer: e.target.value.toUpperCase(),
-                          shuffled: shuffledRight,
+                          shuffled: combinedPairs,
                         })
                       }
                     />
@@ -176,7 +183,7 @@ const TestCard = memo(
         default:
           return null
       }
-    }, [question, control, shuffledRight, questionName])
+    }, [question, control, questionName, combinedPairs])
 
     if (!start) {
       return (
