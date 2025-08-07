@@ -22,22 +22,6 @@ interface CalendarEvent extends RBCEvent {
   resource: Webinar
 }
 
-const messages: Partial<Messages> = {
-  allDay: 'Весь день',
-  previous: 'Назад',
-  next: 'Вперёд',
-  today: 'Сегодня',
-  month: 'Месяц',
-  week: 'Неделя',
-  day: 'День',
-  agenda: 'Расписание',
-  date: 'Дата',
-  time: 'Время',
-  event: 'Событие',
-  noEventsInRange: 'В этом диапазоне нет событий',
-  showMore: (total) => `+ ещё ${total}`,
-}
-
 const eventTypeColors: Record<string, string> = {
   individual: '#a3d9ff',
   exam_practice: '#ffb3a3',
@@ -53,7 +37,6 @@ export const WebinarCalendar = ({
   const [view, setView] = useState<'month' | 'week' | 'day' | 'agenda'>('month')
   const [currentDate, setCurrentDate] = useState(new Date())
   const router = useRouter()
-  console.log('webinars ==> ', webinars)
 
   // Преобразуем документы в события календаря
   const events = useMemo<CalendarEvent[]>(() => {
@@ -65,6 +48,8 @@ export const WebinarCalendar = ({
       resource: webinar,
     }))
   }, [webinars])
+
+  console.log('events ==> ', events)
 
   // Обработчик клика по событию
   const handleSelectEvent = useCallback(
@@ -86,6 +71,38 @@ export const WebinarCalendar = ({
     }
   }
 
+  // Обработчик для клика по кнопке "+ ещё"
+  const handleShowMore = useCallback((events: CalendarEvent[], date: Date) => {
+    // setView('day')
+    setCurrentDate(date)
+  }, [])
+
+  const messages: Partial<Messages> = useMemo(
+    () => ({
+      allDay: 'Весь день',
+      previous: 'Назад',
+      next: 'Вперёд',
+      today: 'Сегодня',
+      month: 'Месяц',
+      week: 'Неделя',
+      day: 'День',
+      agenda: 'Расписание',
+      date: 'Дата',
+      time: 'Время',
+      event: 'Событие',
+      noEventsInRange: 'В этом диапазоне нет событий',
+      showMore: (total) => (
+        <button
+          className="rounded bg-blue-500 px-2 py-1 text-white hover:bg-blue-600"
+          type="button"
+        >
+          + ещё {total}
+        </button>
+      ),
+    }),
+    [],
+  )
+
   const components = useMemo(
     () => ({
       event: MyEvent,
@@ -94,7 +111,7 @@ export const WebinarCalendar = ({
   )
 
   return (
-    <div className="h-full overflow-auto px-4 py-10 text-xs md:h-[800px] md:px-8">
+    <div className="h-[600px]">
       <Calendar
         localizer={localizer}
         events={events}
@@ -103,8 +120,8 @@ export const WebinarCalendar = ({
         endAccessor="end"
         onSelectEvent={handleSelectEvent}
         messages={messages}
-        culture="ru"
         popup
+        culture="ru"
         defaultView="month"
         views={['month', 'week', 'day', 'agenda']}
         view={view}
@@ -115,8 +132,8 @@ export const WebinarCalendar = ({
         }}
         date={currentDate}
         onNavigate={(newDate) => setCurrentDate(newDate)}
+        onShowMore={handleShowMore}
         eventPropGetter={eventPropGetter}
-        style={{ height: '100%' }}
       />
     </div>
   )
