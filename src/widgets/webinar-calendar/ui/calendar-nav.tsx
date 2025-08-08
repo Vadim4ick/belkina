@@ -22,7 +22,11 @@ export const CalendarNav = ({ view, onViewChange }: CalendarNavProps) => {
       type="single"
       className="w-full"
       value={view}
-      onValueChange={(val) => onViewChange(val as (typeof Views)[keyof typeof Views])}
+      onValueChange={(val) => {
+        if (val && val !== view) {
+          onViewChange(val as (typeof Views)[keyof typeof Views])
+        }
+      }}
     >
       {filteredViews.map(({ id, label }) => (
         <ToggleGroupItem

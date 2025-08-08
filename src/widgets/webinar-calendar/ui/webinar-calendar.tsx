@@ -36,7 +36,6 @@ export const WebinarCalendar = ({
 }) => {
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.MONTH)
   const [date, setDate] = useState<Date>(moment().toDate())
-  console.log('date ==> ', date)
   const router = useRouter()
 
   // Преобразуем документы в события календаря
@@ -95,7 +94,6 @@ export const WebinarCalendar = ({
       return moment(date).format('MMMM YYYY')
     }
   }, [view, date])
-  console.log('dateText ==> ', dateText)
 
   return (
     <div className="space-y-5 p-1">
