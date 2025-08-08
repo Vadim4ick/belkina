@@ -30,6 +30,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "seed/scripts/index.ts"
-  ],
+, "src/shared/ui/toggle-group.tsx", "src/widgets/webinar-calendar/_vm/locales-ru.tsч"  ],
   "exclude": ["node_modules"]
 }
