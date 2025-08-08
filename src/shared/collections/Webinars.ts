@@ -152,6 +152,15 @@ const Webinars: CollectionConfig = {
       type: 'text',
       required: true,
       admin: { placeholder: 'https://…' },
+      access: {
+        read: ({ siblingData, req }) => {
+          if (req.user?.role === 'admin') return true
+
+          const isFree = siblingData?.type === 'free'
+
+          return isFree
+        },
+      },
     },
 
     // 💰 Цена (прячем при бесплатном типе)
