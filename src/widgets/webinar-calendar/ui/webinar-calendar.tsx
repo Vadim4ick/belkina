@@ -66,6 +66,7 @@ export const WebinarCalendar = ({
     return CALENDAR_MESSAGES_RU
   }, [])
 
+  // *** НОВОЕ: Обработчик клика на кнопку "Предыдущий" ***
   const onPrevClick = useCallback(() => {
     if (view === Views.DAY) {
       setDate(moment(date).subtract(1, 'd').toDate())
@@ -78,6 +79,7 @@ export const WebinarCalendar = ({
     }
   }, [view, date])
 
+  // *** НОВОЕ: Обработчик клика на кнопку "Следующий" ***
   const onNextClick = useCallback(() => {
     if (view === Views.DAY) {
       setDate(moment(date).add(1, 'd').toDate())
@@ -90,6 +92,7 @@ export const WebinarCalendar = ({
     }
   }, [view, date])
 
+  // *** НОВОЕ: Форматируем текст даты в зависимости от текущего вида ***
   const dateText = useMemo(() => {
     if (view === Views.DAY) {
       return moment(date).format('D MMMM YYYY')
@@ -101,6 +104,15 @@ export const WebinarCalendar = ({
       return moment(date).format('MMMM YYYY')
     }
   }, [view, date])
+
+  // *** НОВОЕ: Определяем минимальное и максимальное время для отображения ***
+  const { min, max } = useMemo(() => {
+    const minTime = new Date()
+    minTime.setHours(9, 0, 0) // 9:00 утра
+    const maxTime = new Date()
+    maxTime.setHours(22, 0, 0) // 22:00 вечера
+    return { min: minTime, max: maxTime }
+  }, [])
 
   return (
     <div className="space-y-5 p-1">
@@ -136,6 +148,8 @@ export const WebinarCalendar = ({
           date={date}
           onNavigate={setDate}
           eventPropGetter={eventPropGetter}
+          min={min}
+          max={max}
         />
       </div>
     </div>
