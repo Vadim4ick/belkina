@@ -1,8 +1,8 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Views } from 'react-big-calendar'
 import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/toggle-group'
-import { useMediaQuery } from 'usehooks-ts'
 import { VIEWS_OPTIONS } from '../_vm/views-options'
 
 interface CalendarNavProps {
@@ -11,11 +11,17 @@ interface CalendarNavProps {
 }
 
 export const CalendarNav = ({ view, onViewChange }: CalendarNavProps) => {
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const [isMobile, setIsMobile] = useState(false)
 
-  const filteredViews = isMobile
-    ? VIEWS_OPTIONS.filter((option) => option.id !== Views.WEEK)
-    : VIEWS_OPTIONS
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 768)
+    }
+    handleResize()
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <ToggleGroup
@@ -28,17 +34,21 @@ export const CalendarNav = ({ view, onViewChange }: CalendarNavProps) => {
         }
       }}
     >
-      {filteredViews.map(({ id, label }) => (
-        <ToggleGroupItem
-          key={id}
-          value={id}
-          aria-label={label}
-          variant="outline"
-          className="w-full"
-        >
-          {label}
-        </ToggleGroupItem>
-      ))}
+      {VIEWS_OPTIONS.map(({ id, label }) => {
+        const disabled = isMobile && id === Views.WEEK
+        return (
+          <ToggleGroupItem
+            key={id}
+            value={id}
+            aria-label={label}
+            variant="outline"
+            className="w-full text-xs md:text-sm"
+            disabled={disabled}
+          >
+            {label}
+          </ToggleGroupItem>
+        )
+      })}
     </ToggleGroup>
   )
 }
