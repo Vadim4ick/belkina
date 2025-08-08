@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
-import type { EventProps, Event as RBCEvent } from 'react-big-calendar'
+import { Event as RBCEvent, Views } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/ru'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -10,9 +10,14 @@ import './calendar-castom-styles.css'
 import { useRouter } from 'next/navigation'
 import type { GetAllWebinarsQuery } from '@/shared/graphql/__generated__'
 import { getRouteWebinarsBySlug } from '@/shared/lib/routes'
+import { CALENDAR_MESSAGES_RU } from './locales-ru'
+import { CalendarNav } from './calendar-nav'
+import { getEventStyle } from '../_vm/eventStyles'
+import { Button } from '@/shared/ui/button'
+import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { Badge } from '@/shared/ui/badge'
 
 moment.locale('ru')
-
 const localizer = momentLocalizer(moment)
 
 type Webinar = GetAllWebinarsQuery['Webinars']['docs'][number]
@@ -22,20 +27,16 @@ interface CalendarEvent extends RBCEvent {
   resource: Webinar
 }
 
-const eventTypeColors: Record<string, string> = {
-  individual: '#a3d9ff',
-  exam_practice: '#ffb3a3',
-  free: '#a3ffa3',
-  minigroup: '#ffcc99',
-}
+type Keys = keyof typeof Views
 
 export const WebinarCalendar = ({
   webinars,
 }: {
   webinars: GetAllWebinarsQuery['Webinars']['docs']
 }) => {
-  const [view, setView] = useState<'month' | 'week' | 'day' | 'agenda'>('month')
-  const [currentDate, setCurrentDate] = useState(new Date())
+  const [view, setView] = useState<(typeof Views)[Keys]>(Views.MONTH)
+  const [date, setDate] = useState<Date>(moment().toDate())
+  console.log('date ==> ', date)
   const router = useRouter()
 
   // Преобразуем документы в события календаря
@@ -49,8 +50,6 @@ export const WebinarCalendar = ({
     }))
   }, [webinars])
 
-  console.log('events ==> ', events)
-
   // Обработчик клика по событию
   const handleSelectEvent = useCallback(
     (event: CalendarEvent) => {
@@ -59,90 +58,81 @@ export const WebinarCalendar = ({
     [router],
   )
 
-  const eventPropGetter = (event: CalendarEvent) => {
-    const backgroundColor = eventTypeColors[event.resource.type] || '#1455fe'
-    return {
-      style: {
-        backgroundColor,
-        color: '#1455fe',
-        borderRadius: '4px',
-        border: 'none',
-      },
-    }
-  }
+  // Функция для получения стилей события
+  const eventPropGetter = getEventStyle
 
-  // Обработчик для клика по кнопке "+ ещё"
-  const handleShowMore = useCallback((events: CalendarEvent[], date: Date) => {
-    // setView('day')
-    setCurrentDate(date)
+  // Перевод сообщений календаря на русский
+  const messages = useMemo<Partial<Messages>>(() => {
+    return CALENDAR_MESSAGES_RU
   }, [])
 
-  const messages: Partial<Messages> = useMemo(
-    () => ({
-      allDay: 'Весь день',
-      previous: 'Назад',
-      next: 'Вперёд',
-      today: 'Сегодня',
-      month: 'Месяц',
-      week: 'Неделя',
-      day: 'День',
-      agenda: 'Расписание',
-      date: 'Дата',
-      time: 'Время',
-      event: 'Событие',
-      noEventsInRange: 'В этом диапазоне нет событий',
-      showMore: (total) => (
-        <span className="font-ligh text-[#1455fe] hover:text-[#0034ba]">+ ещё {total}</span>
-      ),
-    }),
-    [],
-  )
+  const onPrevClick = useCallback(() => {
+    if (view === Views.DAY) {
+      setDate(moment(date).subtract(1, 'd').toDate())
+    } else if (view === Views.WEEK) {
+      setDate(moment(date).subtract(1, 'w').toDate())
+    } else {
+      setDate(moment(date).subtract(1, 'M').toDate())
+    }
+  }, [view, date])
 
-  // const components = useMemo(
-  //   () => ({
-  //     event: MyEvent,
-  //   }),
-  //   [],
-  // )
+  const onNextClick = useCallback(() => {
+    if (view === Views.DAY) {
+      setDate(moment(date).add(1, 'd').toDate())
+    } else if (view === Views.WEEK) {
+      setDate(moment(date).add(1, 'w').toDate())
+    } else {
+      setDate(moment(date).add(1, 'M').toDate())
+    }
+  }, [view, date])
+
+  const dateText = useMemo(() => {
+    if (view === Views.DAY) {
+      return moment(date).format('D MMMM YYYY')
+    } else if (view === Views.WEEK) {
+      return `${moment(date).startOf('week').format('D MMMM')} - ${moment(date).endOf('week').format('D MMMM YYYY')}`
+    } else {
+      return moment(date).format('MMMM YYYY')
+    }
+  }, [view, date])
+  console.log('dateText ==> ', dateText)
 
   return (
-    <div className="h-[800px]">
-      <Calendar
-        localizer={localizer}
-        events={events}
-        // components={components}
-        startAccessor="start"
-        endAccessor="end"
-        onSelectEvent={handleSelectEvent}
-        messages={messages}
-        popup
-        culture="ru"
-        defaultView="month"
-        views={['month', 'week', 'day', 'agenda']}
-        view={view}
-        onView={(nextView) => {
-          if (['month', 'week', 'day', 'agenda'].includes(nextView)) {
-            setView(nextView as 'month' | 'week' | 'day' | 'agenda')
-          }
-        }}
-        date={currentDate}
-        onNavigate={(newDate) => setCurrentDate(newDate)}
-        onShowMore={handleShowMore}
-        eventPropGetter={eventPropGetter}
-      />
+    <div className="space-y-5 p-1">
+      <div className="flex w-full flex-wrap items-center justify-center gap-3">
+        <div className="flex w-full space-x-2">
+          <Button variant="outline" size="icon" onClick={onPrevClick} className="btn btn-secondary">
+            <ArrowLeft />
+          </Button>
+          <Badge variant="secondary" className="grow text-lg">
+            {dateText}
+          </Badge>
+
+          <Button variant="outline" size="icon" onClick={onNextClick} className="btn btn-secondary">
+            <ArrowRight />
+          </Button>
+        </div>
+        <CalendarNav view={view} onViewChange={setView} />
+      </div>
+
+      <div className="h-[400px] md:h-[800px]">
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          onSelectEvent={handleSelectEvent}
+          messages={messages}
+          popup
+          culture="ru"
+          defaultView="month"
+          view={view}
+          toolbar={false}
+          date={date}
+          onNavigate={setDate}
+          eventPropGetter={eventPropGetter}
+        />
+      </div>
     </div>
   )
 }
-
-// function MyEvent({ event, title }: EventProps<CalendarEvent>) {
-//   return (
-//     <div style={{ display: 'flex', flexDirection: 'column' }}>
-//       <span>{title}</span>
-//       {event.resource.price ? (
-//         <small style={{ fontSize: 10, color: '#666' }}>Цена: {event.resource.price} Руб.</small>
-//       ) : (
-//         <small style={{ fontSize: 10, color: '#666' }}>Бесплатно</small>
-//       )}
-//     </div>
-//   )
-// }

@@ -5,14 +5,14 @@ import { WebinarCalendar } from '@/widgets/webinar-calendar'
 
 const WebinarsPage = ({ webinars }: { webinars: GetAllWebinarsQuery['Webinars']['docs'] }) => {
   return (
-    <section className="mt-12">
+    <section className="my-12">
       <Container className="flex flex-col gap-6">
         <Typography tag="h2" variant="visuelt-bold-48">
           Вебинары
         </Typography>
-      </Container>
 
-      <WebinarCalendar webinars={webinars} />
+        <WebinarCalendar webinars={webinars} />
+      </Container>
     </section>
   )
 }

@@ -4,8 +4,14 @@ import { notFound } from 'next/navigation'
 
 export const revalidate = 0
 
-async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = await params
+async function Page({
+  params: paramsPromise,
+}: {
+  params: Promise<{
+    slug?: string
+  }>
+}) {
+  const { slug = '' } = await paramsPromise
 
   const res = await getWebinarsBySlug({ slug })
 

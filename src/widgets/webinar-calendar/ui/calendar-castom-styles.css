@@ -1,0 +1,15 @@
+/* @import 'react-big-calendar/lib/sass/styles'; */
+
+@media (max-width: 799px)  {
+    .rbc-calendar{
+        font-size: 10px;
+    }
+
+    .rbc-overlay {
+        font-size: 10px;
+        max-width: 95%;
+        left: 5px !important;
+
+    }
+
+}
