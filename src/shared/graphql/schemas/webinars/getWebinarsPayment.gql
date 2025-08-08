@@ -1,0 +1,12 @@
+query GetWebinarPaymentByUserId($userId: JSON, $webinarId: JSON) {
+  WebinarPayments(
+    where: { user: { equals: $userId }, webinar: { equals: $webinarId }, paid: { equals: true } }
+  ) {
+    docs {
+      webinar {
+        id
+        url
+      }
+    }
+  }
+}

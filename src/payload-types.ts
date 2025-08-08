@@ -82,6 +82,7 @@ export interface Config {
     posts: Post;
     courses: Course;
     webinars: Webinar;
+    'webinar-payments': WebinarPayment;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -103,6 +104,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     webinars: WebinarsSelect<false> | WebinarsSelect<true>;
+    'webinar-payments': WebinarPaymentsSelect<false> | WebinarPaymentsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -541,6 +543,18 @@ export interface Webinar {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinar-payments".
+ */
+export interface WebinarPayment {
+  id: number;
+  user: number | User;
+  webinar: number | Webinar;
+  paid?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -605,6 +619,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'webinars';
         value: number | Webinar;
+      } | null)
+    | ({
+        relationTo: 'webinar-payments';
+        value: number | WebinarPayment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -955,6 +973,17 @@ export interface WebinarsSelect<T extends boolean = true> {
   price?: T;
   content?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinar-payments_select".
+ */
+export interface WebinarPaymentsSelect<T extends boolean = true> {
+  user?: T;
+  webinar?: T;
+  paid?: T;
   updatedAt?: T;
   createdAt?: T;
 }
