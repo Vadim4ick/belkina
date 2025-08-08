@@ -36,6 +36,7 @@ export const WebinarCalendar = ({
 }) => {
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.MONTH)
   const [date, setDate] = useState<Date>(moment().toDate())
+  console.log('date ==> ', date)
   const router = useRouter()
 
   // Преобразуем документы в события календаря
@@ -70,8 +71,10 @@ export const WebinarCalendar = ({
       setDate(moment(date).subtract(1, 'd').toDate())
     } else if (view === Views.WEEK) {
       setDate(moment(date).subtract(1, 'w').toDate())
+    } else if (view === Views.AGENDA) {
+      setDate(moment(date).subtract(1, 'M').startOf('month').toDate())
     } else {
-      setDate(moment(date).subtract(1, 'M').toDate())
+      setDate(moment(date).subtract(1, 'M').startOf('month').toDate())
     }
   }, [view, date])
 
@@ -80,8 +83,10 @@ export const WebinarCalendar = ({
       setDate(moment(date).add(1, 'd').toDate())
     } else if (view === Views.WEEK) {
       setDate(moment(date).add(1, 'w').toDate())
+    } else if (view === Views.AGENDA) {
+      setDate(moment(date).add(1, 'M').startOf('month').toDate())
     } else {
-      setDate(moment(date).add(1, 'M').toDate())
+      setDate(moment(date).add(1, 'M').startOf('month').toDate())
     }
   }, [view, date])
 
@@ -90,6 +95,8 @@ export const WebinarCalendar = ({
       return moment(date).format('D MMMM YYYY')
     } else if (view === Views.WEEK) {
       return `${moment(date).startOf('week').format('D MMMM')} - ${moment(date).endOf('week').format('D MMMM YYYY')}`
+    } else if (view === Views.AGENDA) {
+      return `${moment(date).startOf('month').format('D MMMM')} - ${moment(date).endOf('month').format('D MMMM YYYY')}`
     } else {
       return moment(date).format('MMMM YYYY')
     }
