@@ -1,17 +1,10 @@
 import type { Event as RBCEvent } from 'react-big-calendar'
 import type { GetAllWebinarsQuery } from '@/shared/graphql/__generated__'
+import { eventTypeColors } from '../model/const'
 
 // Тип события с расширением, если нужно
 interface CalendarEvent extends RBCEvent {
   resource: GetAllWebinarsQuery['Webinars']['docs'][number]
-}
-
-export const eventTypeColors: Record<string, string> = {
-  individual: '#a3d9ff',
-  exam_practice: '#ffb3a3',
-  free: '#a3ffa3',
-  minigroup: '#ffcc99',
-  // Можно добавить остальные типы и цвета
 }
 
 /**

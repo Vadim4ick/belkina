@@ -3,12 +3,18 @@
 import { useState, useEffect } from 'react'
 import { Views } from 'react-big-calendar'
 import { ToggleGroup, ToggleGroupItem } from '@/shared/ui/toggle-group'
-import { VIEWS_OPTIONS } from '../_vm/views-options'
 
 interface CalendarNavProps {
   view: (typeof Views)[keyof typeof Views]
   onViewChange: (view: (typeof Views)[keyof typeof Views]) => void
 }
+
+export const VIEWS_OPTIONS = [
+  { id: Views.MONTH, label: 'Месяц' },
+  { id: Views.WEEK, label: 'Неделя' },
+  { id: Views.DAY, label: 'День' },
+  { id: Views.AGENDA, label: 'Расписание' },
+]
 
 export const CalendarNav = ({ view, onViewChange }: CalendarNavProps) => {
   const [isMobile, setIsMobile] = useState(false)
