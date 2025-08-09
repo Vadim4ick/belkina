@@ -12,10 +12,10 @@ import type { GetAllWebinarsQuery } from '@/shared/graphql/__generated__'
 import { getRouteWebinarsBySlug } from '@/shared/lib/routes'
 import { CALENDAR_MESSAGES_RU } from './locales-ru'
 import { CalendarNav } from './calendar-nav'
-import { getEventStyle } from '../_vm/eventStyles'
 import { Button } from '@/shared/ui/button'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { Badge } from '@/shared/ui/badge'
+import { getEventStyle } from '../model/utils'
 
 moment.locale('ru')
 const localizer = momentLocalizer(moment)
@@ -36,7 +36,7 @@ export const WebinarCalendar = ({
 }) => {
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.MONTH)
   const [date, setDate] = useState<Date>(moment().toDate())
-  console.log('date ==> ', date)
+
   const router = useRouter()
 
   // Преобразуем документы в события календаря
@@ -57,9 +57,6 @@ export const WebinarCalendar = ({
     },
     [router],
   )
-
-  // Функция для получения стилей события
-  const eventPropGetter = getEventStyle
 
   // Перевод сообщений календаря на русский
   const messages = useMemo<Partial<Messages>>(() => {
@@ -147,7 +144,7 @@ export const WebinarCalendar = ({
           toolbar={false}
           date={date}
           onNavigate={setDate}
-          eventPropGetter={eventPropGetter}
+          eventPropGetter={getEventStyle}
           min={min}
           max={max}
         />
