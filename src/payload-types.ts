@@ -81,6 +81,8 @@ export interface Config {
     purchases: Purchase;
     posts: Post;
     courses: Course;
+    webinars: Webinar;
+    'webinar-payments': WebinarPayment;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -101,6 +103,8 @@ export interface Config {
     purchases: PurchasesSelect<false> | PurchasesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
+    webinars: WebinarsSelect<false> | WebinarsSelect<true>;
+    'webinar-payments': WebinarPaymentsSelect<false> | WebinarPaymentsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -507,6 +511,50 @@ export interface Post {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinars".
+ */
+export interface Webinar {
+  id: number;
+  title: string;
+  type: 'minigroup' | 'exam_practice' | 'free' | 'individual';
+  maxParticipants?: number | null;
+  startsAt: string;
+  endAt: string;
+  url: string;
+  price?: number | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinar-payments".
+ */
+export interface WebinarPayment {
+  id: number;
+  user: number | User;
+  webinar: number | Webinar;
+  paid?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -567,6 +615,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'courses';
         value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'webinars';
+        value: number | Webinar;
+      } | null)
+    | ({
+        relationTo: 'webinar-payments';
+        value: number | WebinarPayment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -905,6 +961,34 @@ export interface CoursesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinars_select".
+ */
+export interface WebinarsSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  maxParticipants?: T;
+  startsAt?: T;
+  endAt?: T;
+  url?: T;
+  price?: T;
+  content?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "webinar-payments_select".
+ */
+export interface WebinarPaymentsSelect<T extends boolean = true> {
+  user?: T;
+  webinar?: T;
+  paid?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -955,6 +1039,7 @@ export interface HomePage {
     title: string;
     subtitle: string;
     description: string;
+    media?: (number | null) | Media;
   };
   diagnosticTestBanner: {
     title: string;
@@ -989,6 +1074,7 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         subtitle?: T;
         description?: T;
+        media?: T;
       };
   diagnosticTestBanner?:
     | T

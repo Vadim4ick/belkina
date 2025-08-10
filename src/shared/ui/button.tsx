@@ -17,6 +17,9 @@ const buttonVariants = cva(
         ghostWhite: 'bg-white text-black hover:bg-light-grey disabled:text-dark-grey',
 
         ghost: 'bg-light-grey text-black hover:bg-stroke disabled:opacity-50',
+
+        outline:
+          'border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground',
       },
 
       size: {
@@ -28,6 +31,8 @@ const buttonVariants = cva(
 
         /** 48px  */
         xl: 'h-12',
+
+        icon: 'h-9 w-9 p-0',
       },
     },
 

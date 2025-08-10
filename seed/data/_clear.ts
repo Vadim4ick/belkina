@@ -17,6 +17,8 @@ export const clearSeeds = async () => {
     // 4️⃣ Очистить тарифы
     await payload.delete({ collection: 'tariffs', where: {} })
 
+    await payload.delete({ collection: 'webinars', where: {} })
+
     console.log('✅ Все коллекции очищены')
   } catch (err) {
     console.error('❌ Ошибка при очистке:', err)

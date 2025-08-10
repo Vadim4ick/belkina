@@ -2,7 +2,13 @@ import { GraduationCapIcon } from '@/shared/icons/graduation-cap'
 import { BookOpennCapIcon } from '@/shared/icons/book-open-text'
 import { FAQIcon } from '@/shared/icons/file-question-mark'
 import { Newspaper } from '@/shared/icons/newspaper'
-import { getRouteHome, getRouteCourses, getRoutePosts, getRouteTests } from '@/shared/lib/routes'
+import {
+  getRouteHome,
+  getRouteCourses,
+  getRoutePosts,
+  getRouteWebinars,
+  getRouteTests,
+} from '@/shared/lib/routes'
 import { TestResult_Status_All } from '../graphql/__generated__'
 import { BrainIcon } from 'lucide-react'
 
@@ -45,10 +51,20 @@ export const navItems: NavItemsProps[] = [
     url: getRouteHome(),
     icon: GraduationCapIcon,
   },
+  // {
+  //   title: 'Курсы',
+  //   url: getRouteCourses(),
+  //   icon: BookOpennCapIcon,
+  // },
   {
-    title: 'Курсы',
-    url: getRouteCourses(),
+    title: 'Вебинары',
+    url: getRouteWebinars(),
     icon: BookOpennCapIcon,
+  },
+  {
+    title: 'FAQ',
+    url: '#',
+    icon: FAQIcon,
   },
   {
     title: 'Тесты',

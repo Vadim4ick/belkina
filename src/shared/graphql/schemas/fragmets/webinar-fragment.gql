@@ -1,0 +1,14 @@
+fragment WebinarFragment on Webinar {
+  id
+  title
+
+  type
+  maxParticipants
+  startsAt
+  url
+  slug
+  price
+  updatedAt
+  createdAt
+  endAt
+}

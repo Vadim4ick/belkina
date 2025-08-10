@@ -16,8 +16,8 @@ export const CacheKeys = {
     examsAll: () => join(V, 'exams', 'all'),
     subjectsAll: () => join(V, 'subjects', 'all'),
 
-    purchasesByUser: (userId: string | number) => join(V, 'purchases', 'user', userId),
-    purchasesAll: () => join(V, 'purchases', 'all'),
+    // purchasesByUser: (userId: string | number) => join(V, 'purchases', 'user', userId),
+    // purchasesAll: () => join(V, 'purchases', 'all'),
 
     getMe: (userId: string | number) => join(V, 'me', userId),
 
@@ -26,6 +26,8 @@ export const CacheKeys = {
     getFAQ: () => join(V, 'faq'),
 
     courseBySlug: ({ slug }: { slug: string }) => join(V, 'courses', slug),
+
+    fetchAllTestsIds: () => join(V, 'fetchAllTestsIds'),
 
     testById: (id: string | number) => join(V, 'test', id),
     recommendations: (userId: string | number) => join(V, 'recommendations', userId),
@@ -36,5 +38,8 @@ export const CacheKeys = {
     posts: () => join(V, 'posts'),
     postBySlug: ({ slug }: { slug: string }) => join(V, 'posts', slug),
     postsByPage: ({ page }: { page: number }) => join(V, 'posts', page),
+
+    webinars: () => join(V, 'webinars'),
+    webinarBySlug: ({ slug }: { slug: string }) => join(V, 'webinars', slug),
   },
 } as const

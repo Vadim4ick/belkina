@@ -17,6 +17,8 @@ import { TestQuestions } from './shared/collections/test/questions'
 import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
+import { Webinars } from './shared/collections/Webinars'
+import { WebinarPayments } from './shared/collections/WebinarPayments'
 import Purchases from './shared/collections/Purchases'
 
 import dotenv from 'dotenv'
@@ -26,6 +28,7 @@ import { Subjects } from './shared/collections/categories/Subjects'
 import Courses from './shared/collections/Courses'
 import { GetUserTestsResolver } from './shared/graphql/resolvers/GetUserTestsResolver'
 import { GetUserRecommendationsResolver } from './shared/graphql/resolvers/GetUserRecommendations'
+import { GetRecommendationsByAnswerIdsResolver } from './shared/graphql/resolvers/GetRecommendationsByAnswerIdsResolver'
 
 dotenv.config()
 
@@ -64,6 +67,8 @@ export default buildConfig({
     Purchases,
     Posts,
     Courses,
+    Webinars,
+    WebinarPayments,
   ],
   globals: [HomePage],
   editor: lexicalEditor(),
@@ -145,6 +150,18 @@ export default buildConfig({
             userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
           },
           resolve: GetUserRecommendationsResolver.resolve,
+        },
+
+        GetRecommendationsByQuestionsIDS: {
+          type: new GraphQL.GraphQLList(RecommendationType),
+          args: {
+            answerIds: {
+              type: new GraphQL.GraphQLNonNull(
+                new GraphQL.GraphQLList(new GraphQL.GraphQLNonNull(GraphQL.GraphQLString)),
+              ),
+            },
+          },
+          resolve: GetRecommendationsByAnswerIdsResolver.resolve,
         },
       }
     },
