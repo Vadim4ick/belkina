@@ -101,6 +101,14 @@ export const HomePage: GlobalConfig = {
           required: true,
           localized: true,
         },
+
+        {
+          name: 'media',
+          label: 'Медиа файл',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+        },
       ],
     },
     {
