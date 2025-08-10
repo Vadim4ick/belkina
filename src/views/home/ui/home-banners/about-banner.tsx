@@ -2,7 +2,7 @@ import { GetHomePageQuery } from '@/shared/graphql/__generated__'
 import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
-import Image from 'next/image'
+import { MediaBlock } from './media-block'
 
 const AboutBanner = ({
   content,
@@ -13,14 +13,13 @@ const AboutBanner = ({
     <section className="max-mobile:py-6 py-12">
       <Container>
         <div className="bg-light-grey max-desktop:gap-6 max-tablet:flex-col max-tablet:py-6 max-tablet:px-4 flex gap-[48px] rounded-[16px]">
-          <Image
-            src="/img/about.png"
-            alt="about"
-            width={570}
-            height={612}
-            unoptimized
-            className="max-desktop:w-[450px] max-tablet:w-full max-tablet:max-h-[450px] rounded-[16px]"
-          />
+          <div className="max-desktop:w-[450px] max-tablet:w-full w-[570px] flex-none rounded-[16px]">
+            <MediaBlock
+              media={content.media}
+              className="rounded-[16px]"
+              aspect="aspect-[570/612]" /* можно поменять на aspect-video при видео-only */
+            />
+          </div>
 
           <div className="tablet:py-[40px] tablet:pr-[22px] max-tablet:gap-6 flex h-auto flex-col justify-between gap-10">
             <div className="flex flex-col gap-12">
