@@ -20434,7 +20434,7 @@ export type GetRecommendationsByQuestionsIds2QueryVariables = Exact<{
 }>;
 
 
-export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string }> };
+export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string }> };
 
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -20947,6 +20947,7 @@ export const GetRecommendationsByQuestionsIds2Document = gql`
   GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
     id
     title
+    description
   }
 }
     `;
