@@ -38,6 +38,7 @@ export const GetRecommendationsByAnswerIdsResolver = {
 
     return recommendationsRes.Recomendations.docs.map((doc) => ({
       title: doc.title,
+      description: JSON.stringify(doc.description),
     }))
   },
 }
