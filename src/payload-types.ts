@@ -331,9 +331,6 @@ export interface Question {
 export interface Recomendation {
   id: number;
   title: string;
-  /**
-   * Можно использовать заголовки и нумерованные списки
-   */
   description: {
     root: {
       type: string;

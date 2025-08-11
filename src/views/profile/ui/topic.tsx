@@ -1,98 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import React, { useMemo } from 'react'
+import React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { GetRecomendationsQuery } from '@/shared/graphql/__generated__'
 import { ArrowLeft } from 'lucide-react'
-
-type LexicalNode = {
-  type: string
-  text?: string
-  tag?: string
-  format?: number
-  detail?: number
-  version?: number
-  children?: LexicalNode[]
-}
-
-function parseLexical(desc: unknown): LexicalNode | null {
-  if (!desc) return null
-  try {
-    const data = typeof desc === 'string' ? JSON.parse(desc) : (desc as any)
-
-    if (data && data.root && data.root.type === 'root') {
-      return data.root
-    }
-    // иногда payload richtext может быть сразу root
-    if (data && (data as any).type === 'root') {
-      return data as LexicalNode
-    }
-    return null
-  } catch (e) {
-    console.warn('[Lexical parse] failed', e, desc)
-    return null
-  }
-}
-
-/* ===== Renderer ===== */
-const LexicalRenderer: React.FC<{ node: LexicalNode | null }> = ({ node }) => {
-  if (!node) return null
-
-  const render = (n: LexicalNode, key?: React.Key): React.ReactNode => {
-    switch (n.type) {
-      case 'root':
-        return <div key={key}>{n.children?.map((c, i) => render(c, i))}</div>
-
-      case 'paragraph':
-        return (
-          <p key={key} className="mb-3 text-base leading-relaxed text-[#424242]">
-            {n.children?.map((c, i) => render(c, i))}
-          </p>
-        )
-
-      case 'heading': {
-        const Tag = (n.tag as any) || 'h3'
-        return (
-          <Tag key={key} className="mt-4 mb-2 text-xl font-semibold text-black">
-            {n.children?.map((c, i) => render(c, i))}
-          </Tag>
-        )
-      }
-
-      case 'list':
-        return (
-          <ul key={key} className="mb-4 list-disc space-y-1 pl-5 text-[#424242]">
-            {n.children?.map((c, i) => render(c, i))}
-          </ul>
-        )
-
-      case 'listitem':
-        return <li key={key}>{n.children?.map((c, i) => render(c, i))}</li>
-
-      case 'quote':
-        return (
-          <blockquote key={key} className="border-accent mb-4 border-l-4 pl-4 text-[#555] italic">
-            {n.children?.map((c, i) => render(c, i))}
-          </blockquote>
-        )
-
-      case 'linebreak':
-        return <br key={key} />
-
-      case 'text': {
-        // Можешь добавить анализ format (bold/italic и т.д.)
-        return <span key={key}>{n.text}</span>
-      }
-
-      default:
-        return null
-    }
-  }
-
-  return <div>{render(node)}</div>
-}
+import RichText from '@/shared/ui/rich-text'
 
 type TopicProps = {
   recomendations: GetRecomendationsQuery['GetUserRecommendations']
@@ -107,14 +20,16 @@ const cardBaseClasses =
 const SingleRecommendation: React.FC<{
   rec: GetRecomendationsQuery['GetUserRecommendations'][number]
 }> = ({ rec }) => {
-  const rootNode = useMemo(() => parseLexical(rec.description), [rec.description])
-
   return (
     <div className="w-full">
       <div className={cardBaseClasses}>
         <h2 className="text-3xl font-bold text-black">{rec.title}</h2>
-        {rootNode ? (
-          <LexicalRenderer node={rootNode} />
+        {rec.description ? (
+          <RichText
+            className="m-0 flex flex-col"
+            data={JSON.parse(rec.description)}
+            enableGutter={false}
+          />
         ) : (
           <p className="text-base text-[#626262]">Нет подробного описания.</p>
         )}
@@ -156,7 +71,6 @@ const CarouselRecommendations: React.FC<{
         {/* Container */}
         <div className="-ml-4 flex">
           {recs.map((rec) => {
-            const rootNode = parseLexical(rec.description)
             return (
               <div
                 key={rec.id}
@@ -164,8 +78,12 @@ const CarouselRecommendations: React.FC<{
               >
                 <div className={cardBaseClasses}>
                   <h2 className="text-2xl font-bold text-black">{rec.title}</h2>
-                  {rootNode ? (
-                    <LexicalRenderer node={rootNode} />
+                  {rec.description ? (
+                    <RichText
+                      className="m-0 flex flex-col"
+                      data={JSON.parse(rec.description)}
+                      enableGutter={false}
+                    />
                   ) : (
                     <p className="text-base text-[#626262]">Нет описания.</p>
                   )}

@@ -4,6 +4,7 @@ import { getRouteWebinars } from '@/shared/lib/routes'
 import { getResultLevel } from '@/shared/lib/utils'
 import { useGetRecommendationQuestionByIds } from '@/shared/services/recommendations.service'
 import { Button } from '@/shared/ui/button'
+import RichText from '@/shared/ui/rich-text'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
@@ -87,14 +88,20 @@ const CompletedInfo = memo(
 
         {recommendations && recommendations.GetRecommendationsByQuestionsIDS.length > 0 && (
           <>
-            <Typography tag="h3" variant="poppins-md-16" className="mb-2 text-left">
+            <Typography tag="h3" variant="poppins-md-16" className="mb-0 text-left">
               Рекомендации:
             </Typography>
-            <ul className="mb-6 ml-4 list-disc text-left">
+
+            <div className="max-h-[300px] overflow-auto">
               {recommendations.GetRecommendationsByQuestionsIDS.map((r) => (
-                <li key={r.id}>{r.title}</li>
+                <RichText
+                  key={r.id}
+                  className="m-0 flex flex-col"
+                  data={JSON.parse(r.description)}
+                  enableGutter={false}
+                />
               ))}
-            </ul>
+            </div>
           </>
         )}
 
