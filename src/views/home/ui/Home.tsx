@@ -1,20 +1,17 @@
 import { MainBanner } from './home-banners/main-banner'
 import { TestsBanner } from './home-banners/tests-banner'
 import { AboutBanner } from './home-banners/about-banner'
-import { AskedQuestions } from '@/features/asked-questions'
 import { TestCardQuestions } from '@/widgets/test-card-questions'
 import { getSettledValue } from '@/shared/lib/utils'
 import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
-import { getFAQ } from '@/shared/actions/faq.action'
 import { getPosts } from '@/shared/actions/post.action'
 import { VerifyEmail } from '@/widgets/verify-email'
 
 const Home = async () => {
-  const [res, faqs, posts] = await Promise.allSettled([getHomePage(), getFAQ(), getPosts()])
+  const [res, posts] = await Promise.allSettled([getHomePage(), getPosts()])
 
   const resVal = getSettledValue(res)
-  const faqsVal = getSettledValue(faqs)
   const postsVal = getSettledValue(posts)
 
   return (
@@ -29,10 +26,6 @@ const Home = async () => {
 
       {resVal && resVal?.HomePage && resVal?.HomePage?.featuredTest && (
         <TestCardQuestions test={resVal?.HomePage?.featuredTest} />
-      )}
-
-      {faqsVal && faqsVal?.Faqs && faqsVal?.Faqs?.docs?.length > 0 && (
-        <AskedQuestions faqs={faqsVal?.Faqs.docs} />
       )}
 
       {resVal &&
