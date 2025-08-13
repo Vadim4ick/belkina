@@ -2430,6 +2430,7 @@ export type HomePageDocAccessFields_AboutProjectBanner_Delete = {
 export type HomePageDocAccessFields_AboutProjectBanner_Fields = {
   readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_Fields';
   readonly description: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description>;
+  readonly media: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media>;
   readonly subtitle: Maybe<HomePageDocAccessFields_AboutProjectBanner_Subtitle>;
   readonly title: Maybe<HomePageDocAccessFields_AboutProjectBanner_Title>;
 };
@@ -2469,6 +2470,34 @@ export type HomePageDocAccessFields_AboutProjectBanner_Description_Read = {
 
 export type HomePageDocAccessFields_AboutProjectBanner_Description_Update = {
   readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_AboutProjectBanner_Media = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_media';
+  readonly create: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media_Delete>;
+  readonly read: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media_Update>;
+};
+
+export type HomePageDocAccessFields_AboutProjectBanner_Media_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_media_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_AboutProjectBanner_Media_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_media_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_AboutProjectBanner_Media_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_media_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_AboutProjectBanner_Media_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_media_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -2976,6 +3005,7 @@ export type HomePageFields_AboutProjectBanner_Delete = {
 export type HomePageFields_AboutProjectBanner_Fields = {
   readonly __typename?: 'HomePageFields_aboutProjectBanner_Fields';
   readonly description: Maybe<HomePageFields_AboutProjectBanner_Description>;
+  readonly media: Maybe<HomePageFields_AboutProjectBanner_Media>;
   readonly subtitle: Maybe<HomePageFields_AboutProjectBanner_Subtitle>;
   readonly title: Maybe<HomePageFields_AboutProjectBanner_Title>;
 };
@@ -3015,6 +3045,34 @@ export type HomePageFields_AboutProjectBanner_Description_Read = {
 
 export type HomePageFields_AboutProjectBanner_Description_Update = {
   readonly __typename?: 'HomePageFields_aboutProjectBanner_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_AboutProjectBanner_Media = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_media';
+  readonly create: Maybe<HomePageFields_AboutProjectBanner_Media_Create>;
+  readonly delete: Maybe<HomePageFields_AboutProjectBanner_Media_Delete>;
+  readonly read: Maybe<HomePageFields_AboutProjectBanner_Media_Read>;
+  readonly update: Maybe<HomePageFields_AboutProjectBanner_Media_Update>;
+};
+
+export type HomePageFields_AboutProjectBanner_Media_Create = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_media_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_AboutProjectBanner_Media_Delete = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_media_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_AboutProjectBanner_Media_Read = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_media_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_AboutProjectBanner_Media_Update = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_media_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -3517,8 +3575,15 @@ export type HomePageUpdateDocAccess = {
 export type HomePage_AboutProjectBanner = {
   readonly __typename?: 'HomePage_AboutProjectBanner';
   readonly description: Maybe<Scalars['String']['output']>;
+  readonly media: Maybe<Media>;
   readonly subtitle: Maybe<Scalars['String']['output']>;
   readonly title: Maybe<Scalars['String']['output']>;
+};
+
+
+export type HomePage_AboutProjectBannerMediaArgs = {
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
 };
 
 export type HomePage_DiagnosticTestBanner = {
@@ -19188,6 +19253,7 @@ export type MutationHomePageInput = {
 
 export type MutationHomePage_AboutProjectBannerInput = {
   readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly media: InputMaybe<Scalars['Int']['input']>;
   readonly subtitle: InputMaybe<Scalars['String']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
 };
@@ -20223,14 +20289,14 @@ export type GetAllCoursesQueryVariables = Exact<{
 }>;
 
 
-export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly page: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
+export type GetAllCoursesQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly page: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
 
 export type GetCourseBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetCourseBySlugQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly kinescopeVideos: any, readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
+export type GetCourseBySlugQuery = { readonly __typename?: 'Query', readonly Courses: { readonly __typename?: 'Courses', readonly docs: ReadonlyArray<{ readonly __typename?: 'Course', readonly kinescopeVideos: any, readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> }> } };
 
 export type GetCourseSlugByIdQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -20244,11 +20310,11 @@ export type GetFaGsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetFaGsQuery = { readonly __typename?: 'Query', readonly Faqs: { readonly __typename?: 'Faqs', readonly docs: ReadonlyArray<{ readonly __typename?: 'Faq', readonly id: number, readonly question: string, readonly answer: string }> } };
 
-export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> };
+export type CourseFragmentFragment = { readonly __typename?: 'Course', readonly id: number, readonly title: string, readonly description: string, readonly price: number, readonly discount: number, readonly slug: string, readonly isFree: boolean, readonly totalDuration: string, readonly previewVideoId: string, readonly banner: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string }, readonly exams: { readonly __typename?: 'Exam', readonly id: number, readonly title: string }, readonly subjects: ReadonlyArray<{ readonly __typename?: 'Subject', readonly id: number, readonly title: string }> };
 
 export type ExamFragmentFragment = { readonly __typename?: 'Exam', readonly id: number, readonly title: string };
 
-export type MediaFragmentFragment = { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string };
+export type MediaFragmentFragment = { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string };
 
 export type PostFragmentFragment = { readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly content: any, readonly publishedAt: any, readonly image: { readonly __typename?: 'Media', readonly url: string, readonly alt: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }>, readonly relatedPosts: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number }> };
 
@@ -20267,7 +20333,7 @@ export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonl
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -20282,7 +20348,7 @@ export type GetPostListQueryVariables = Exact<{
 }>;
 
 
-export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly alt: string, readonly url: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }> }> } };
+export type GetPostListQuery = { readonly __typename?: 'Query', readonly Posts: { readonly __typename?: 'Posts', readonly hasNextPage: boolean, readonly hasPrevPage: boolean, readonly limit: number, readonly nextPage: number, readonly page: number, readonly pagingCounter: number, readonly prevPage: number, readonly totalDocs: number, readonly totalPages: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Post', readonly id: number, readonly slug: string, readonly title: string, readonly description: string, readonly image: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string }, readonly categories: ReadonlyArray<{ readonly __typename?: 'Exam', readonly title: string }> }> } };
 
 export type GetPurchaseByIdQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -20368,7 +20434,7 @@ export type GetRecommendationsByQuestionsIds2QueryVariables = Exact<{
 }>;
 
 
-export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string }> };
+export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string }> };
 
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -20435,7 +20501,7 @@ export type GetUserByEmailQueryVariables = Exact<{
 }>;
 
 
-export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly isVerified: boolean, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string } }> } };
+export type GetUserByEmailQuery = { readonly __typename?: 'Query', readonly Users: { readonly __typename?: 'Users', readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'User', readonly id: number, readonly email: any, readonly password: string, readonly signupMethod: User_SignupMethod, readonly role: User_Role, readonly isVerified: boolean, readonly name: string, readonly avatar: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }> } };
 
 export type UpdateUserEmailMutationVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -20493,6 +20559,7 @@ export const MediaFragmentFragmentDoc = gql`
   id
   url
   alt
+  mimeType
 }
     `;
 export const ExamFragmentFragmentDoc = gql`
@@ -20688,6 +20755,9 @@ export const GetHomePageDocument = gql`
       title
       subtitle
       description
+      media {
+        ...MediaFragment
+      }
     }
     diagnosticTestBanner {
       title
@@ -20699,7 +20769,8 @@ export const GetHomePageDocument = gql`
     }
   }
 }
-    ${TestFragmentFragmentDoc}`;
+    ${MediaFragmentFragmentDoc}
+${TestFragmentFragmentDoc}`;
 export const GetPostBySlugDocument = gql`
     query GetPostBySlug($slug: String!) {
   Posts(where: {slug: {equals: $slug}}) {
@@ -20718,9 +20789,7 @@ export const GetPostListDocument = gql`
       title
       description
       image {
-        id
-        alt
-        url
+        ...MediaFragment
       }
       categories {
         title
@@ -20737,7 +20806,7 @@ export const GetPostListDocument = gql`
     totalPages
   }
 }
-    `;
+    ${MediaFragmentFragmentDoc}`;
 export const GetPurchaseByIdDocument = gql`
     query GetPurchaseById($userId: JSON, $courseId: JSON) {
   Purchases(where: {user: {equals: $userId}, course: {equals: $courseId}}) {
@@ -20878,6 +20947,7 @@ export const GetRecommendationsByQuestionsIds2Document = gql`
   GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
     id
     title
+    description
   }
 }
     `;

@@ -47,8 +47,12 @@ const SliderWrapper: React.FC<Props> = ({ posts }: Props) => {
                 )
               })}
           </CarouselContent>
-          <CarouselPrevious className="bg-accent" />
-          <CarouselNext className="bg-accent" />
+
+          {/* ЛЕВАЯ */}
+          <CarouselPrevious className="bg-accent max-tablet:-left-0 max-tablet:-top-6" />
+
+          {/* ПРАВАЯ */}
+          <CarouselNext className="bg-accent max-tablet:-right-0 max-tablet:-top-6" />
         </Carousel>
       </Container>
     </section>

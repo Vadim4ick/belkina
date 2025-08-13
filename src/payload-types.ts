@@ -331,9 +331,6 @@ export interface Question {
 export interface Recomendation {
   id: number;
   title: string;
-  /**
-   * Можно использовать заголовки и нумерованные списки
-   */
   description: {
     root: {
       type: string;
@@ -1039,6 +1036,7 @@ export interface HomePage {
     title: string;
     subtitle: string;
     description: string;
+    media?: (number | null) | Media;
   };
   diagnosticTestBanner: {
     title: string;
@@ -1073,6 +1071,7 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         subtitle?: T;
         description?: T;
+        media?: T;
       };
   diagnosticTestBanner?:
     | T

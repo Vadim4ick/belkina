@@ -6,9 +6,7 @@ query GetPostList($limit: Int!, $page: Int!) {
       title
       description
       image {
-        id
-        alt
-        url
+        ...MediaFragment
       }
       categories {
         title
