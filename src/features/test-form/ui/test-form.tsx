@@ -99,7 +99,7 @@ const TestForm = memo(
                   testRes={testRes}
                   totalCorrectAnswers={totalCorrectAnswers}
                   countQuestions={questions.length}
-                  publicFlag={publicFlag}
+                  publicFlag={publicFlag || !!!profile?.id}
                   publicCorrectAnswers={publicCorrectAnswers}
                 />
               )}

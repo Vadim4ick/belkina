@@ -2,7 +2,8 @@ import { CollectionConfig } from 'payload'
 import {
   FixedToolbarFeature,
   HeadingFeature,
-  UnorderedListFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { CacheKeys } from '../redis/cache-keys'
@@ -53,21 +54,18 @@ export const Recomendations: CollectionConfig = {
 
     {
       name: 'description',
-      label: 'Описание',
       type: 'richText',
+      label: 'Описание',
       required: true,
       editor: lexicalEditor({
-        features: () => [
-          HeadingFeature({
-            enabledHeadingSizes: ['h3', 'h4'],
-          }),
-          UnorderedListFeature(),
+        features: ({ rootFeatures }) => [
+          ...rootFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
           FixedToolbarFeature(),
+          InlineToolbarFeature(),
+          HorizontalRuleFeature(),
         ],
       }),
-      admin: {
-        description: 'Можно использовать заголовки и нумерованные списки',
-      },
     },
   ],
 }
