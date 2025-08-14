@@ -3,6 +3,7 @@ import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 import { MediaBlock } from './media-block'
+import RichText from '@/shared/ui/rich-text'
 
 const AboutBanner = ({
   content,
@@ -33,13 +34,21 @@ const AboutBanner = ({
                 </Typography>
               </div>
 
-              <Typography
+              {/* <Typography
                 tag="div"
                 className="text-dark-grey rounded-[16px] bg-white p-6"
                 variant="poppins-md-16"
               >
                 {content.description}
-              </Typography>
+              </Typography> */}
+
+              {content.content && (
+                <RichText
+                  className="m-0 flex flex-col"
+                  data={content.content}
+                  enableGutter={false}
+                />
+              )}
             </div>
 
             <Button size={'xl'}>Пройти тест</Button>

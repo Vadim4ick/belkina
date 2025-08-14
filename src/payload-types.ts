@@ -1035,7 +1035,21 @@ export interface HomePage {
   aboutProjectBanner: {
     title: string;
     subtitle: string;
-    description: string;
+    content?: {
+      root: {
+        type: string;
+        children: {
+          type: string;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     media?: (number | null) | Media;
   };
   diagnosticTestBanner: {
@@ -1070,7 +1084,7 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         title?: T;
         subtitle?: T;
-        description?: T;
+        content?: T;
         media?: T;
       };
   diagnosticTestBanner?:
