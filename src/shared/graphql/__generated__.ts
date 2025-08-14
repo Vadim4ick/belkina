@@ -2429,7 +2429,7 @@ export type HomePageDocAccessFields_AboutProjectBanner_Delete = {
 
 export type HomePageDocAccessFields_AboutProjectBanner_Fields = {
   readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_Fields';
-  readonly description: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description>;
+  readonly content: Maybe<HomePageDocAccessFields_AboutProjectBanner_Content>;
   readonly media: Maybe<HomePageDocAccessFields_AboutProjectBanner_Media>;
   readonly subtitle: Maybe<HomePageDocAccessFields_AboutProjectBanner_Subtitle>;
   readonly title: Maybe<HomePageDocAccessFields_AboutProjectBanner_Title>;
@@ -2445,31 +2445,31 @@ export type HomePageDocAccessFields_AboutProjectBanner_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageDocAccessFields_AboutProjectBanner_Description = {
-  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description';
-  readonly create: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description_Create>;
-  readonly delete: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description_Delete>;
-  readonly read: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description_Read>;
-  readonly update: Maybe<HomePageDocAccessFields_AboutProjectBanner_Description_Update>;
+export type HomePageDocAccessFields_AboutProjectBanner_Content = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_content';
+  readonly create: Maybe<HomePageDocAccessFields_AboutProjectBanner_Content_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_AboutProjectBanner_Content_Delete>;
+  readonly read: Maybe<HomePageDocAccessFields_AboutProjectBanner_Content_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_AboutProjectBanner_Content_Update>;
 };
 
-export type HomePageDocAccessFields_AboutProjectBanner_Description_Create = {
-  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description_Create';
+export type HomePageDocAccessFields_AboutProjectBanner_Content_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_content_Create';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageDocAccessFields_AboutProjectBanner_Description_Delete = {
-  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description_Delete';
+export type HomePageDocAccessFields_AboutProjectBanner_Content_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_content_Delete';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageDocAccessFields_AboutProjectBanner_Description_Read = {
-  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description_Read';
+export type HomePageDocAccessFields_AboutProjectBanner_Content_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_content_Read';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageDocAccessFields_AboutProjectBanner_Description_Update = {
-  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_description_Update';
+export type HomePageDocAccessFields_AboutProjectBanner_Content_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_aboutProjectBanner_content_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -3004,7 +3004,7 @@ export type HomePageFields_AboutProjectBanner_Delete = {
 
 export type HomePageFields_AboutProjectBanner_Fields = {
   readonly __typename?: 'HomePageFields_aboutProjectBanner_Fields';
-  readonly description: Maybe<HomePageFields_AboutProjectBanner_Description>;
+  readonly content: Maybe<HomePageFields_AboutProjectBanner_Content>;
   readonly media: Maybe<HomePageFields_AboutProjectBanner_Media>;
   readonly subtitle: Maybe<HomePageFields_AboutProjectBanner_Subtitle>;
   readonly title: Maybe<HomePageFields_AboutProjectBanner_Title>;
@@ -3020,31 +3020,31 @@ export type HomePageFields_AboutProjectBanner_Update = {
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageFields_AboutProjectBanner_Description = {
-  readonly __typename?: 'HomePageFields_aboutProjectBanner_description';
-  readonly create: Maybe<HomePageFields_AboutProjectBanner_Description_Create>;
-  readonly delete: Maybe<HomePageFields_AboutProjectBanner_Description_Delete>;
-  readonly read: Maybe<HomePageFields_AboutProjectBanner_Description_Read>;
-  readonly update: Maybe<HomePageFields_AboutProjectBanner_Description_Update>;
+export type HomePageFields_AboutProjectBanner_Content = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_content';
+  readonly create: Maybe<HomePageFields_AboutProjectBanner_Content_Create>;
+  readonly delete: Maybe<HomePageFields_AboutProjectBanner_Content_Delete>;
+  readonly read: Maybe<HomePageFields_AboutProjectBanner_Content_Read>;
+  readonly update: Maybe<HomePageFields_AboutProjectBanner_Content_Update>;
 };
 
-export type HomePageFields_AboutProjectBanner_Description_Create = {
-  readonly __typename?: 'HomePageFields_aboutProjectBanner_description_Create';
+export type HomePageFields_AboutProjectBanner_Content_Create = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_content_Create';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageFields_AboutProjectBanner_Description_Delete = {
-  readonly __typename?: 'HomePageFields_aboutProjectBanner_description_Delete';
+export type HomePageFields_AboutProjectBanner_Content_Delete = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_content_Delete';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageFields_AboutProjectBanner_Description_Read = {
-  readonly __typename?: 'HomePageFields_aboutProjectBanner_description_Read';
+export type HomePageFields_AboutProjectBanner_Content_Read = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_content_Read';
   readonly permission: Scalars['Boolean']['output'];
 };
 
-export type HomePageFields_AboutProjectBanner_Description_Update = {
-  readonly __typename?: 'HomePageFields_aboutProjectBanner_description_Update';
+export type HomePageFields_AboutProjectBanner_Content_Update = {
+  readonly __typename?: 'HomePageFields_aboutProjectBanner_content_Update';
   readonly permission: Scalars['Boolean']['output'];
 };
 
@@ -3574,10 +3574,15 @@ export type HomePageUpdateDocAccess = {
 
 export type HomePage_AboutProjectBanner = {
   readonly __typename?: 'HomePage_AboutProjectBanner';
-  readonly description: Maybe<Scalars['String']['output']>;
+  readonly content: Maybe<Scalars['JSON']['output']>;
   readonly media: Maybe<Media>;
   readonly subtitle: Maybe<Scalars['String']['output']>;
   readonly title: Maybe<Scalars['String']['output']>;
+};
+
+
+export type HomePage_AboutProjectBannerContentArgs = {
+  depth: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -19252,7 +19257,7 @@ export type MutationHomePageInput = {
 };
 
 export type MutationHomePage_AboutProjectBannerInput = {
-  readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly content: InputMaybe<Scalars['JSON']['input']>;
   readonly media: InputMaybe<Scalars['Int']['input']>;
   readonly subtitle: InputMaybe<Scalars['String']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
@@ -20333,7 +20338,7 @@ export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonl
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: string, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly content: any, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -20754,7 +20759,7 @@ export const GetHomePageDocument = gql`
     aboutProjectBanner {
       title
       subtitle
-      description
+      content
       media {
         ...MediaFragment
       }

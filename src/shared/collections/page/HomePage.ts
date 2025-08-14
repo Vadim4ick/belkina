@@ -1,5 +1,12 @@
 import { CacheKeys } from '@/shared/redis/cache-keys'
 import { invalidateTags } from '@/shared/redis/gqlCached'
+import {
+  FixedToolbarFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import { GlobalConfig } from 'payload'
 
 export const HomePage: GlobalConfig = {
@@ -94,12 +101,28 @@ export const HomePage: GlobalConfig = {
           required: true,
           localized: true,
         },
+        // {
+        //   name: 'description',
+        //   label: 'Описание',
+        //   type: 'textarea',
+        //   required: true,
+        //   localized: true,
+        // },
+
         {
-          name: 'description',
-          label: 'Описание',
-          type: 'textarea',
-          required: true,
-          localized: true,
+          name: 'content',
+          type: 'richText',
+          label: 'Содержание',
+          required: false,
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [
+              ...rootFeatures,
+              HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+              FixedToolbarFeature(),
+              InlineToolbarFeature(),
+              HorizontalRuleFeature(),
+            ],
+          }),
         },
 
         {
