@@ -17,3 +17,5 @@ export const getRoutePostsBySlug = (slug: string) => `${getRoutePosts()}/${slug}
 
 export const authRoutes = [getRouteAuth(), getRouteRegister()]
 export const privateRoutes = [getRouteProfile()]
+
+export const getRouteFAQ = () => '/faq'

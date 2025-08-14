@@ -8,6 +8,7 @@ import {
   getRoutePosts,
   getRouteWebinars,
   getRouteTests,
+  getRouteFAQ,
 } from '@/shared/lib/routes'
 import { TestResult_Status_All } from '../graphql/__generated__'
 import { BrainIcon } from 'lucide-react'
@@ -63,7 +64,7 @@ export const navItems: NavItemsProps[] = [
   },
   {
     title: 'FAQ',
-    url: '#',
+    url: getRouteFAQ(),
     icon: FAQIcon,
   },
   {
@@ -71,11 +72,6 @@ export const navItems: NavItemsProps[] = [
     url: getRouteTests(),
     icon: BrainIcon,
   },
-  // {
-  //   title: 'FAQ',
-  //   url: '#',
-  //   icon: FAQIcon,
-  // },
   {
     title: 'Блог',
     url: getRoutePosts(),
