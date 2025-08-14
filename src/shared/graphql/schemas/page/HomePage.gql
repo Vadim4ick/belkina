@@ -13,7 +13,7 @@ query GetHomePage {
     aboutProjectBanner {
       title
       subtitle
-      description
+      content
 
       media {
         ...MediaFragment
