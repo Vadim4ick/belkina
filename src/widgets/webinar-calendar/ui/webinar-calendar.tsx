@@ -118,7 +118,7 @@ export const WebinarCalendar = ({
           <Button variant="outline" size="icon" onClick={onPrevClick} className="btn btn-secondary">
             <ArrowLeft />
           </Button>
-          <Badge variant="secondary" className="grow text-lg">
+          <Badge variant="secondary" className="grow text-sm md:text-lg">
             {dateText}
           </Badge>
 
