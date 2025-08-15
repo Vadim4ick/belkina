@@ -12,6 +12,7 @@ import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
 import slugify from 'slugify'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
+import { gql } from '../graphql/client'
 
 const Webinars: CollectionConfig = {
   slug: 'webinars',
@@ -153,6 +154,20 @@ const Webinars: CollectionConfig = {
       required: true,
       admin: { placeholder: 'https://…' },
       access: {
+        // read: async ({ siblingData, req }) => {
+        //   const isFree = siblingData?.type === 'free'
+        //   if (isFree) return true
+
+        //   if (req.user?.role === 'admin') return true
+
+        //   const payments = await gql.GetWebinarPaymentByUserId({
+        //     userId: req.user?.id,
+        //     webinarId: siblingData?.id,
+        //   })
+
+        //   return payments?.WebinarPayments?.docs?.length > 0
+        // },
+
         read: ({ siblingData, req }) => {
           if (req.user?.role === 'admin') return true
 

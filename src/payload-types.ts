@@ -546,7 +546,29 @@ export interface WebinarPayment {
   id: number;
   user: number | User;
   webinar: number | Webinar;
-  paid?: boolean | null;
+  paymentId: string;
+  amount: number;
+  currency?: string | null;
+  status: 'pending' | 'waiting_for_capture' | 'succeeded' | 'canceled' | 'refunded';
+  /**
+   * Обычно { userId, webinarId }
+   */
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Заполняется при canceled/ошибках
+   */
+  failure?: {
+    code?: string | null;
+    message?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -980,7 +1002,17 @@ export interface WebinarsSelect<T extends boolean = true> {
 export interface WebinarPaymentsSelect<T extends boolean = true> {
   user?: T;
   webinar?: T;
-  paid?: T;
+  paymentId?: T;
+  amount?: T;
+  currency?: T;
+  status?: T;
+  metadata?: T;
+  failure?:
+    | T
+    | {
+        code?: T;
+        message?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

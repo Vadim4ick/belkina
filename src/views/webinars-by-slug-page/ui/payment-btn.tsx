@@ -1,12 +1,19 @@
 'use client'
 
 import { useProfileStore } from '@/entities/user/use-profile-store'
+import { useCreateWebinarPayment } from '@/shared/services/webinar-payments.service'
 import { useGetWebinarPayment } from '@/shared/services/webinar.service'
 import { Button } from '@/shared/ui/button'
 import { toast } from 'sonner'
 
-const PaymentBtn = ({ webinarId }: { webinarId: number }) => {
+const PaymentBtn = ({ webinarId, price }: { webinarId: number; price: number }) => {
   const { profile } = useProfileStore()
+
+  const { mutateAsync: createWebinarPayment } = useCreateWebinarPayment({
+    webinarId,
+    price: price,
+    userId: profile?.id ?? 0,
+  })
 
   const handleClick = () => {
     if (!!!profile?.id) {
@@ -17,7 +24,7 @@ const PaymentBtn = ({ webinarId }: { webinarId: number }) => {
       return toast.error('Вы не подтвердили почту. Пожалуйста, подтвердите свою почту в профиле.')
     }
 
-    console.log('click')
+    createWebinarPayment()
   }
 
   const { data: webinar, isLoading, isFetching } = useGetWebinarPayment({ webinarId })
