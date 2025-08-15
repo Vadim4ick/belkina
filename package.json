@@ -16,6 +16,8 @@
     "generate": "npx graphql-codegen --config src/shared/graphql/codegen.ts",
     "seed": "tsx seed/scripts/index.ts",
     "check-types": "tsc --noEmit",
+    "migrate:create": "npm run payload migrate:create",
+    "migrate:up": "npm run payload migrate",
     "worker": "tsx scripts/worker.ts"
   },
   "dependencies": {
