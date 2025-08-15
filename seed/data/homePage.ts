@@ -25,6 +25,7 @@ export const seedHomePage = async () => {
       },
       aboutProjectBanner: {
         title: 'О проекте',
+
         subtitle:
           'Наш проект помогает подготовиться к ЕГЭ по русскому языку, чтобы сдать на 90+ баллов без лишнего напряжения',
       },
