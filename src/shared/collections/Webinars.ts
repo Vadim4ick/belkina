@@ -12,7 +12,8 @@ import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
 import slugify from 'slugify'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
-import { gql } from '../graphql/client'
+import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+import { getUserIdByToken } from '../lib/utils'
 
 const Webinars: CollectionConfig = {
   slug: 'webinars',
@@ -154,27 +155,37 @@ const Webinars: CollectionConfig = {
       required: true,
       admin: { placeholder: 'https://…' },
       access: {
-        // read: async ({ siblingData, req }) => {
-        //   const isFree = siblingData?.type === 'free'
-        //   if (isFree) return true
+        read: () => true, // <-- всегда "видно", но содержимое можем подменять
+      },
 
-        //   if (req.user?.role === 'admin') return true
+      hooks: {
+        afterRead: [
+          async ({ value, req, siblingData }) => {
+            const gql = await getServerAuthGqlClient({})
 
-        //   const payments = await gql.GetWebinarPaymentByUserId({
-        //     userId: req.user?.id,
-        //     webinarId: siblingData?.id,
-        //   })
+            // админам всегда можно
+            if (req.user?.role === 'admin') return value
 
-        //   return payments?.WebinarPayments?.docs?.length > 0
-        // },
+            // бесплатные вебы — тоже можно
+            if (siblingData?.type === 'free') return value
 
-        read: ({ siblingData, req }) => {
-          if (req.user?.role === 'admin') return true
+            const res = await getUserIdByToken({ req })
 
-          const isFree = siblingData?.type === 'free'
+            if (!res) return null
 
-          return isFree
-        },
+            // платные — проверяем оплату
+            const payments = await gql.GetWebinarPaymentByUserId({
+              userId: res.id,
+              webinarId: siblingData.id,
+            })
+
+            if (payments?.WebinarPayments?.docs?.length > 0) {
+              return value // доступ есть
+            }
+
+            return null // скрываем ссылку
+          },
+        ],
       },
     },
 

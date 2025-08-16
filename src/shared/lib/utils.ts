@@ -45,6 +45,23 @@ export async function checkAccessToken({ req }: { req: PayloadRequest }): Promis
     return false
   }
 }
+export async function getUserIdByToken({ req }: { req: PayloadRequest }) {
+  const authHeader = req.headers.get('authorization')
+  const token = authHeader?.replace(/^Bearer\s/, '')
+
+  if (!token) {
+    console.warn('🚫 Нет токена — доступ по умолчанию запрещён')
+    return false
+  }
+
+  try {
+    const res = await JwtService.verifyToken(token)
+
+    return res
+  } catch (err) {
+    console.warn('⚠️ Токен невалиден:', (err as Error)?.message)
+  }
+}
 
 export function getResultLevel(percent: number): string {
   if (percent === 100) {
