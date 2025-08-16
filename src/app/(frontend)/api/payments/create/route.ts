@@ -1,27 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from 'next/server'
-import { ykCreatePayment, upsertWebinarPayment } from '../_lib'
+import { ykCreatePayment, upsertWebinarPayment, getWebinarPriceById } from '../_lib'
 
 export const runtime = 'nodejs'
 
 type CreateBody = {
   webinarId: number
   webinarSlug: string
-  price: number
+  userEmail: string
   userId: number // сервер ВСЕГДА должен сам знать userId; не доверяй фронту — подтяни из сессии в реальном проекте
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { webinarId, userId, price, webinarSlug } = (await req.json()) as CreateBody
+    const { webinarId, userId, webinarSlug, userEmail } = (await req.json()) as CreateBody
 
-    if (!webinarId || !userId || !price || !webinarSlug) {
+    if (!webinarId || !userId || !webinarSlug || !userEmail) {
       return NextResponse.json({ message: 'Bad request' }, { status: 400 })
+    }
+
+    const webinar = await getWebinarPriceById(webinarId)
+
+    const price = webinar?.Webinar?.price
+
+    if (!price || price === 0) {
+      return NextResponse.json({ message: 'Webinar not found' }, { status: 404 })
     }
 
     // 1) цена вебинара из БД
     const amount = {
-      value: price.toFixed(2), // "1000.00"
+      value: price,
       currency: 'RUB',
     }
 
@@ -40,6 +48,7 @@ export async function POST(req: NextRequest) {
       // полезно класть метадату
       metadata: {
         webinarId,
+        userEmail,
         userId: String(userId),
         webinarSlug,
       },
@@ -56,7 +65,11 @@ export async function POST(req: NextRequest) {
 
     // 4) отдадим ссылку для редиректа
     const confirmationUrl =
-      yk?.confirmation?.confirmation_url ?? yk?.confirmation?.confirmationUrl ?? null
+      (yk?.confirmation &&
+        ('confirmation_url' in yk.confirmation
+          ? yk.confirmation.confirmation_url
+          : (yk.confirmation as any)?.confirmationUrl)) ??
+      null
 
     return NextResponse.json({
       paymentId: yk.id,

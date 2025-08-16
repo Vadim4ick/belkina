@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { markErrorPaid, markPaid, upsertWebinarPayment, ykGetPayment } from '../_lib'
+import { NodemailerService } from '@/shared/services/nodemailer.service'
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
+  const gql = await getServerAuthGqlClient({})
+
   try {
     const payload = await req.json()
     const event = payload?.event
@@ -29,6 +33,15 @@ export async function POST(req: NextRequest) {
     // Если платёж прошёл — отмечаем как paid=true
     if (yk.status === 'succeeded' && yk.paid === true) {
       await markPaid(paymentId)
+      const webinar = await gql.GetWebinarById({
+        id: Number(yk?.metadata?.webinarId),
+      })
+
+      await NodemailerService.sendWebinarAccess(
+        yk?.metadata?.userEmail || '',
+        webinar.Webinar.title,
+        webinar.Webinar.url,
+      )
     }
 
     if (yk.status === 'canceled') {
