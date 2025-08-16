@@ -8,13 +8,6 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { GlobalConfig } from 'payload'
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
 
 export const HomePage: GlobalConfig = {
   slug: 'homePage',
