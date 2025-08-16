@@ -5,6 +5,10 @@ import { Typography } from '@/shared/ui/typography'
 import { notFound } from 'next/navigation'
 
 const TestByIdPage = async ({ id }: { id: string }) => {
+  if (!id) {
+    return notFound()
+  }
+
   try {
     const res = await getTestById({ id })
 
