@@ -7,8 +7,10 @@ import { UrlWebinar } from './url-webinar'
 
 const WebinarsBySlugPage = ({
   webinar,
+  count,
 }: {
   webinar: GetWebinarsBySlugQuery['Webinars']['docs'][0]
+  count: number
 }) => {
   return (
     <section className="mt-12">
@@ -41,11 +43,20 @@ const WebinarsBySlugPage = ({
           </div>
         )}
 
-        {Boolean(webinar?.maxParticipants) && (
+        {Boolean(webinar?.maxParticipants) && webinar.type === 'minigroup' && (
           <div className="flex flex-col gap-2">
-            <Typography tag="p" variant="poppins-md-16">
-              <b>🟠 Осталось свободных мест: 3 из {webinar.maxParticipants}</b>
-            </Typography>
+            {count < webinar.maxParticipants ? (
+              <Typography tag="p" variant="poppins-md-16">
+                <b>
+                  🟠 Осталось свободных мест: {webinar.maxParticipants - count} из{' '}
+                  {webinar.maxParticipants}
+                </b>
+              </Typography>
+            ) : (
+              <Typography tag="p" variant="poppins-md-16">
+                <b>🟠 Все места заняты. Набор группы закрыт.</b>
+              </Typography>
+            )}
 
             <Typography tag="p" variant="poppins-md-16">
               Группы формируются вручную, чтобы сохранить динамику и внимание к каждому ученику.
@@ -56,11 +67,14 @@ const WebinarsBySlugPage = ({
 
         <UrlWebinar webinarId={webinar.id} webinarUrl={webinar?.url} />
 
-        {Boolean(webinar?.price) && (
-          <div className="flex max-w-[300px] flex-col gap-4">
-            <PaymentBtn webinarId={webinar.id} />
-          </div>
-        )}
+        {/* кнопка только если можно оплатить */}
+        {(webinar.type !== 'minigroup' ||
+          (webinar.maxParticipants && count < webinar.maxParticipants)) &&
+          Boolean(webinar?.price) && (
+            <div className="flex max-w-[300px] flex-col gap-4">
+              <PaymentBtn webinarId={webinar.id} webinarSlug={webinar.slug} />
+            </div>
+          )}
       </Container>
     </section>
   )

@@ -1,5 +1,5 @@
 {
-  "id": "1b434b84-bf2c-4bb7-8554-d38d139b4177",
+  "id": "f8bcbcc7-1bae-475f-9cf4-7791e7097e09",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -3632,12 +3632,50 @@
           "primaryKey": false,
           "notNull": true
         },
-        "paid": {
-          "name": "paid",
-          "type": "boolean",
+        "payment_id": {
+          "name": "payment_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false,
-          "default": false
+          "default": "'RUB'"
+        },
+        "status": {
+          "name": "status",
+          "type": "enum_webinar_payments_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "failure_code": {
+          "name": "failure_code",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "failure_message": {
+          "name": "failure_message",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "updated_at": {
           "name": "updated_at",
@@ -3675,6 +3713,36 @@
           "columns": [
             {
               "expression": "webinar_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "webinar_payments_payment_id_idx": {
+          "name": "webinar_payments_payment_id_idx",
+          "columns": [
+            {
+              "expression": "payment_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "webinar_payments_status_idx": {
+          "name": "webinar_payments_status_idx",
+          "columns": [
+            {
+              "expression": "status",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -4934,14 +5002,26 @@
           "primaryKey": true,
           "notNull": true
         },
+        "seo_seo_title": {
+          "name": "seo_seo_title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seo_seo_description": {
+          "name": "seo_seo_description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "featured_test_id": {
           "name": "featured_test_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "about_project_banner_content": {
-          "name": "about_project_banner_content",
+        "about_project_banner_desc": {
+          "name": "about_project_banner_desc",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
@@ -5240,6 +5320,17 @@
         "exam_practice",
         "free",
         "individual"
+      ]
+    },
+    "public.enum_webinar_payments_status": {
+      "name": "enum_webinar_payments_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "waiting_for_capture",
+        "succeeded",
+        "canceled",
+        "refunded"
       ]
     }
   },
