@@ -1,13 +1,21 @@
 'use client'
 
+import { useProfile } from '@/shared/hooks/use-profile'
 import { useGetWebinarPayment } from '@/shared/services/webinar.service'
+import { Skeleton } from '@/shared/ui/skeleton'
 import { Typography } from '@/shared/ui/typography'
 
 const UrlWebinar = ({ webinarId, webinarUrl }: { webinarId: number; webinarUrl?: string }) => {
+  const { isLoading } = useProfile()
+
   const { data: webinar, isFetched } = useGetWebinarPayment({ webinarId })
 
   // Если есть явный URL — показываем сразу
   if (webinarUrl) {
+    if (isLoading) {
+      return <Skeleton className="h-[54px] w-[315px]" />
+    }
+
     return (
       <div className="flex w-fit flex-col gap-2 rounded-lg border border-green-500 bg-green-50 p-4">
         <Typography tag="p" variant="poppins-md-16">
