@@ -1054,7 +1054,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
-  SEO?: {
+  Meta?: {
     'seo-title'?: string | null;
     'seo-description'?: string | null;
   };
@@ -1101,7 +1101,7 @@ export interface HomePage {
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
-  SEO?:
+  Meta?:
     | T
     | {
         'seo-title'?: T;
