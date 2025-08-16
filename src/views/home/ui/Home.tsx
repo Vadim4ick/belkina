@@ -11,12 +11,21 @@ import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
   const res = await getHomePage()
+  console.log('res ==> ', res)
+
+  if (!res) {
+    return {
+      title: 'BELKINA.ONLINE',
+      description: 'Подготовка к ЕГЭ по русскому языку',
+    }
+  }
 
   const homePage = res?.HomePage || {}
+  console.log('homePage ==> ', homePage)
 
   return {
-    title: `${homePage.SEO.seo_title}`,
-    description: `${homePage.SEO.seo_description}`,
+    title: homePage.Meta.seo_title,
+    description: homePage.Meta.seo_description,
   }
 }
 
