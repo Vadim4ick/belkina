@@ -290,7 +290,7 @@ export interface Test {
   id: number;
   title: string;
   description?: string | null;
-  questions?: (number | Question)[] | null;
+  questions: (number | Question)[];
   exam?: (number | null) | Exam;
   subjects?: (number | Subject)[] | null;
   updatedAt: string;
@@ -1022,6 +1022,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface HomePage {
   id: number;
+  SEO?: {
+    'seo-title'?: string | null;
+    'seo-description'?: string | null;
+  };
   featuredTest?: (number | null) | Test;
   mainOfferBanner: {
     title: string;
@@ -1065,6 +1069,12 @@ export interface HomePage {
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  SEO?:
+    | T
+    | {
+        'seo-title'?: T;
+        'seo-description'?: T;
+      };
   featuredTest?: T;
   mainOfferBanner?:
     | T

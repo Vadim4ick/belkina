@@ -1,5 +1,10 @@
 query GetHomePage {
   HomePage {
+    SEO {
+      seo_title
+      seo_description
+    }
+
     mainOfferBanner {
       title
       description
