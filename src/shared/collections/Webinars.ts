@@ -12,6 +12,8 @@ import { MediaBlock } from '@/shared/blocks/MediaBlock/config'
 import slugify from 'slugify'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
+import { getServerAuthGqlClient } from '../actions/getServerAuthGqlClient'
+import { getUserIdByToken } from '../lib/utils'
 
 const Webinars: CollectionConfig = {
   slug: 'webinars',
@@ -96,8 +98,7 @@ const Webinars: CollectionConfig = {
       name: 'maxParticipants',
       label: 'Максимальное кол-во учеников',
       type: 'number',
-      min: 2,
-      max: 10,
+      min: 1,
       admin: {
         condition: (_, siblingData) => siblingData.type === 'minigroup',
       },
@@ -153,13 +154,37 @@ const Webinars: CollectionConfig = {
       required: true,
       admin: { placeholder: 'https://…' },
       access: {
-        read: ({ siblingData, req }) => {
-          if (req.user?.role === 'admin') return true
+        read: () => true, // <-- всегда "видно", но содержимое можем подменять
+      },
 
-          const isFree = siblingData?.type === 'free'
+      hooks: {
+        afterRead: [
+          async ({ value, req, siblingData }) => {
+            const gql = await getServerAuthGqlClient({})
 
-          return isFree
-        },
+            // админам всегда можно
+            if (req.user?.role === 'admin') return value
+
+            // бесплатные вебы — тоже можно
+            if (siblingData?.type === 'free') return value
+
+            const res = await getUserIdByToken({ req })
+
+            if (!res) return null
+
+            // платные — проверяем оплату
+            const payments = await gql.GetWebinarPaymentByUserId({
+              userId: res.id,
+              webinarId: siblingData.id,
+            })
+
+            if (payments?.WebinarPayments?.docs?.length > 0) {
+              return value // доступ есть
+            }
+
+            return null // скрываем ссылку
+          },
+        ],
       },
     },
 

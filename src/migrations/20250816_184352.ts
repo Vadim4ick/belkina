@@ -13,6 +13,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__posts_v_published_locale" AS ENUM('en', 'ru');
   CREATE TYPE "public"."enum_webinars_type" AS ENUM('minigroup', 'exam_practice', 'free', 'individual');
+  CREATE TYPE "public"."enum_webinar_payments_status" AS ENUM('pending', 'waiting_for_capture', 'succeeded', 'canceled', 'refunded');
   CREATE TABLE "users" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"email" varchar NOT NULL,
@@ -319,7 +320,13 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"user_id" integer NOT NULL,
   	"webinar_id" integer NOT NULL,
-  	"paid" boolean DEFAULT false,
+  	"payment_id" varchar NOT NULL,
+  	"amount" numeric NOT NULL,
+  	"currency" varchar DEFAULT 'RUB',
+  	"status" "enum_webinar_payments_status" DEFAULT 'pending' NOT NULL,
+  	"metadata" jsonb,
+  	"failure_code" varchar,
+  	"failure_message" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
@@ -393,8 +400,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "home_page" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"seo_seo_title" varchar,
+  	"seo_seo_description" varchar,
   	"featured_test_id" integer,
-  	"about_project_banner_content" jsonb,
+  	"about_project_banner_desc" jsonb,
   	"about_project_banner_media_id" integer,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
@@ -567,6 +576,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "webinars_created_at_idx" ON "webinars" USING btree ("created_at");
   CREATE INDEX "webinar_payments_user_idx" ON "webinar_payments" USING btree ("user_id");
   CREATE INDEX "webinar_payments_webinar_idx" ON "webinar_payments" USING btree ("webinar_id");
+  CREATE UNIQUE INDEX "webinar_payments_payment_id_idx" ON "webinar_payments" USING btree ("payment_id");
+  CREATE INDEX "webinar_payments_status_idx" ON "webinar_payments" USING btree ("status");
   CREATE INDEX "webinar_payments_updated_at_idx" ON "webinar_payments" USING btree ("updated_at");
   CREATE INDEX "webinar_payments_created_at_idx" ON "webinar_payments" USING btree ("created_at");
   CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
@@ -654,5 +665,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_posts_status";
   DROP TYPE "public"."enum__posts_v_version_status";
   DROP TYPE "public"."enum__posts_v_published_locale";
-  DROP TYPE "public"."enum_webinars_type";`)
+  DROP TYPE "public"."enum_webinars_type";
+  DROP TYPE "public"."enum_webinar_payments_status";`)
 }

@@ -1,0 +1,14 @@
+query GetWebinarPriceById($id: Int!) {
+  Webinar(id: $id) {
+    price
+  }
+}
+
+query GetWebinarById($id: Int!) {
+  Webinar(id: $id) {
+    price
+    title
+    url
+    slug
+  }
+}

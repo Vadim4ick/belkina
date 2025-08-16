@@ -1,7 +1,13 @@
 query GetAllWebinars {
   Webinars {
     docs {
-      ...WebinarFragment
+      id
+
+      title
+      type
+      startsAt
+      endAt
+      slug
     }
   }
 }

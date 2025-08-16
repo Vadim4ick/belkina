@@ -34,6 +34,28 @@ export class NodemailerService {
     })
   }
 
+  // Письмо после успешной оплаты
+  static async sendWebinarAccess(
+    email: string,
+    webinarTitle: string,
+    webinarLink: string,
+  ): Promise<void> {
+    await this.transporter.sendMail({
+      from: `"Поддержка BELKINA.ONLINE" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: `Доступ к вебинару "${webinarTitle}"`,
+      html: `
+        <h2>Спасибо за оплату!</h2>
+        <p>Поздравляем 🎉 Ваша оплата успешно прошла.</p>
+        <p>Вы получили доступ к вебинару <b>"${webinarTitle}"</b>.</p>
+        <p>Присоединяйтесь по ссылке: <a href="${webinarLink}" target="_blank">${webinarLink}</a></p>
+        <br/>
+        <p>Если у вас возникнут вопросы — смело пишите в нашу поддержку.</p>
+        <p>Хорошего просмотра!<br/>Команда <b>BELKINA.ONLINE</b></p>
+      `,
+    })
+  }
+
   // Создание JWT с кодом
   static async signCode(email: string, code: string): Promise<string> {
     return await new SignJWT({ email, code })
