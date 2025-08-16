@@ -12,8 +12,7 @@ export default async function Page() {
 
   // Добавляем проверку на null/undefined
   if (!examsVal?.Exams?.docs || !subjectsVal?.Subjects?.docs) {
-    console.error('Missing required data:', { examsVal, subjectsVal })
-    return <div>Error loading data. Please try again later.</div>
+    return null
   }
 
   return <TestsPage exams={examsVal?.Exams.docs} subjects={subjectsVal!.Subjects.docs} />
