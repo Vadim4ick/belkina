@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
     // Если платёж прошёл — отмечаем как paid=true
     if (yk.status === 'succeeded' && yk.paid === true) {
       await markPaid(paymentId)
+
       const webinar = await gql.GetWebinarById({
         id: Number(yk?.metadata?.webinarId),
       })
