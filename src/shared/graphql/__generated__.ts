@@ -21152,22 +21152,6 @@ export type UpdateWebinarPaymentMutationVariables = Exact<{
 
 export type UpdateWebinarPaymentMutation = { readonly __typename?: 'Mutation', readonly updateWebinarPayment: { readonly __typename?: 'WebinarPayment', readonly id: number } };
 
-export type UpdateStatusSuccessWebinarPaymentMutationVariables = Exact<{
-  id: Scalars['Int']['input'];
-}>;
-
-
-export type UpdateStatusSuccessWebinarPaymentMutation = { readonly __typename?: 'Mutation', readonly updateWebinarPayment: { readonly __typename?: 'WebinarPayment', readonly id: number } };
-
-export type UpdateCancelStatusWebinarPaymentMutationVariables = Exact<{
-  id: Scalars['Int']['input'];
-  code: InputMaybe<Scalars['String']['input']>;
-  message: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type UpdateCancelStatusWebinarPaymentMutation = { readonly __typename?: 'Mutation', readonly updateWebinarPayment: { readonly __typename?: 'WebinarPayment', readonly id: number } };
-
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
   id
@@ -21778,23 +21762,6 @@ export const UpdateWebinarPaymentDocument = gql`
   }
 }
     `;
-export const UpdateStatusSuccessWebinarPaymentDocument = gql`
-    mutation UpdateStatusSuccessWebinarPayment($id: Int!) {
-  updateWebinarPayment(id: $id, data: {status: succeeded}) {
-    id
-  }
-}
-    `;
-export const UpdateCancelStatusWebinarPaymentDocument = gql`
-    mutation UpdateCancelStatusWebinarPayment($id: Int!, $code: String, $message: String) {
-  updateWebinarPayment(
-    id: $id
-    data: {status: canceled, failure: {code: $code, message: $message}}
-  ) {
-    id
-  }
-}
-    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -21925,12 +21892,6 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     UpdateWebinarPayment(variables: UpdateWebinarPaymentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateWebinarPaymentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateWebinarPaymentMutation>({ document: UpdateWebinarPaymentDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateWebinarPayment', 'mutation', variables);
-    },
-    UpdateStatusSuccessWebinarPayment(variables: UpdateStatusSuccessWebinarPaymentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateStatusSuccessWebinarPaymentMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateStatusSuccessWebinarPaymentMutation>({ document: UpdateStatusSuccessWebinarPaymentDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateStatusSuccessWebinarPayment', 'mutation', variables);
-    },
-    UpdateCancelStatusWebinarPayment(variables: UpdateCancelStatusWebinarPaymentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateCancelStatusWebinarPaymentMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<UpdateCancelStatusWebinarPaymentMutation>({ document: UpdateCancelStatusWebinarPaymentDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateCancelStatusWebinarPayment', 'mutation', variables);
     }
   };
 }

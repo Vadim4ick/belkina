@@ -34,18 +34,3 @@ mutation UpdateWebinarPayment($id: Int!, $data: mutationWebinarPaymentUpdateInpu
     id
   }
 }
-
-mutation UpdateStatusSuccessWebinarPayment($id: Int!) {
-  updateWebinarPayment(id: $id, data: { status: succeeded }) {
-    id
-  }
-}
-
-mutation UpdateCancelStatusWebinarPayment($id: Int!, $code: String, $message: String) {
-  updateWebinarPayment(
-    id: $id
-    data: { status: canceled, failure: { code: $code, message: $message } }
-  ) {
-    id
-  }
-}

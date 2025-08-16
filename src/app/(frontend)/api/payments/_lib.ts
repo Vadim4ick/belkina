@@ -1,6 +1,8 @@
 import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
-import { WebinarPayment_Status_MutationInput } from '@/shared/graphql/__generated__'
-import { NodemailerService } from '@/shared/services/nodemailer.service'
+import {
+  MutationWebinarPaymentUpdateInput,
+  WebinarPayment_Status_MutationInput,
+} from '@/shared/graphql/__generated__'
 import crypto from 'node:crypto'
 
 export const runtime = 'nodejs'
@@ -59,59 +61,51 @@ export async function upsertWebinarPayment(opts: {
     paymentId: opts.paymentId,
   })
 
+  const data = {
+    user: opts.userId,
+    amount: opts.amount,
+    status: opts.status,
+    paymentId: opts.paymentId,
+    metadata: JSON.stringify({ userId: opts.userId, webinarId: opts.webinarId }),
+    currency: 'RUB',
+    failure: {
+      code: '',
+      message: '',
+    },
+    webinar: opts.webinarId,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+
   if (search?.WebinarPayments.docs?.[0]?.id) {
     return gql.UpdateWebinarPayment({
       id: search.WebinarPayments.docs[0].id,
-      data: {
-        user: opts.userId,
-        amount: opts.amount,
-        status: opts.status,
-        paymentId: opts.paymentId,
-        metadata: JSON.stringify({ userId: opts.userId, webinarId: opts.webinarId }),
-        currency: 'RUB',
-        failure: {
-          code: '',
-          message: '',
-        },
-        webinar: opts.webinarId,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
+      data: data,
     })
   }
 
   return await gql.CreateWebinarPayment({
-    data: {
-      user: opts.userId,
-      amount: opts.amount,
-      status: opts.status,
-      paymentId: opts.paymentId,
-      metadata: JSON.stringify({ userId: opts.userId, webinarId: opts.webinarId }),
-      currency: 'RUB',
-      failure: {
-        code: '',
-        message: '',
-      },
-      webinar: opts.webinarId,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
+    data: data,
   })
+}
+
+async function updatePaymentByPaymentId(
+  paymentId: string,
+  data: MutationWebinarPaymentUpdateInput,
+) {
+  const gql = await getServerAuthGqlClient({})
+  const found = await gql.GetWebinarByPaymentId({ paymentId })
+  const id = found?.WebinarPayments?.docs?.[0]?.id
+  if (!id) return
+  return gql.UpdateWebinarPayment({ id, data })
 }
 
 // Помечаем оплаченным по paymentId
 export async function markPaid(paymentId: string) {
-  const gql = await getServerAuthGqlClient({})
-
-  const search = await gql.GetWebinarByPaymentId({
-    paymentId,
-  })
-
-  if (!search?.WebinarPayments.docs?.[0]?.id) return
-
-  return gql.UpdateStatusSuccessWebinarPayment({
-    id: search.WebinarPayments.docs[0].id,
-  })
+  return updatePaymentByPaymentId(paymentId, {
+    status: 'succeeded',
+    failure: { code: '', message: '' },
+  } as MutationWebinarPaymentUpdateInput)
 }
 
 // Помечаем ошибкой по paymentId
@@ -124,19 +118,10 @@ export async function markErrorPaid({
   code: string
   message: string
 }) {
-  const gql = await getServerAuthGqlClient({})
-
-  const search = await gql.GetWebinarByPaymentId({
-    paymentId,
-  })
-
-  if (!search?.WebinarPayments.docs?.[0]?.id) return
-
-  return await gql.UpdateCancelStatusWebinarPayment({
-    id: search.WebinarPayments.docs[0].id,
-    code,
-    message,
-  })
+  return updatePaymentByPaymentId(paymentId, {
+    status: 'canceled',
+    failure: { code, message },
+  } as MutationWebinarPaymentUpdateInput)
 }
 
 export async function getWebinarPriceById(webinarId: number) {

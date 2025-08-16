@@ -1,4 +1,6 @@
 import { CollectionConfig } from 'payload'
+import { invalidateTags } from '../redis/gqlCached'
+import { CacheKeys } from '../redis/cache-keys'
 
 export const WebinarPayments: CollectionConfig = {
   slug: 'webinar-payments',
@@ -13,6 +15,14 @@ export const WebinarPayments: CollectionConfig = {
     create: () => true,
     update: () => true,
     delete: () => true,
+  },
+
+  hooks: {
+    afterDelete: [
+      async () => {
+        await invalidateTags(CacheKeys.tags.webinars())
+      },
+    ],
   },
   fields: [
     // Ключи сущностей
