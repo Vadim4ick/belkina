@@ -21113,7 +21113,7 @@ export type GetWebinarByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetWebinarByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number, readonly title: string, readonly url: string } };
+export type GetWebinarByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number, readonly title: string, readonly url: string, readonly slug: string } };
 
 export type GetWebinarsBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
@@ -21151,6 +21151,13 @@ export type UpdateWebinarPaymentMutationVariables = Exact<{
 
 
 export type UpdateWebinarPaymentMutation = { readonly __typename?: 'Mutation', readonly updateWebinarPayment: { readonly __typename?: 'WebinarPayment', readonly id: number } };
+
+export type WebinarSuccessCountQueryVariables = Exact<{
+  id: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type WebinarSuccessCountQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly totalDocs: number } };
 
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
@@ -21712,6 +21719,7 @@ export const GetWebinarByIdDocument = gql`
     price
     title
     url
+    slug
   }
 }
     `;
@@ -21759,6 +21767,13 @@ export const UpdateWebinarPaymentDocument = gql`
     mutation UpdateWebinarPayment($id: Int!, $data: mutationWebinarPaymentUpdateInput!) {
   updateWebinarPayment(id: $id, data: $data) {
     id
+  }
+}
+    `;
+export const WebinarSuccessCountDocument = gql`
+    query WebinarSuccessCount($id: JSON) {
+  WebinarPayments(where: {webinar: {equals: $id}, status: {equals: succeeded}}) {
+    totalDocs
   }
 }
     `;
@@ -21892,6 +21907,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     UpdateWebinarPayment(variables: UpdateWebinarPaymentMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateWebinarPaymentMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateWebinarPaymentMutation>({ document: UpdateWebinarPaymentDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateWebinarPayment', 'mutation', variables);
+    },
+    WebinarSuccessCount(variables?: WebinarSuccessCountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<WebinarSuccessCountQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<WebinarSuccessCountQuery>({ document: WebinarSuccessCountDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'WebinarSuccessCount', 'query', variables);
     }
   };
 }

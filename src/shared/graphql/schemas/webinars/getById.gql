@@ -9,5 +9,6 @@ query GetWebinarById($id: Int!) {
     price
     title
     url
+    slug
   }
 }

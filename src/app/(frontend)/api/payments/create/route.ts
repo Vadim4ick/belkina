@@ -80,7 +80,25 @@ export async function POST(req: NextRequest) {
       confirmationUrl,
     })
   } catch (e: any) {
-    console.error(e)
-    return NextResponse.json({ message: e?.message ?? 'Create payment error' }, { status: 500 })
+    console.error('createWebinarPayment', e)
+
+    // если это ошибка от GraphQL
+    if (e?.response?.errors?.[0]?.message) {
+      return NextResponse.json(
+        { message: e.response.errors[0].message },
+        { status: e.response.errors[0].extensions?.statusCode || 500 },
+      )
+    }
+
+    // если это ошибка от fetch/YooKassa
+    if (e?.message) {
+      return NextResponse.json({ message: e.message }, { status: 500 })
+    }
+
+    // fallback
+    return NextResponse.json(
+      { message: 'Неизвестная ошибка при создании платежа' },
+      { status: 500 },
+    )
   }
 }

@@ -23,6 +23,39 @@ export const WebinarPayments: CollectionConfig = {
         await invalidateTags(CacheKeys.tags.webinars())
       },
     ],
+
+    beforeValidate: [
+      async ({ data, req, operation }) => {
+        if (operation !== 'create') return data
+
+        const webinarId = data?.webinar
+        if (!webinarId) return data
+
+        // вытаскиваем вебинар
+        const webinar = await req.payload.findByID({
+          collection: 'webinars',
+          id: webinarId,
+        })
+
+        // если это минигруппа
+        if (webinar.type === 'minigroup' && webinar.maxParticipants) {
+          // считаем успешные оплаты
+          const existing = await req.payload.find({
+            collection: 'webinar-payments',
+            where: {
+              webinar: { equals: webinarId },
+              status: { equals: 'succeeded' },
+            },
+          })
+
+          if (existing.totalDocs >= webinar.maxParticipants) {
+            throw new Error('Мест больше нет — оплата невозможна')
+          }
+        }
+
+        return data
+      },
+    ],
   },
   fields: [
     // Ключи сущностей

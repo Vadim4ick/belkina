@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       await NodemailerService.sendWebinarAccess(
         yk?.metadata?.userEmail || '',
         webinar.Webinar.title,
-        webinar.Webinar.url,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/webinars/${webinar.Webinar.slug}`,
       )
     }
 
