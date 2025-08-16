@@ -1,5 +1,6 @@
 import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { WebinarPayment_Status_MutationInput } from '@/shared/graphql/__generated__'
+import { NodemailerService } from '@/shared/services/nodemailer.service'
 import crypto from 'node:crypto'
 
 export const runtime = 'nodejs'
@@ -12,6 +13,7 @@ export function authHeader() {
   return `Basic ${basic}`
 }
 
+// Создаём платеж
 export async function ykCreatePayment(body: unknown) {
   const res = await fetch('https://api.yookassa.ru/v3/payments', {
     method: 'POST',
@@ -30,6 +32,7 @@ export async function ykCreatePayment(body: unknown) {
   return res.json() as Promise<any>
 }
 
+// Получаем информацию о платеже
 export async function ykGetPayment(paymentId: string) {
   const res = await fetch(`https://api.yookassa.ru/v3/payments/${paymentId}`, {
     headers: { Authorization: authHeader() },
@@ -77,7 +80,7 @@ export async function upsertWebinarPayment(opts: {
     })
   }
 
-  return gql.CreateWebinarPayment({
+  return await gql.CreateWebinarPayment({
     data: {
       user: opts.userId,
       amount: opts.amount,
@@ -134,4 +137,9 @@ export async function markErrorPaid({
     code,
     message,
   })
+}
+
+export async function getWebinarPriceById(webinarId: number) {
+  const gql = await getServerAuthGqlClient({})
+  return gql.GetWebinarPriceById({ id: webinarId })
 }

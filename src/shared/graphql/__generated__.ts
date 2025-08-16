@@ -21101,6 +21101,20 @@ export type GetAllWebinarsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllWebinarsQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly startsAt: any, readonly endAt: any, readonly slug: string }> } };
 
+export type GetWebinarPriceByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetWebinarPriceByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number } };
+
+export type GetWebinarByIdQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetWebinarByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number, readonly title: string, readonly url: string } };
+
 export type GetWebinarsBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -21701,6 +21715,22 @@ export const GetAllWebinarsDocument = gql`
   }
 }
     `;
+export const GetWebinarPriceByIdDocument = gql`
+    query GetWebinarPriceById($id: Int!) {
+  Webinar(id: $id) {
+    price
+  }
+}
+    `;
+export const GetWebinarByIdDocument = gql`
+    query GetWebinarById($id: Int!) {
+  Webinar(id: $id) {
+    price
+    title
+    url
+  }
+}
+    `;
 export const GetWebinarsBySlugDocument = gql`
     query GetWebinarsBySlug($slug: String) {
   Webinars(where: {slug: {equals: $slug}}) {
@@ -21874,6 +21904,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetAllWebinars(variables?: GetAllWebinarsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllWebinarsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllWebinarsQuery>({ document: GetAllWebinarsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllWebinars', 'query', variables);
+    },
+    GetWebinarPriceById(variables: GetWebinarPriceByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarPriceByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarPriceByIdQuery>({ document: GetWebinarPriceByIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarPriceById', 'query', variables);
+    },
+    GetWebinarById(variables: GetWebinarByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarByIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarByIdQuery>({ document: GetWebinarByIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarById', 'query', variables);
     },
     GetWebinarsBySlug(variables?: GetWebinarsBySlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarsBySlugQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarsBySlugQuery>({ document: GetWebinarsBySlugDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarsBySlug', 'query', variables);

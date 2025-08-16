@@ -1,23 +1,27 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-export const useCreateWebinarPayment = ({
-  webinarId,
-  price,
-  userId,
-}: {
+type CreateWebinarPaymentArgs = {
   webinarId: number
-  price: number
   userId: number
-}) => {
+  userEmail?: string
+  webinarSlug?: string
+}
+
+export const useCreateWebinarPayment = () => {
   return useMutation({
-    mutationKey: ['createWebinarPayment', webinarId, userId, price],
-    mutationFn: async () => {
+    mutationKey: ['createWebinarPayment'],
+    mutationFn: async ({ webinarId, userId, userEmail, webinarSlug }: CreateWebinarPaymentArgs) => {
+      if (!webinarId) throw new Error('Missing webinarId')
+      if (!userId) throw new Error('Missing userId')
+      if (!userEmail) throw new Error('Missing userEmail')
+      if (!webinarSlug) throw new Error('Missing webinarSlug')
+
       try {
         const res = await fetch(`/api/payments/create`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ webinarId, userId, price }),
+          body: JSON.stringify({ webinarId, userId, userEmail, webinarSlug }),
         })
 
         const data = await res.json()

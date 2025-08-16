@@ -6,25 +6,26 @@ import { useGetWebinarPayment } from '@/shared/services/webinar.service'
 import { Button } from '@/shared/ui/button'
 import { toast } from 'sonner'
 
-const PaymentBtn = ({ webinarId, price }: { webinarId: number; price: number }) => {
+const PaymentBtn = ({ webinarId, webinarSlug }: { webinarId: number; webinarSlug: string }) => {
   const { profile } = useProfileStore()
 
-  const { mutateAsync: createWebinarPayment } = useCreateWebinarPayment({
-    webinarId,
-    price: price,
-    userId: profile?.id ?? 0,
-  })
+  const { mutate: createWebinarPayment } = useCreateWebinarPayment()
 
   const handleClick = () => {
     if (!!!profile?.id) {
       return toast.error('Вы не авторизованы. Пожалуйста, авторизуйтесь.')
     }
 
-    if (!profile.isVerified) {
+    if (!profile.isVerified || !profile.email) {
       return toast.error('Вы не подтвердили почту. Пожалуйста, подтвердите свою почту в профиле.')
     }
 
-    createWebinarPayment()
+    createWebinarPayment({
+      webinarId,
+      userId: profile.id,
+      userEmail: profile.email,
+      webinarSlug,
+    })
   }
 
   const { data: webinar, isLoading, isFetching } = useGetWebinarPayment({ webinarId })

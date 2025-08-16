@@ -58,7 +58,7 @@ const WebinarsBySlugPage = ({
 
         {Boolean(webinar?.price) && (
           <div className="flex max-w-[300px] flex-col gap-4">
-            <PaymentBtn webinarId={webinar.id} price={webinar.price} />
+            <PaymentBtn webinarId={webinar.id} webinarSlug={webinar.slug} />
           </div>
         )}
       </Container>
