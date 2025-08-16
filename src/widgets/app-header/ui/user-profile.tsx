@@ -45,7 +45,12 @@ export const UserProfile = memo(({ className, reverse }: UserProfileProps) => {
   const { mutate: logout } = useLogout()
 
   if (isLoading) {
-    return <Skeleton className="h-[48px] w-[100px]" />
+    return (
+      <div className="flex items-center gap-4">
+        <Skeleton className="h-[22px] w-[130px]" />
+        <Skeleton className="size-[48px] rounded-full" />
+      </div>
+    )
   }
 
   if (!profile?.id) {
