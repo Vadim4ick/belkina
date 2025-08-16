@@ -97,6 +97,7 @@ export const Tests: CollectionConfig = {
       name: 'questions',
       label: 'Вопросы',
       type: 'relationship',
+      required: true,
       relationTo: 'questions',
       hasMany: true,
     },

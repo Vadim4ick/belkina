@@ -8,6 +8,13 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 import { GlobalConfig } from 'payload'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 
 export const HomePage: GlobalConfig = {
   slug: 'homePage',
@@ -26,7 +33,25 @@ export const HomePage: GlobalConfig = {
       },
     ],
   },
+
   fields: [
+    {
+      name: 'SEO',
+      label: 'SEO',
+      type: 'group',
+      fields: [
+        {
+          name: 'seo-title',
+          label: 'SEO Заголовок',
+          type: 'text',
+        },
+        {
+          name: 'seo-description',
+          label: 'SEO Описание',
+          type: 'text',
+        },
+      ],
+    },
     {
       name: 'featuredTest',
       label: 'Выбранный тест для отображения',
