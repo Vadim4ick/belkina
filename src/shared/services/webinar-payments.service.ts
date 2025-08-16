@@ -37,7 +37,7 @@ export const useCreateWebinarPayment = () => {
 
         return data
       } catch (err) {
-        console.error('createWebinarPayment', err)
+        toast.error((err as Error).message ?? 'Произошла ошибка при создании платежа')
         throw err
       }
     },

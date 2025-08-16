@@ -1,3 +1,4 @@
+import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 import { getWebinarsBySlug } from '@/shared/actions/webinars.action'
 import { WebinarsBySlugPage } from '@/views/webinars-by-slug-page'
 import { notFound } from 'next/navigation'
@@ -11,6 +12,8 @@ async function Page({
     slug?: string
   }>
 }) {
+  const gql = await getServerAuthGqlClient({})
+
   const { slug = '' } = await paramsPromise
 
   const res = await getWebinarsBySlug({ slug })
@@ -21,7 +24,9 @@ async function Page({
     return notFound()
   }
 
-  return <WebinarsBySlugPage webinar={webinar} />
+  const count = await gql.WebinarSuccessCount({ id: webinar.id })
+
+  return <WebinarsBySlugPage webinar={webinar} count={count.WebinarPayments.totalDocs} />
 }
 
 export default Page

@@ -98,8 +98,7 @@ const Webinars: CollectionConfig = {
       name: 'maxParticipants',
       label: 'Максимальное кол-во учеников',
       type: 'number',
-      min: 2,
-      max: 10,
+      min: 1,
       admin: {
         condition: (_, siblingData) => siblingData.type === 'minigroup',
       },

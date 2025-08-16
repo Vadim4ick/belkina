@@ -34,3 +34,9 @@ mutation UpdateWebinarPayment($id: Int!, $data: mutationWebinarPaymentUpdateInpu
     id
   }
 }
+
+query WebinarSuccessCount($id: JSON) {
+  WebinarPayments(where: { webinar: { equals: $id }, status: { equals: succeeded } }) {
+    totalDocs
+  }
+}
