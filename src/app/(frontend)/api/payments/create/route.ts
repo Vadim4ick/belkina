@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
       currency: 'RUB',
     }
 
+    const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString()
+
     // 2) создаём платёж в YooKassa (одностадийный, с авто-капчером)
     const yk = await ykCreatePayment({
       amount,
@@ -52,6 +54,7 @@ export async function POST(req: NextRequest) {
         userId: String(userId),
         webinarSlug,
       },
+      expires_at: expiresAt,
     })
 
     // 3) сохраним/обновим запись об оплате у себя
