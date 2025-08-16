@@ -29,8 +29,8 @@ export const HomePage: GlobalConfig = {
 
   fields: [
     {
-      name: 'SEO',
-      label: 'SEO',
+      name: 'Meta',
+      label: 'Мета данные страницы',
       type: 'group',
       fields: [
         {
