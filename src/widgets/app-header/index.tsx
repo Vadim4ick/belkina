@@ -6,20 +6,16 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/shared/lib/utils'
 import { Logo } from '@/shared/ui/logo'
 import { Typography } from '@/shared/ui/typography'
-import { Button } from '@/shared/ui/button'
 import { MenuIcon, XIcon } from 'lucide-react'
 import { UserProfile } from './ui/user-profile'
 import { MobileNavButton } from './ui/mobile-nav-button'
 import { Container } from '@/shared/ui/container'
 import { navItems } from '@/shared/const'
-import { useProfileStore } from '@/entities/user/use-profile-store'
 
 export const AppHeader = ({ className }: { className?: string }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
-
-  const { profile } = useProfileStore()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,11 +73,6 @@ export const AppHeader = ({ className }: { className?: string }) => {
 
           {/* Кнопки авторизации/профиля */}
           <div className="flex items-center gap-4">
-            {!profile?.id && (
-              <Button variant="secondary" onClick={() => console.log('Записаться')}>
-                Записаться на урок
-              </Button>
-            )}
             <UserProfile />
           </div>
           {/* Мобильное меню (контент) */}
@@ -106,11 +97,6 @@ export const AppHeader = ({ className }: { className?: string }) => {
               ))}
 
               <div className="space-y-5 border-t pt-4">
-                {!profile?.id && (
-                  <Button className="h-12 w-full" onClick={() => console.log('Записаться')}>
-                    Записаться на урок
-                  </Button>
-                )}
                 <UserProfile reverse={true} className="h-12 w-full" />
               </div>
             </div>
