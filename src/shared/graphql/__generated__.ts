@@ -2384,6 +2384,7 @@ export type FaqsUpdateDocAccess = {
 
 export type HomePage = {
   readonly __typename?: 'HomePage';
+  readonly SEO: Maybe<HomePage_Seo>;
   readonly aboutProjectBanner: Maybe<HomePage_AboutProjectBanner>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly diagnosticTestBanner: Maybe<HomePage_DiagnosticTestBanner>;
@@ -2400,12 +2401,104 @@ export type HomePageFeaturedTestArgs = {
 
 export type HomePageDocAccessFields = {
   readonly __typename?: 'HomePageDocAccessFields';
+  readonly SEO: Maybe<HomePageDocAccessFields_Seo>;
   readonly aboutProjectBanner: Maybe<HomePageDocAccessFields_AboutProjectBanner>;
   readonly createdAt: Maybe<HomePageDocAccessFields_CreatedAt>;
   readonly diagnosticTestBanner: Maybe<HomePageDocAccessFields_DiagnosticTestBanner>;
   readonly featuredTest: Maybe<HomePageDocAccessFields_FeaturedTest>;
   readonly mainOfferBanner: Maybe<HomePageDocAccessFields_MainOfferBanner>;
   readonly updatedAt: Maybe<HomePageDocAccessFields_UpdatedAt>;
+};
+
+export type HomePageDocAccessFields_Seo = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO';
+  readonly create: Maybe<HomePageDocAccessFields_Seo_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_Seo_Delete>;
+  readonly fields: Maybe<HomePageDocAccessFields_Seo_Fields>;
+  readonly read: Maybe<HomePageDocAccessFields_Seo_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_Seo_Update>;
+};
+
+export type HomePageDocAccessFields_Seo_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Fields = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_Fields';
+  readonly seo_description: Maybe<HomePageDocAccessFields_Seo_Seo_Description>;
+  readonly seo_title: Maybe<HomePageDocAccessFields_Seo_Seo_Title>;
+};
+
+export type HomePageDocAccessFields_Seo_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Description = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_description';
+  readonly create: Maybe<HomePageDocAccessFields_Seo_Seo_Description_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_Seo_Seo_Description_Delete>;
+  readonly read: Maybe<HomePageDocAccessFields_Seo_Seo_Description_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_Seo_Seo_Description_Update>;
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Description_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_description_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Description_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_description_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Description_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_description_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Description_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Title = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_title';
+  readonly create: Maybe<HomePageDocAccessFields_Seo_Seo_Title_Create>;
+  readonly delete: Maybe<HomePageDocAccessFields_Seo_Seo_Title_Delete>;
+  readonly read: Maybe<HomePageDocAccessFields_Seo_Seo_Title_Read>;
+  readonly update: Maybe<HomePageDocAccessFields_Seo_Seo_Title_Update>;
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Title_Create = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_title_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Title_Delete = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_title_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Title_Read = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_title_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageDocAccessFields_Seo_Seo_Title_Update = {
+  readonly __typename?: 'HomePageDocAccessFields_SEO_seo_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type HomePageDocAccessFields_AboutProjectBanner = {
@@ -2975,12 +3068,104 @@ export type HomePageDocAccessFields_UpdatedAt_Update = {
 
 export type HomePageFields = {
   readonly __typename?: 'HomePageFields';
+  readonly SEO: Maybe<HomePageFields_Seo>;
   readonly aboutProjectBanner: Maybe<HomePageFields_AboutProjectBanner>;
   readonly createdAt: Maybe<HomePageFields_CreatedAt>;
   readonly diagnosticTestBanner: Maybe<HomePageFields_DiagnosticTestBanner>;
   readonly featuredTest: Maybe<HomePageFields_FeaturedTest>;
   readonly mainOfferBanner: Maybe<HomePageFields_MainOfferBanner>;
   readonly updatedAt: Maybe<HomePageFields_UpdatedAt>;
+};
+
+export type HomePageFields_Seo = {
+  readonly __typename?: 'HomePageFields_SEO';
+  readonly create: Maybe<HomePageFields_Seo_Create>;
+  readonly delete: Maybe<HomePageFields_Seo_Delete>;
+  readonly fields: Maybe<HomePageFields_Seo_Fields>;
+  readonly read: Maybe<HomePageFields_Seo_Read>;
+  readonly update: Maybe<HomePageFields_Seo_Update>;
+};
+
+export type HomePageFields_Seo_Create = {
+  readonly __typename?: 'HomePageFields_SEO_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Delete = {
+  readonly __typename?: 'HomePageFields_SEO_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Fields = {
+  readonly __typename?: 'HomePageFields_SEO_Fields';
+  readonly seo_description: Maybe<HomePageFields_Seo_Seo_Description>;
+  readonly seo_title: Maybe<HomePageFields_Seo_Seo_Title>;
+};
+
+export type HomePageFields_Seo_Read = {
+  readonly __typename?: 'HomePageFields_SEO_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Update = {
+  readonly __typename?: 'HomePageFields_SEO_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Description = {
+  readonly __typename?: 'HomePageFields_SEO_seo_description';
+  readonly create: Maybe<HomePageFields_Seo_Seo_Description_Create>;
+  readonly delete: Maybe<HomePageFields_Seo_Seo_Description_Delete>;
+  readonly read: Maybe<HomePageFields_Seo_Seo_Description_Read>;
+  readonly update: Maybe<HomePageFields_Seo_Seo_Description_Update>;
+};
+
+export type HomePageFields_Seo_Seo_Description_Create = {
+  readonly __typename?: 'HomePageFields_SEO_seo_description_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Description_Delete = {
+  readonly __typename?: 'HomePageFields_SEO_seo_description_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Description_Read = {
+  readonly __typename?: 'HomePageFields_SEO_seo_description_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Description_Update = {
+  readonly __typename?: 'HomePageFields_SEO_seo_description_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Title = {
+  readonly __typename?: 'HomePageFields_SEO_seo_title';
+  readonly create: Maybe<HomePageFields_Seo_Seo_Title_Create>;
+  readonly delete: Maybe<HomePageFields_Seo_Seo_Title_Delete>;
+  readonly read: Maybe<HomePageFields_Seo_Seo_Title_Read>;
+  readonly update: Maybe<HomePageFields_Seo_Seo_Title_Update>;
+};
+
+export type HomePageFields_Seo_Seo_Title_Create = {
+  readonly __typename?: 'HomePageFields_SEO_seo_title_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Title_Delete = {
+  readonly __typename?: 'HomePageFields_SEO_seo_title_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Title_Read = {
+  readonly __typename?: 'HomePageFields_SEO_seo_title_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type HomePageFields_Seo_Seo_Title_Update = {
+  readonly __typename?: 'HomePageFields_SEO_seo_title_Update';
+  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type HomePageFields_AboutProjectBanner = {
@@ -3610,6 +3795,12 @@ export type HomePage_MainOfferBanner_Options = {
   readonly __typename?: 'HomePage_MainOfferBanner_Options';
   readonly id: Maybe<Scalars['String']['output']>;
   readonly text: Maybe<Scalars['String']['output']>;
+};
+
+export type HomePage_Seo = {
+  readonly __typename?: 'HomePage_SEO';
+  readonly seo_description: Maybe<Scalars['String']['output']>;
+  readonly seo_title: Maybe<Scalars['String']['output']>;
 };
 
 export type LocaleInputType =
@@ -15251,7 +15442,7 @@ export type Test = {
   readonly description: Maybe<Scalars['String']['output']>;
   readonly exam: Maybe<Exam>;
   readonly id: Scalars['Int']['output'];
-  readonly questions: Maybe<ReadonlyArray<Question>>;
+  readonly questions: ReadonlyArray<Question>;
   readonly subjects: Maybe<ReadonlyArray<Subject>>;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
@@ -16178,7 +16369,6 @@ export type Test_Id_Operator = {
 export type Test_Questions_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly equals: InputMaybe<Scalars['JSON']['input']>;
-  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
   readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
   readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
   readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
@@ -19248,6 +19438,7 @@ export type MutationFaqUpdateInput = {
 };
 
 export type MutationHomePageInput = {
+  readonly SEO: InputMaybe<MutationHomePage_SeoInput>;
   readonly aboutProjectBanner: MutationHomePage_AboutProjectBannerInput;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly diagnosticTestBanner: MutationHomePage_DiagnosticTestBannerInput;
@@ -19279,6 +19470,11 @@ export type MutationHomePage_MainOfferBannerInput = {
 export type MutationHomePage_MainOfferBanner_OptionsInput = {
   readonly id: InputMaybe<Scalars['String']['input']>;
   readonly text: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationHomePage_SeoInput = {
+  readonly seo_description: InputMaybe<Scalars['String']['input']>;
+  readonly seo_title: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationMediaInput = {
@@ -20338,7 +20534,7 @@ export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonl
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly desc: any, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly SEO: { readonly __typename?: 'HomePage_SEO', readonly seo_title: string, readonly seo_description: string }, readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly desc: any, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string, readonly label: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -20747,6 +20943,10 @@ export const GetFaGsDocument = gql`
 export const GetHomePageDocument = gql`
     query GetHomePage {
   HomePage {
+    SEO {
+      seo_title
+      seo_description
+    }
     mainOfferBanner {
       title
       description

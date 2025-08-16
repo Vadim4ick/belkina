@@ -7,6 +7,18 @@ import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
 import { getPosts } from '@/shared/actions/post.action'
 import { VerifyEmail } from '@/widgets/verify-email'
+import { Metadata } from 'next'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const res = await getHomePage()
+
+  const homePage = res?.HomePage || {}
+
+  return {
+    title: `${homePage.SEO.seo_title}`,
+    description: `${homePage.SEO.seo_description}`,
+  }
+}
 
 const Home = async () => {
   const [res, posts] = await Promise.allSettled([getHomePage(), getPosts()])
