@@ -403,7 +403,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"meta_seo_title" varchar,
   	"meta_seo_description" varchar,
   	"featured_test_id" integer,
-  	"about_project_banner_desc" jsonb,
+  	"about_project_banner_description" jsonb,
   	"about_project_banner_media_id" integer,
   	"updated_at" timestamp(3) with time zone,
   	"created_at" timestamp(3) with time zone
