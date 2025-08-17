@@ -400,8 +400,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "home_page" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"seo_seo_title" varchar,
-  	"seo_seo_description" varchar,
+  	"meta_seo_title" varchar,
+  	"meta_seo_description" varchar,
   	"featured_test_id" integer,
   	"about_project_banner_desc" jsonb,
   	"about_project_banner_media_id" integer,

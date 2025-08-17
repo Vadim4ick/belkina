@@ -72,9 +72,8 @@ jobs:
           # echo "⚙️ Билдим проект"
           # NODE_OPTIONS=--no-deprecation npm run build --debug
 
-          echo "⚙️ Билдим проект"
-          # Установка на ограничение потребляемой памяти
-          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run build
+          echo "⚙️ Миграции + билд"
+          NODE_OPTIONS="--max-old-space-size=1536 --no-deprecation" npm run ci
 
           echo "🚀 Запускаем через PM2"
           if pm2 list | grep -q belkina-app; then
