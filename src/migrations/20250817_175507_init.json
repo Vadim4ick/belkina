@@ -1,5 +1,5 @@
 {
-  "id": "af8e2be1-940f-4bb4-93d4-0e58e1763d83",
+  "id": "75d7647a-3e45-409a-a655-640fbc0e3cd0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -5020,8 +5020,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "about_project_banner_description": {
-          "name": "about_project_banner_description",
+        "about_project_banner_desc": {
+          "name": "about_project_banner_desc",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
