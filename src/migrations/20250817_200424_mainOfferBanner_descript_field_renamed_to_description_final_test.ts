@@ -1,0 +1,11 @@
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  await db.execute(sql`
+   ALTER TABLE "home_page" RENAME COLUMN "about_project_banner_descript" TO "about_project_banner_description";`)
+}
+
+export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  await db.execute(sql`
+   ALTER TABLE "home_page" RENAME COLUMN "about_project_banner_description" TO "about_project_banner_descript";`)
+}
