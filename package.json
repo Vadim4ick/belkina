@@ -20,7 +20,7 @@
     "migrate:up": "npm run payload migrate",
     "migrate:status": "npm run payload migrate:status",
     "worker": "tsx scripts/worker.ts",
-    "ci": "payload migrate && pnpm build"
+    "ci": "payload migrate && npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
