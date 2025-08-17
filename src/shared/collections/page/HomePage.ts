@@ -128,7 +128,7 @@ export const HomePage: GlobalConfig = {
         // },
 
         {
-          name: 'description',
+          name: 'desc',
           type: 'richText',
           label: 'Содержание',
           required: false,
