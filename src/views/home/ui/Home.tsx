@@ -14,6 +14,8 @@ const Home = async () => {
   const resVal = getSettledValue(res)
   const postsVal = getSettledValue(posts)
 
+  console.log(1)
+
   return (
     <>
       {resVal && resVal?.HomePage && resVal?.HomePage?.mainOfferBanner?.title && (
