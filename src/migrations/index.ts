@@ -1,5 +1,6 @@
 import * as migration_20250817_175507_init from './20250817_175507_init';
 import * as migration_20250817_175946_mainOfferBanner_desc_field_renamed_to_description from './20250817_175946_mainOfferBanner_desc_field_renamed_to_description';
+import * as migration_20250817_194229_mainOfferBanner_description_field_renamed_to_descript from './20250817_194229_mainOfferBanner_description_field_renamed_to_descript';
 
 export const migrations = [
   {
@@ -10,6 +11,11 @@ export const migrations = [
   {
     up: migration_20250817_175946_mainOfferBanner_desc_field_renamed_to_description.up,
     down: migration_20250817_175946_mainOfferBanner_desc_field_renamed_to_description.down,
-    name: '20250817_175946_mainOfferBanner_desc_field_renamed_to_description'
+    name: '20250817_175946_mainOfferBanner_desc_field_renamed_to_description',
+  },
+  {
+    up: migration_20250817_194229_mainOfferBanner_description_field_renamed_to_descript.up,
+    down: migration_20250817_194229_mainOfferBanner_description_field_renamed_to_descript.down,
+    name: '20250817_194229_mainOfferBanner_description_field_renamed_to_descript'
   },
 ];
