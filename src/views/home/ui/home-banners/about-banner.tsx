@@ -42,8 +42,12 @@ const AboutBanner = ({
                 {content.description}
               </Typography> */}
 
-              {content.desc && (
-                <RichText className="m-0 flex flex-col" data={content.desc} enableGutter={false} />
+              {content.description && (
+                <RichText
+                  className="m-0 flex flex-col"
+                  data={content.description}
+                  enableGutter={false}
+                />
               )}
             </div>
 
