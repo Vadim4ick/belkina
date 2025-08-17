@@ -77,16 +77,16 @@ jobs:
 
           echo "🚀 Запускаем через PM2"
           if pm2 list | grep -q belkina-app; then
-            pm2 restart belkina-app --update-env
+            NODE_ENV=production pm2 restart belkina-app --update-env
           else
-            pm2 start npm --name belkina-app -- run start
+            NODE_ENV=production pm2 start npm --name belkina-app -- run start
           fi
 
           echo "🚀 Запускаем worker через PM2"
           if pm2 list | grep -q belkina-worker; then
-            pm2 restart belkina-worker
+            NODE_ENV=production pm2 restart belkina-worker
           else
-            pm2 start npm --name belkina-worker -- run worker
+            NODE_ENV=production pm2 start npm --name belkina-worker -- run worker
           fi
 
           pm2 save
