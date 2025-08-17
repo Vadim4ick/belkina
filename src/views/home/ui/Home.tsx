@@ -7,27 +7,6 @@ import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
 import { getPosts } from '@/shared/actions/post.action'
 import { VerifyEmail } from '@/widgets/verify-email'
-import { Metadata } from 'next'
-
-export async function generateMetadata(): Promise<Metadata> {
-  const res = await getHomePage()
-  console.log('res ==> ', res)
-
-  if (!res) {
-    return {
-      title: 'BELKINA.ONLINE',
-      description: 'Подготовка к ЕГЭ по русскому языку',
-    }
-  }
-
-  const homePage = res?.HomePage || {}
-  console.log('homePage ==> ', homePage)
-
-  return {
-    title: homePage.Meta.seo_title,
-    description: homePage.Meta.seo_description,
-  }
-}
 
 const Home = async () => {
   const [res, posts] = await Promise.allSettled([getHomePage(), getPosts()])

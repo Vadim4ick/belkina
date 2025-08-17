@@ -1,5 +1,5 @@
 {
-  "id": "f8bcbcc7-1bae-475f-9cf4-7791e7097e09",
+  "id": "dfeda37e-9818-4d1b-9432-af057b9f21c5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -5002,14 +5002,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "seo_seo_title": {
-          "name": "seo_seo_title",
+        "meta_seo_title": {
+          "name": "meta_seo_title",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "seo_seo_description": {
-          "name": "seo_seo_description",
+        "meta_seo_description": {
+          "name": "meta_seo_description",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false

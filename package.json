@@ -18,7 +18,9 @@
     "check-types": "tsc --noEmit",
     "migrate:create": "npm run payload migrate:create",
     "migrate:up": "npm run payload migrate",
-    "worker": "tsx scripts/worker.ts"
+    "migrate:status": "npm run payload migrate:status",
+    "worker": "tsx scripts/worker.ts",
+    "ci": "payload migrate && pnpm build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
