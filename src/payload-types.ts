@@ -1071,7 +1071,7 @@ export interface HomePage {
   aboutProjectBanner: {
     title: string;
     subtitle: string;
-    desc?: {
+    description?: {
       root: {
         type: string;
         children: {
@@ -1126,7 +1126,7 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         title?: T;
         subtitle?: T;
-        desc?: T;
+        description?: T;
         media?: T;
       };
   diagnosticTestBanner?:
