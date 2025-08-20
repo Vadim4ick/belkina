@@ -1,5 +1,4 @@
 import { GetHomePageQuery } from '@/shared/graphql/__generated__'
-import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 import { MediaBlock } from './media-block'
@@ -13,7 +12,7 @@ const AboutBanner = ({
   return (
     <section className="max-mobile:py-6 py-12">
       <Container>
-        <div className="bg-light-grey max-desktop:gap-6 max-tablet:flex-col max-tablet:py-6 max-tablet:px-4 flex gap-[48px] rounded-[16px]">
+        <div className="bg-light-grey max-desktop:gap-6 max-tablet:flex-col max-tablet:py-6 max-tablet:px-4 flex items-center gap-[48px] rounded-[16px]">
           <div className="max-desktop:w-[450px] max-tablet:w-full w-[570px] flex-none rounded-[16px]">
             <MediaBlock
               media={content.media}
@@ -50,8 +49,6 @@ const AboutBanner = ({
                 />
               )}
             </div>
-
-            <Button size={'xl'}>Пройти тест</Button>
           </div>
         </div>
       </Container>
