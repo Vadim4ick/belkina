@@ -1,4 +1,3 @@
-import { FeedbackForm } from '@/features/feedback-form'
 import { GetHomePageQuery } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
@@ -11,8 +10,8 @@ const TestsBanner = ({
   return (
     <section className="bg-light-grey max-mobile:py-6 py-12">
       <Container className="relative flex items-center justify-center">
-        <div className="relative w-full overflow-hidden">
-          <div className="bg-blue max-tablet:flex-col max-mobile:py-[24px] max-mobile:px-4 max-tablet:h-full flex h-[570px] w-full items-center justify-between gap-6 rounded-[16px] px-[20px] py-[48px]">
+        <div className="bg-blue relative w-full overflow-hidden rounded-[16px]">
+          <div className="max-tablet:flex-col max-mobile:py-[24px] max-mobile:px-4 max-tablet:h-full flex h-[570px] w-full items-center justify-between gap-6 px-[20px] py-[48px]">
             <div className="max-tablet:max-w-full z-10 flex h-full w-full max-w-[485px] flex-col justify-between gap-[24px]">
               <div className="flex flex-col gap-6">
                 <Typography
@@ -35,12 +34,10 @@ const TestsBanner = ({
               </div>
             </div>
 
-            <FeedbackForm className="max-tablet:items-start max-tablet:justify-start max-mobile:items-center z-10" />
-
             <img
               src={'/img/teacher.png'}
               alt="teacher"
-              className="max-mobile:block z-10 -mb-[24px] hidden max-h-[350px]"
+              className="max-mobile:block z-10 -mr-[16px] -mb-[24px] hidden max-h-[350px] self-end"
             />
           </div>
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute right-[20px] w-[1500px] px-4">
@@ -49,7 +46,7 @@ const TestsBanner = ({
           <img
             src={'/img/teacher.png'}
             alt="teacher"
-            className="max-tablet:right-0 tablet:left-1/2 tablet:-translate-x-1/2 max-mobile:hidden absolute bottom-0 max-[1200px]:max-h-[450px]"
+            className="max-mobile:hidden absolute right-0 bottom-0 max-w-[400px]"
           />
         </div>
       </Container>
