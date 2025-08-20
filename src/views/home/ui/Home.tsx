@@ -7,6 +7,7 @@ import { SliderWrapper } from '@/widgets/slider-wrapper'
 import { getHomePage } from '@/shared/actions/home.action'
 import { getPosts } from '@/shared/actions/post.action'
 import { VerifyEmail } from '@/widgets/verify-email'
+import { FloatingTestButton } from '@/features/floating-test-button'
 
 const Home = async () => {
   const [res, posts] = await Promise.allSettled([getHomePage(), getPosts()])
@@ -39,6 +40,8 @@ const Home = async () => {
       )}
 
       <VerifyEmail />
+
+      <FloatingTestButton />
     </>
   )
 }
