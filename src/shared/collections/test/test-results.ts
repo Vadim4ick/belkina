@@ -35,6 +35,7 @@ export const TestResults: CollectionConfig = {
 
             if (prevStatus !== newStatus) {
               await invalidateTags(CacheKeys.tags.testHistory(userId))
+              await invalidateTags(CacheKeys.tags.recommendationsAll())
             }
           }
         } catch (e) {
@@ -55,6 +56,7 @@ export const TestResults: CollectionConfig = {
           if (!userId) return
 
           await invalidateTags(CacheKeys.tags.testHistory(userId))
+          await invalidateTags(CacheKeys.tags.recommendationsAll())
         } catch (e) {
           console.warn('[TestResults.afterDelete] invalidate failed', e)
         }
