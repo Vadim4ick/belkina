@@ -45,10 +45,10 @@ export class NodemailerService {
       to: email,
       subject: `Доступ к вебинару "${webinarTitle}"`,
       html: `
-        <h2>Спасибо за оплату!</h2>
+        <h2>Оплата прошла успешно!</h2>
         <p>Поздравляем 🎉 Ваша оплата успешно прошла.</p>
-        <p>Вы получили доступ к вебинару <b>"${webinarTitle}"</b>.</p>
-        <p>Присоединяйтесь по ссылке: <a href="${webinarLink}" target="_blank">${webinarLink}</a></p>
+        <p>Теперь у вас открыт доступ к вебинару <b>"${webinarTitle}"</b>.</p>
+        <p>Ссылка на трансляцию доступна на странице вебинара: <a href="${webinarLink}" target="_blank">${webinarLink}</a></p>
         <br/>
         <p>Если у вас возникнут вопросы — смело пишите в нашу поддержку.</p>
         <p>Хорошего просмотра!<br/>Команда <b>BELKINA.ONLINE</b></p>
