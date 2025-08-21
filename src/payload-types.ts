@@ -1091,7 +1091,6 @@ export interface HomePage {
   diagnosticTestBanner: {
     title: string;
     subtitle: string;
-    label: string;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1134,7 +1133,6 @@ export interface HomePageSelect<T extends boolean = true> {
     | {
         title?: T;
         subtitle?: T;
-        label?: T;
       };
   updatedAt?: T;
   createdAt?: T;
