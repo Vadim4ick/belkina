@@ -3,7 +3,6 @@ import TestsListItem from './tests-list-item'
 import { GetAllUserTestsQuery } from '@/shared/graphql/__generated__'
 import { TestsListSkeleton } from './tests-list.skeleton'
 import { EmptyDataMessage } from '@/widgets/empty-data-message'
-import { FilterTests } from '@/widgets/filter-category'
 
 const TestsList = ({
   tests,
@@ -34,7 +33,7 @@ const TestsList = ({
               style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}
             >
               {tests.map((test) => (
-                <TestsListItem className="border-light-grey border-b-2" key={test.id} test={test} />
+                <TestsListItem key={test.id} test={test} />
               ))}
 
               {tests.length < 4 &&
@@ -42,9 +41,6 @@ const TestsList = ({
             </div>
           </>
         ) : (
-          // <Typography className="mt-4 text-center" tag="p" variant="visuelt-bold-32">
-          //   Тестов не найдено
-          // </Typography>
           <EmptyDataMessage
             title="Тесты не найдены"
             message="Измените параметры поиска или попробуйте снова."
