@@ -25,6 +25,9 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizeCss: true, // важно для Tailwind 4
+  },
   reactStrictMode: true,
   redirects,
 }
