@@ -28,7 +28,6 @@ query GetHomePage {
     diagnosticTestBanner {
       title
       subtitle
-      label
     }
 
     featuredTest {
