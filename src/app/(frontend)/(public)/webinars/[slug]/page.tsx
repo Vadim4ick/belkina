@@ -3,7 +3,7 @@ import { getWebinarsBySlug } from '@/shared/actions/webinars.action'
 import { WebinarsBySlugPage } from '@/views/webinars-by-slug-page'
 import { notFound } from 'next/navigation'
 
-export const revalidate = 0
+export const revalidate = 180
 
 async function Page({
   params: paramsPromise,
