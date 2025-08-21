@@ -27,6 +27,20 @@ export const Users: CollectionConfig = {
           }
         }
 
+        // Удаляем webinar-payments
+        const { docs: payments } = await payload.find({
+          collection: 'webinar-payments',
+          where: { user: { equals: id } },
+          depth: 0,
+        })
+
+        for (const pay of payments) {
+          await payload.delete({
+            collection: 'webinar-payments',
+            id: pay.id,
+          })
+        }
+
         return
       },
     ],

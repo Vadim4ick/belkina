@@ -1,6 +1,8 @@
 import { Container } from '@/shared/ui/container'
-import { Typography } from '@/shared/ui/typography'
+
 import { FaqPage } from '@/views/faqs'
+
+export const revalidate = 180
 
 async function Page() {
   return (
