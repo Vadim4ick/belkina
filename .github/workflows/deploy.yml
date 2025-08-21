@@ -47,6 +47,7 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -o StrictHostKeyChecking=no" \
+            --exclude='.next' \
             --exclude='package-lock.json' \
             --exclude='node_modules' \
             --exclude='media' \
