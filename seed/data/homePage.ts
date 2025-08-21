@@ -32,7 +32,7 @@ export const seedHomePage = async () => {
       diagnosticTestBanner: {
         title: 'Тест ОГЭ/ЕГЭ и план подготовки по слабым темам!',
         subtitle: 'Оставьте заявку сейчас',
-        label: 'плати только за нужные темы',
+        // label: 'плати только за нужные темы',
       },
     },
   })
