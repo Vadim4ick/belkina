@@ -52,7 +52,7 @@ const TestsBanner = ({
           </div>
 
           {/* Десктопная версия изображения */}
-          <div className="max-mobile:hidden absolute right-0 bottom-0 h-full max-w-[400px]">
+          <div className="max-mobile:hidden absolute right-0 bottom-0 z-10 h-full max-w-[400px]">
             <Image
               src="/img/teacher.png"
               alt="teacher"
