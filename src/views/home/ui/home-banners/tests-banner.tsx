@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/button'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
 import Link from 'next/link'
+import Image from 'next/image' // Используем next/image для оптимизации
 
 const TestsBanner = ({
   content,
@@ -30,12 +31,6 @@ const TestsBanner = ({
                 </Typography>
               </div>
 
-              {/* <div className="bg-green w-fit rounded-[12px] px-4 py-3">
-                <Typography className="uppercase" tag="p" variant="poppins-md-16">
-                  {content.label}
-                </Typography>
-              </div> */}
-
               <Link href={getRouteTests()}>
                 <Button className="w-fit" variant={'ghost'}>
                   Перейти к тестам
@@ -43,21 +38,35 @@ const TestsBanner = ({
               </Link>
             </div>
 
-            <img
-              src={'/img/teacher.png'}
+            {/* Мобильная версия изображения */}
+            <div className="max-mobile:block z-10 -mr-[16px] -mb-[24px] hidden h-full self-end">
+              <Image
+                src="/img/teacher.png"
+                alt="teacher"
+                width={300}
+                height={400}
+                className="h-full w-auto object-contain"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Десктопная версия изображения */}
+          <div className="max-mobile:hidden absolute right-0 bottom-0 h-full max-w-[400px]">
+            <Image
+              src="/img/teacher.png"
               alt="teacher"
-              className="max-mobile:block z-10 -mr-[16px] -mb-[24px] hidden h-full self-end"
+              width={400}
+              height={510}
+              className="h-full w-auto object-contain"
+              priority
             />
           </div>
-          {/* добавлено апасити */}
+
+          {/* Фоновый элемент */}
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute w-[1500px] opacity-40">
             <img alt="line" src={'/img/bannerLine.png'} />
           </div>
-          <img
-            src={'/img/teacher.png'}
-            alt="teacher"
-            className="max-mobile:hidden absolute right-0 bottom-0 h-full max-w-[400px]"
-          />
         </div>
       </Container>
     </section>
