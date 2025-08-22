@@ -49,6 +49,7 @@ const TestsBanner = ({
               className="max-mobile:block z-10 -mr-[16px] -mb-[24px] hidden h-full self-end"
             />
           </div>
+          {/* добавлено апасити */}
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute w-[1500px] opacity-40">
             <img alt="line" src={'/img/bannerLine.png'} />
           </div>
