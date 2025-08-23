@@ -50,7 +50,7 @@ export class NodemailerService {
         <p>Теперь у вас открыт доступ к вебинару <b>"${webinarTitle}"</b>.</p>
         <p>Ссылка на трансляцию доступна на странице вебинара: <a href="${webinarLink}" target="_blank">${webinarLink}</a></p>
         <br/>
-        <p>Если у вас возникнут вопросы — смело пишите в нашу поддержку.</p>
+        <p>Если у вас возникнут вопросы — смело пишите в нашу поддержку в Telegram - <a href="https://t.me/Belkina_online2025">@Belkina_online2025</a>.</p>
         <p>Хорошего просмотра!<br/>Команда <b>BELKINA.ONLINE</b></p>
       `,
     })
