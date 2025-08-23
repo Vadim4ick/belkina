@@ -8,6 +8,7 @@ import { getSettledValue } from '@/shared/lib/utils'
 import { ProfileForm } from './profile-form'
 import { ProfileTitle } from './profile-title'
 import { Container } from '@/shared/ui/container'
+import { Typography } from '@/shared/ui/typography'
 
 export async function Profile() {
   const cookieStore = await cookies()
@@ -41,21 +42,16 @@ export async function Profile() {
         </div>
 
         {recommendationsVal && recommendationsVal?.GetUserRecommendations?.length > 0 && (
-          <Topic recomendations={recommendationsVal.GetUserRecommendations} />
+          <div className="my-4">
+            <Typography className="mb-4" tag="h2" variant="poppins-md-24">
+              Рекомендации
+            </Typography>
+
+            <Topic recomendations={recommendationsVal.GetUserRecommendations} />
+          </div>
         )}
 
         {testHistoryVal && <TestsHistory testHistory={testHistoryVal.TestResults.docs} />}
-
-        {/* <ProductCardsGridCatalog title="Бесплатные материалы">
-        {mockProducts.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
-      </ProductCardsGridCatalog>
-      <ProductCardsGridCatalog title="Каталог">
-        {mockProducts.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ))}
-      </ProductCardsGridCatalog> */}
       </Container>
     </section>
   )
