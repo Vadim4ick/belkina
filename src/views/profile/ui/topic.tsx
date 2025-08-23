@@ -23,11 +23,11 @@ const SingleRecommendation: React.FC<{
   return (
     <div className="w-full">
       <div className={cardBaseClasses}>
-        <h2 className="text-3xl font-bold text-black">{rec.title}</h2>
-        {rec.description ? (
+        <h2 className="text-3xl font-bold text-black">{rec.recommendation.title}</h2>
+        {rec.recommendation?.description ? (
           <RichText
             className="m-0 flex flex-col"
-            data={JSON.parse(rec.description)}
+            data={JSON.parse(rec.recommendation.description)}
             enableGutter={false}
           />
         ) : (
@@ -70,18 +70,21 @@ const CarouselRecommendations: React.FC<{
       <div ref={viewportRef} className="overflow-hidden">
         {/* Container */}
         <div className="-ml-4 flex">
-          {recs.map((rec) => {
+          {recs.map((rec, idx) => {
             return (
               <div
-                key={rec.id}
+                key={`${rec.title}-${idx}`}
                 className="flex-[0_0_100%] pl-4 md:flex-[0_0_100%] lg:flex-[0_0_100%] xl:flex-[0_0_100%]"
               >
                 <div className={cardBaseClasses}>
-                  <h2 className="text-2xl font-bold text-black">{rec.title}</h2>
-                  {rec.description ? (
+                  <h2 className="text-2xl font-bold text-black">{rec.recommendation.title}</h2>
+
+                  <p className="text-base text-gray-600">❓ {rec.title}</p>
+
+                  {rec.recommendation?.description ? (
                     <RichText
                       className="m-0 flex flex-col"
-                      data={JSON.parse(rec.description)}
+                      data={JSON.parse(rec.recommendation.description)}
                       enableGutter={false}
                     />
                   ) : (

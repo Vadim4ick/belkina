@@ -92,14 +92,29 @@ const CompletedInfo = memo(
               Рекомендации:
             </Typography>
 
-            <div className="max-h-[300px] overflow-auto">
-              {recommendations.GetRecommendationsByQuestionsIDS.map((r) => (
-                <RichText
-                  key={r.id}
-                  className="m-0 flex flex-col"
-                  data={JSON.parse(r.description)}
-                  enableGutter={false}
-                />
+            <div className="my-4 flex max-h-[400px] flex-col gap-4 overflow-auto">
+              {recommendations.GetRecommendationsByQuestionsIDS.map((r, i) => (
+                <div key={`${r.questionId}-${i}`} className="rounded-lg border bg-gray-50 p-3">
+                  <Typography
+                    tag="p"
+                    variant="poppins-md-16"
+                    className="mb-2 font-medium text-gray-700"
+                  >
+                    {r.questionText}
+                  </Typography>
+
+                  {r.recommendation ? (
+                    <RichText
+                      className="m-0 flex flex-col"
+                      data={JSON.parse(r.recommendation.description)}
+                      enableGutter={false}
+                    />
+                  ) : (
+                    <Typography tag="p" variant="poppins-md-16" className="text-gray-500">
+                      Для этого вопроса рекомендации пока нет.
+                    </Typography>
+                  )}
+                </div>
               ))}
             </div>
           </>
@@ -114,12 +129,20 @@ const CompletedInfo = memo(
         </Typography>
 
         <div className="flex list-disc flex-col items-start gap-0.5">
-          <Button size={'sm'} type="button" variant={'ghostWhite'} onClick={resetTestRes}>
+          <Button
+            className="max-mobile:p-0"
+            size={'sm'}
+            type="button"
+            variant={'ghostWhite'}
+            onClick={resetTestRes}
+          >
             🌀 Пройти тест ещё раз
           </Button>
 
-          <Button size={'sm'} type="button" variant={'ghostWhite'}>
-            <Link href={getRouteWebinars()}>🎓 Записаться на живой разбор заданий</Link>
+          <Button className="max-mobile:p-0" size={'sm'} type="button" variant={'ghostWhite'}>
+            <Link className="break-all" href={getRouteWebinars()}>
+              🎓 Записаться на живой разбор заданий
+            </Link>
           </Button>
         </div>
       </div>
