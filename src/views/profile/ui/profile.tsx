@@ -42,7 +42,7 @@ export async function Profile() {
         </div>
 
         {recommendationsVal && recommendationsVal?.GetUserRecommendations?.length > 0 && (
-          <div className="my-4">
+          <div className="my-6">
             <Typography className="mb-4" tag="h2" variant="poppins-md-24">
               Рекомендации
             </Typography>

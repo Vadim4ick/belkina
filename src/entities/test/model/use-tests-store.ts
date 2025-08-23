@@ -26,3 +26,25 @@ export const useTestsStore = create<CoursesState>((set) => ({
       filters: { ...state.filters, categoryIdx: value },
     })),
 }))
+
+export type QuestionResults = Record<number, boolean>
+
+type TempState = {
+  byQuestion: Record<number, boolean>
+  mark: (questionId: number, correct: boolean) => void
+  getAll: () => Record<number, boolean>
+  reset: () => void
+}
+
+export const useTempTestStats = create<TempState>((set, get) => ({
+  byQuestion: {},
+
+  mark: (questionId, correct) =>
+    set((state) => ({
+      byQuestion: { ...state.byQuestion, [questionId]: correct },
+    })),
+
+  getAll: () => get().byQuestion,
+
+  reset: () => set({ byQuestion: {} }),
+}))

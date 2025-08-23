@@ -1,4 +1,3 @@
-import { useProfileStore } from '@/entities/user/use-profile-store'
 import { GetByIdTestResultQuery } from '@/shared/graphql/__generated__'
 import { getRouteWebinars } from '@/shared/lib/routes'
 import { getResultLevel } from '@/shared/lib/utils'
@@ -18,6 +17,7 @@ const CompletedInfo = memo(
     publicFlag,
     publicCorrectAnswers,
     testRes,
+    publicRes,
   }: {
     totalCorrectAnswers: number
     resetTestRes: () => void
@@ -25,9 +25,8 @@ const CompletedInfo = memo(
     publicFlag: boolean
     publicCorrectAnswers: number
     testRes?: GetByIdTestResultQuery['TestResults']['docs'][0]
+    publicRes?: string[]
   }) => {
-    const { profile } = useProfileStore()
-
     const percent = Math.round((totalCorrectAnswers / countQuestions) * 100)
 
     const score = publicFlag ? publicCorrectAnswers : totalCorrectAnswers
@@ -39,34 +38,8 @@ const CompletedInfo = memo(
 
     const { data: recommendations, isLoading: isLoadingRecommendations } =
       useGetRecommendationQuestionByIds({
-        questionsIds: questionNoCorrectIds?.map((id) => String(id)),
+        questionsIds: publicFlag ? publicRes : questionNoCorrectIds?.map((id) => String(id)),
       })
-
-    if (publicFlag || !!!profile?.id) {
-      return (
-        <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-8 rounded-2xl border bg-white p-10 text-center shadow-lg">
-          <div className="text-4xl">🎉</div>
-
-          <div className="flex flex-col items-center justify-center gap-1">
-            <Typography tag="p" variant="poppins-md-16" className="font-semibold">
-              <b>Правильных ответов:</b> {score} из {countQuestions}
-            </Typography>
-            <p>
-              <b>Результат:</b> {percent}%
-            </p>
-            <p>
-              <b>{resultLevel}</b>
-            </p>
-          </div>
-
-          <div className="flex list-disc flex-col items-start gap-0.5">
-            <Button size={'sm'} type="button" variant={'ghostWhite'}>
-              <Link href={getRouteWebinars()}>🎓 Записаться на живой разбор заданий</Link>
-            </Button>
-          </div>
-        </div>
-      )
-    }
 
     return (
       <div className="mx-auto w-full bg-white">
@@ -129,15 +102,17 @@ const CompletedInfo = memo(
         </Typography>
 
         <div className="flex list-disc flex-col items-start gap-0.5">
-          <Button
-            className="max-mobile:p-0"
-            size={'sm'}
-            type="button"
-            variant={'ghostWhite'}
-            onClick={resetTestRes}
-          >
-            🌀 Пройти тест ещё раз
-          </Button>
+          {!publicFlag && (
+            <Button
+              className="max-mobile:p-0"
+              size={'sm'}
+              type="button"
+              variant={'ghostWhite'}
+              onClick={resetTestRes}
+            >
+              🌀 Пройти тест ещё раз
+            </Button>
+          )}
 
           <Button className="max-mobile:p-0" size={'sm'} type="button" variant={'ghostWhite'}>
             <Link className="break-all" href={getRouteWebinars()}>
