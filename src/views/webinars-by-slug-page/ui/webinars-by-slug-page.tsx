@@ -32,8 +32,7 @@ const WebinarsBySlugPage = ({
             </Typography>
 
             <Typography tag="p" variant="poppins-md-16">
-              💡 Оплата — за занятие, без абонементов. Оплачиваете — участвуете. Пропустили — не
-              платите.
+              💡 Оплата — за занятие, без абонементов. Оплачиваете — участвуете.
             </Typography>
 
             <Typography tag="p" variant="poppins-md-16">

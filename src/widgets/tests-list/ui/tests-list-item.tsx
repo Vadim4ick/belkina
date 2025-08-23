@@ -9,6 +9,7 @@ import { getRouteTestById } from '@/shared/lib/routes'
 import { MAPPING_TEST_HISTORY_MODE, TEST_STATUS_COLOR } from '@/shared/const'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 import { BookOpenIcon } from 'lucide-react' // пример иконки
+import RichText from '@/shared/ui/rich-text'
 
 interface TestsListItemProps {
   test: GetAllUserTestsQuery['GetUserTests']['docs'][0]
@@ -39,9 +40,13 @@ const TestsListItem = ({ test, className }: TestsListItemProps) => {
 
       {/* Тело карточки */}
       <div className="flex flex-1 flex-col px-6 py-4">
-        <Typography tag="p" variant="poppins-reg-14" className="line-clamp-4 flex-1 text-[#6B7280]">
-          {test.description}
-        </Typography>
+        {test?.description && (
+          <RichText
+            className="m-0 flex flex-col"
+            data={JSON.parse(test.description)}
+            enableGutter={false}
+          />
+        )}
       </div>
 
       {/* Нижний фиксированный футер */}
