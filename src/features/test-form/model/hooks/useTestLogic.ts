@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 'use client'
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -22,6 +23,7 @@ import {
 
 import { formatUserAnswer } from '../const'
 import { useProfileStore } from '@/entities/user/use-profile-store'
+import { useTempTestStats } from '@/entities/test/model/use-tests-store'
 
 export type AnswerInput = Omit<MutationTestResultUpdate_AnswersInput, 'id'>
 
@@ -48,6 +50,8 @@ export const useTestLogic = ({
   const [start, setStart] = useState(false)
   const queryClient = useQueryClient()
   const { profile } = useProfileStore()
+
+  const markTemp = useTempTestStats((s) => s.mark)
 
   /* ----------------------- текущий вопрос --------------------------- */
 
@@ -172,15 +176,25 @@ export const useTestLogic = ({
     }
 
     /* ------------------------ Публичный режим ----------------------- */
+
     if (publicFlag) {
+      const values = getValues() as Record<string, any>
+
+      // Оцениваем только текущий вопрос
+      const isCorrect = evaluateSingle(currentQuestion.id, values)
+
+      // Временная отметка неверности (если включаешь стор)
+      if (test?.id) markTemp(currentQuestion.id, isCorrect)
+
       if (publicStep < questions.length - 1) {
-        setPublicStep(publicStep + 1)
+        setPublicStep((s) => s + 1) // функциональный апдейт, чтобы не поймать stale
       } else {
         setPublicCompleted(true)
-        const answers = getValues()
-        const { correctCount } = evaluate(answers)
+        // Общий подсчёт — ОДИН раз в конце
+        const { correctCount } = evaluate(values)
         setPublicCorrectAnswers(correctCount)
       }
+      return
     }
   }
 

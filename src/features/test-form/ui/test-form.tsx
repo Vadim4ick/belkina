@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { FormProvider } from 'react-hook-form'
 
 import { TestFragmentFragment } from '@/shared/graphql/__generated__'
@@ -11,6 +11,7 @@ import { SkeletonTestCard } from './skeleton-test-card'
 import { CompletedInfo } from './completed-info'
 import { useTestLogic } from '../model/hooks/useTestLogic'
 import { useProfileStore } from '@/entities/user/use-profile-store'
+import { useTempTestStats } from '@/entities/test/model/use-tests-store'
 
 const TestForm = memo(
   ({ test, publicFlag = false }: { test?: TestFragmentFragment; publicFlag?: boolean }) => {
@@ -38,6 +39,17 @@ const TestForm = memo(
     const totalCorrectAnswers = totalCorrectAnswersFn(testRes?.answers ?? [])
 
     const { formState, handleSubmit } = form
+
+    const resetTemp = useTempTestStats((s) => s.reset)
+    const getTemp = useTempTestStats((s) => s.byQuestion)
+    const testIdStr = test?.id ? String(test.id) : undefined
+
+    // Очистить при размонтировании компонента (уход со страницы)
+    useEffect(() => {
+      return () => {
+        resetTemp()
+      }
+    }, [testIdStr, resetTemp])
 
     if (isLoading || isFetching) {
       return <SkeletonTestCard />
@@ -101,6 +113,9 @@ const TestForm = memo(
                   countQuestions={questions.length}
                   publicFlag={publicFlag || !!!profile?.id}
                   publicCorrectAnswers={publicCorrectAnswers}
+                  publicRes={Object.entries(getTemp)
+                    .filter(([_, v]) => !v)
+                    .map(([id]) => id)}
                 />
               )}
             </div>
