@@ -15380,13 +15380,18 @@ export type TariffsUpdateDocAccess = {
 export type Test = {
   readonly __typename?: 'Test';
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly description: Maybe<Scalars['String']['output']>;
+  readonly description: Maybe<Scalars['JSON']['output']>;
   readonly exam: Maybe<Exam>;
   readonly id: Scalars['Int']['output'];
   readonly questions: ReadonlyArray<Question>;
   readonly subjects: Maybe<ReadonlyArray<Subject>>;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type TestDescriptionArgs = {
+  depth: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -16281,11 +16286,11 @@ export type Test_CreatedAt_Operator = {
 };
 
 export type Test_Description_Operator = {
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly contains: InputMaybe<Scalars['JSON']['input']>;
+  readonly equals: InputMaybe<Scalars['JSON']['input']>;
   readonly exists: InputMaybe<Scalars['Boolean']['input']>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly like: InputMaybe<Scalars['JSON']['input']>;
+  readonly not_equals: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Test_Exam_Operator = {
@@ -20326,7 +20331,7 @@ export type MutationTariff_BenefitsInput = {
 
 export type MutationTestInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly description: InputMaybe<Scalars['JSON']['input']>;
   readonly exam: InputMaybe<Scalars['Int']['input']>;
   readonly questions: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
@@ -20368,7 +20373,7 @@ export type MutationTestResult_AnswersInput = {
 
 export type MutationTestUpdateInput = {
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
-  readonly description: InputMaybe<Scalars['String']['input']>;
+  readonly description: InputMaybe<Scalars['JSON']['input']>;
   readonly exam: InputMaybe<Scalars['Int']['input']>;
   readonly questions: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
   readonly subjects: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
@@ -21024,14 +21029,14 @@ export type SubjectsFragmentFragment = { readonly __typename?: 'Subject', readon
 
 export type TariffFragmentFragment = { readonly __typename?: 'Tariff', readonly id: number, readonly title: string, readonly price: number, readonly description: string, readonly benefits: ReadonlyArray<{ readonly __typename?: 'Tariff_Benefits', readonly id: string, readonly value: string }> };
 
-export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
+export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: any, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> };
 
 export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any };
 
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly Meta: { readonly __typename?: 'HomePage_Meta', readonly seo_title: string, readonly seo_description: string }, readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: any, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
+export type GetHomePageQuery = { readonly __typename?: 'Query', readonly HomePage: { readonly __typename?: 'HomePage', readonly Meta: { readonly __typename?: 'HomePage_Meta', readonly seo_title: string, readonly seo_description: string }, readonly mainOfferBanner: { readonly __typename?: 'HomePage_MainOfferBanner', readonly title: string, readonly description: string, readonly label: string, readonly options: ReadonlyArray<{ readonly __typename?: 'HomePage_MainOfferBanner_Options', readonly text: string, readonly id: string }> }, readonly aboutProjectBanner: { readonly __typename?: 'HomePage_AboutProjectBanner', readonly title: string, readonly subtitle: string, readonly description: any, readonly media: { readonly __typename?: 'Media', readonly id: number, readonly url: string, readonly alt: string, readonly mimeType: string } }, readonly diagnosticTestBanner: { readonly __typename?: 'HomePage_DiagnosticTestBanner', readonly title: string, readonly subtitle: string }, readonly featuredTest: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: any, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } } };
 
 export type GetPostBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
@@ -21162,7 +21167,7 @@ export type GetByIdTestQueryVariables = Exact<{
 }>;
 
 
-export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } };
+export type GetByIdTestQuery = { readonly __typename?: 'Query', readonly Test: { readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: any, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> } };
 
 export type GetTestsByIdsQueryVariables = Exact<{
   limit: InputMaybe<Scalars['Int']['input']>;
@@ -21172,7 +21177,7 @@ export type GetTestsByIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetTestsByIdsQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly page: number, readonly totalPages: number, readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: string, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> }> } };
+export type GetTestsByIdsQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly page: number, readonly totalPages: number, readonly totalDocs: number, readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number, readonly title: string, readonly description: any, readonly questions: ReadonlyArray<{ readonly __typename?: 'Question', readonly id: number, readonly questionText: string, readonly questionType: Question_QuestionType, readonly textAnswer: string, readonly createdAt: any, readonly answers: ReadonlyArray<{ readonly __typename?: 'Question_Answers', readonly id: string, readonly label: string, readonly isCorrect: boolean, readonly value: string }>, readonly matchingPairs: ReadonlyArray<{ readonly __typename?: 'Question_MatchingPairs', readonly id: string, readonly left: string, readonly right: string }> }> }> } };
 
 export type UpdateTestResultMutationVariables = Exact<{
   testResId: Scalars['Int']['input'];
