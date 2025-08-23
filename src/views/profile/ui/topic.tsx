@@ -7,6 +7,8 @@ import { GetRecomendationsQuery } from '@/shared/graphql/__generated__'
 import { ArrowLeft } from 'lucide-react'
 import RichText from '@/shared/ui/rich-text'
 
+import AutoHeight from 'embla-carousel-auto-height'
+
 type TopicProps = {
   recomendations: GetRecomendationsQuery['GetUserRecommendations']
   autoplayDelay?: number
@@ -51,8 +53,9 @@ const CarouselRecommendations: React.FC<{
             stopOnInteraction: false,
             playOnInit: true,
           }),
+          AutoHeight(),
         ]
-      : []
+      : [AutoHeight()]
 
   // Embla – viewportRef вешаем на контейнер дорожки
   const [viewportRef, emblaApi] = useEmblaCarousel(
