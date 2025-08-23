@@ -30,15 +30,17 @@ const TestCard = memo(
 
     const questionName = questionNameFn(question.id)
 
-    const shuffledRight = useShuffledOnClient(question.matchingPairs?.map((p) => p))
+    const shuffledRight = useShuffledOnClient(question.matchingPairs ?? [], question.id)
 
-    const combinedPairs = useMemo(() => {
-      return question.matchingPairs.map((pair, idx) => ({
-        id: pair.id,
-        left: pair.left,
-        right: shuffledRight[idx]?.right ?? '',
-      }))
-    }, [question.matchingPairs, shuffledRight])
+    const combinedPairs = useMemo(
+      () =>
+        question.matchingPairs.map((pair, idx) => ({
+          id: pair.id,
+          left: pair.left,
+          right: shuffledRight[idx]?.right ?? '',
+        })),
+      [question.matchingPairs, shuffledRight],
+    )
 
     const renderContent = useMemo(() => {
       switch (question.questionType) {
