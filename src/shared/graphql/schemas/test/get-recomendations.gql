@@ -29,6 +29,9 @@ query GetRecommendationsByIds($where: Recomendation_where) {
 query GetRecommendationsByQuestionsIds($where: Question_where) {
   Questions(where: $where) {
     docs {
+      questionText
+      id
+
       recommendation {
         id
       }
@@ -38,8 +41,12 @@ query GetRecommendationsByQuestionsIds($where: Question_where) {
 
 query GetRecommendationsByQuestionsIDS2($questionsIds: [String!]!) {
   GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
-    id
-    title
-    description
+    questionId
+    questionText
+    recommendation {
+      id
+      title
+      description
+    }
   }
 }

@@ -1,7 +1,11 @@
 query GetRecomendations($userId: Int!) {
   GetUserRecommendations(userId: $userId) {
-    id
     title
-    description
+
+    recommendation {
+      id
+      title
+      description
+    }
   }
 }

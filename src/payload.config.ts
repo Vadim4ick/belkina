@@ -126,6 +126,23 @@ export default buildConfig({
         },
       })
 
+      const QuestionWithRecommendationType = new GraphQL.GraphQLObjectType({
+        name: 'QuestionWithRecommendation',
+        fields: {
+          questionId: { type: GraphQL.GraphQLID },
+          questionText: { type: GraphQL.GraphQLString },
+          recommendation: { type: RecommendationType }, // может быть null
+        },
+      })
+
+      const QuestionWithRecommendationType2 = new GraphQL.GraphQLObjectType({
+        name: 'QuestionWithRecommendation_User',
+        fields: {
+          title: { type: GraphQL.GraphQLString },
+          recommendation: { type: RecommendationType }, // может быть null
+        },
+      })
+
       return {
         GetUserTests: {
           type: PaginatedTestsWithStatusType,
@@ -144,9 +161,8 @@ export default buildConfig({
           },
           resolve: GetUserTestsResolver.resolve,
         },
-
         GetUserRecommendations: {
-          type: new GraphQL.GraphQLList(RecommendationType),
+          type: new GraphQL.GraphQLList(QuestionWithRecommendationType2),
           args: {
             userId: { type: new GraphQL.GraphQLNonNull(GraphQL.GraphQLInt) },
           },
@@ -154,7 +170,7 @@ export default buildConfig({
         },
 
         GetRecommendationsByQuestionsIDS: {
-          type: new GraphQL.GraphQLList(RecommendationType),
+          type: new GraphQL.GraphQLList(QuestionWithRecommendationType),
           args: {
             answerIds: {
               type: new GraphQL.GraphQLNonNull(

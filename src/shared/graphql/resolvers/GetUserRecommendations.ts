@@ -15,30 +15,90 @@ export const GetUserRecommendationsResolver = {
 
     if (!userId) return []
 
+    // получаем все тесты с ответами
     const res = await gql.GetNotCorrectedAnswers({ userId })
 
-    const recommendationIds = Array.from(
-      new Map(
-        res.TestResults.docs
-          .flatMap((doc) => doc.answers)
-          .filter((answer) => !answer.isCorrect && answer.question?.recommendation?.id)
-          .map((answer) => {
-            const rec = answer.question.recommendation
-            return [rec.id, rec]
-          }),
-      ).values(),
-    ).map((rec) => rec.id)
+    const allWrongAnswers = res.TestResults.docs
+      .flatMap((doc) => doc.answers)
+      .filter((answer) => !answer.isCorrect)
 
-    if (recommendationIds.length === 0) return []
+    if (allWrongAnswers.length === 0) return []
 
-    const where = { OR: recommendationIds.map((id) => ({ id: { equals: id } })) }
+    // собираем все recommendationIds (с повторами)
+    const recommendationIds = allWrongAnswers
+      .map((answer) => answer.question?.recommendation?.id)
+      .filter(Boolean)
 
-    // @ts-ignore
-    const recommendationsRes = await gql.GetRecommendationsByIds({ where })
+    let recommendationsMap = new Map()
 
-    return recommendationsRes.Recomendations.docs.map((doc) => ({
-      ...doc,
-      description: JSON.stringify(doc.description),
-    }))
+    if (recommendationIds.length > 0) {
+      const where = { OR: recommendationIds.map((id) => ({ id: { equals: id } })) }
+
+      // @ts-ignore
+      const recommendationsRes = await gql.GetRecommendationsByIds({ where })
+
+      recommendationsMap = new Map(
+        recommendationsRes.Recomendations.docs.map((doc) => [
+          doc.id,
+          {
+            id: doc.id,
+            title: doc.title,
+            description: JSON.stringify(doc.description),
+          },
+        ]),
+      )
+    }
+
+    // финальный ответ: вопрос → рекомендация (только у которых есть recommendation.id)
+    return allWrongAnswers
+      .filter((answer) => answer.question?.recommendation?.id) // 👈 исключаем пустые
+      .map((answer) => ({
+        title: answer.question.questionText,
+        recommendation: recommendationsMap.get(answer.question.recommendation.id) ?? null,
+      }))
   },
 }
+// /* eslint-disable @typescript-eslint/ban-ts-comment */
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+
+// export const GetUserRecommendationsResolver = {
+//   resolve: async (
+//     _: any,
+//     {
+//       userId,
+//     }: {
+//       userId: string
+//     },
+//   ) => {
+//     const gql = await getServerAuthGqlClient({})
+
+//     if (!userId) return []
+
+//     const res = await gql.GetNotCorrectedAnswers({ userId })
+
+//     const recommendationIds = Array.from(
+//       new Map(
+//         res.TestResults.docs
+//           .flatMap((doc) => doc.answers)
+//           .filter((answer) => !answer.isCorrect && answer.question?.recommendation?.id)
+//           .map((answer) => {
+//             const rec = answer.question.recommendation
+//             return [rec.id, rec]
+//           }),
+//       ).values(),
+//     ).map((rec) => rec.id)
+
+//     if (recommendationIds.length === 0) return []
+
+//     const where = { OR: recommendationIds.map((id) => ({ id: { equals: id } })) }
+
+//     // @ts-ignore
+//     const recommendationsRes = await gql.GetRecommendationsByIds({ where })
+
+//     return recommendationsRes.Recomendations.docs.map((doc) => ({
+//       ...doc,
+//       description: JSON.stringify(doc.description),
+//     }))
+//   },
+// }

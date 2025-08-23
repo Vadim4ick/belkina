@@ -11986,8 +11986,8 @@ export type Query = {
   readonly Exams: Maybe<Exams>;
   readonly Faq: Maybe<Faq>;
   readonly Faqs: Maybe<Faqs>;
-  readonly GetRecommendationsByQuestionsIDS: Maybe<ReadonlyArray<Maybe<Recommendation>>>;
-  readonly GetUserRecommendations: Maybe<ReadonlyArray<Maybe<Recommendation>>>;
+  readonly GetRecommendationsByQuestionsIDS: Maybe<ReadonlyArray<Maybe<QuestionWithRecommendation>>>;
+  readonly GetUserRecommendations: Maybe<ReadonlyArray<Maybe<QuestionWithRecommendation_User>>>;
   readonly GetUserTests: Maybe<PaginatedTestsWithStatus>;
   readonly HomePage: Maybe<HomePage>;
   readonly Media: Maybe<Media>;
@@ -12706,6 +12706,19 @@ export type QuestionUpdate_QuestionType_MutationInput =
   | 'multiple_choice'
   | 'single_choice'
   | 'text_input';
+
+export type QuestionWithRecommendation = {
+  readonly __typename?: 'QuestionWithRecommendation';
+  readonly questionId: Maybe<Scalars['ID']['output']>;
+  readonly questionText: Maybe<Scalars['String']['output']>;
+  readonly recommendation: Maybe<Recommendation>;
+};
+
+export type QuestionWithRecommendation_User = {
+  readonly __typename?: 'QuestionWithRecommendation_User';
+  readonly recommendation: Maybe<Recommendation>;
+  readonly title: Maybe<Scalars['String']['output']>;
+};
 
 export type Question_Answers = {
   readonly __typename?: 'Question_Answers';
@@ -21081,7 +21094,7 @@ export type GetRecomendationsQueryVariables = Exact<{
 }>;
 
 
-export type GetRecomendationsQuery = { readonly __typename?: 'Query', readonly GetUserRecommendations: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string }> };
+export type GetRecomendationsQuery = { readonly __typename?: 'Query', readonly GetUserRecommendations: ReadonlyArray<{ readonly __typename?: 'QuestionWithRecommendation_User', readonly title: string, readonly recommendation: { readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string } }> };
 
 export type GetTaraffisQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -21130,14 +21143,14 @@ export type GetRecommendationsByQuestionsIdsQueryVariables = Exact<{
 }>;
 
 
-export type GetRecommendationsByQuestionsIdsQuery = { readonly __typename?: 'Query', readonly Questions: { readonly __typename?: 'Questions', readonly docs: ReadonlyArray<{ readonly __typename?: 'Question', readonly recommendation: { readonly __typename?: 'Recomendation', readonly id: number } }> } };
+export type GetRecommendationsByQuestionsIdsQuery = { readonly __typename?: 'Query', readonly Questions: { readonly __typename?: 'Questions', readonly docs: ReadonlyArray<{ readonly __typename?: 'Question', readonly questionText: string, readonly id: number, readonly recommendation: { readonly __typename?: 'Recomendation', readonly id: number } }> } };
 
 export type GetRecommendationsByQuestionsIds2QueryVariables = Exact<{
   questionsIds: ReadonlyArray<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
 
-export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string }> };
+export type GetRecommendationsByQuestionsIds2Query = { readonly __typename?: 'Query', readonly GetRecommendationsByQuestionsIDS: ReadonlyArray<{ readonly __typename?: 'QuestionWithRecommendation', readonly questionId: string, readonly questionText: string, readonly recommendation: { readonly __typename?: 'Recommendation', readonly id: string, readonly title: string, readonly description: string } }> };
 
 export type GetTestResHistoryQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
@@ -21598,9 +21611,12 @@ export const UpdatePurchasesStatusDocument = gql`
 export const GetRecomendationsDocument = gql`
     query GetRecomendations($userId: Int!) {
   GetUserRecommendations(userId: $userId) {
-    id
     title
-    description
+    recommendation {
+      id
+      title
+      description
+    }
   }
 }
     `;
@@ -21684,6 +21700,8 @@ export const GetRecommendationsByQuestionsIdsDocument = gql`
     query GetRecommendationsByQuestionsIds($where: Question_where) {
   Questions(where: $where) {
     docs {
+      questionText
+      id
       recommendation {
         id
       }
@@ -21694,9 +21712,13 @@ export const GetRecommendationsByQuestionsIdsDocument = gql`
 export const GetRecommendationsByQuestionsIds2Document = gql`
     query GetRecommendationsByQuestionsIDS2($questionsIds: [String!]!) {
   GetRecommendationsByQuestionsIDS(answerIds: $questionsIds) {
-    id
-    title
-    description
+    questionId
+    questionText
+    recommendation {
+      id
+      title
+      description
+    }
   }
 }
     `;
