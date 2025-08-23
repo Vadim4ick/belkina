@@ -1,23 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export function useShuffledOnClient<T>(input: readonly T[]): T[] {
+export function useShuffledOnClient<T>(input: readonly T[], depKey: string | number): T[] {
   const [shuffled, setShuffled] = useState<T[]>([])
-  const initialized = useRef(false)
 
   useEffect(() => {
-    if (initialized.current) return
+    if (!input) return
 
-    // снимаем readonly со всего массива
     const copy: T[] = input.map((item) => ({ ...item }))
-
     for (let i = copy.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
       ;[copy[i], copy[j]] = [copy[j], copy[i]]
     }
 
     setShuffled(copy)
-    initialized.current = true
-  }, [input])
+  }, [depKey, input.length]) // зависим только от ключа вопроса и длины массива
 
-  return shuffled.length > 0 ? shuffled : input?.slice()
+  return shuffled.length > 0 ? shuffled : [...input]
 }
