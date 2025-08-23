@@ -40,7 +40,7 @@ export const GetUserTestsResolver = {
       return {
         id: test.id,
         title: test.title,
-        description: test.description,
+        description: JSON.stringify(test.description),
         status: testStatus,
       }
     })

@@ -8,7 +8,6 @@ export const createTests = async (recommendationId: number) => {
     collection: 'tests',
     data: {
       title: 'Общий тест №1',
-      description: 'Тест с разными типами вопросов',
       questions: [allQuestions[0].id, allQuestions[1].id, allQuestions[4].id, allQuestions[5].id],
     },
   })
@@ -17,7 +16,6 @@ export const createTests = async (recommendationId: number) => {
     collection: 'tests',
     data: {
       title: 'Общий тест №2',
-      description: 'Ещё один тест с разными форматами вопросов',
 
       questions: [allQuestions[2].id, allQuestions[3].id, allQuestions[6].id, allQuestions[7].id],
     },
