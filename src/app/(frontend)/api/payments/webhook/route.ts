@@ -6,7 +6,11 @@ import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
 export const runtime = 'nodejs'
 
 export async function POST(req: NextRequest) {
-  const gql = await getServerAuthGqlClient({})
+  const gql = await getServerAuthGqlClient({
+    extraHeaders: {
+      'x-internal-secret': process.env.INTERNAL_WEBHOOK_SECRET!,
+    },
+  })
 
   try {
     const payload = await req.json()
@@ -41,7 +45,7 @@ export async function POST(req: NextRequest) {
       await NodemailerService.sendWebinarAccess(
         yk?.metadata?.userEmail || '',
         webinar.Webinar.title,
-        `${process.env.NEXTAUTH_URL}/webinars/${webinar.Webinar.slug}`,
+        webinar.Webinar.url ?? `${process.env.NEXTAUTH_URL}/webinars/${webinar.Webinar.slug}`,
       )
     }
 
