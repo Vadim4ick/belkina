@@ -21124,6 +21124,13 @@ export type GetUserByIdTestResultQueryVariables = Exact<{
 
 export type GetUserByIdTestResultQuery = { readonly __typename?: 'Query', readonly TestResults: { readonly __typename?: 'TestResults', readonly docs: ReadonlyArray<{ readonly __typename?: 'TestResult', readonly status: TestResult_Status, readonly test: { readonly __typename?: 'Test', readonly id: number } }> } };
 
+export type GetTestsByQuestionIdQueryVariables = Exact<{
+  questionId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetTestsByQuestionIdQuery = { readonly __typename?: 'Query', readonly Tests: { readonly __typename?: 'Tests', readonly docs: ReadonlyArray<{ readonly __typename?: 'Test', readonly id: number }> } };
+
 export type GetNotCorrectedAnswersQueryVariables = Exact<{
   userId: InputMaybe<Scalars['JSON']['input']>;
 }>;
@@ -21666,6 +21673,15 @@ export const GetUserByIdTestResultDocument = gql`
   }
 }
     `;
+export const GetTestsByQuestionIdDocument = gql`
+    query GetTestsByQuestionId($questionId: JSON) {
+  Tests(where: {questions: {equals: $questionId}}) {
+    docs {
+      id
+    }
+  }
+}
+    `;
 export const GetNotCorrectedAnswersDocument = gql`
     query GetNotCorrectedAnswers($userId: JSON) {
   TestResults(
@@ -22001,6 +22017,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetUserByIdTestResult(variables?: GetUserByIdTestResultQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetUserByIdTestResultQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserByIdTestResultQuery>({ document: GetUserByIdTestResultDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetUserByIdTestResult', 'query', variables);
+    },
+    GetTestsByQuestionId(variables?: GetTestsByQuestionIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetTestsByQuestionIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTestsByQuestionIdQuery>({ document: GetTestsByQuestionIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetTestsByQuestionId', 'query', variables);
     },
     GetNotCorrectedAnswers(variables?: GetNotCorrectedAnswersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetNotCorrectedAnswersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNotCorrectedAnswersQuery>({ document: GetNotCorrectedAnswersDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetNotCorrectedAnswers', 'query', variables);

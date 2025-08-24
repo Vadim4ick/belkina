@@ -35,7 +35,7 @@ const WebinarsBySlugPage = ({
         {Boolean(webinar?.price) && (
           <div className="flex flex-col gap-2">
             <Typography tag="p" variant="poppins-md-16">
-              💳 Стоимость участия: <b> {webinar.price} ₽ / занятие</b>
+              💳 Стоимость участия: <b> {webinar.price} ₽ / вебинар</b>
             </Typography>
 
             <Typography tag="p" variant="poppins-md-16">

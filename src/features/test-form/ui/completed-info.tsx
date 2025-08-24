@@ -27,9 +27,10 @@ const CompletedInfo = memo(
     testRes?: GetByIdTestResultQuery['TestResults']['docs'][0]
     publicRes?: string[]
   }) => {
-    const percent = Math.round((totalCorrectAnswers / countQuestions) * 100)
-
     const score = publicFlag ? publicCorrectAnswers : totalCorrectAnswers
+
+    const percent = Math.round((score / countQuestions) * 100)
+
     const resultLevel = getResultLevel(percent)
 
     const questionNoCorrectIds = testRes?.answers

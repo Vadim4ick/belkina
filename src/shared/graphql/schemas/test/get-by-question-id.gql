@@ -1,0 +1,7 @@
+query GetTestsByQuestionId($questionId: JSON) {
+  Tests(where: { questions: { equals: $questionId } }) {
+    docs {
+      id
+    }
+  }
+}
