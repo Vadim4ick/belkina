@@ -204,3 +204,7 @@ body {
 .list-bullet {
   margin: 0 !important;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}

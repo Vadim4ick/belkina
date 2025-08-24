@@ -8,6 +8,10 @@ import { FeedbackFormData } from '../model/type'
 import { feedbackSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { useState } from 'react'
+
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 export function FeedbackForm({ className }: { className?: string }) {
   const {
@@ -17,8 +21,39 @@ export function FeedbackForm({ className }: { className?: string }) {
   } = useForm<FeedbackFormData>({
     resolver: zodResolver(feedbackSchema),
   })
-  const onSubmit = (data: FeedbackFormData) => {
-    console.log(data)
+
+  const [loading, setLoading] = useState(false)
+  const { executeRecaptcha } = useGoogleReCaptcha()
+
+  const onSubmit = async (data: FeedbackFormData) => {
+    setLoading(true)
+
+    if (!executeRecaptcha) {
+      toast.error('Не удалось инициализировать капчу')
+      return
+    }
+
+    try {
+      const token = await executeRecaptcha('feedback_form')
+
+      const res = await fetch('/api/send-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, token }),
+      })
+
+      const result = await res.json()
+
+      if (result.success) {
+        toast.success('Письмо отправлено! Проверьте почту 📩')
+      } else {
+        toast.error('Ошибка: ' + result.message)
+      }
+    } catch {
+      toast.error('Не удалось отправить письмо. Повторите попытку позже.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -42,7 +77,9 @@ export function FeedbackForm({ className }: { className?: string }) {
           error={errors.email?.message}
         />
 
-        <Button size={'xl'}>Отправить</Button>
+        <Button type="submit" disabled={loading} size={'xl'}>
+          Отправить
+        </Button>
       </div>
     </form>
   )
