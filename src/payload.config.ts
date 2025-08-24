@@ -18,6 +18,7 @@ import { TestResults } from './shared/collections/test/test-results'
 import { Admins } from './shared/collections/Admins'
 import { Recomendations } from './shared/collections/Recomendations'
 import { Webinars } from './shared/collections/Webinars'
+import { MailSend } from './shared/collections/MailSend'
 import { WebinarPayments } from './shared/collections/WebinarPayments'
 import Purchases from './shared/collections/Purchases'
 
@@ -70,7 +71,7 @@ export default buildConfig({
     Webinars,
     WebinarPayments,
   ],
-  globals: [HomePage],
+  globals: [HomePage, MailSend],
   editor: lexicalEditor(),
   secret: process.env.NEXTAUTH_SECRET || '',
   typescript: {
