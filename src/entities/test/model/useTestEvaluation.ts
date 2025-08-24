@@ -59,12 +59,32 @@ function evaluateSingleAnswer(
 
       const normalize = (str: string) =>
         str
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '') // ё → е
+          .normalize('NFD') // ё → е
+          .replace(/[\u0300-\u036f]/g, '')
           .toLowerCase()
           .trim()
 
-      return normalize(userAnswer) === normalize(correct)
+      // нормализуем ответ в массив токенов
+      const tokenize = (str: string) =>
+        normalize(str)
+          .replace(/[^a-zа-я0-9]+/gi, ' ') // всё, кроме букв/цифр → пробел
+          .split(/\s+/) // режем по пробелам
+          .filter(Boolean)
+
+      const userTokens = tokenize(userAnswer)
+      const correctTokens = tokenize(correct)
+
+      // вариант 1: если всё слитно (личноеместоимение) → склеиваем
+      const userJoined = userTokens.join('')
+      const correctJoined = correctTokens.join('')
+
+      // считаем правильным, если:
+      // - токены совпали (по порядку), либо
+      // - склеенные строки совпали
+      const isCorrect =
+        JSON.stringify(userTokens) === JSON.stringify(correctTokens) || userJoined === correctJoined
+
+      return isCorrect
     }
 
     case 'matching': {
