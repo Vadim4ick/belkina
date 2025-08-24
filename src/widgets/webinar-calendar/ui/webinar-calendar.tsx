@@ -102,15 +102,6 @@ export const WebinarCalendar = ({
     }
   }, [view, date])
 
-  // *** НОВОЕ: Определяем минимальное и максимальное время для отображения ***
-  const { min, max } = useMemo(() => {
-    const minTime = new Date()
-    minTime.setHours(9, 0, 0) // 9:00 утра
-    const maxTime = new Date()
-    maxTime.setHours(22, 0, 0) // 22:00 вечера
-    return { min: minTime, max: maxTime }
-  }, [])
-
   return (
     <div className="space-y-5 p-1">
       <div className="flex w-full flex-wrap items-center justify-center gap-3">
@@ -145,8 +136,6 @@ export const WebinarCalendar = ({
           date={date}
           onNavigate={setDate}
           eventPropGetter={getEventStyle}
-          min={min}
-          max={max}
         />
       </div>
     </div>
