@@ -29,9 +29,26 @@ const Webinars: CollectionConfig = {
 
   hooks: {
     beforeChange: [
-      async ({ data, originalDoc }) => {
+      async ({ data, originalDoc, req }) => {
+        const payload = req.payload
+
         if (data.title && data.title !== originalDoc?.title) {
-          data.slug = slugify(data.title, { lower: true, strict: true })
+          const base = slugify(data.title, { lower: true, strict: true })
+          let slug = base
+
+          // ищем, есть ли такой slug, но исключаем текущий документ при update
+          const existing = await payload.find({
+            collection: 'webinars',
+            where: { slug: { equals: slug } },
+          })
+
+          const alreadyExists = existing.docs.some((doc) => doc.id !== originalDoc?.id)
+
+          if (alreadyExists) {
+            slug = `${base}-${Date.now()}`
+          }
+
+          data.slug = slug
         }
 
         return data

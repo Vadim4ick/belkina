@@ -1,3 +1,4 @@
+import { gql } from '@/shared/graphql/client'
 import { CacheKeys } from '@/shared/redis/cache-keys'
 import { invalidateTags } from '@/shared/redis/gqlCached'
 import { CollectionConfig } from 'payload'
@@ -17,8 +18,20 @@ export const TestQuestions: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async () => {
+      async ({ doc, operation }) => {
         await invalidateTags(CacheKeys.tags.recommendationsAll())
+
+        const questionId = doc?.id
+
+        if (questionId && operation === 'update') {
+          const tests = await gql.GetTestsByQuestionId({ questionId })
+
+          console.log(tests)
+
+          tests.Tests.docs.forEach(async (test) => {
+            await invalidateTags(CacheKeys.tags.testById(test.id))
+          })
+        }
       },
     ],
 
