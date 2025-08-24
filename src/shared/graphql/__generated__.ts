@@ -22082,7 +22082,7 @@ export const GetTestResHistoryDocument = gql`
     `;
 export const GetAllTestsByTitlesDocument = gql`
     query GetAllTestsByTitles {
-  Tests {
+  Tests(limit: 100) {
     docs {
       id
       title
@@ -22205,7 +22205,7 @@ export const UpdateUserNameDocument = gql`
     `;
 export const GetAllWebinarsDocument = gql`
     query GetAllWebinars {
-  Webinars {
+  Webinars(limit: 100) {
     docs {
       id
       title
