@@ -1,6 +1,7 @@
 import * as migration_20250817_201152_init from './20250817_201152_init';
 import * as migration_20250821_093901 from './20250821_093901';
 import * as migration_20250823_142912_update_tests_description_to_richtext from './20250823_142912_update_tests_description_to_richtext';
+import * as migration_20250824_144541 from './20250824_144541';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20250823_142912_update_tests_description_to_richtext.up,
     down: migration_20250823_142912_update_tests_description_to_richtext.down,
-    name: '20250823_142912_update_tests_description_to_richtext'
+    name: '20250823_142912_update_tests_description_to_richtext',
+  },
+  {
+    up: migration_20250824_144541.up,
+    down: migration_20250824_144541.down,
+    name: '20250824_144541'
   },
 ];
