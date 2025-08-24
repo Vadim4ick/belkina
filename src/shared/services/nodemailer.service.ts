@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer'
 const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET!)
 
 export class NodemailerService {
-  private static transporter = nodemailer.createTransport({
+  static transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT) || 465,
     secure: process.env.NODE_ENV === 'production',
