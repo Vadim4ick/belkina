@@ -46,7 +46,6 @@ const TestsBanner = ({
                 width={300}
                 height={400}
                 className="h-full w-auto object-contain"
-                priority
               />
             </div>
           </div>
@@ -59,13 +58,18 @@ const TestsBanner = ({
               width={400}
               height={510}
               className="h-full w-auto object-contain"
-              priority
             />
           </div>
 
           {/* Фоновый элемент */}
           <div className="mobile:bottom-0 max-mobile:top-[150px] max-tablet:left-[-20px] absolute w-[1500px] opacity-40">
-            <img alt="line" src={'/img/bannerLine.png'} />
+            <Image
+              alt="Фоновая линия" // alt для декоративных изображений лучше оставлять пустым ""
+              src={'/img/bannerLine.png'}
+              fill // Растягиваем на весь родительский div
+              className="object-contain" // Сохраняем пропорции
+              quality={50} // Для фоновых изображений можно снизить качество
+            />
           </div>
         </div>
       </Container>

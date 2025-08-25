@@ -30,3 +30,30 @@ async function Page({
 }
 
 export default Page
+
+export async function generateMetadata({
+  params: paramsPromise,
+}: {
+  params: Promise<{
+    slug?: string
+  }>
+}) {
+  const { slug = '' } = await paramsPromise
+
+  try {
+    const res = await getWebinarsBySlug({ slug })
+    const webinar = res.Webinars.docs?.[0]
+
+    return {
+      title: webinar.title || 'Вебинар | BELKINA.ONLINE',
+      description: webinar.content || `Запишитесь на бесплатный вебинар по теме ${webinar.title}`,
+    }
+  } catch (error) {
+    console.error('Failed to generate metadata:', error)
+    return {
+      title: 'Вебинар | BELKINA.ONLINE',
+      description:
+        'Запишитесь на бесплатный вебинар по подготовке к ЕГЭ по русскому языку на платформе BELKINA.ONLINE',
+    }
+  }
+}

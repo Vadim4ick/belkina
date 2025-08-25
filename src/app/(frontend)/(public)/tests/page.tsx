@@ -1,6 +1,7 @@
 import { getExams, getSubjects } from '@/shared/actions/category.action'
 import { getSettledValue } from '@/shared/lib/utils'
 import { TestsPage } from '@/views/tests'
+import { Metadata } from 'next'
 
 export const revalidate = 180
 
@@ -16,4 +17,10 @@ export default async function Page() {
   }
 
   return <TestsPage exams={examsVal?.Exams.docs} subjects={subjectsVal!.Subjects.docs} />
+}
+
+export const metadata: Metadata = {
+  title: 'Подготовка к ЕГЭ по русскому языку | BELKINA.ONLINE | Тесты',
+  description:
+    'Эффективно готовьтесь к ЕГЭ по русскому с персональной программой на платформе BELKINA.ONLINE',
 }
