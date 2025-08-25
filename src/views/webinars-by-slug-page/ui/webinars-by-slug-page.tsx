@@ -1,9 +1,14 @@
+'use client'
+
 import { GetWebinarsBySlugQuery } from '@/shared/graphql/__generated__'
 import { Container } from '@/shared/ui/container'
 import RichText from '@/shared/ui/rich-text'
 import { Typography } from '@/shared/ui/typography'
 import { PaymentBtn } from './payment-btn'
 import { UrlWebinar } from './url-webinar'
+import { Button } from '@/shared/ui/button'
+import { ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const WebinarsBySlugPage = ({
   webinar,
@@ -12,6 +17,7 @@ const WebinarsBySlugPage = ({
   webinar: GetWebinarsBySlugQuery['Webinars']['docs'][0]
   count: number
 }) => {
+  const router = useRouter()
   const nowUtc = new Date()
   const nowMsk = new Date(nowUtc.getTime() + 3 * 60 * 60 * 1000)
 
@@ -21,6 +27,17 @@ const WebinarsBySlugPage = ({
 
   return (
     <section className="mt-12">
+      <Container className="max-mobile:pb-6 gap-6 pb-12">
+        <Button
+          variant="outline"
+          onClick={() => router.back()} // Используем router.back() для возврата
+          className="mb-6 flex items-center gap-2"
+        >
+          <ArrowLeft size={16} />
+          <span>Назад</span>
+        </Button>
+      </Container>
+
       <Container className="max-mobile:pb-6 flex flex-col gap-6 pb-12">
         <Typography tag="h1" variant="visuelt-bold-48">
           Вебинар - {webinar.title}

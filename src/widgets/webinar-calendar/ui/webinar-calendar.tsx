@@ -1,7 +1,7 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
-import { Calendar, Messages, momentLocalizer } from 'react-big-calendar'
+import { PropsWithChildren, useCallback, useMemo, useState } from 'react'
+import { Calendar, EventWrapperProps, Messages, momentLocalizer } from 'react-big-calendar'
 import { Event as RBCEvent, Views } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment/locale/ru'
@@ -16,13 +16,15 @@ import { Button } from '@/shared/ui/button'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { Badge } from '@/shared/ui/badge'
 import { getEventStyle } from '../model/utils'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip'
+import { WebinarInfoPopUp } from './popover-info'
 
 moment.locale('ru')
 const localizer = momentLocalizer(moment)
 
 type Webinar = GetAllWebinarsQuery['Webinars']['docs'][number]
 
-interface CalendarEvent extends RBCEvent {
+export interface CalendarEvent extends RBCEvent {
   slug: string
   resource: Webinar
 }
@@ -36,6 +38,7 @@ export const WebinarCalendar = ({
 }) => {
   const [view, setView] = useState<(typeof Views)[Keys]>(Views.MONTH)
   const [date, setDate] = useState<Date>(moment().toDate())
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
 
   const router = useRouter()
 
@@ -53,7 +56,8 @@ export const WebinarCalendar = ({
   // Обработчик клика по событию
   const handleSelectEvent = useCallback(
     (event: CalendarEvent) => {
-      router.push(getRouteWebinarsBySlug({ slug: event.slug }))
+      setSelectedEvent(event)
+      // router.push(getRouteWebinarsBySlug({ slug: event.slug }))
     },
     [router],
   )
@@ -102,6 +106,45 @@ export const WebinarCalendar = ({
     }
   }, [view, date])
 
+  const MyEventWrapper = ({
+    event,
+    children,
+  }: PropsWithChildren<EventWrapperProps<CalendarEvent>>) => {
+    if (!event.start || !event.end) {
+      return <>{children}</> // Просто возвращаем дочерний элемент без подсказки
+    }
+
+    return (
+      <div
+        ref={(node) => {
+          const eventEl = node?.querySelector('.rbc-event')
+        }}
+      >
+        <Tooltip>
+          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipContent className="max-w-72 space-y-1">
+            <p className="mb-3 line-clamp-2 text-sm text-[#E87837]">{event.title}</p>
+            <p>
+              <span>Начало: </span>
+              {new Date(event.start).toLocaleString('ru-RU')}
+            </p>
+            <p>
+              <span>Окончание: </span>
+              {new Date(event.end).toLocaleString('ru-RU')}
+            </p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
+    )
+  }
+
+  const components = useMemo(
+    () => ({
+      eventWrapper: MyEventWrapper,
+    }),
+    [],
+  )
+
   return (
     <div className="space-y-5 p-1">
       <div className="flex w-full flex-wrap items-center justify-center gap-3">
@@ -136,8 +179,19 @@ export const WebinarCalendar = ({
           date={date}
           onNavigate={setDate}
           eventPropGetter={getEventStyle}
+          tooltipAccessor={() => ''}
+          components={components}
         />
       </div>
+      <WebinarInfoPopUp
+        isOpen={!!selectedEvent}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            setSelectedEvent(null)
+          }
+        }}
+        event={selectedEvent}
+      />
     </div>
   )
 }
