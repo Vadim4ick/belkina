@@ -28,13 +28,15 @@ export function MediaBlock({
   const mimeType = media?.mimeType
   const isVideoMedia = isVideo(mimeType) || (!mimeType && isLikelyVideoByName(url || ''))
 
+  const posterUrl = '/img/about.webp' // TODO: можно добавить в CMS поле с постером для видео
+
   // Фоллбек: статика-заглушка, но с тем же аспектом, чтобы не дёргало вёрстку
   if (!url) {
     return (
       <div
         className={`relative ${aspect} w-full overflow-hidden rounded-[16px] bg-[#E9ECF1] ${className}`}
       >
-        <Image src="/img/about.png" alt="about" fill unoptimized className="object-cover" />
+        <Image src="/img/about.webp" alt="about" fill unoptimized className="object-cover" />
       </div>
     )
   }
@@ -67,7 +69,8 @@ export function MediaBlock({
           className="absolute inset-0 block h-full w-full object-cover"
           playsInline
           controls={false}
-          preload="metadata"
+          preload="none"
+          poster={posterUrl}
         />
 
         {/* Кастомная кнопка Play по центру — показываем, пока не идёт воспроизведение */}
