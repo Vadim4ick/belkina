@@ -1,8 +1,7 @@
 query GetAllWebinars {
-  Webinars {
+  Webinars(limit: 100) {
     docs {
       id
-
       title
       type
       startsAt

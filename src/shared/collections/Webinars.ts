@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -184,6 +185,12 @@ const Webinars: CollectionConfig = {
 
             // бесплатные вебы — тоже можно
             if (siblingData?.type === 'free') return value
+
+            const secret = req.headers?.get('x-internal-secret')
+
+            if (secret && secret === process.env.INTERNAL_WEBHOOK_SECRET) {
+              return value
+            }
 
             const res = await getUserIdByToken({ req })
 
