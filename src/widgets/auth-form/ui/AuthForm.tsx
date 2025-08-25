@@ -87,7 +87,10 @@ export function AuthForm({
               <label className="flex cursor-pointer items-center gap-2">
                 <Checkbox checked={agreed} onCheckedChange={onToggleAgree} />
                 <Typography tag="p" variant="poppins-md-16">
-                  Даю согласие на обработку персональных данных
+                  Даю согласие на{' '}
+                  <a className="text-blue" href="/terms_belkina_online.docx" download>
+                    обработку персональных данных
+                  </a>
                 </Typography>
               </label>
             )}
