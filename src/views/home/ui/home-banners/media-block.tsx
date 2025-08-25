@@ -67,6 +67,7 @@ export function MediaBlock({
           className="absolute inset-0 block h-full w-full object-cover"
           playsInline
           controls={false}
+          preload="metadata"
         />
 
         {/* Кастомная кнопка Play по центру — показываем, пока не идёт воспроизведение */}
