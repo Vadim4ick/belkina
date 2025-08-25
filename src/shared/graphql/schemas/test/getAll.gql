@@ -1,5 +1,5 @@
 query GetAllTestsByTitles {
-  Tests {
+  Tests(limit: 100) {
     docs {
       id
       title

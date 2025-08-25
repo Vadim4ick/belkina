@@ -114,9 +114,11 @@ export interface Config {
   };
   globals: {
     homePage: HomePage;
+    'mail-send': MailSend;
   };
   globalsSelect: {
     homePage: HomePageSelect<false> | HomePageSelect<true>;
+    'mail-send': MailSendSelect<false> | MailSendSelect<true>;
   };
   locale: 'en' | 'ru';
   user: Admin & {
@@ -1111,6 +1113,31 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mail-send".
+ */
+export interface MailSend {
+  id: number;
+  subject: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homePage_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
@@ -1148,6 +1175,17 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         subtitle?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mail-send_select".
+ */
+export interface MailSendSelect<T extends boolean = true> {
+  subject?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

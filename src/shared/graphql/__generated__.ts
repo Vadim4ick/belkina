@@ -29,6 +29,7 @@ export type Access = {
   readonly exams: Maybe<ExamsAccess>;
   readonly faqs: Maybe<FaqsAccess>;
   readonly homePage: Maybe<HomePageAccess>;
+  readonly mail_send: Maybe<Mail_SendAccess>;
   readonly media: Maybe<MediaAccess>;
   readonly payload_locked_documents: Maybe<Payload_Locked_DocumentsAccess>;
   readonly payload_preferences: Maybe<Payload_PreferencesAccess>;
@@ -3747,6 +3748,283 @@ export type HomePage_Meta = {
 export type LocaleInputType =
   | 'en'
   | 'ru';
+
+export type MailSend = {
+  readonly __typename?: 'MailSend';
+  readonly content: Scalars['JSON']['output'];
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly subject: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type MailSendContentArgs = {
+  depth: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type MailSendDocAccessFields = {
+  readonly __typename?: 'MailSendDocAccessFields';
+  readonly content: Maybe<MailSendDocAccessFields_Content>;
+  readonly createdAt: Maybe<MailSendDocAccessFields_CreatedAt>;
+  readonly subject: Maybe<MailSendDocAccessFields_Subject>;
+  readonly updatedAt: Maybe<MailSendDocAccessFields_UpdatedAt>;
+};
+
+export type MailSendDocAccessFields_Content = {
+  readonly __typename?: 'MailSendDocAccessFields_content';
+  readonly create: Maybe<MailSendDocAccessFields_Content_Create>;
+  readonly delete: Maybe<MailSendDocAccessFields_Content_Delete>;
+  readonly read: Maybe<MailSendDocAccessFields_Content_Read>;
+  readonly update: Maybe<MailSendDocAccessFields_Content_Update>;
+};
+
+export type MailSendDocAccessFields_Content_Create = {
+  readonly __typename?: 'MailSendDocAccessFields_content_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Content_Delete = {
+  readonly __typename?: 'MailSendDocAccessFields_content_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Content_Read = {
+  readonly __typename?: 'MailSendDocAccessFields_content_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Content_Update = {
+  readonly __typename?: 'MailSendDocAccessFields_content_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_CreatedAt = {
+  readonly __typename?: 'MailSendDocAccessFields_createdAt';
+  readonly create: Maybe<MailSendDocAccessFields_CreatedAt_Create>;
+  readonly delete: Maybe<MailSendDocAccessFields_CreatedAt_Delete>;
+  readonly read: Maybe<MailSendDocAccessFields_CreatedAt_Read>;
+  readonly update: Maybe<MailSendDocAccessFields_CreatedAt_Update>;
+};
+
+export type MailSendDocAccessFields_CreatedAt_Create = {
+  readonly __typename?: 'MailSendDocAccessFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_CreatedAt_Delete = {
+  readonly __typename?: 'MailSendDocAccessFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_CreatedAt_Read = {
+  readonly __typename?: 'MailSendDocAccessFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_CreatedAt_Update = {
+  readonly __typename?: 'MailSendDocAccessFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Subject = {
+  readonly __typename?: 'MailSendDocAccessFields_subject';
+  readonly create: Maybe<MailSendDocAccessFields_Subject_Create>;
+  readonly delete: Maybe<MailSendDocAccessFields_Subject_Delete>;
+  readonly read: Maybe<MailSendDocAccessFields_Subject_Read>;
+  readonly update: Maybe<MailSendDocAccessFields_Subject_Update>;
+};
+
+export type MailSendDocAccessFields_Subject_Create = {
+  readonly __typename?: 'MailSendDocAccessFields_subject_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Subject_Delete = {
+  readonly __typename?: 'MailSendDocAccessFields_subject_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Subject_Read = {
+  readonly __typename?: 'MailSendDocAccessFields_subject_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_Subject_Update = {
+  readonly __typename?: 'MailSendDocAccessFields_subject_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_UpdatedAt = {
+  readonly __typename?: 'MailSendDocAccessFields_updatedAt';
+  readonly create: Maybe<MailSendDocAccessFields_UpdatedAt_Create>;
+  readonly delete: Maybe<MailSendDocAccessFields_UpdatedAt_Delete>;
+  readonly read: Maybe<MailSendDocAccessFields_UpdatedAt_Read>;
+  readonly update: Maybe<MailSendDocAccessFields_UpdatedAt_Update>;
+};
+
+export type MailSendDocAccessFields_UpdatedAt_Create = {
+  readonly __typename?: 'MailSendDocAccessFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_UpdatedAt_Delete = {
+  readonly __typename?: 'MailSendDocAccessFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_UpdatedAt_Read = {
+  readonly __typename?: 'MailSendDocAccessFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendDocAccessFields_UpdatedAt_Update = {
+  readonly __typename?: 'MailSendDocAccessFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields = {
+  readonly __typename?: 'MailSendFields';
+  readonly content: Maybe<MailSendFields_Content>;
+  readonly createdAt: Maybe<MailSendFields_CreatedAt>;
+  readonly subject: Maybe<MailSendFields_Subject>;
+  readonly updatedAt: Maybe<MailSendFields_UpdatedAt>;
+};
+
+export type MailSendFields_Content = {
+  readonly __typename?: 'MailSendFields_content';
+  readonly create: Maybe<MailSendFields_Content_Create>;
+  readonly delete: Maybe<MailSendFields_Content_Delete>;
+  readonly read: Maybe<MailSendFields_Content_Read>;
+  readonly update: Maybe<MailSendFields_Content_Update>;
+};
+
+export type MailSendFields_Content_Create = {
+  readonly __typename?: 'MailSendFields_content_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Content_Delete = {
+  readonly __typename?: 'MailSendFields_content_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Content_Read = {
+  readonly __typename?: 'MailSendFields_content_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Content_Update = {
+  readonly __typename?: 'MailSendFields_content_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_CreatedAt = {
+  readonly __typename?: 'MailSendFields_createdAt';
+  readonly create: Maybe<MailSendFields_CreatedAt_Create>;
+  readonly delete: Maybe<MailSendFields_CreatedAt_Delete>;
+  readonly read: Maybe<MailSendFields_CreatedAt_Read>;
+  readonly update: Maybe<MailSendFields_CreatedAt_Update>;
+};
+
+export type MailSendFields_CreatedAt_Create = {
+  readonly __typename?: 'MailSendFields_createdAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_CreatedAt_Delete = {
+  readonly __typename?: 'MailSendFields_createdAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_CreatedAt_Read = {
+  readonly __typename?: 'MailSendFields_createdAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_CreatedAt_Update = {
+  readonly __typename?: 'MailSendFields_createdAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Subject = {
+  readonly __typename?: 'MailSendFields_subject';
+  readonly create: Maybe<MailSendFields_Subject_Create>;
+  readonly delete: Maybe<MailSendFields_Subject_Delete>;
+  readonly read: Maybe<MailSendFields_Subject_Read>;
+  readonly update: Maybe<MailSendFields_Subject_Update>;
+};
+
+export type MailSendFields_Subject_Create = {
+  readonly __typename?: 'MailSendFields_subject_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Subject_Delete = {
+  readonly __typename?: 'MailSendFields_subject_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Subject_Read = {
+  readonly __typename?: 'MailSendFields_subject_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_Subject_Update = {
+  readonly __typename?: 'MailSendFields_subject_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_UpdatedAt = {
+  readonly __typename?: 'MailSendFields_updatedAt';
+  readonly create: Maybe<MailSendFields_UpdatedAt_Create>;
+  readonly delete: Maybe<MailSendFields_UpdatedAt_Delete>;
+  readonly read: Maybe<MailSendFields_UpdatedAt_Read>;
+  readonly update: Maybe<MailSendFields_UpdatedAt_Update>;
+};
+
+export type MailSendFields_UpdatedAt_Create = {
+  readonly __typename?: 'MailSendFields_updatedAt_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_UpdatedAt_Delete = {
+  readonly __typename?: 'MailSendFields_updatedAt_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_UpdatedAt_Read = {
+  readonly __typename?: 'MailSendFields_updatedAt_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendFields_UpdatedAt_Update = {
+  readonly __typename?: 'MailSendFields_updatedAt_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type MailSendReadAccess = {
+  readonly __typename?: 'MailSendReadAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type MailSendReadDocAccess = {
+  readonly __typename?: 'MailSendReadDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type MailSendUpdateAccess = {
+  readonly __typename?: 'MailSendUpdateAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
+
+export type MailSendUpdateDocAccess = {
+  readonly __typename?: 'MailSendUpdateDocAccess';
+  readonly permission: Scalars['Boolean']['output'];
+  readonly where: Maybe<Scalars['JSONObject']['output']>;
+};
 
 export type Media = {
   readonly __typename?: 'Media';
@@ -8478,6 +8756,7 @@ export type Mutation = {
   readonly updateExam: Maybe<Exam>;
   readonly updateFaq: Maybe<Faq>;
   readonly updateHomePage: Maybe<HomePage>;
+  readonly updateMailSend: Maybe<MailSend>;
   readonly updateMedia: Maybe<Media>;
   readonly updatePayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly updatePayloadPreference: Maybe<PayloadPreference>;
@@ -8882,6 +9161,13 @@ export type MutationUpdateFaqArgs = {
 
 export type MutationUpdateHomePageArgs = {
   data: MutationHomePageInput;
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type MutationUpdateMailSendArgs = {
+  data: MutationMailSendInput;
   draft: InputMaybe<Scalars['Boolean']['input']>;
   locale: InputMaybe<LocaleInputType>;
 };
@@ -11990,6 +12276,7 @@ export type Query = {
   readonly GetUserRecommendations: Maybe<ReadonlyArray<Maybe<QuestionWithRecommendation_User>>>;
   readonly GetUserTests: Maybe<PaginatedTestsWithStatus>;
   readonly HomePage: Maybe<HomePage>;
+  readonly MailSend: Maybe<MailSend>;
   readonly Media: Maybe<Media>;
   readonly PayloadLockedDocument: Maybe<PayloadLockedDocument>;
   readonly PayloadLockedDocuments: Maybe<PayloadLockedDocuments>;
@@ -12041,6 +12328,7 @@ export type Query = {
   readonly docAccessExam: Maybe<ExamsDocAccess>;
   readonly docAccessFaq: Maybe<FaqsDocAccess>;
   readonly docAccessHomePage: Maybe<HomePageDocAccess>;
+  readonly docAccessMailSend: Maybe<Mail_SendDocAccess>;
   readonly docAccessMedia: Maybe<MediaDocAccess>;
   readonly docAccessPayloadLockedDocument: Maybe<Payload_Locked_DocumentsDocAccess>;
   readonly docAccessPayloadPreference: Maybe<Payload_PreferencesDocAccess>;
@@ -12163,6 +12451,13 @@ export type QueryGetUserTestsArgs = {
 
 
 export type QueryHomePageArgs = {
+  draft: InputMaybe<Scalars['Boolean']['input']>;
+  fallbackLocale: InputMaybe<FallbackLocaleInputType>;
+  locale: InputMaybe<LocaleInputType>;
+};
+
+
+export type QueryMailSendArgs = {
   draft: InputMaybe<Scalars['Boolean']['input']>;
   fallbackLocale: InputMaybe<FallbackLocaleInputType>;
   locale: InputMaybe<LocaleInputType>;
@@ -19825,6 +20120,20 @@ export type HomePageDocAccess = {
   readonly update: Maybe<HomePageUpdateDocAccess>;
 };
 
+export type Mail_SendAccess = {
+  readonly __typename?: 'mail_sendAccess';
+  readonly fields: Maybe<MailSendFields>;
+  readonly read: Maybe<MailSendReadAccess>;
+  readonly update: Maybe<MailSendUpdateAccess>;
+};
+
+export type Mail_SendDocAccess = {
+  readonly __typename?: 'mail_sendDocAccess';
+  readonly fields: Maybe<MailSendDocAccessFields>;
+  readonly read: Maybe<MailSendReadDocAccess>;
+  readonly update: Maybe<MailSendUpdateDocAccess>;
+};
+
 export type MediaAccess = {
   readonly __typename?: 'mediaAccess';
   readonly create: Maybe<MediaCreateAccess>;
@@ -19970,6 +20279,13 @@ export type MutationHomePage_MainOfferBanner_OptionsInput = {
 export type MutationHomePage_MetaInput = {
   readonly seo_description: InputMaybe<Scalars['String']['input']>;
   readonly seo_title: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MutationMailSendInput = {
+  readonly content: Scalars['JSON']['input'];
+  readonly createdAt: InputMaybe<Scalars['String']['input']>;
+  readonly subject: Scalars['String']['input'];
+  readonly updatedAt: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationMediaInput = {
@@ -21046,6 +21362,11 @@ export type TestFragmentFragment = { readonly __typename?: 'Test', readonly id: 
 
 export type WebinarFragmentFragment = { readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly maxParticipants: number, readonly startsAt: any, readonly url: string, readonly slug: string, readonly price: number, readonly updatedAt: any, readonly createdAt: any, readonly endAt: any };
 
+export type GetMailSendQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMailSendQuery = { readonly __typename?: 'Query', readonly MailSend: { readonly __typename?: 'MailSend', readonly subject: string, readonly content: any } };
+
 export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -21505,6 +21826,14 @@ export const GetFaGsDocument = gql`
   }
 }
     `;
+export const GetMailSendDocument = gql`
+    query GetMailSend {
+  MailSend {
+    subject
+    content
+  }
+}
+    `;
 export const GetHomePageDocument = gql`
     query GetHomePage {
   HomePage {
@@ -21753,7 +22082,7 @@ export const GetTestResHistoryDocument = gql`
     `;
 export const GetAllTestsByTitlesDocument = gql`
     query GetAllTestsByTitles {
-  Tests {
+  Tests(limit: 100) {
     docs {
       id
       title
@@ -21876,7 +22205,7 @@ export const UpdateUserNameDocument = gql`
     `;
 export const GetAllWebinarsDocument = gql`
     query GetAllWebinars {
-  Webinars {
+  Webinars(limit: 100) {
     docs {
       id
       title
@@ -21984,6 +22313,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetFAGs(variables?: GetFaGsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetFaGsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetFaGsQuery>({ document: GetFaGsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetFAGs', 'query', variables);
+    },
+    GetMailSend(variables?: GetMailSendQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetMailSendQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetMailSendQuery>({ document: GetMailSendDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetMailSend', 'query', variables);
     },
     GetHomePage(variables?: GetHomePageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetHomePageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHomePageQuery>({ document: GetHomePageDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetHomePage', 'query', variables);

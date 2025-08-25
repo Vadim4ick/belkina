@@ -1,0 +1,6 @@
+query GetMailSend {
+  MailSend {
+    subject
+    content
+  }
+}
