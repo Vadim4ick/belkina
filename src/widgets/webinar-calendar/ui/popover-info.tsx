@@ -54,6 +54,8 @@ export function WebinarInfoPopUp({ event, isOpen, onOpenChange }: WebinarInfoPop
         <DialogHeader>
           <DialogTitle className="text-lg leading-tight">{event.title}</DialogTitle>
         </DialogHeader>
+        <DialogDescription />
+
         <div className="grid gap-4 py-4">
           <div className="flex flex-col space-y-2 text-sm">
             <p>
