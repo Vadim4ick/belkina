@@ -55,6 +55,26 @@ export async function POST(req: NextRequest) {
         webinarSlug,
       },
       expires_at: expiresAt,
+
+      // Чек
+      receipt: {
+        customer: {
+          email: userEmail, // или phone, если нет email
+        },
+        items: [
+          {
+            description: `Вебинар #${webinarId}`,
+            quantity: '1.00',
+            amount: {
+              value: price.toFixed(2), // строкой, с двумя знаками
+              currency: 'RUB',
+            },
+            vat_code: 6, // НДС 20%. Если ИП на УСН — ставь 6 (без НДС)
+            payment_mode: 'full_payment',
+            payment_subject: 'service', // услуга
+          },
+        ],
+      },
     })
 
     // 3) сохраним/обновим запись об оплате у себя
