@@ -22205,7 +22205,10 @@ export const UpdateUserNameDocument = gql`
     `;
 export const GetAllWebinarsDocument = gql`
     query GetAllWebinars {
-  Webinars(limit: 100) {
+  Webinars(
+    limit: 100
+    where: {endAt: {greater_than: "${new Date().toISOString()}"}}
+  ) {
     docs {
       id
       title
