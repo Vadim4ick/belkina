@@ -280,7 +280,6 @@ export interface Tariff {
 export interface Faq {
   id: number;
   question: string;
-  answer: string;
   description?: {
     root: {
       type: string;
@@ -847,7 +846,6 @@ export interface TariffsSelect<T extends boolean = true> {
  */
 export interface FaqsSelect<T extends boolean = true> {
   question?: T;
-  answer?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;

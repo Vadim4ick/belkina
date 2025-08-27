@@ -20,12 +20,6 @@ export const FAQs: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'answer',
-      label: 'Ответ',
-      type: 'textarea',
-      required: true,
-    },
 
     {
       name: 'description',

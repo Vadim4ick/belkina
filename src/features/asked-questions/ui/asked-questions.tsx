@@ -1,9 +1,9 @@
 import { cn } from '@/shared/lib/utils'
 import { Container } from '@/shared/ui/container'
-import { Typography } from '@/shared/ui/typography'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/shared/ui/accordion'
 import { GetFaGsQuery } from '@/shared/graphql/__generated__'
+import RichText from '@/shared/ui/rich-text'
 
 const AskedQuestions = ({
   className,
@@ -19,7 +19,13 @@ const AskedQuestions = ({
           {faqs.map((faq) => (
             <AccordionItem key={faq.id} value={`item-${faq.id}`}>
               <AccordionTrigger>{faq.question}</AccordionTrigger>
-              <AccordionContent>{faq.answer}</AccordionContent>
+              <AccordionContent>
+                <RichText
+                  className="m-0 flex flex-col"
+                  data={faq.description}
+                  enableGutter={false}
+                />
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

@@ -3,7 +3,7 @@ query GetFAGs {
     docs {
       id
       question
-      answer
+      description
     }
   }
 }
