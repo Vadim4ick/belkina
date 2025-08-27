@@ -1,5 +1,5 @@
-query GetAllWebinars {
-  Webinars(limit: 100, where: { endAt: { greater_than: "${new Date().toISOString()}" } }) {
+query GetAllWebinars($now: DateTime!) {
+  Webinars(limit: 100, where: { endAt: { greater_than: $now } }) {
     docs {
       id
       title

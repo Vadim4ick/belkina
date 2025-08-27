@@ -9,6 +9,8 @@ import { UrlWebinar } from './url-webinar'
 import { Button } from '@/shared/ui/button'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { getMoscowNow } from '@/shared/lib/utils'
+import { formatInTimeZone } from 'date-fns-tz'
 
 const WebinarsBySlugPage = ({
   webinar,
@@ -18,30 +20,36 @@ const WebinarsBySlugPage = ({
   count: number
 }) => {
   const router = useRouter()
-  const nowUtc = new Date()
-  const nowMsk = new Date(nowUtc.getTime() + 3 * 60 * 60 * 1000)
+
+  const nowMsk = getMoscowNow()
 
   const webinarEnded = webinar.endAt
     ? new Date(webinar.endAt) < nowMsk
     : new Date(webinar.startsAt) < nowMsk
 
+  const startMsk = formatInTimeZone(new Date(webinar.startsAt), 'Europe/Moscow', 'dd.MM.yyyy HH:mm')
+
   return (
     <section className="mt-12">
-      <Container className="max-mobile:pb-6 gap-6 pb-12">
+      <Container className="max-mobile:pb-6 flex flex-col gap-6 pb-12">
         <Button
           variant="outline"
           onClick={() => router.back()} // Используем router.back() для возврата
-          className="mb-6 flex items-center gap-2"
+          className="flex w-fit items-center gap-2"
         >
           <ArrowLeft size={16} />
           <span>Назад</span>
         </Button>
-      </Container>
 
-      <Container className="max-mobile:pb-6 flex flex-col gap-6 pb-12">
-        <Typography tag="h1" variant="visuelt-bold-48">
-          Вебинар - {webinar.title}
-        </Typography>
+        <div className="flex flex-col gap-2">
+          <Typography tag="h1" variant="visuelt-bold-48">
+            Вебинар - {webinar.title}
+          </Typography>
+
+          <Typography tag="p" variant="poppins-md-16">
+            Начало вебинара: <b>{startMsk}</b> (по МСК)
+          </Typography>
+        </div>
 
         <RichText
           className="mx-[initial] flex flex-col"

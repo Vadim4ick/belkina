@@ -39,6 +39,7 @@ export class NodemailerService {
     email: string,
     webinarTitle: string,
     webinarLink: string,
+    webinarStartsAt: string,
   ): Promise<void> {
     await this.transporter.sendMail({
       from: `"Поддержка BELKINA.ONLINE" <${process.env.SMTP_USER}>`,
@@ -48,6 +49,7 @@ export class NodemailerService {
         <h2>Оплата прошла успешно!</h2>
         <p>Поздравляем 🎉 Ваша оплата успешно прошла.</p>
         <p>Теперь у вас открыт доступ к вебинару <b>"${webinarTitle}"</b>.</p>
+        <p><b>Начало вебинара:</b> ${webinarStartsAt} (по МСК)</p>
         <p>Ссылка на трансляцию: <a href="${webinarLink}" target="_blank">${webinarLink}</a> (Так-же ссылка доступна на странице вебинара) </p>
         <br/>
         <p>Если у вас возникнут вопросы — смело пишите в нашу поддержку в Telegram - <a href="https://t.me/Belkina_online2025">@Belkina_online2025</a>.</p>
