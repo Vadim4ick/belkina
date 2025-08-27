@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { JwtService } from '../services/jwt-service'
 import { PayloadRequest } from 'payload'
+import { toZonedTime } from 'date-fns-tz'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -77,4 +78,10 @@ export function getResultLevel(percent: number): string {
   } else {
     return 'Похоже, стоит начать с основ'
   }
+}
+
+export function getMoscowNow() {
+  const now = new Date() // это UTC внутри JS
+  const moscowDate = toZonedTime(now, 'Europe/Moscow')
+  return moscowDate
 }

@@ -21578,7 +21578,9 @@ export type UpdateUserNameMutationVariables = Exact<{
 
 export type UpdateUserNameMutation = { readonly __typename?: 'Mutation', readonly updateUser: { readonly __typename?: 'User', readonly id: number, readonly email: any } };
 
-export type GetAllWebinarsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllWebinarsQueryVariables = Exact<{
+  now: Scalars['DateTime']['input'];
+}>;
 
 
 export type GetAllWebinarsQuery = { readonly __typename?: 'Query', readonly Webinars: { readonly __typename?: 'Webinars', readonly docs: ReadonlyArray<{ readonly __typename?: 'Webinar', readonly id: number, readonly title: string, readonly type: Webinar_Type, readonly startsAt: any, readonly endAt: any, readonly slug: string }> } };
@@ -21595,7 +21597,7 @@ export type GetWebinarByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetWebinarByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number, readonly title: string, readonly url: string, readonly slug: string } };
+export type GetWebinarByIdQuery = { readonly __typename?: 'Query', readonly Webinar: { readonly __typename?: 'Webinar', readonly price: number, readonly title: string, readonly url: string, readonly slug: string, readonly startsAt: any } };
 
 export type GetWebinarsBySlugQueryVariables = Exact<{
   slug: InputMaybe<Scalars['String']['input']>;
@@ -22204,11 +22206,8 @@ export const UpdateUserNameDocument = gql`
 }
     `;
 export const GetAllWebinarsDocument = gql`
-    query GetAllWebinars {
-  Webinars(
-    limit: 100
-    where: {endAt: {greater_than: "${new Date().toISOString()}"}}
-  ) {
+    query GetAllWebinars($now: DateTime!) {
+  Webinars(limit: 100, where: {endAt: {greater_than: $now}}) {
     docs {
       id
       title
@@ -22234,6 +22233,7 @@ export const GetWebinarByIdDocument = gql`
     title
     url
     slug
+    startsAt
   }
 }
     `;
@@ -22404,7 +22404,7 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     UpdateUserName(variables: UpdateUserNameMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<UpdateUserNameMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateUserNameMutation>({ document: UpdateUserNameDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'UpdateUserName', 'mutation', variables);
     },
-    GetAllWebinars(variables?: GetAllWebinarsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllWebinarsQuery> {
+    GetAllWebinars(variables: GetAllWebinarsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetAllWebinarsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllWebinarsQuery>({ document: GetAllWebinarsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetAllWebinars', 'query', variables);
     },
     GetWebinarPriceById(variables: GetWebinarPriceByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarPriceByIdQuery> {

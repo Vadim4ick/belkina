@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { markErrorPaid, markPaid, upsertWebinarPayment, ykGetPayment } from '../_lib'
 import { NodemailerService } from '@/shared/services/nodemailer.service'
 import { getServerAuthGqlClient } from '@/shared/actions/getServerAuthGqlClient'
+import { formatInTimeZone } from 'date-fns-tz'
 
 export const runtime = 'nodejs'
 
@@ -42,10 +43,17 @@ export async function POST(req: NextRequest) {
         id: Number(yk?.metadata?.webinarId),
       })
 
+      const startMsk = formatInTimeZone(
+        new Date(webinar.Webinar.startsAt),
+        'Europe/Moscow',
+        'dd.MM.yyyy HH:mm',
+      )
+
       await NodemailerService.sendWebinarAccess(
         yk?.metadata?.userEmail || '',
         webinar.Webinar.title,
         webinar.Webinar.url ?? `${process.env.NEXTAUTH_URL}/webinars/${webinar.Webinar.slug}`,
+        startMsk,
       )
     }
 
