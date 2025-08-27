@@ -1,5 +1,6 @@
 'use server'
 
+import { getMoscowNow } from '../lib/utils'
 import { CacheKeys } from '../redis/cache-keys'
 import { withRedisCache } from '../redis/gqlCached'
 import { getServerAuthGqlClient } from './getServerAuthGqlClient'
@@ -7,7 +8,11 @@ import { getServerAuthGqlClient } from './getServerAuthGqlClient'
 async function fetchWebinars() {
   const gql = await getServerAuthGqlClient({})
 
-  return await gql.GetAllWebinars()
+  const moscowNow = getMoscowNow().toISOString()
+
+  return await gql.GetAllWebinars({
+    now: moscowNow,
+  })
 }
 export const getWebinars = withRedisCache(fetchWebinars, {
   ttl: 180,

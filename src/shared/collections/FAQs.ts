@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { invalidateTags } from '../redis/gqlCached'
 import { CacheKeys } from '../redis/cache-keys'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
@@ -24,6 +25,16 @@ export const FAQs: CollectionConfig = {
       label: 'Ответ',
       type: 'textarea',
       required: true,
+    },
+
+    {
+      name: 'description',
+      type: 'richText',
+      label: 'Описание',
+      required: false,
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => [...rootFeatures],
+      }),
     },
   ],
   hooks: {
