@@ -18,7 +18,7 @@ async function Page() {
 export default Page
 
 export const metadata: Metadata = {
-  title: 'Рассписание вебинаров | BELKINA.ONLINE',
+  title: 'Расписание вебинаров | BELKINA.ONLINE',
   description:
     'Расписание бесплатных вебинаров по подготовке к ЕГЭ по русскому языку на платформе BELKINA.ONLINE',
 }
