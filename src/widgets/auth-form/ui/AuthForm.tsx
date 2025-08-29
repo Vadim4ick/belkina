@@ -88,7 +88,7 @@ export function AuthForm({
                 <Checkbox checked={agreed} onCheckedChange={onToggleAgree} />
                 <Typography tag="p" variant="poppins-md-16">
                   Даю согласие на{' '}
-                  <a className="text-blue" href="/terms_belkina_online.docx" download>
+                  <a className="text-blue" href="/terms_belkina_online.pdf" download>
                     обработку персональных данных
                   </a>
                 </Typography>
