@@ -19,6 +19,8 @@ export const ProfileForm = () => {
     profileFields,
     isOpen,
     setIsOpen,
+    cooldownOld,
+    cooldownNew,
 
     // old step
     verifyOpenOld,
@@ -151,8 +153,9 @@ export const ProfileForm = () => {
             <Button onClick={verifyOldEmail} disabled={pending}>
               {pending ? 'Проверка…' : 'Подтвердить'}
             </Button>
-            <Button variant="ghost" onClick={resendOld} disabled={pending}>
-              Отправить код повторно
+
+            <Button variant="ghost" onClick={resendOld} disabled={pending || cooldownOld > 0}>
+              {cooldownOld > 0 ? `Отправить повторно (${cooldownOld})` : 'Отправить код повторно'}
             </Button>
           </div>
         </DialogContent>
@@ -186,8 +189,8 @@ export const ProfileForm = () => {
             <Button onClick={verifyNewAndSave} disabled={pending}>
               {pending ? 'Проверка…' : 'Подтвердить и сохранить'}
             </Button>
-            <Button variant="ghost" onClick={resendNew} disabled={pending}>
-              Отправить код повторно
+            <Button variant="ghost" onClick={resendNew} disabled={pending || cooldownNew > 0}>
+              {cooldownNew > 0 ? `Отправить повторно (${cooldownNew})` : 'Отправить код повторно'}
             </Button>
           </div>
         </DialogContent>

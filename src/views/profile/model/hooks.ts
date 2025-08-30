@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useState } from 'react'
+// useProfileForm.ts — two‑step email change flow with resend cooldown
+import { useState, useEffect } from 'react'
 import { useProfileStore } from '@/entities/user/use-profile-store'
 import { useUpdateUser } from '@/shared/services/profile.service'
 import { authService } from '@/shared/services/auth.service'
@@ -23,8 +23,8 @@ export const useProfileForm = () => {
   // ── codes & tokens
   const [oldCode, setOldCode] = useState('')
   const [newCode, setNewCode] = useState('')
-  const [oldToken, setOldToken] = useState<string | null>(null) // token for current email
-  const [newToken, setNewToken] = useState<string | null>(null) // token for NEW email
+  const [oldToken, setOldToken] = useState<string | null>(null)
+  const [newToken, setNewToken] = useState<string | null>(null)
   const [oldVerified, setOldVerified] = useState(false)
   const [pendingField, setPendingField] = useState<Exclude<ProfileVariantField, 'name'> | null>(
     null,
@@ -34,6 +34,24 @@ export const useProfileForm = () => {
   const [pending, setPending] = useState(false)
   const { mutate, isPending } = useUpdateUser()
   const queryClient = useQueryClient()
+
+  // ── resend cooldowns
+  const [cooldownOld, setCooldownOld] = useState(0)
+  const [cooldownNew, setCooldownNew] = useState(0)
+
+  useEffect(() => {
+    if (cooldownOld > 0) {
+      const timer = setTimeout(() => setCooldownOld((c) => c - 1), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [cooldownOld])
+
+  useEffect(() => {
+    if (cooldownNew > 0) {
+      const timer = setTimeout(() => setCooldownNew((c) => c - 1), 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [cooldownNew])
 
   const profileFields = [
     {
@@ -62,7 +80,7 @@ export const useProfileForm = () => {
     },
   ] as const
 
-  // 1) Начало изменения: сначала подтверждаем текущую почту
+  // 1) Начало изменения
   const startChange = async (field: ProfileVariantField) => {
     if (field === 'name') {
       setIsOpen('name')
@@ -74,6 +92,7 @@ export const useProfileForm = () => {
       const res = await authService.resendCode({ email: profile?.email })
       setOldToken(res.token)
       setVerifyOpenOld(true)
+      setCooldownOld(30)
       toast.success('Код подтверждения отправлен на текущую почту')
     } catch (e) {
       toast.error((e as Error).message)
@@ -82,17 +101,15 @@ export const useProfileForm = () => {
     }
   }
 
-  // 1.2) Подтверждаем код с текущей почты
   const verifyOldEmail = async () => {
     if (!oldToken || !oldCode) return toast.error('Введите код из письма')
     try {
       setPending(true)
-      await authService.confirm(oldToken, oldCode, true) // сервер помечает «old verified»
+      await authService.confirm(oldToken, oldCode, true)
       setOldVerified(true)
       setVerifyOpenOld(false)
       setOldCode('')
-      // открываем нужный диалог
-      pendingField ? setIsOpen(pendingField) : setIsOpen('email')
+      if (pendingField) setIsOpen(pendingField)
       toast.success('Текущая почта подтверждена')
     } catch (e) {
       toast.error((e as Error).message)
@@ -101,13 +118,11 @@ export const useProfileForm = () => {
     }
   }
 
-  // 2) Пользователь ввёл НОВУЮ почту и нажал «Сохранить» → шлём код на новую почту
   const handleUpdate = async () => {
     if (!isOpen) return
     const field = profileFields.find((f) => f.key === isOpen)
     if (!field) return
 
-    // имя и пароль сохраняем как раньше
     if (isOpen !== 'email') {
       if (isOpen === 'password' && !oldVerified) {
         toast.error('Сначала подтвердите доступ к текущей почте')
@@ -126,7 +141,6 @@ export const useProfileForm = () => {
       return
     }
 
-    // Для email — двухэтапная верификация
     if (!oldVerified) return toast.error('Сначала подтвердите доступ к текущей почте')
 
     const nextEmail = String(field.value).trim().toLowerCase()
@@ -135,11 +149,10 @@ export const useProfileForm = () => {
 
     try {
       setPending(true)
-      // Рекомендуется: сервер ДОЛЖЕН проверить, что oldToken прошёл верификацию и email свободен
-      // Здесь используем выделенный endpoint; если его пока нет — можно временно вызвать resendCode({ email: nextEmail })
       const res = await authService.resendCodeToNewEmail({ newEmail: nextEmail, oldToken })
       setNewToken(res.token)
       setVerifyOpenNew(true)
+      setCooldownNew(30)
       toast.success('Код отправлен на новую почту')
     } catch (e) {
       toast.error((e as Error).message)
@@ -148,13 +161,11 @@ export const useProfileForm = () => {
     }
   }
 
-  // 3) Подтверждение НОВОЙ почты → только затем выполняем мутацию смены email
   const verifyNewAndSave = async () => {
     if (!newToken || !newCode) return toast.error('Введите код, отправленный на новую почту')
     try {
       setPending(true)
-      await authService.confirm(newToken, newCode, true) // сервер проверяет код новой почты
-
+      await authService.confirm(newToken, newCode, true)
       mutate(
         { variables: { type: 'email', email } },
         {
@@ -167,7 +178,6 @@ export const useProfileForm = () => {
             setOldCode('')
             setNewToken(null)
             setPendingField(null)
-            // Перечитать профиль
             await queryClient.invalidateQueries({ queryKey: ['me'] })
           },
         },
@@ -179,8 +189,8 @@ export const useProfileForm = () => {
     }
   }
 
-  // Повторная отправка кода на текущую почту (шаг 1)
   const resendOld = async () => {
+    if (cooldownOld > 0) return
     try {
       setPending(true)
       const res = await authService.resendCode({
@@ -188,6 +198,7 @@ export const useProfileForm = () => {
         token: oldToken || undefined,
       })
       setOldToken(res.token)
+      setCooldownOld(30)
       toast.success('Код отправлен повторно')
     } catch (e) {
       toast.error((e as Error).message)
@@ -196,13 +207,14 @@ export const useProfileForm = () => {
     }
   }
 
-  // Повторная отправка кода на НОВУЮ почту (шаг 3)
   const resendNew = async () => {
+    if (cooldownNew > 0) return
     if (!email) return toast.error('Введите новую почту')
     try {
       setPending(true)
       const res = await authService.resendCodeToNewEmail({ newEmail: email, oldToken })
       setNewToken(res.token)
+      setCooldownNew(30)
       toast.success('Код отправлен повторно на новую почту')
     } catch (e) {
       toast.error((e as Error).message)
@@ -224,6 +236,7 @@ export const useProfileForm = () => {
     setOldCode,
     verifyOldEmail,
     resendOld,
+    cooldownOld,
 
     // new verify
     verifyOpenNew,
@@ -232,6 +245,7 @@ export const useProfileForm = () => {
     setNewCode,
     verifyNewAndSave,
     resendNew,
+    cooldownNew,
 
     // form
     email,
