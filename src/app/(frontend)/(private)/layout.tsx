@@ -9,7 +9,7 @@ import { SiteBarHeader } from '@/widgets/app-sidebar/_ui/site-bar-header'
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProviders loading={true}>
-      <AppHeader className="max-lg:hidden" />
+      <AppHeader className="" />
 
       {/* Сайдбар закоментирован до момента появления видеокурсов и связанных с ними вкладок */}
       {/* <SidebarProvider
