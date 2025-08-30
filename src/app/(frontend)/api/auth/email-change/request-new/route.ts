@@ -19,6 +19,6 @@ export async function POST(req: Request) {
 
   const code = NodemailerService.generateCode()
   const token = await NodemailerService.signCode(newEmail, code) // подписываем код для НОВОЙ почты
-  await NodemailerService.sendCode(newEmail, code, token)
+  await NodemailerService.sendCode(newEmail, code, token, true)
   return NextResponse.json({ message: 'Код отправлен', token })
 }
