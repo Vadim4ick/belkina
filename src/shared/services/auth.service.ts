@@ -49,7 +49,7 @@ export class AuthService {
 
   async resendCode({ token, email }: { token?: string; email?: string }) {
     try {
-      const res = await axios.post('/api/auth/resend-code', {
+      const res = await axios.post('/api/auth/email-change/resend-code', {
         ...(token && { token }),
         ...(email && { email }),
       })
@@ -85,7 +85,22 @@ export class AuthService {
 
   async resendCodeToEmail(email: string) {
     try {
-      const res = await axios.post('/api/auth/resend-code-to-email', { email })
+      const res = await axios.post('/api/auth/email-change/resend-code-to-email', { email })
+      return res.data
+    } catch {
+      throw new Error('Не удалось отправить код на почту')
+    }
+  }
+
+  async resendCodeToNewEmail({
+    newEmail,
+    oldToken,
+  }: {
+    newEmail: string
+    oldToken: string | null
+  }) {
+    try {
+      const res = await axios.post('/api/auth/email-change/request-new', { newEmail, oldToken })
       return res.data
     } catch {
       throw new Error('Не удалось отправить код на почту')

@@ -19,7 +19,7 @@ export class NodemailerService {
   }
 
   // Отправка письма с кодом
-  static async sendCode(email: string, code: string, token: string): Promise<void> {
+  static async sendCode(email: string, code: string, token: string, noLink = false): Promise<void> {
     const verifyLink = `${process.env.NEXT_PUBLIC_SERVER_URL}?token=${token}`
 
     await this.transporter.sendMail({
@@ -29,7 +29,7 @@ export class NodemailerService {
       html: `
       <p>Ваш код подтверждения: <b>${code}</b></p>
       <p>Код действителен 10 минут.</p>
-      <p>Или просто нажмите: <a href="${verifyLink}">Подтвердить Email</a></p>
+      ${noLink ? '' : `<p>Или просто нажмите: <a href="${verifyLink}">Подтвердить Email</a></p>`}
     `,
     })
   }
