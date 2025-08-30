@@ -91,6 +91,21 @@ export class AuthService {
       throw new Error('Не удалось отправить код на почту')
     }
   }
+
+  async resendCodeToNewEmail({
+    newEmail,
+    oldToken,
+  }: {
+    newEmail: string
+    oldToken: string | null
+  }) {
+    try {
+      const res = await axios.post('/api/auth/email-change/request-new', { newEmail, oldToken })
+      return res.data
+    } catch {
+      throw new Error('Не удалось отправить код на почту')
+    }
+  }
 }
 
 export const authService = new AuthService()
