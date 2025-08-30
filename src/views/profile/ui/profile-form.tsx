@@ -1,5 +1,4 @@
 'use client'
-
 import { Input } from '@/shared/ui/input'
 import { Button } from '@/shared/ui/button'
 import {
@@ -12,7 +11,7 @@ import {
 } from '@/shared/ui/dialog'
 import { Skeleton } from '@/shared/ui/skeleton'
 import { useProfileForm } from '../model/hooks'
-import { ProfileVariantField } from '../model/type'
+import type { ProfileVariantField } from '../model/type'
 
 export const ProfileForm = () => {
   const {
@@ -20,16 +19,28 @@ export const ProfileForm = () => {
     profileFields,
     isOpen,
     setIsOpen,
-    verifyOpen,
-    setVerifyOpen,
-    code,
-    setCode,
+
+    // old step
+    verifyOpenOld,
+    setVerifyOpenOld,
+    oldCode,
+    setOldCode,
+    verifyOldEmail,
+    resendOld,
+
+    // new step
+    verifyOpenNew,
+    setVerifyOpenNew,
+    newCode,
+    setNewCode,
+    verifyNewAndSave,
+    resendNew,
+
+    // generic
     pending,
     isPending,
-    handleUpdate,
-    handleConfirm,
-    handleVerify,
     startChange,
+    handleUpdate,
   } = useProfileForm()
 
   return (
@@ -70,7 +81,7 @@ export const ProfileForm = () => {
             </Button>
           ))
         ) : (
-          <Button className="col-span-full" onClick={handleConfirm} disabled={pending}>
+          <Button className="col-span-full" onClick={resendOld} disabled={pending}>
             Подтвердить почту
           </Button>
         )}
@@ -106,41 +117,76 @@ export const ProfileForm = () => {
               </Button>
             </DialogClose>
             <Button className="w-full" onClick={handleUpdate} disabled={isPending}>
-              {isPending ? 'Сохраняем...' : 'Сохранить'}
+              {isPending ? 'Сохраняем…' : 'Сохранить'}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Диалог подтверждения email */}
+      {/* Диалог #1 — подтверждение ТЕКУЩЕЙ почты */}
       <Dialog
-        open={verifyOpen}
+        open={verifyOpenOld}
         onOpenChange={() => {
-          setVerifyOpen(false)
-          setCode('')
+          setVerifyOpenOld(false)
+          setOldCode('')
         }}
       >
         <DialogContent className="flex max-w-[450px] flex-col gap-4 rounded-[10px] bg-white p-6">
           <DialogHeader>
             <DialogTitle>Подтверждение основной почты</DialogTitle>
             <DialogDescription>
-              Прежде чем изменить email или пароль, подтвердите доступ к текущей почте (
-              {profile?.email}). Введите код, отправленный на ваш адрес.
+              Прежде чем изменить email/пароль, подтвердите доступ к текущей почте ({profile?.email}
+              ).
             </DialogDescription>
           </DialogHeader>
 
           <Input
             placeholder="Код из письма"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={oldCode}
+            onChange={(e) => setOldCode(e.target.value)}
             maxLength={4}
           />
 
           <div className="flex flex-col gap-2">
-            <Button onClick={handleVerify} disabled={pending}>
-              {pending ? 'Проверка...' : 'Подтвердить'}
+            <Button onClick={verifyOldEmail} disabled={pending}>
+              {pending ? 'Проверка…' : 'Подтвердить'}
             </Button>
-            <Button variant="ghost" onClick={handleConfirm} disabled={pending}>
+            <Button variant="ghost" onClick={resendOld} disabled={pending}>
+              Отправить код повторно
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Диалог #2 — подтверждение НОВОЙ почты */}
+      <Dialog
+        open={verifyOpenNew}
+        onOpenChange={() => {
+          setVerifyOpenNew(false)
+          setNewCode('')
+        }}
+      >
+        <DialogContent className="flex max-w-[450px] flex-col gap-4 rounded-[10px] bg-white p-6">
+          <DialogHeader>
+            <DialogTitle>Подтверждение новой почты</DialogTitle>
+            <DialogDescription>
+              Введите код, который мы отправили на новую почту (
+              {profileFields.find((f) => f.key === 'email')?.value || '—'}).
+            </DialogDescription>
+          </DialogHeader>
+
+          <Input
+            placeholder="Код из письма"
+            value={newCode}
+            onChange={(e) => setNewCode(e.target.value)}
+            maxLength={4}
+          />
+
+          <div className="flex flex-col gap-2">
+            <Button onClick={verifyNewAndSave} disabled={pending}>
+              {pending ? 'Проверка…' : 'Подтвердить и сохранить'}
+            </Button>
+            <Button variant="ghost" onClick={resendNew} disabled={pending}>
               Отправить код повторно
             </Button>
           </div>
