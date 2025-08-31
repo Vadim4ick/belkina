@@ -11,6 +11,8 @@ import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { getMoscowNow } from '@/shared/lib/utils'
 import { formatInTimeZone } from 'date-fns-tz'
+import { useProfile } from '@/shared/hooks/use-profile'
+import { AdminTablePayments } from './admin-table-payments'
 
 const WebinarsBySlugPage = ({
   webinar,
@@ -20,6 +22,7 @@ const WebinarsBySlugPage = ({
   count: number
 }) => {
   const router = useRouter()
+  const { profile } = useProfile()
 
   const nowMsk = getMoscowNow()
 
@@ -74,6 +77,11 @@ const WebinarsBySlugPage = ({
             </Typography>
 
             <Typography tag="p" variant="poppins-md-16">
+              ✉️ Обратите внимание: иногда письмо может попасть в папку <b>«Спам»</b> , проверьте
+              папку тоже.
+            </Typography>
+
+            <Typography tag="p" variant="poppins-md-16">
               📝 Остались вопросы? Напишите нам в Telegram —{' '}
               <a href="https://t.me/Belkina_online2025">@Belkina_online2025</a>
             </Typography>
@@ -123,6 +131,8 @@ const WebinarsBySlugPage = ({
               <PaymentBtn webinarId={webinar.id} webinarSlug={webinar.slug} />
             </div>
           )}
+
+        {profile?.role === 'admin' && <AdminTablePayments webinarId={webinar.id} />}
       </Container>
     </section>
   )
