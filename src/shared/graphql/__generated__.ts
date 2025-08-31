@@ -17982,6 +17982,7 @@ export type Webinar = {
   readonly type: Webinar_Type;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
   readonly url: Maybe<Scalars['String']['output']>;
+  readonly urlRecord: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -19127,6 +19128,17 @@ export type Webinar_UpdatedAt_Operator = {
   readonly not_equals: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export type Webinar_UrlRecord_Operator = {
+  readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly contains: InputMaybe<Scalars['String']['input']>;
+  readonly equals: InputMaybe<Scalars['String']['input']>;
+  readonly exists: InputMaybe<Scalars['Boolean']['input']>;
+  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  readonly like: InputMaybe<Scalars['String']['input']>;
+  readonly not_equals: InputMaybe<Scalars['String']['input']>;
+  readonly not_in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type Webinar_Url_Operator = {
   readonly all: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   readonly contains: InputMaybe<Scalars['String']['input']>;
@@ -19152,6 +19164,7 @@ export type Webinar_Where = {
   readonly type: InputMaybe<Webinar_Type_Operator>;
   readonly updatedAt: InputMaybe<Webinar_UpdatedAt_Operator>;
   readonly url: InputMaybe<Webinar_Url_Operator>;
+  readonly urlRecord: InputMaybe<Webinar_UrlRecord_Operator>;
 };
 
 export type Webinar_Where_And = {
@@ -19169,6 +19182,7 @@ export type Webinar_Where_And = {
   readonly type: InputMaybe<Webinar_Type_Operator>;
   readonly updatedAt: InputMaybe<Webinar_UpdatedAt_Operator>;
   readonly url: InputMaybe<Webinar_Url_Operator>;
+  readonly urlRecord: InputMaybe<Webinar_UrlRecord_Operator>;
 };
 
 export type Webinar_Where_Or = {
@@ -19186,6 +19200,7 @@ export type Webinar_Where_Or = {
   readonly type: InputMaybe<Webinar_Type_Operator>;
   readonly updatedAt: InputMaybe<Webinar_UpdatedAt_Operator>;
   readonly url: InputMaybe<Webinar_Url_Operator>;
+  readonly urlRecord: InputMaybe<Webinar_UrlRecord_Operator>;
 };
 
 export type Webinars = {
@@ -19240,6 +19255,7 @@ export type WebinarsDocAccessFields = {
   readonly type: Maybe<WebinarsDocAccessFields_Type>;
   readonly updatedAt: Maybe<WebinarsDocAccessFields_UpdatedAt>;
   readonly url: Maybe<WebinarsDocAccessFields_Url>;
+  readonly urlRecord: Maybe<WebinarsDocAccessFields_UrlRecord>;
 };
 
 export type WebinarsDocAccessFields_Content = {
@@ -19530,6 +19546,34 @@ export type WebinarsDocAccessFields_Url = {
   readonly update: Maybe<WebinarsDocAccessFields_Url_Update>;
 };
 
+export type WebinarsDocAccessFields_UrlRecord = {
+  readonly __typename?: 'WebinarsDocAccessFields_urlRecord';
+  readonly create: Maybe<WebinarsDocAccessFields_UrlRecord_Create>;
+  readonly delete: Maybe<WebinarsDocAccessFields_UrlRecord_Delete>;
+  readonly read: Maybe<WebinarsDocAccessFields_UrlRecord_Read>;
+  readonly update: Maybe<WebinarsDocAccessFields_UrlRecord_Update>;
+};
+
+export type WebinarsDocAccessFields_UrlRecord_Create = {
+  readonly __typename?: 'WebinarsDocAccessFields_urlRecord_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_UrlRecord_Delete = {
+  readonly __typename?: 'WebinarsDocAccessFields_urlRecord_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_UrlRecord_Read = {
+  readonly __typename?: 'WebinarsDocAccessFields_urlRecord_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsDocAccessFields_UrlRecord_Update = {
+  readonly __typename?: 'WebinarsDocAccessFields_urlRecord_Update';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
 export type WebinarsDocAccessFields_Url_Create = {
   readonly __typename?: 'WebinarsDocAccessFields_url_Create';
   readonly permission: Scalars['Boolean']['output'];
@@ -19563,6 +19607,7 @@ export type WebinarsFields = {
   readonly type: Maybe<WebinarsFields_Type>;
   readonly updatedAt: Maybe<WebinarsFields_UpdatedAt>;
   readonly url: Maybe<WebinarsFields_Url>;
+  readonly urlRecord: Maybe<WebinarsFields_UrlRecord>;
 };
 
 export type WebinarsFields_Content = {
@@ -19851,6 +19896,34 @@ export type WebinarsFields_Url = {
   readonly delete: Maybe<WebinarsFields_Url_Delete>;
   readonly read: Maybe<WebinarsFields_Url_Read>;
   readonly update: Maybe<WebinarsFields_Url_Update>;
+};
+
+export type WebinarsFields_UrlRecord = {
+  readonly __typename?: 'WebinarsFields_urlRecord';
+  readonly create: Maybe<WebinarsFields_UrlRecord_Create>;
+  readonly delete: Maybe<WebinarsFields_UrlRecord_Delete>;
+  readonly read: Maybe<WebinarsFields_UrlRecord_Read>;
+  readonly update: Maybe<WebinarsFields_UrlRecord_Update>;
+};
+
+export type WebinarsFields_UrlRecord_Create = {
+  readonly __typename?: 'WebinarsFields_urlRecord_Create';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_UrlRecord_Delete = {
+  readonly __typename?: 'WebinarsFields_urlRecord_Delete';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_UrlRecord_Read = {
+  readonly __typename?: 'WebinarsFields_urlRecord_Read';
+  readonly permission: Scalars['Boolean']['output'];
+};
+
+export type WebinarsFields_UrlRecord_Update = {
+  readonly __typename?: 'WebinarsFields_urlRecord_Update';
+  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type WebinarsFields_Url_Create = {
@@ -20752,6 +20825,7 @@ export type MutationWebinarInput = {
   readonly type: Webinar_Type_MutationInput;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
   readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly urlRecord: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MutationWebinarPaymentInput = {
@@ -20802,6 +20876,7 @@ export type MutationWebinarUpdateInput = {
   readonly type: InputMaybe<WebinarUpdate_Type_MutationInput>;
   readonly updatedAt: InputMaybe<Scalars['String']['input']>;
   readonly url: InputMaybe<Scalars['String']['input']>;
+  readonly urlRecord: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Payload_Locked_DocumentsAccess = {
@@ -21625,7 +21700,7 @@ export type GetWebinarPaymentByUserQueryVariables = Exact<{
 }>;
 
 
-export type GetWebinarPaymentByUserQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly webinar: { readonly __typename?: 'Webinar', readonly id: number, readonly url: string, readonly title: string, readonly startsAt: any, readonly slug: string, readonly endAt: any } }> } };
+export type GetWebinarPaymentByUserQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly webinar: { readonly __typename?: 'Webinar', readonly id: number, readonly url: string, readonly urlRecord: string, readonly title: string, readonly startsAt: any, readonly slug: string, readonly endAt: any } }> } };
 
 export type GetWebinarByPaymentIdQueryVariables = Exact<{
   paymentId: InputMaybe<Scalars['String']['input']>;
@@ -22291,6 +22366,7 @@ export const GetWebinarPaymentByUserDocument = gql`
       webinar {
         id
         url
+        urlRecord
         title
         startsAt
         slug
