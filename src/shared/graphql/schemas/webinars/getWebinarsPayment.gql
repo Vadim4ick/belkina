@@ -40,3 +40,18 @@ query WebinarSuccessCount($id: JSON) {
     totalDocs
   }
 }
+
+query GetInfoWebinarPaymentsByWebinarId($webinarId: JSON) {
+  WebinarPayments(where: { webinar: { equals: $webinarId }, status: { equals: succeeded } }) {
+    docs {
+      id
+
+      user {
+        email
+        name
+      }
+
+      createdAt
+    }
+  }
+}

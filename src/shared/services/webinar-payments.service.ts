@@ -1,5 +1,6 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { useGqlClient } from '../hooks/useGqlClient'
 
 type CreateWebinarPaymentArgs = {
   webinarId: number
@@ -41,5 +42,24 @@ export const useCreateWebinarPayment = () => {
         throw err
       }
     },
+  })
+}
+
+export const useGetInfoWebinarPaymentByWebinarId = ({ webinarId }: { webinarId: number }) => {
+  const gql = useGqlClient({})
+
+  return useQuery({
+    queryKey: ['getInfoWebinarPayment', webinarId],
+    queryFn: async () => {
+      try {
+        return await gql.GetInfoWebinarPaymentsByWebinarId({
+          webinarId: webinarId,
+        })
+      } catch (err) {
+        console.error('getInfoWebinarPayment', err)
+        throw err
+      }
+    },
+    enabled: !!webinarId,
   })
 }
