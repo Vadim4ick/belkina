@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -73,6 +72,16 @@ const Webinars: CollectionConfig = {
         }
 
         await invalidateTags(CacheKeys.tags.webinars())
+      },
+    ],
+
+    beforeDelete: [
+      async ({ id, req }) => {
+        // Удаляем все оплаты, связанные с этим вебинаром
+        await req.payload.delete({
+          collection: 'webinar-payments',
+          where: { webinar: { equals: id } },
+        })
       },
     ],
 
@@ -191,6 +200,44 @@ const Webinars: CollectionConfig = {
             if (secret && secret === process.env.INTERNAL_WEBHOOK_SECRET) {
               return value
             }
+
+            const res = await getUserIdByToken({ req })
+
+            if (!res) return null
+
+            // платные — проверяем оплату
+            const payments = await gql.GetWebinarPaymentByUserId({
+              userId: res.id,
+              webinarId: siblingData.id,
+            })
+
+            if (payments?.WebinarPayments?.docs?.length > 0) {
+              return value // доступ есть
+            }
+
+            return null // скрываем ссылку
+          },
+        ],
+      },
+    },
+
+    {
+      name: 'urlRecord',
+      label: 'Ссылка на запись трансляции',
+      type: 'text',
+      required: false,
+      admin: { placeholder: 'https://…' },
+      access: {
+        read: () => true,
+      },
+
+      hooks: {
+        afterRead: [
+          async ({ value, req, siblingData }) => {
+            const gql = await getServerAuthGqlClient({})
+
+            // админам всегда можно
+            if (req.user?.role === 'admin') return value
 
             const res = await getUserIdByToken({ req })
 

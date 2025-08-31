@@ -57,25 +57,39 @@ const ProfilePayments = () => {
               {/* Правая часть — кнопки */}
               <div className="flex flex-col gap-2 md:flex-row">
                 {!webinarEnded && (
-                  <Link
-                    href={getRouteWebinarsBySlug({ slug: webinar.slug })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                  >
-                    Страница вебинара
-                  </Link>
+                  <>
+                    <Link
+                      href={getRouteWebinarsBySlug({ slug: webinar.slug })}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                    >
+                      Страница вебинара
+                    </Link>
+
+                    <a
+                      href={webinar.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Ссылка на вебинар
+                    </a>
+                  </>
                 )}
 
-                <a
-                  href={webinar.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  Ссылка на вебинар
-                </a>
+                {webinarEnded && webinar.urlRecord && (
+                  <a
+                    href={webinar.urlRecord}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Ссылка на запись вебинара
+                  </a>
+                )}
               </div>
             </li>
           )
