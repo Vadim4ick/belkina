@@ -9,6 +9,7 @@ import { ProfileForm } from './profile-form'
 import { ProfileTitle } from './profile-title'
 import { Container } from '@/shared/ui/container'
 import { Typography } from '@/shared/ui/typography'
+import { ProfilePayments } from './profile-payments'
 
 export async function Profile() {
   const cookieStore = await cookies()
@@ -50,6 +51,8 @@ export async function Profile() {
             <Topic recomendations={recommendationsVal.GetUserRecommendations} />
           </div>
         )}
+
+        <ProfilePayments />
 
         {testHistoryVal && <TestsHistory testHistory={testHistoryVal.TestResults.docs} />}
       </Container>
