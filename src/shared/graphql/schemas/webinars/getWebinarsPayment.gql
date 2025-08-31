@@ -15,6 +15,24 @@ query GetWebinarPaymentByUserId($userId: JSON, $webinarId: JSON) {
   }
 }
 
+query GetWebinarPaymentByUser($userId: JSON) {
+  WebinarPayments(
+    where: { user: { equals: $userId }, status: { equals: succeeded } }
+    limit: 1000
+  ) {
+    docs {
+      webinar {
+        id
+        url
+        title
+        startsAt
+        slug
+        endAt
+      }
+    }
+  }
+}
+
 query GetWebinarByPaymentId($paymentId: String) {
   WebinarPayments(where: { paymentId: { equals: $paymentId } }) {
     docs {
@@ -36,13 +54,16 @@ mutation UpdateWebinarPayment($id: Int!, $data: mutationWebinarPaymentUpdateInpu
 }
 
 query WebinarSuccessCount($id: JSON) {
-  WebinarPayments(where: { webinar: { equals: $id }, status: { equals: succeeded } }) {
+  WebinarPayments(where: { webinar: { equals: $id }, status: { equals: succeeded } }, limit: 1000) {
     totalDocs
   }
 }
 
 query GetInfoWebinarPaymentsByWebinarId($webinarId: JSON) {
-  WebinarPayments(where: { webinar: { equals: $webinarId }, status: { equals: succeeded } }) {
+  WebinarPayments(
+    where: { webinar: { equals: $webinarId }, status: { equals: succeeded } }
+    limit: 1000
+  ) {
     docs {
       id
 
