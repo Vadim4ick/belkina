@@ -21620,6 +21620,13 @@ export type GetWebinarPaymentByUserIdQueryVariables = Exact<{
 
 export type GetWebinarPaymentByUserIdQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly webinar: { readonly __typename?: 'Webinar', readonly id: number, readonly url: string } }> } };
 
+export type GetWebinarPaymentByUserQueryVariables = Exact<{
+  userId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetWebinarPaymentByUserQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly webinar: { readonly __typename?: 'Webinar', readonly id: number, readonly url: string, readonly title: string, readonly startsAt: any, readonly slug: string, readonly endAt: any } }> } };
+
 export type GetWebinarByPaymentIdQueryVariables = Exact<{
   paymentId: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -22274,6 +22281,25 @@ export const GetWebinarPaymentByUserIdDocument = gql`
   }
 }
     `;
+export const GetWebinarPaymentByUserDocument = gql`
+    query GetWebinarPaymentByUser($userId: JSON) {
+  WebinarPayments(
+    where: {user: {equals: $userId}, status: {equals: succeeded}}
+    limit: 1000
+  ) {
+    docs {
+      webinar {
+        id
+        url
+        title
+        startsAt
+        slug
+        endAt
+      }
+    }
+  }
+}
+    `;
 export const GetWebinarByPaymentIdDocument = gql`
     query GetWebinarByPaymentId($paymentId: String) {
   WebinarPayments(where: {paymentId: {equals: $paymentId}}) {
@@ -22299,7 +22325,10 @@ export const UpdateWebinarPaymentDocument = gql`
     `;
 export const WebinarSuccessCountDocument = gql`
     query WebinarSuccessCount($id: JSON) {
-  WebinarPayments(where: {webinar: {equals: $id}, status: {equals: succeeded}}) {
+  WebinarPayments(
+    where: {webinar: {equals: $id}, status: {equals: succeeded}}
+    limit: 1000
+  ) {
     totalDocs
   }
 }
@@ -22308,6 +22337,7 @@ export const GetInfoWebinarPaymentsByWebinarIdDocument = gql`
     query GetInfoWebinarPaymentsByWebinarId($webinarId: JSON) {
   WebinarPayments(
     where: {webinar: {equals: $webinarId}, status: {equals: succeeded}}
+    limit: 1000
   ) {
     docs {
       id
@@ -22447,6 +22477,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetWebinarPaymentByUserId(variables?: GetWebinarPaymentByUserIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarPaymentByUserIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarPaymentByUserIdQuery>({ document: GetWebinarPaymentByUserIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarPaymentByUserId', 'query', variables);
+    },
+    GetWebinarPaymentByUser(variables?: GetWebinarPaymentByUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarPaymentByUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarPaymentByUserQuery>({ document: GetWebinarPaymentByUserDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarPaymentByUser', 'query', variables);
     },
     GetWebinarByPaymentId(variables?: GetWebinarByPaymentIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetWebinarByPaymentIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetWebinarByPaymentIdQuery>({ document: GetWebinarByPaymentIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetWebinarByPaymentId', 'query', variables);
