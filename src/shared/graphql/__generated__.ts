@@ -1994,7 +1994,6 @@ export type FallbackLocaleInputType =
 
 export type Faq = {
   readonly __typename?: 'Faq';
-  readonly answer: Scalars['String']['output'];
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly description: Maybe<Scalars['JSON']['output']>;
   readonly id: Scalars['Int']['output'];
@@ -2005,13 +2004,6 @@ export type Faq = {
 
 export type FaqDescriptionArgs = {
   depth: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type Faq_Answer_Operator = {
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly equals: InputMaybe<Scalars['String']['input']>;
-  readonly like: InputMaybe<Scalars['String']['input']>;
-  readonly not_equals: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Faq_CreatedAt_Operator = {
@@ -2067,7 +2059,6 @@ export type Faq_UpdatedAt_Operator = {
 export type Faq_Where = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
-  readonly answer: InputMaybe<Faq_Answer_Operator>;
   readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
   readonly description: InputMaybe<Faq_Description_Operator>;
   readonly id: InputMaybe<Faq_Id_Operator>;
@@ -2078,7 +2069,6 @@ export type Faq_Where = {
 export type Faq_Where_And = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
-  readonly answer: InputMaybe<Faq_Answer_Operator>;
   readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
   readonly description: InputMaybe<Faq_Description_Operator>;
   readonly id: InputMaybe<Faq_Id_Operator>;
@@ -2089,7 +2079,6 @@ export type Faq_Where_And = {
 export type Faq_Where_Or = {
   readonly AND: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_And>>>;
   readonly OR: InputMaybe<ReadonlyArray<InputMaybe<Faq_Where_Or>>>;
-  readonly answer: InputMaybe<Faq_Answer_Operator>;
   readonly createdAt: InputMaybe<Faq_CreatedAt_Operator>;
   readonly description: InputMaybe<Faq_Description_Operator>;
   readonly id: InputMaybe<Faq_Id_Operator>;
@@ -2138,39 +2127,10 @@ export type FaqsDeleteDocAccess = {
 
 export type FaqsDocAccessFields = {
   readonly __typename?: 'FaqsDocAccessFields';
-  readonly answer: Maybe<FaqsDocAccessFields_Answer>;
   readonly createdAt: Maybe<FaqsDocAccessFields_CreatedAt>;
   readonly description: Maybe<FaqsDocAccessFields_Description>;
   readonly question: Maybe<FaqsDocAccessFields_Question>;
   readonly updatedAt: Maybe<FaqsDocAccessFields_UpdatedAt>;
-};
-
-export type FaqsDocAccessFields_Answer = {
-  readonly __typename?: 'FaqsDocAccessFields_answer';
-  readonly create: Maybe<FaqsDocAccessFields_Answer_Create>;
-  readonly delete: Maybe<FaqsDocAccessFields_Answer_Delete>;
-  readonly read: Maybe<FaqsDocAccessFields_Answer_Read>;
-  readonly update: Maybe<FaqsDocAccessFields_Answer_Update>;
-};
-
-export type FaqsDocAccessFields_Answer_Create = {
-  readonly __typename?: 'FaqsDocAccessFields_answer_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsDocAccessFields_Answer_Delete = {
-  readonly __typename?: 'FaqsDocAccessFields_answer_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsDocAccessFields_Answer_Read = {
-  readonly __typename?: 'FaqsDocAccessFields_answer_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsDocAccessFields_Answer_Update = {
-  readonly __typename?: 'FaqsDocAccessFields_answer_Update';
-  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type FaqsDocAccessFields_CreatedAt = {
@@ -2287,39 +2247,10 @@ export type FaqsDocAccessFields_UpdatedAt_Update = {
 
 export type FaqsFields = {
   readonly __typename?: 'FaqsFields';
-  readonly answer: Maybe<FaqsFields_Answer>;
   readonly createdAt: Maybe<FaqsFields_CreatedAt>;
   readonly description: Maybe<FaqsFields_Description>;
   readonly question: Maybe<FaqsFields_Question>;
   readonly updatedAt: Maybe<FaqsFields_UpdatedAt>;
-};
-
-export type FaqsFields_Answer = {
-  readonly __typename?: 'FaqsFields_answer';
-  readonly create: Maybe<FaqsFields_Answer_Create>;
-  readonly delete: Maybe<FaqsFields_Answer_Delete>;
-  readonly read: Maybe<FaqsFields_Answer_Read>;
-  readonly update: Maybe<FaqsFields_Answer_Update>;
-};
-
-export type FaqsFields_Answer_Create = {
-  readonly __typename?: 'FaqsFields_answer_Create';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsFields_Answer_Delete = {
-  readonly __typename?: 'FaqsFields_answer_Delete';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsFields_Answer_Read = {
-  readonly __typename?: 'FaqsFields_answer_Read';
-  readonly permission: Scalars['Boolean']['output'];
-};
-
-export type FaqsFields_Answer_Update = {
-  readonly __typename?: 'FaqsFields_answer_Update';
-  readonly permission: Scalars['Boolean']['output'];
 };
 
 export type FaqsFields_CreatedAt = {
@@ -20304,7 +20235,6 @@ export type MutationExamUpdateInput = {
 };
 
 export type MutationFaqInput = {
-  readonly answer: Scalars['String']['input'];
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: InputMaybe<Scalars['JSON']['input']>;
   readonly question: Scalars['String']['input'];
@@ -20312,7 +20242,6 @@ export type MutationFaqInput = {
 };
 
 export type MutationFaqUpdateInput = {
-  readonly answer: InputMaybe<Scalars['String']['input']>;
   readonly createdAt: InputMaybe<Scalars['String']['input']>;
   readonly description: InputMaybe<Scalars['JSON']['input']>;
   readonly question: InputMaybe<Scalars['String']['input']>;
@@ -21720,6 +21649,13 @@ export type WebinarSuccessCountQueryVariables = Exact<{
 
 export type WebinarSuccessCountQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly totalDocs: number } };
 
+export type GetInfoWebinarPaymentsByWebinarIdQueryVariables = Exact<{
+  webinarId: InputMaybe<Scalars['JSON']['input']>;
+}>;
+
+
+export type GetInfoWebinarPaymentsByWebinarIdQuery = { readonly __typename?: 'Query', readonly WebinarPayments: { readonly __typename?: 'WebinarPayments', readonly docs: ReadonlyArray<{ readonly __typename?: 'WebinarPayment', readonly id: number, readonly createdAt: any, readonly user: { readonly __typename?: 'User', readonly email: any, readonly name: string } }> } };
+
 export const MediaFragmentFragmentDoc = gql`
     fragment MediaFragment on Media {
   id
@@ -22368,6 +22304,22 @@ export const WebinarSuccessCountDocument = gql`
   }
 }
     `;
+export const GetInfoWebinarPaymentsByWebinarIdDocument = gql`
+    query GetInfoWebinarPaymentsByWebinarId($webinarId: JSON) {
+  WebinarPayments(
+    where: {webinar: {equals: $webinarId}, status: {equals: succeeded}}
+  ) {
+    docs {
+      id
+      user {
+        email
+        name
+      }
+      createdAt
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -22507,6 +22459,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     WebinarSuccessCount(variables?: WebinarSuccessCountQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<WebinarSuccessCountQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<WebinarSuccessCountQuery>({ document: WebinarSuccessCountDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'WebinarSuccessCount', 'query', variables);
+    },
+    GetInfoWebinarPaymentsByWebinarId(variables?: GetInfoWebinarPaymentsByWebinarIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetInfoWebinarPaymentsByWebinarIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetInfoWebinarPaymentsByWebinarIdQuery>({ document: GetInfoWebinarPaymentsByWebinarIdDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'GetInfoWebinarPaymentsByWebinarId', 'query', variables);
     }
   };
 }
