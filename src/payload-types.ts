@@ -548,6 +548,7 @@ export interface Webinar {
   startsAt: string;
   endAt: string;
   url: string;
+  urlRecord?: string | null;
   price?: number | null;
   content: {
     root: {
@@ -1019,6 +1020,7 @@ export interface WebinarsSelect<T extends boolean = true> {
   startsAt?: T;
   endAt?: T;
   url?: T;
+  urlRecord?: T;
   price?: T;
   content?: T;
   slug?: T;
