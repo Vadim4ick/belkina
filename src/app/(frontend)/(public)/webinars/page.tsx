@@ -21,4 +21,5 @@ export const metadata: Metadata = {
   title: 'Расписание вебинаров | BELKINA.ONLINE',
   description:
     'Расписание бесплатных вебинаров по подготовке к ЕГЭ по русскому языку на платформе BELKINA.ONLINE',
+  keywords: 'Вебинар ЕГЭ, Вебинар ОГЭ',
 }

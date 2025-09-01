@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  keywords: 'Подготовка к ОГЭ, Подготовка к ЕГЭ',
 }
 
 export default async function RootLayout({

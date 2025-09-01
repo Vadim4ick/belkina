@@ -9,6 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Блог Belkina.online',
     description: 'Часто задаваемые вопросы от Belkina.online.',
+    keywords: 'Часто задаваемые ОГЭ ЕГЭ',
     alternates: {
       canonical: '/faq',
     },
