@@ -21,6 +21,7 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   return {
     title: pageNum > 1 ? `Блог Belkina.online - Страница ${pageNum}` : 'Блог Belkina.online',
     description: 'Последние статьи и новости от Belkina.online. ОГЭ и ЕГЭ по Русскому языку.',
+    keywords: 'Огэ Егэ по русскому языку новости',
     alternates: {
       canonical: pageNum > 1 ? undefined : '/posts',
     },

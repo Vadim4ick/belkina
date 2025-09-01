@@ -12,6 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'Блог Belkina.online',
     description: 'Последние статьи и новости от Belkina.online. ОГЭ и ЕГЭ по Русскому языку.',
+    keywords: 'Огэ Егэ по русскому языку новости',
     alternates: {
       canonical: '/posts',
     },
