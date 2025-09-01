@@ -23,4 +23,5 @@ export const metadata: Metadata = {
   title: 'Подготовка к ЕГЭ по русскому языку | BELKINA.ONLINE | Тесты',
   description:
     'Эффективно готовьтесь к ЕГЭ по русскому с персональной программой на платформе BELKINA.ONLINE',
+  keywords: 'Тесты ОГЭ ЕГЭ',
 }
