@@ -28,7 +28,7 @@ const sitemap: MetadataRoute.Sitemap = [
     priority: 0.9,
   },
   {
-    url: baseUrl + '/blog',
+    url: baseUrl + '/posts',
     changeFrequency: 'weekly',
     lastModified: new Date(),
     priority: 0.8,
