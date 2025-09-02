@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/payload/', '/private/'],
+      disallow: ['/admin/', '/profile/'],
     },
     sitemap: 'https://belkina.online/sitemap.xml',
   }
