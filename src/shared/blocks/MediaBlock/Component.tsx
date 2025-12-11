@@ -3,9 +3,10 @@ import type { StaticImageData } from 'next/image'
 import React from 'react'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
-import { cn } from '@/shared/lib/utils'
-import { ImageMedia } from '@/shared/ui/image-media'
+
 import RichText from '@/shared/ui/rich-text'
+import { cn } from '@/shared/lib/utils'
+import { Media } from '@/widgets/Media'
 
 type Props = MediaBlockProps & {
   breakout?: boolean
@@ -42,7 +43,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
       )}
     >
       {(media || staticImage) && (
-        <ImageMedia
+        <Media
           imgClassName={cn('border border-border rounded-[0.8rem]', imgClassName)}
           resource={media}
           src={staticImage}
