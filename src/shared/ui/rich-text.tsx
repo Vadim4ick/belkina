@@ -1,3 +1,4 @@
+import { MediaBlock } from '@/shared/blocks/MediaBlock/Component'
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
@@ -11,8 +12,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
-import { cn } from '@/shared/lib/utils'
-import { MediaBlock } from '../blocks/MediaBlock/Component'
+import { cn } from '../lib/utils'
 
 type NodeTypes = DefaultNodeTypes | SerializedBlockNode<MediaBlockProps>
 
@@ -34,7 +34,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         className="col-span-3 col-start-1"
         imgClassName="m-0"
         {...node.fields}
-        captionClassName="mx-auto max-w-[48rem]"
+        captionClassName="mx-auto max-w-3xl"
         enableGutter={false}
         disableInnerContainer={true}
       />
