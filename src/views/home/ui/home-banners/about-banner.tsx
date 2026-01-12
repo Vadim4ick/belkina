@@ -21,7 +21,7 @@ const AboutBanner = ({
             />
           </div>
 
-          <div className="tablet:py-[40px] tablet:pr-[22px] max-tablet:gap-6 flex h-auto flex-col justify-between gap-10">
+          <div className="tablet:py-10 tablet:pr-5.5 max-tablet:gap-6 flex h-auto flex-col justify-between gap-10">
             <div className="flex flex-col gap-12">
               <div className="flex flex-col gap-6">
                 <Typography tag="h2" variant="visuelt-bold-48">
