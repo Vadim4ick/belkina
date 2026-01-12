@@ -17,7 +17,7 @@ const AboutBanner = ({
             <MediaBlock
               media={content.media}
               className="rounded-[16px]"
-              aspect="aspect-[570/612]" /* можно поменять на aspect-video при видео-only */
+              aspect="aspect-[570/612]"
             />
           </div>
 
