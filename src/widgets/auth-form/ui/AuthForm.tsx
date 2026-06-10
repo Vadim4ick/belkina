@@ -106,7 +106,7 @@ export function AuthForm({
             </div>
 
             <div className="flex gap-2">
-              <GoogleLoginBtn />
+              {/* <GoogleLoginBtn /> */}
               <LoginBtn />
             </div>
 
